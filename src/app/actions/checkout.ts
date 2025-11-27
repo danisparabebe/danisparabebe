@@ -5,7 +5,12 @@ import Stripe from 'stripe';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeKey || stripeKey.includes('placeholder')) {
+    console.error('CRITICAL: Using placeholder Stripe key. Checkout will fail.');
+}
+
+const stripe = new Stripe(stripeKey || 'sk_test_placeholder', {
     apiVersion: '2025-11-17.clover',
 });
 
