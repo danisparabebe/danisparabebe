@@ -1,3 +1,10 @@
+'use client';
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
+import { ShieldCheck } from 'lucide-react';
+
 export const dynamic = 'force-dynamic';
 
 export default function TestProductPage() {
@@ -76,7 +83,7 @@ export default function TestProductPage() {
 
                 <div className="space-y-2">
                     <span className="text-xs uppercase tracking-[0.2em] text-subtle font-nunito">
-                        MVP Test v3.0 (Logger)
+                        MVP Test v3.1 (FIXED)
                     </span>
                     <h1 className="text-3xl font-playfair text-text">
                         {product.name}
