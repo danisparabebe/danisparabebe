@@ -16,7 +16,7 @@ export default function StepSummary() {
         setIsProcessing(true);
         try {
             const { createCheckoutSession } = await import('@/app/actions/checkout');
-            const { url } = await createCheckoutSession({
+            const result = await createCheckoutSession({
                 productId: selectedProduct.id,
                 productName: selectedProduct.name,
                 fabricId: selectedFabric.id,
@@ -26,9 +26,18 @@ export default function StepSummary() {
                 babyName,
                 totalPrice,
             });
-            if (url) window.location.href = url;
+
+            if (result.error) {
+                console.error('Checkout Error:', result.error);
+                alert(`Erro ao iniciar checkout: ${result.error}`); // Simple alert for now
+                setIsProcessing(false);
+                return;
+            }
+
+            if (result.url) window.location.href = result.url;
         } catch (error) {
-            console.error(error);
+            console.error('Unexpected error:', error);
+            alert('Ocorreu um erro inesperado. Tente novamente.');
             setIsProcessing(false);
         }
     };

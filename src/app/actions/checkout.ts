@@ -64,8 +64,8 @@ export async function createCheckoutSession(orderData: {
         });
 
         return { url: session.url, sessionId: session.id };
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating checkout session:', error);
-        throw new Error('Failed to create checkout session');
+        return { error: error.message || 'Failed to create checkout session' };
     }
 }
