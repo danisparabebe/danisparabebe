@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --creme: #FFFFFF;
+    --rosa: #A68A6C;
+    --azul: #F5F5F5;
+    --text: #1A1A1A;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--creme);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .shadow-soft {
+        box-shadow: none;
+    }
+}
