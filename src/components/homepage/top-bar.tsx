@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 
 const messages = [
     'Frete grátis acima de R$ 200',
-    '🎁 Devolução estendida - 60 dias',
-    'Parcelamento em até 12x sem juros'
+    'Entrega em até 10 dias após a compra',
+    'Parcelamento em até 3x sem juros'
 ];
 
 export function TopBar() {

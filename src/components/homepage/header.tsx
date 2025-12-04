@@ -18,10 +18,11 @@ export function Header() {
                     <Link href="/" className="flex items-center">
                         <div className="h-12 w-32 relative">
                             <Image
-                                src="/api/placeholder/150/48"
+                                src="/logo-rosa.png"
                                 alt="Danis Para Bebê"
                                 fill
                                 className="object-contain"
+                                priority
                             />
                         </div>
                     </Link>

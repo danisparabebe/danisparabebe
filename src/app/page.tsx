@@ -4,10 +4,9 @@ import { Navigation } from '@/components/homepage/navigation';
 import { PromoBanner } from '@/components/homepage/promo-banner';
 import { HeroGrid } from '@/components/homepage/hero-grid';
 import { ProductGrid } from '@/components/homepage/product-grid';
-import { BrandGrid } from '@/components/homepage/brand-grid';
 import { Newsletter } from '@/components/homepage/newsletter';
 import { Footer } from '@/components/homepage/footer';
-import { heroItems, featuredProducts, categoryShowcase, brands } from '@/data/homepage-data';
+import { heroItems, realProducts, categoryShowcase } from '@/data/homepage-data';
 
 export default function HomePage() {
     return (
@@ -21,14 +20,11 @@ export default function HomePage() {
                 {/* Hero Section */}
                 <HeroGrid items={heroItems} />
 
-                {/* Featured Products */}
-                <ProductGrid title="Produtos em Destaque" products={featuredProducts} />
+                {/* Featured Products - All Real Products */}
+                <ProductGrid title="Produtos em Destaque" products={realProducts} />
 
                 {/* Category Showcase */}
                 <HeroGrid items={categoryShowcase} />
-
-                {/* Brand Grid */}
-                <BrandGrid title="Marcas Especiais" brands={brands} />
 
                 {/* Newsletter */}
                 <Newsletter />

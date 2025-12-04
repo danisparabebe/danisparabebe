@@ -13,7 +13,7 @@ export function Footer() {
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <ShieldCheck className="h-5 w-5 text-dusty-rose" />
-                        <span>🎁 Devolução estendida - 60 dias</span>
+                        <span>Entrega em até 10 dias após a compra</span>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,6 @@ export function Footer() {
                         <h4 className="mb-4 font-semibold text-charcoal">Atendimento</h4>
                         <ul className="space-y-2 text-sm">
                             <li><Link href="/faq" className="hover:text-dusty-rose">FAQ</Link></li>
-                            <li><Link href="/trocas" className="hover:text-dusty-rose">Trocas e Devoluções</Link></li>
                             <li><Link href="/entrega" className="hover:text-dusty-rose">Entrega</Link></li>
                         </ul>
                     </div>

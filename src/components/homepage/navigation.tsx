@@ -4,13 +4,12 @@ import Link from 'next/link';
 
 const categories = [
     { name: 'Ofertas', href: '/ofertas' },
-    { name: 'Roupas', href: '/roupas' },
-    { name: 'Sapatos', href: '/sapatos' },
-    { name: 'Baby', href: '/baby' },
-    { name: 'Enxovais', href: '/enxovais' },
-    { name: 'Brinquedos', href: '/brinquedos' },
-    { name: 'Decoração', href: '/decoracao' },
-    { name: 'Novo', href: '/novo' },
+    { name: 'Kit Manta Bordada', href: '/categoria/kit-manta' },
+    { name: 'Kit Fraldas Bordadas', href: '/categoria/kit-fraldas' },
+    { name: 'Toalhas Bordadas', href: '/categoria/toalhas' },
+    { name: 'Body', href: '/categoria/body' },
+    { name: 'Touca Bordada', href: '/categoria/touca' },
+    { name: 'Faixa de Cabelo', href: '/categoria/faixa' },
 ];
 
 export function Navigation() {

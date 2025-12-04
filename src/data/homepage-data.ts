@@ -1,90 +1,119 @@
-export const heroItems = [
+export const realProducts = [
     {
-        title: 'FASHION BONANZA',
-        subtitle: 'Roupas até 60% off',
-        image: '/api/placeholder/800/1200',
-        link: '/ofertas/roupas',
-        ctaText: 'COMPRAR AGORA'
+        id: 'kit-manta-bordada',
+        name: 'Kit Manta Bordada Personalizada',
+        category: 'Kit Manta',
+        description: 'Kit completo com manta flanelada, fralda grande e fralda de boca, tudo personalizado com bordado.',
+        price: 189.00,
+        installmentPrice: 67.00,
+        installments: 3,
+        image: '/produtos/Kit manta - produto campeão 2.jpeg',
+        badge: 'Produto Campeão',
+        includes: [
+            '1 manta flanelada',
+            '1 fralda grande',
+            '1 fralda de boca'
+        ]
     },
     {
-        title: 'PRESENTES ESPECIAIS',
-        subtitle: 'Brinquedos & Decoração até 50% off',
-        image: '/api/placeholder/800/1200',
-        link: '/ofertas/brinquedos',
-        ctaText: 'COMPRAR AGORA'
+        id: 'kit-fraldas-bordadas',
+        name: 'Kit Fraldas Bordadas Personalizadas',
+        category: 'Kit Fraldas',
+        description: 'Kit essencial com fralda grande e fralda de boca personalizadas com bordado.',
+        price: 87.00,
+        installmentPrice: 31.00,
+        installments: 3,
+        image: '/produtos/Kit fraldas - produto campeão 1.jpeg',
+        badge: 'Produto Campeão',
+        includes: [
+            '1 fralda grande',
+            '1 fralda de boca'
+        ]
+    },
+    {
+        id: 'body-bordado',
+        name: 'Body Bordado Personalizado',
+        category: 'Body',
+        description: 'Body personalizado com bordado do nome do bebê.',
+        price: 57.00,
+        installmentPrice: 19.00,
+        installments: 3,
+        image: '/produtos/Body personalizado.jpeg',
+        includes: [
+            '1 body personalizado'
+        ]
+    },
+    {
+        id: 'toalha-banho-bordada',
+        name: 'Toalha de Banho Forrada Bordada',
+        category: 'Toalhas',
+        description: 'Toalha de banho com capuz personalizada com bordado.',
+        price: 138.00,
+        installmentPrice: 46.00,
+        installments: 3,
+        image: '/produtos/Toalha de banho.jpeg',
+        includes: [
+            '1 toalha de banho com capuz personalizada'
+        ]
+    },
+    {
+        id: 'touca-personalizada',
+        name: 'Touca Bordada Personalizada',
+        category: 'Touca',
+        description: 'Touca bordada personalizada para bebê.',
+        price: 34.00,
+        installmentPrice: 11.50,
+        installments: 3,
+        image: '/produtos/Touca.jpeg',
+        includes: [
+            '1 touca bordada personalizada'
+        ]
+    },
+    {
+        id: 'faixa-cabelo',
+        name: 'Faixa de Cabelo Bordada',
+        category: 'Faixa de Cabelo',
+        description: 'Faixa de cabelo bordada personalizada.',
+        price: 24.00,
+        installmentPrice: 8.00,
+        installments: 3,
+        image: '/produtos/Faixa de cabelo.jpeg',
+        includes: [
+            '1 faixa de cabelo bordada personalizada'
+        ]
     }
 ];
 
-export const featuredProducts = [
+export const heroItems = [
     {
-        id: '1',
-        name: 'Macacão Algodão Orgânico',
-        brand: 'Danis Baby',
-        price: 89.90,
-        originalPrice: 129.90,
-        image: '/api/placeholder/300/400'
+        title: 'Kit Manta Bordada',
+        subtitle: 'Personalizado com muito carinho',
+        image: '/produtos/Kit manta - produto campeão 2.jpeg',
+        link: '/produto/kit-manta-bordada',
+        ctaText: 'COMPRAR AGORA'
     },
     {
-        id: '2',
-        name: 'Body Manga Longa Creme',
-        brand: 'Danis Baby',
-        price: 59.90,
-        image: '/api/placeholder/300/400'
-    },
-    {
-        id: '3',
-        name: 'Meia Lã Merino',
-        brand: 'Danis Comfort',
-        price: 29.90,
-        originalPrice: 49.90,
-        image: '/api/placeholder/300/400'
-    },
-    {
-        id: '4',
-        name: 'Manta Soft Rosa',
-        brand: 'Danis Home',
-        price: 149.90,
-        image: '/api/placeholder/300/400'
-    },
-    {
-        id: '5',
-        name: 'Touca Tricot Bege',
-        brand: 'Danis Baby',
-        price: 39.90,
-        originalPrice: 59.90,
-        image: '/api/placeholder/300/400'
-    },
-    {
-        id: '6',
-        name: 'Luvas Térmicas',
-        brand: 'Danis Comfort',
-        price: 34.90,
-        image: '/api/placeholder/300/400'
+        title: 'Presentes Especiais',
+        subtitle: 'Kit Fraldas Bordadas',
+        image: '/produtos/Kit fraldas - produto campeão 1.jpeg',
+        link: '/produto/kit-fraldas-bordadas',
+        ctaText: 'COMPRAR AGORA'
     }
 ];
 
 export const categoryShowcase = [
     {
-        title: 'Winter Collection',
-        subtitle: 'Até 50% off',
-        image: '/api/placeholder/800/800',
-        link: '/colecao/inverno',
+        title: 'Body Bordado',
+        subtitle: 'Personalizado para seu bebê',
+        image: '/produtos/Body personalizado.jpeg',
+        link: '/produto/body-bordado',
         ctaText: 'DESCOBRIR'
     },
     {
         title: 'Baby Essentials',
-        subtitle: 'Enxovais completos',
-        image: '/api/placeholder/800/800',
-        link: '/baby',
+        subtitle: 'Touca Bordada Personalizada',
+        image: '/produtos/Touca.jpeg',
+        link: '/produto/touca-personalizada',
         ctaText: 'COMPRAR AGORA'
     }
-];
-
-export const brands = [
-    { name: 'Danis Baby', image: '/api/placeholder/200/260' },
-    { name: 'Danis Comfort', image: '/api/placeholder/200/260' },
-    { name: 'Danis Home', image: '/api/placeholder/200/260' },
-    { name: 'Danis Premium', image: '/api/placeholder/200/260' },
-    { name: 'Danis Organic', image: '/api/placeholder/200/260' },
-    { name: 'Danis Essentials', image: '/api/placeholder/200/260' }
 ];

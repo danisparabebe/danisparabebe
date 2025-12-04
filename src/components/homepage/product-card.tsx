@@ -5,15 +5,15 @@ import { Heart } from 'lucide-react';
 interface ProductCardProps {
     id: string;
     name: string;
-    brand: string;
+    category?: string;
     price: number;
-    originalPrice?: number;
+    installmentPrice?: number;
+    installments?: number;
     image: string;
+    badge?: string;
 }
 
-export function ProductCard({ id, name, brand, price, originalPrice, image }: ProductCardProps) {
-    const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
-
+export function ProductCard({ id, name, category, price, installmentPrice, installments = 3, image, badge }: ProductCardProps) {
     return (
         <div className="group relative">
             <Link href={`/produto/${id}`}>
@@ -24,9 +24,9 @@ export function ProductCard({ id, name, brand, price, originalPrice, image }: Pr
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    {discount > 0 && (
+                    {badge && (
                         <div className="absolute top-2 right-2 bg-dusty-rose text-white px-2 py-1 rounded text-xs font-bold">
-                            -{discount}%
+                            {badge}
                         </div>
                     )}
                 </div>
@@ -37,17 +37,17 @@ export function ProductCard({ id, name, brand, price, originalPrice, image }: Pr
             </button>
 
             <div className="mt-3 space-y-1">
-                <p className="text-xs text-slate">{brand}</p>
+                {category && <p className="text-xs text-slate">{category}</p>}
                 <h3 className="text-sm font-medium text-charcoal line-clamp-2">{name}</h3>
-                <div className="flex items-center gap-2">
-                    <span className="text-lg font-semibold text-charcoal">
-                        R$ {price.toFixed(2)}
-                    </span>
-                    {originalPrice && (
-                        <span className="text-sm text-slate line-through">
-                            R$ {originalPrice.toFixed(2)}
-                        </span>
+                <div className="space-y-1">
+                    {installmentPrice && (
+                        <div className="text-sm text-charcoal">
+                            <span className="font-semibold">{installments}x R$ {installmentPrice.toFixed(2)}</span>
+                        </div>
                     )}
+                    <div className="text-xs text-slate">
+                        ou <span className="font-semibold text-charcoal">R$ {price.toFixed(2)}</span> no PIX
+                    </div>
                 </div>
                 <button className="mt-2 w-full bg-dusty-rose hover:bg-deep-rose text-white py-2 rounded-full text-sm font-medium transition-colors">
                     Adicionar

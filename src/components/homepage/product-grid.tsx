@@ -3,10 +3,12 @@ import { ProductCard } from './product-card';
 interface Product {
     id: string;
     name: string;
-    brand: string;
+    category?: string;
     price: number;
-    originalPrice?: number;
+    installmentPrice?: number;
+    installments?: number;
     image: string;
+    badge?: string;
 }
 
 interface ProductGridProps {
