@@ -9,31 +9,41 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                creme: "#FFFFFF", // Pure White
-                rosa: "#A68A6C",  // Gold/Bronze Accent (replacing rosa)
-                azul: "#F5F5F5",  // Light Gray (replacing azul)
-                text: "#1A1A1A",  // Near Black
-                subtle: "#666666", // Gray Text
-                border: "#E5E5E5", // Light Border
+                primary: {
+                    brand: '#D6A6A6',      // Dusty Rose
+                    hover: '#C48F8F',       // Deep Rose
+                },
+                secondary: {
+                    brand: '#AECeb3',       // Sage Green
+                },
+                neutral: {
+                    bg: '#FAFAF9',          // Warm Stone
+                    white: '#FFFFFF',       // Cards
+                    text: '#1F2937',        // Charcoal
+                    textSub: '#64748B',     // Slate
+                    border: '#E2E8F0',      // Cool Gray
+                },
+                status: {
+                    success: '#10B981',
+                    error: '#EF4444',
+                },
+                accent: {
+                    gold: '#D4AF37',
+                },
             },
             fontFamily: {
-                playfair: ['"Playfair Display"', "serif"],
-                nunito: ["Nunito", "sans-serif"],
-                cursive: ['"Dancing Script"', "cursive"],
+                fraunces: ['var(--font-fraunces)', 'serif'],
+                dmSans: ['var(--font-dm-sans)', 'sans-serif'],
             },
             borderRadius: {
-                'none': '0',
-                'sm': '0',
-                'md': '0',
-                'lg': '0',
-                'xl': '0',
-                '2xl': '0',
-                '3xl': '0',
-                'full': '9999px', // Keep full for circular elements if needed
+                sm: '8px',
+                md: '16px',
+                lg: '24px',
+                full: '9999px',
             },
             boxShadow: {
-                'soft': 'none', // Removing soft shadow
-                'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                soft: '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                hover: '0 10px 25px -5px rgba(214, 166, 166, 0.25)',
             },
         },
     },

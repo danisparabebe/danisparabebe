@@ -1,0 +1,7 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+www.babyshop.com	TRUE	/	FALSE	1999999999	session-uuid	944a785a-1e37-4a28-a0d6-708f603dde2b
+www.babyshop.com	TRUE	/	FALSE	1999999999	market	sv-se
+www.babyshop.com	TRUE	/	FALSE	1999999999	persistent-uuid	b8301cd0-83cf-4811-a05d-4d572334f8d0
+www.babyshop.com	TRUE	/	FALSE	1999999999	SameSite	lax
+

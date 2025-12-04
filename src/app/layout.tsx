@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import UtilityBar from "@/components/layout/utility-bar";
-import MainHeader from "@/components/layout/main-header";
 
 export const metadata: Metadata = {
-    title: "Danis Para Bebê | Enxovais Personalizados",
-    description: "Atelier de enxovais personalizados para bebês.",
+    title: "Danis Para Bebê - Enxovais Personalizados Premium",
+    description: "Enxovais personalizados de alto padrão. Feito à mão com amor e exclusividade para o seu bebê.",
 };
 
 export default function RootLayout({
@@ -15,9 +13,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR">
-            <body className="antialiased bg-creme text-text">
-                <UtilityBar />
-                <MainHeader />
+            <body className="antialiased">
                 {children}
             </body>
         </html>

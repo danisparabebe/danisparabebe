@@ -1,53 +1,58 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-    "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rosa disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest",
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50',
     {
         variants: {
             variant: {
-                default:
-                    "bg-rosa text-white shadow-soft hover:bg-rosa/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0",
-                outline:
-                    "border border-rosa text-rosa bg-transparent hover:bg-rosa/10",
-                ghost: "hover:bg-rosa/10 text-rosa",
-                link: "text-rosa underline-offset-4 hover:underline",
-                white: "bg-white text-text shadow-soft hover:bg-white/90 hover:shadow-lg",
+                primary: 'bg-primary-brand hover:bg-primary-hover text-white shadow-soft hover:shadow-hover',
+                secondary: 'bg-transparent border border-primary-brand text-primary-brand hover:bg-primary-brand/10',
+                icon: 'bg-neutral-white shadow-soft hover:shadow-hover text-neutral-text',
             },
             size: {
-                default: "h-12 px-8 py-2",
-                sm: "h-9 px-4 text-xs",
-                lg: "h-14 px-10 text-base",
-                icon: "h-10 w-10",
+                default: 'h-12 px-6 py-3',
+                sm: 'h-10 px-4 py-2 text-sm',
+                lg: 'h-14 px-8 py-4 text-lg',
+                icon: 'h-10 w-10',
+            },
+            rounded: {
+                pill: 'rounded-full',
+                default: 'rounded-md',
+                full: 'rounded-full',
+            },
+            uppercase: {
+                true: 'uppercase tracking-wider text-sm',
+                false: '',
             },
         },
         defaultVariants: {
-            variant: "default",
-            size: "default",
+            variant: 'primary',
+            size: 'default',
+            rounded: 'pill',
+            uppercase: true,
         },
     }
-)
+);
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-    asChild?: boolean
+    asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
-        const Comp = asChild ? Slot : "button"
+    ({ className, variant, size, rounded, uppercase, ...props }, ref) => {
         return (
-            <Comp
-                className={cn(buttonVariants({ variant, size, className }))}
+            <button
+                className={cn(buttonVariants({ variant, size, rounded, uppercase, className }))}
                 ref={ref}
                 {...props}
             />
-        )
+        );
     }
-)
-Button.displayName = "Button"
+);
+Button.displayName = 'Button';
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

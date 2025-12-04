@@ -1,53 +1,117 @@
-import HeroSection from '@/components/hero-section';
-import LifestyleSection from '@/components/lifestyle-section';
-import ProductGallery from '@/components/product-gallery';
-import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import { ShoppingBag, Award, Sparkles, Heart } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
-export default function HomePage() {
+export default function Home() {
     return (
-        <main className="min-h-screen bg-white">
-            <HeroSection />
-            <LifestyleSection />
-            <ProductGallery />
-
-            {/* Minimalist Footer - Trousseau Style */}
-            <footer className="bg-white py-20 px-6 border-t border-gray-100">
-                <div className="max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-                    <div className="space-y-6">
-                        <h4 className="text-sm uppercase tracking-widest font-nunito font-bold text-text">Sobre</h4>
-                        <ul className="space-y-3 text-xs uppercase tracking-wider text-subtle font-nunito">
-                            <li><Link href="#" className="hover:text-text transition-colors">A Marca</Link></li>
-                            <li><Link href="#" className="hover:text-text transition-colors">Lojas</Link></li>
-                            <li><Link href="#" className="hover:text-text transition-colors">Trabalhe Conosco</Link></li>
-                        </ul>
+        <div className="min-h-screen bg-warm-stone">
+            {/* Hero Section */}
+            <main className="relative overflow-hidden">
+                <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+                    {/* Logo */}
+                    <div className="flex justify-center mb-12">
+                        <div className="relative w-64 h-64 md:w-80 md:h-80">
+                            <Image
+                                src="/logo-danis.png"
+                                alt="Danis Para Bebê"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <h4 className="text-sm uppercase tracking-widest font-nunito font-bold text-text">Ajuda</h4>
-                        <ul className="space-y-3 text-xs uppercase tracking-wider text-subtle font-nunito">
-                            <li><Link href="#" className="hover:text-text transition-colors">Fale Conosco</Link></li>
-                            <li><Link href="#" className="hover:text-text transition-colors">Entregas</Link></li>
-                            <li><Link href="#" className="hover:text-text transition-colors">Trocas e Devoluções</Link></li>
-                        </ul>
-                    </div>
+                    {/* Main Content */}
+                    <div className="text-center space-y-10">
+                        <h1 className="text-5xl md:text-7xl font-semibold text-charcoal tracking-tight leading-tight">
+                            Enxovais Personalizados<br />
+                            <span className="text-dusty-rose">de Alto Padrão</span>
+                        </h1>
 
-                    <div className="space-y-6 md:col-span-2 text-center md:text-right">
-                        <h3 className="text-2xl font-playfair text-text mb-4">TROUSSEAU</h3>
-                        <p className="text-xs text-subtle font-nunito uppercase tracking-widest">
-                            Cadastre-se para receber novidades
+                        <p className="text-xl md:text-2xl text-slate max-w-3xl mx-auto leading-relaxed font-light">
+                            Feito à mão com amor e exclusividade.
+                            <br />
+                            Para celebrar a chegada do seu bebê com todo o cuidado que ele merece.
                         </p>
-                        {/* Newsletter Input Placeholder */}
-                        <div className="flex border-b border-gray-300 max-w-xs ml-auto mt-4">
-                            <input type="email" placeholder="SEU E-MAIL" className="w-full py-2 bg-transparent text-xs outline-none placeholder:text-gray-400 font-nunito uppercase" />
-                            <button className="text-xs uppercase font-bold text-text">Enviar</button>
+
+                        {/* Trust Indicators */}
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 pt-6">
+                            <div className="flex items-center gap-3 bg-surface-white px-6 py-4 rounded-callisto shadow-soft">
+                                <Heart className="h-5 w-5 text-dusty-rose flex-shrink-0" />
+                                <span className="text-sm md:text-base font-medium text-charcoal">Feito à Mão</span>
+                            </div>
+                            <div className="flex items-center gap-3 bg-surface-white px-6 py-4 rounded-callisto shadow-soft">
+                                <Sparkles className="h-5 w-5 text-dusty-rose flex-shrink-0" />
+                                <span className="text-sm md:text-base font-medium text-charcoal">Personalizado</span>
+                            </div>
+                            <div className="flex items-center gap-3 bg-sage-green/20 px-6 py-4 rounded-callisto shadow-soft border border-sage-green/30">
+                                <Award className="h-5 w-5 text-sage-green flex-shrink-0" />
+                                <span className="text-sm md:text-base font-medium text-charcoal">Premium</span>
+                            </div>
+                        </div>
+
+                        {/* CTA Button */}
+                        <div className="pt-8">
+                            <Button
+                                size="lg"
+                                className="bg-dusty-rose hover:bg-deep-rose text-white px-14 py-7 text-base md:text-lg rounded-full shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105 font-medium uppercase tracking-wider"
+                                asChild
+                            >
+                                <Link href="/configurador">
+                                    <ShoppingBag className="mr-3 h-5 w-5" />
+                                    Personalizar Agora
+                                </Link>
+                            </Button>
+                        </div>
+
+                        <p className="text-sm text-slate pt-6">
+                            ✨ Cada peça é única e feita especialmente para você
+                        </p>
+                    </div>
+                </div>
+            </main>
+
+            {/* How it Works Section */}
+            <section className="bg-surface-white py-20 border-t border-line">
+                <div className="max-w-6xl mx-auto px-6">
+                    <h2 className="text-3xl md:text-4xl font-semibold text-center text-charcoal mb-16">
+                        Como Funciona
+                    </h2>
+
+                    <div className="grid md:grid-cols-3 gap-12">
+                        <div className="text-center space-y-4">
+                            <div className="w-20 h-20 bg-dusty-rose/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <span className="text-3xl font-bold text-dusty-rose">1</span>
+                            </div>
+                            <h3 className="text-xl font-semibold text-charcoal">Escolha o Modelo</h3>
+                            <p className="text-slate">
+                                Selecione os itens que deseja para compor o enxoval do seu bebê
+                            </p>
+                        </div>
+
+                        <div className="text-center space-y-4">
+                            <div className="w-20 h-20 bg-dusty-rose/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <span className="text-3xl font-bold text-dusty-rose">2</span>
+                            </div>
+                            <h3 className="text-xl font-semibold text-charcoal">Personalize</h3>
+                            <p className="text-slate">
+                                Escolha tecidos premium e bordados feitos à mão com o nome do bebê
+                            </p>
+                        </div>
+
+                        <div className="text-center space-y-4">
+                            <div className="w-20 h-20 bg-dusty-rose/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <span className="text-3xl font-bold text-dusty-rose">3</span>
+                            </div>
+                            <h3 className="text-xl font-semibold text-charcoal">Receba em Casa</h3>
+                            <p className="text-slate">
+                                Seu enxoval exclusivo é confeccionado com carinho e entregue para você
+                            </p>
                         </div>
                     </div>
                 </div>
-
-                <div className="max-w-[1800px] mx-auto mt-20 pt-8 border-t border-gray-50 text-center text-[10px] uppercase tracking-widest text-gray-400 font-nunito">
-                    © 2024 Danis Para Bebê. Todos os direitos reservados.
-                </div>
-            </footer>
-        </main>
+            </section>
+        </div>
     );
 }
