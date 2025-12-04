@@ -16,7 +16,7 @@ export function Header() {
                     {/* Logo */}
                     <Link href="/" className="flex items-center">
                         <img
-                            src="/logo-rosa.png"
+                            src="/logo-oficial.png"
                             alt="Danis Para Bebê"
                             className="h-16 w-auto object-contain"
                         />
