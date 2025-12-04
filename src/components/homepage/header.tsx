@@ -16,13 +16,14 @@ export function Header() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center">
-                        <div className="h-12 w-32 relative">
+                        <div className="h-16 w-40 relative">
                             <Image
                                 src="/logo-rosa.png"
                                 alt="Danis Para Bebê"
                                 fill
                                 className="object-contain"
                                 priority
+                                unoptimized
                             />
                         </div>
                     </Link>
