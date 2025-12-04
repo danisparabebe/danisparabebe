@@ -10,6 +10,8 @@ const buttonVariants = cva(
                 primary: 'bg-primary-brand hover:bg-primary-hover text-white shadow-soft hover:shadow-hover',
                 secondary: 'bg-transparent border border-primary-brand text-primary-brand hover:bg-primary-brand/10',
                 icon: 'bg-neutral-white shadow-soft hover:shadow-hover text-neutral-text',
+                ghost: 'bg-transparent hover:bg-gray-100 text-gray-700',
+                outline: 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50',
             },
             size: {
                 default: 'h-12 px-6 py-3',
