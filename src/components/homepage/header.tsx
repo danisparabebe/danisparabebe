@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Search, Heart, ShoppingCart, Menu } from 'lucide-react';
 
 export function Header() {
@@ -16,16 +15,11 @@ export function Header() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center">
-                        <div className="h-16 w-40 relative">
-                            <Image
-                                src="/logo-rosa.png"
-                                alt="Danis Para Bebê"
-                                fill
-                                className="object-contain"
-                                priority
-                                unoptimized
-                            />
-                        </div>
+                        <img
+                            src="/logo-rosa.png"
+                            alt="Danis Para Bebê"
+                            className="h-16 w-auto object-contain"
+                        />
                     </Link>
 
                     {/* Search - Desktop */}
