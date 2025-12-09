@@ -10,7 +10,7 @@ import { heroItems, realProducts, categoryShowcase } from '@/data/homepage-data'
 
 export default function HomePage() {
     return (
-        <div className="min-h-screen bg-warm-stone">
+        <div className="min-h-screen bg-dots-texture">
             <TopBar />
             <Header />
             <Navigation />
