@@ -130,6 +130,8 @@
 
     body {
         background-color: rgb(250, 250, 249);
+        background-image: radial-gradient(rgba(214, 166, 166, 0.25) 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
         color: rgb(31, 41, 55);
         font-family: var(--font-body);
     }
