@@ -28,8 +28,9 @@ export function generateStaticParams() {
     }));
 }
 
-export default function CategoryPage({ params }: PageProps) {
-    const categoryName = categoryMap[params.slug];
+export default async function CategoryPage({ params }: PageProps) {
+    const { slug } = await params;
+    const categoryName = categoryMap[slug];
 
     if (!categoryName) {
         notFound();

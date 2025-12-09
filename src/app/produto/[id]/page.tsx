@@ -1,3 +1,4 @@
+
 'use client';
 
 import { realProducts } from '@/data/homepage-data';
@@ -8,17 +9,18 @@ import { Footer } from '@/components/homepage/footer';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ChevronLeft, Truck, ShieldCheck, CreditCard } from 'lucide-react';
-import { useState } from 'react';
+import { useState, use } from 'react';
 
 interface PageProps {
-    params: {
+    params: Promise<{
         id: string;
-    }
+    }>
 }
 
 export default function ProductPage({ params }: PageProps) {
     const router = useRouter();
-    const product = realProducts.find(p => p.id === params.id);
+    const { id } = use(params);
+    const product = realProducts.find(p => p.id === id);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
     if (!product) {
