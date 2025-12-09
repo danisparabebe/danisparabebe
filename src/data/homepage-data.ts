@@ -1,4 +1,5 @@
 export const realProducts = [
+    // ... products existing ...
     {
         id: 'kit-manta-bordada',
         name: 'Kit Manta Bordada Personalizada',
@@ -9,11 +10,7 @@ export const realProducts = [
         installments: 3,
         image: '/produtos/Kit manta - produto campeão 2.jpeg',
         badge: 'Produto Campeão',
-        includes: [
-            '1 manta flanelada',
-            '1 fralda grande',
-            '1 fralda de boca'
-        ]
+        includes: ['1 manta flanelada', '1 fralda grande', '1 fralda de boca']
     },
     {
         id: 'kit-fraldas-bordadas',
@@ -25,10 +22,7 @@ export const realProducts = [
         installments: 3,
         image: '/produtos/Kit fraldas - produto campeão 1.jpeg',
         badge: 'Produto Campeão',
-        includes: [
-            '1 fralda grande',
-            '1 fralda de boca'
-        ]
+        includes: ['1 fralda grande', '1 fralda de boca']
     },
     {
         id: 'body-bordado',
@@ -39,9 +33,7 @@ export const realProducts = [
         installmentPrice: 19.00,
         installments: 3,
         image: '/produtos/Body personalizado.jpeg',
-        includes: [
-            '1 body personalizado'
-        ]
+        includes: ['1 body personalizado']
     },
     {
         id: 'toalha-banho-bordada',
@@ -52,9 +44,7 @@ export const realProducts = [
         installmentPrice: 46.00,
         installments: 3,
         image: '/produtos/Toalha de banho.jpeg',
-        includes: [
-            '1 toalha de banho com capuz personalizada'
-        ]
+        includes: ['1 toalha de banho com capuz personalizada']
     },
     {
         id: 'touca-personalizada',
@@ -65,9 +55,7 @@ export const realProducts = [
         installmentPrice: 11.50,
         installments: 3,
         image: '/produtos/Touca.jpeg',
-        includes: [
-            '1 touca bordada personalizada'
-        ]
+        includes: ['1 touca bordada personalizada']
     },
     {
         id: 'faixa-cabelo',
@@ -78,9 +66,78 @@ export const realProducts = [
         installmentPrice: 8.00,
         installments: 3,
         image: '/produtos/Faixa de cabelo.jpeg',
-        includes: [
-            '1 faixa de cabelo bordada personalizada'
-        ]
+        includes: ['1 faixa de cabelo bordada personalizada']
+    },
+    // Mock Products for Grid Population
+    {
+        id: 'kit-manta-luxo',
+        name: 'Kit Manta Luxo Bordada',
+        category: 'Kit Manta',
+        description: 'Manta em piquet com acabamento de luxo.',
+        price: 210.00,
+        installmentPrice: 70.00,
+        installments: 3,
+        image: '', // Placeholder
+        includes: ['1 manta luxo', '1 fralda grande']
+    },
+    {
+        id: 'kit-fraldas-simples',
+        name: 'Kit Fraldas Passeio',
+        category: 'Kit Fraldas',
+        description: 'Kit com 3 fraldas de boca.',
+        price: 65.00,
+        installmentPrice: 21.66,
+        installments: 3,
+        image: '',
+        includes: ['3 fraldas de boca']
+    },
+    {
+        id: 'toalha-fralda',
+        name: 'Toalha Fralda Bordada',
+        category: 'Toalhas',
+        description: 'Toalha fralda macia para recém nascido.',
+        price: 89.90,
+        installmentPrice: 29.96,
+        installments: 3,
+        image: '',
+        includes: ['1 toalha fralda']
+    },
+    {
+        id: 'body-manga-longa',
+        name: 'Body Manga Longa Bordado',
+        category: 'Body',
+        description: 'Body manga longa suedine 100% algodão.',
+        price: 62.00,
+        installmentPrice: 20.66,
+        installments: 3,
+        image: '',
+        includes: ['1 body manga longa']
+    },
+    {
+        id: 'body-oferta',
+        name: 'Body Básico (Oferta)',
+        category: 'Body',
+        description: 'Body básico para dia a dia.',
+        price: 39.90,
+        installmentPrice: 13.30,
+        installments: 3,
+        originalPrice: 59.90,
+        image: '',
+        badge: 'Oferta',
+        includes: ['1 body básico']
+    },
+    {
+        id: 'kit-manta-oferta',
+        name: 'Kit Manta Promocional',
+        category: 'Kit Manta',
+        description: 'Kit manta com valor especial.',
+        price: 159.90,
+        installmentPrice: 53.30,
+        installments: 3,
+        originalPrice: 199.90,
+        image: '',
+        badge: 'Oferta',
+        includes: ['1 manta', '1 fralda']
     }
 ];
 

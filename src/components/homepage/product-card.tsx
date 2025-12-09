@@ -16,7 +16,7 @@ interface ProductCardProps {
 export function ProductCard({ id, name, category, price, installmentPrice, installments = 3, image, badge }: ProductCardProps) {
     return (
         <div className="group relative flex flex-col h-full">
-            <Link href={`/produto/${id}`} className="block">
+            <Link href={`/produto/${id}`} className="block" target="_blank">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-gray-100">
                     <Image
                         src={image}

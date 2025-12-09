@@ -29,12 +29,7 @@ export function Navigation() {
                             </Link>
                         ))}
                     </div>
-                    <Link
-                        href="/marcas"
-                        className="text-sm font-medium text-charcoal hover:text-dusty-rose"
-                    >
-                        Marcas
-                    </Link>
+
                 </div>
             </div>
         </nav>
