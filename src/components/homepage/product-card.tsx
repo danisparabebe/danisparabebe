@@ -15,8 +15,8 @@ interface ProductCardProps {
 
 export function ProductCard({ id, name, category, price, installmentPrice, installments = 3, image, badge }: ProductCardProps) {
     return (
-        <div className="group relative">
-            <Link href={`/produto/${id}`}>
+        <div className="group relative flex flex-col h-full">
+            <Link href={`/produto/${id}`} className="block">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-gray-100">
                     <Image
                         src={image}
@@ -32,14 +32,14 @@ export function ProductCard({ id, name, category, price, installmentPrice, insta
                 </div>
             </Link>
 
-            <button className="absolute top-2 left-2 p-2 bg-white rounded-full shadow-soft hover:shadow-hover transition-shadow">
+            <button className="absolute top-2 left-2 p-2 bg-white rounded-full shadow-soft hover:shadow-hover transition-shadow z-10">
                 <Heart className="h-4 w-4" />
             </button>
 
-            <div className="mt-3 space-y-1">
+            <div className="mt-3 flex flex-col flex-1">
                 {category && <p className="text-xs text-slate">{category}</p>}
-                <h3 className="text-sm font-medium text-charcoal line-clamp-2">{name}</h3>
-                <div className="space-y-1">
+                <h3 className="text-sm font-medium text-charcoal line-clamp-2 min-h-[2.5rem]">{name}</h3>
+                <div className="space-y-1 mt-auto pt-2">
                     {installmentPrice && (
                         <div className="text-sm text-charcoal">
                             <span className="font-semibold">{installments}x R$ {installmentPrice.toFixed(2)}</span>
@@ -49,7 +49,7 @@ export function ProductCard({ id, name, category, price, installmentPrice, insta
                         ou <span className="font-semibold text-charcoal">R$ {price.toFixed(2)}</span> no PIX
                     </div>
                 </div>
-                <button className="mt-2 w-full bg-dusty-rose hover:bg-deep-rose text-white py-2 rounded-full text-sm font-medium transition-colors">
+                <button className="mt-3 w-full bg-dusty-rose hover:bg-deep-rose text-white py-2 rounded-full text-sm font-medium transition-colors">
                     Adicionar
                 </button>
             </div>

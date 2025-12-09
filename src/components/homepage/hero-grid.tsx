@@ -24,19 +24,19 @@ export function HeroGrid({ items }: HeroGridProps) {
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <div className="absolute inset-0 flex items-end justify-center pb-12 bg-gradient-to-t from-black/60 via-transparent to-transparent">
                         <div className="text-center px-4">
-                            <h2 className="text-2xl md:text-4xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+                            <h2 className="text-2xl md:text-4xl font-bold text-white mb-2 drop-shadow-md" style={{ fontFamily: 'var(--font-heading)' }}>
                                 {item.title}
                             </h2>
                             {item.subtitle && (
-                                <h3 className="text-xl md:text-3xl text-white mb-4">
+                                <h3 className="text-xl md:text-3xl text-white mb-6 drop-shadow-md">
                                     {item.subtitle}
                                 </h3>
                             )}
                             <Link
                                 href={item.link}
-                                className="inline-block bg-dusty-rose hover:bg-deep-rose text-white px-8 md:px-14 py-4 rounded-full text-sm md:text-base uppercase font-medium transition-colors"
+                                className="inline-block bg-white/90 hover:bg-white text-charcoal px-8 md:px-14 py-3 rounded-full text-sm md:text-base uppercase font-bold transition-colors shadow-lg"
                             >
                                 {item.ctaText}
                             </Link>
