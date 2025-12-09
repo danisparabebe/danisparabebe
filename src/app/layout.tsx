@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartSidebar } from "@/components/cart/cart-sidebar";
 
 export const metadata: Metadata = {
     title: "Danis Para Bebê - Enxovais Personalizados Premium",
@@ -15,6 +16,7 @@ export default function RootLayout({
         <html lang="pt-BR">
             <body className="antialiased">
                 {children}
+                <CartSidebar />
             </body>
         </html>
     );

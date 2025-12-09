@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import { Search, Heart, ShoppingCart, Menu } from 'lucide-react';
+import { useCartStore } from '@/store/cart-store';
 
 export function Header() {
+    const { openCart, items } = useCartStore();
     return (
         <header className="sticky top-0 z-30 bg-warm-stone pt-1">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -41,11 +43,13 @@ export function Header() {
                         <button className="p-2 hover:text-dusty-rose">
                             <Heart className="h-6 w-6" />
                         </button>
-                        <button className="p-2 hover:text-dusty-rose relative">
+                        <button onClick={openCart} className="p-2 hover:text-dusty-rose relative">
                             <ShoppingCart className="h-6 w-6" />
-                            <span className="absolute -top-1 -right-1 bg-dusty-rose text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                                0
-                            </span>
+                            {items.length > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-dusty-rose text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                    {items.length}
+                                </span>
+                            )}
                         </button>
                     </div>
                 </div>

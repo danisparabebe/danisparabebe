@@ -17,11 +17,16 @@ interface PageProps {
     }>
 }
 
+import { useCartStore } from '@/store/cart-store';
+import { ProductPersonalizationModal } from '@/components/product/personalization-modal';
+
 export default function ProductPage({ params }: PageProps) {
     const router = useRouter();
     const { id } = use(params);
     const product = realProducts.find(p => p.id === id);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
+    const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
+    const { addItem, openCart } = useCartStore();
 
     if (!product) {
         return <div className="p-10 text-center">Produto não encontrado</div>;
@@ -131,10 +136,25 @@ export default function ProductPage({ params }: PageProps) {
 
                         {/* Actions */}
                         <div className="flex flex-col gap-3 mt-auto">
-                            <button className="w-full bg-dusty-rose hover:bg-deep-rose text-white py-4 rounded-full font-bold text-lg shadow-soft transition-colors flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => setIsPersonalizationOpen(true)}
+                                className="w-full bg-dusty-rose hover:bg-deep-rose text-white py-4 rounded-full font-bold text-lg shadow-soft transition-colors flex items-center justify-center gap-2"
+                            >
                                 COMPRAR AGORA
                             </button>
-                            <button className="w-full bg-white border border-dusty-rose text-dusty-rose hover:bg-dusty-rose/5 py-4 rounded-full font-bold text-lg transition-colors">
+                            <button
+                                onClick={() => {
+                                    if (!product) return;
+                                    addItem({
+                                        productId: product.id,
+                                        name: product.name,
+                                        price: product.price,
+                                        image: images[0],
+                                        quantity: 1
+                                    });
+                                }}
+                                className="w-full bg-white border border-dusty-rose text-dusty-rose hover:bg-dusty-rose/5 py-4 rounded-full font-bold text-lg transition-colors"
+                            >
                                 Adicionar ao Carrinho
                             </button>
                         </div>
@@ -157,6 +177,31 @@ export default function ProductPage({ params }: PageProps) {
                     </div>
                 </div>
             </main>
+
+            <ProductPersonalizationModal
+                isOpen={isPersonalizationOpen}
+                onClose={() => setIsPersonalizationOpen(false)}
+                productName={product.name}
+                productImage={images[0]}
+                onConfirm={(data) => {
+                    addItem({
+                        productId: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: images[0],
+                        quantity: 1,
+                        personalization: {
+                            name: data.name,
+                            color: data.color,
+                            theme: data.observations
+                        }
+                    });
+                    setIsPersonalizationOpen(false);
+                    // Open cart directly or redirect to checkout
+                    // For now, let's open cart to show item is there, then user can click checkout
+                    openCart();
+                }}
+            />
 
             <Footer simple />
         </div>
