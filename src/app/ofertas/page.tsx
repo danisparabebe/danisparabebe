@@ -19,7 +19,7 @@ export default function OfertasPage() {
                 <ProductGrid title="Ofertas Especiais" products={products} />
             </main>
 
-            <Footer />
+            <Footer simple />
         </div>
     );
 }

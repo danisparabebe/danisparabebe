@@ -47,7 +47,7 @@ export default function CategoryPage({ params }: PageProps) {
                 <ProductGrid title={categoryName} products={products} />
             </main>
 
-            <Footer />
+            <Footer simple />
         </div>
     );
 }

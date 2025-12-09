@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ShieldCheck } from 'lucide-react';
 
-export function Footer() {
+export function Footer({ simple = false }: { simple?: boolean }) {
     return (
         <footer className="bg-warm-stone border-t border-line">
             {/* USPs */}
@@ -32,42 +32,44 @@ export function Footer() {
                 </div>
             </div>
 
-            {/* Footer Links */}
-            <div className="py-8">
-                <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 md:grid-cols-4">
-                    <div>
-                        <h4 className="mb-4 font-semibold text-charcoal">Institucional</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="/sobre" className="hover:text-dusty-rose">Sobre Nós</Link></li>
-                            <li><Link href="/contato" className="hover:text-dusty-rose">Contato</Link></li>
-                            <li><Link href="/lojas" className="hover:text-dusty-rose">Nossas Lojas</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="mb-4 font-semibold text-charcoal">Atendimento</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="/faq" className="hover:text-dusty-rose">FAQ</Link></li>
-                            <li><Link href="/entrega" className="hover:text-dusty-rose">Entrega</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="mb-4 font-semibold text-charcoal">Categorias</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="/roupas" className="hover:text-dusty-rose">Roupas</Link></li>
-                            <li><Link href="/sapatos" className="hover:text-dusty-rose">Sapatos</Link></li>
-                            <li><Link href="/enxovais" className="hover:text-dusty-rose">Enxovais</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="mb-4 font-semibold text-charcoal">Siga-nos</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-dusty-rose">Instagram</Link></li>
-                            <li><Link href="#" className="hover:text-dusty-rose">Facebook</Link></li>
-                            <li><Link href="#" className="hover:text-dusty-rose">Pinterest</Link></li>
-                        </ul>
+            {/* Footer Links - Only show if not simple */}
+            {!simple && (
+                <div className="py-8">
+                    <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 md:grid-cols-4">
+                        <div>
+                            <h4 className="mb-4 font-semibold text-charcoal">Institucional</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/sobre" className="hover:text-dusty-rose">Sobre Nós</Link></li>
+                                <li><Link href="/contato" className="hover:text-dusty-rose">Contato</Link></li>
+                                <li><Link href="/lojas" className="hover:text-dusty-rose">Nossas Lojas</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="mb-4 font-semibold text-charcoal">Atendimento</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/faq" className="hover:text-dusty-rose">FAQ</Link></li>
+                                <li><Link href="/entrega" className="hover:text-dusty-rose">Entrega</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="mb-4 font-semibold text-charcoal">Categorias</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/roupas" className="hover:text-dusty-rose">Roupas</Link></li>
+                                <li><Link href="/sapatos" className="hover:text-dusty-rose">Sapatos</Link></li>
+                                <li><Link href="/enxovais" className="hover:text-dusty-rose">Enxovais</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="mb-4 font-semibold text-charcoal">Siga-nos</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="#" className="hover:text-dusty-rose">Instagram</Link></li>
+                                <li><Link href="#" className="hover:text-dusty-rose">Facebook</Link></li>
+                                <li><Link href="#" className="hover:text-dusty-rose">Pinterest</Link></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Copyright */}
             <div className="border-t border-line py-4">

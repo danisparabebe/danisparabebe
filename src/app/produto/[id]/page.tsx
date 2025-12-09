@@ -117,8 +117,8 @@ export default function ProductPage({ params }: PageProps) {
                                         key={color}
                                         onClick={() => setSelectedColor(color)}
                                         className={`px-4 py-2 rounded-full text-sm border ${selectedColor === color
-                                                ? 'border-dusty-rose bg-dusty-rose/10 text-dusty-rose font-medium'
-                                                : 'border-line text-slate hover:border-dusty-rose'
+                                            ? 'border-dusty-rose bg-dusty-rose/10 text-dusty-rose font-medium'
+                                            : 'border-line text-slate hover:border-dusty-rose'
                                             }`}
                                     >
                                         {color}
@@ -156,7 +156,7 @@ export default function ProductPage({ params }: PageProps) {
                 </div>
             </main>
 
-            <Footer />
+            <Footer simple />
         </div>
     );
 }
