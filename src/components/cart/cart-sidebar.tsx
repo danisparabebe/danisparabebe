@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 export function CartSidebar() {
     const { items, isOpen, closeCart, removeItem, updateQuantity, total } = useCartStore();
     const [isLoading, setIsLoading] = useState(false);
+    const [shippingCep, setShippingCep] = useState('');
+    const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
 
     const handleCheckout = async () => {
         setIsLoading(true);
@@ -22,15 +24,56 @@ export function CartSidebar() {
 
             const data = await response.json();
 
+            if (!response.ok) {
+                throw new Error(data.error || 'Falha ao criar sessão de checkout');
+            }
+
             if (data.url) {
                 window.location.href = data.url;
             } else {
-                console.error('Erro ao criar sessão de checkout');
+                console.error('Erro ao criar sessão de checkout: URL não retornada');
+                alert('Ocorreu um erro ao iniciar o checkout. Por favor, tente novamente.');
                 setIsLoading(false);
             }
         } catch (error) {
             console.error('Erro ao processar checkout:', error);
+            alert(`Erro ao processar checkout: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
             setIsLoading(false);
+        }
+    };
+
+    const calculateShipping = async () => {
+        const cep = shippingCep.replace(/\D/g, '');
+        if (cep.length !== 8) {
+            alert('Por favor, digite um CEP válido com 8 dígitos.');
+            return;
+        }
+
+        setIsCalculatingShipping(true);
+        try {
+            const res = await fetch('/api/shipping', {
+                method: 'POST',
+                body: JSON.stringify({ cep })
+            });
+
+            if (!res.ok) {
+                throw new Error('Falha ao calcular frete');
+            }
+
+            const options = await res.json();
+
+            if (options && options.length > 0) {
+                const cheapest = options[0];
+                useCartStore.getState().setShipping(cheapest.price);
+                // Optional: visual feedback of success
+            } else {
+                alert('Nenhuma opção de frete encontrada para este CEP.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Erro ao calcular frete. Verifique o CEP ou tente novamente mais tarde.');
+        } finally {
+            setIsCalculatingShipping(false);
         }
     };
 
@@ -150,35 +193,24 @@ export function CartSidebar() {
                                 placeholder="Seu CEP"
                                 className="flex-1 px-3 py-2 border border-line rounded-lg text-sm focus:border-dusty-rose outline-none"
                                 maxLength={9}
+                                value={shippingCep}
                                 onChange={(e) => {
                                     // Mask 00000-000
                                     let v = e.target.value.replace(/\D/g, '');
                                     if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5, 8);
-                                    e.target.value = v;
+                                    setShippingCep(v);
                                 }}
-                                onBlur={async (e) => {
-                                    const cep = e.target.value.replace(/\D/g, '');
-                                    if (cep.length === 8) {
-                                        try {
-                                            const res = await fetch('/api/shipping', {
-                                                method: 'POST',
-                                                body: JSON.stringify({ cep })
-                                            });
-                                            const options = await res.json();
-                                            // Auto-select first option for now or show list
-                                            // For simplicity in this step, let's just pick the first one and show it
-                                            if (options && options.length > 0) {
-                                                const cheapest = options[0]; // Assuming sorted or picking first
-                                                // Ideally show a selector, but let's effectively set it
-                                                useCartStore.getState().setShipping(cheapest.price);
-                                            }
-                                        } catch (err) {
-                                            console.error(err);
-                                        }
-                                    }
+                                onBlur={() => {
+                                    if (shippingCep.length >= 8) calculateShipping();
                                 }}
                             />
-                            <button className="text-xs font-bold text-dusty-rose uppercase">Calcular</button>
+                            <button
+                                onClick={calculateShipping}
+                                disabled={isCalculatingShipping}
+                                className="text-xs font-bold text-dusty-rose uppercase px-2 hover:bg-dusty-rose/10 rounded transition-colors"
+                            >
+                                {isCalculatingShipping ? '...' : 'Calcular'}
+                            </button>
                         </div>
                     </div>
                 )}
