@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     const { cep } = await req.json();
+    console.log('Calculating shipping for CEP:', cep);
+    console.log('SuperFrete Token exists:', !!process.env.SUPERFRETE_TOKEN);
 
     if (!cep) {
         return NextResponse.json({ error: 'CEP is required' }, { status: 400 });
@@ -62,7 +64,7 @@ export async function POST(req: Request) {
         if (!response.ok) {
             const errorText = await response.text();
             console.error('SuperFrete API Error:', response.status, errorText);
-            throw new Error('Failed to fetch shipping rates');
+            throw new Error(`SuperFrete Error: ${response.status} - ${errorText}`);
         }
 
         const data = await response.json();

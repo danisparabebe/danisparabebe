@@ -37,10 +37,10 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json({ url: session.url });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating checkout session:', error);
         return NextResponse.json(
-            { error: 'Error creating checkout session' },
+            { error: `Erro ao criar sessão: ${error.message || 'Erro desconhecido no servidor'}` },
             { status: 500 }
         );
     }
