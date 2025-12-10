@@ -3,6 +3,9 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
+import { OrderConfirmationEmail } from '@/components/email/order-confirmation';
+import { resend } from '@/lib/resend';
+import { createElement } from 'react';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
     apiVersion: '2025-11-17.clover',
@@ -41,22 +44,18 @@ export async function POST(req: Request) {
             const orderTotal = (session.amount_total! / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
             if (customerEmail && process.env.RESEND_API_KEY) {
-                // Email sending logic paused due to dependency issue
-                // const { OrderConfirmationEmail } = await import('@/components/email/order-confirmation');
-                // const { resend } = await import('@/lib/resend');
-
-                // await resend.emails.send({
-                //     from: 'Danis Para Bebê <onboarding@resend.dev>',
-                //     to: customerEmail,
-                //     subject: `Pedido Confirmado! #${session.id.slice(-6).toUpperCase()}`,
-                //     react: OrderConfirmationEmail({
-                //         customerName,
-                //         orderId: session.id.slice(-6).toUpperCase(),
-                //         total: orderTotal,
-                //         items: emailItems,
-                //     }),
-                // });
-                console.log(`Email sending skipped for ${customerEmail} (Resend not fully configured)`);
+                await resend.emails.send({
+                    from: 'Danis Para Bebê <onboarding@resend.dev>', // Should be updated to real domain later
+                    to: customerEmail,
+                    subject: `Pedido Confirmado! #${session.id.slice(-6).toUpperCase()}`,
+                    react: createElement(OrderConfirmationEmail, {
+                        customerName,
+                        orderId: session.id.slice(-6).toUpperCase(),
+                        total: orderTotal,
+                        items: emailItems,
+                    }),
+                });
+                console.log(`Email sent to ${customerEmail}`);
             }
 
             console.log(`Order ${session.id} processed successfully`);
