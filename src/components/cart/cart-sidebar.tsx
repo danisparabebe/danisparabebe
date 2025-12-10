@@ -218,9 +218,21 @@ export function CartSidebar() {
                 {/* Footer */}
                 {items.length > 0 && (
                     <div className="p-4 border-t border-line bg-warm-stone/30">
-                        <div className="flex justify-between items-center mb-4">
-                            <span className="text-slate">Total</span>
-                            <span className="text-xl font-bold text-charcoal">R$ {total().toFixed(2)}</span>
+                        <div className="space-y-2 mb-4">
+                            <div className="flex justify-between items-center text-sm text-slate">
+                                <span>Subtotal</span>
+                                <span>R$ {(total() - useCartStore.getState().shipping).toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm text-slate">
+                                <span>Frete</span>
+                                <span className={useCartStore.getState().shipping > 0 ? 'text-charcoal' : 'text-slate/60'}>
+                                    {useCartStore.getState().shipping > 0 ? `R$ ${useCartStore.getState().shipping.toFixed(2)}` : 'Calculando...'}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center pt-2 border-t border-line">
+                                <span className="font-bold text-charcoal">Total</span>
+                                <span className="text-xl font-bold text-dusty-rose">R$ {total().toFixed(2)}</span>
+                            </div>
                         </div>
                         <button
                             onClick={handleCheckout}

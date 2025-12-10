@@ -21,7 +21,7 @@ export async function POST(req: Request) {
                     description: item.personalization
                         ? `Personalização: ${item.personalization.name} (${item.personalization.theme})`
                         : undefined,
-                    images: item.image ? [item.image.startsWith('http') ? item.image : `${process.env.NEXT_PUBLIC_APP_URL || 'https://danisparabebe.com'}${item.image}`] : [],
+                    images: item.image ? [item.image.startsWith('http') ? encodeURI(item.image) : encodeURI(`${process.env.NEXT_PUBLIC_APP_URL || 'https://danisparabebe.com'}${item.image}`)] : [],
                 },
                 unit_amount: Math.round(item.price * 100), // Stripe expects cents
             },
