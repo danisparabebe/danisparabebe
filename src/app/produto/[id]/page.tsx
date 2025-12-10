@@ -146,12 +146,14 @@ export default function ProductPage({ params }: PageProps) {
                                 onClick={() => {
                                     if (!product) return;
                                     addItem({
+                                        id: `${product.id}-default`,
                                         productId: product.id,
                                         name: product.name,
                                         price: product.price,
-                                        image: images[0],
+                                        image: product.image,
                                         quantity: 1
                                     });
+                                    openCart();
                                 }}
                                 className="w-full bg-white border border-dusty-rose text-dusty-rose hover:bg-dusty-rose/5 py-4 rounded-full font-bold text-lg transition-colors"
                             >
@@ -184,21 +186,17 @@ export default function ProductPage({ params }: PageProps) {
                 productName={product.name}
                 productImage={images[0]}
                 onConfirm={(data) => {
+                    if (!product) return;
                     addItem({
+                        id: `${product.id}-personalized-${Date.now()}`,
                         productId: product.id,
                         name: product.name,
                         price: product.price,
-                        image: images[0],
+                        image: product.image,
                         quantity: 1,
-                        personalization: {
-                            name: data.name,
-                            color: data.color,
-                            theme: data.observations
-                        }
+                        personalization: data
                     });
                     setIsPersonalizationOpen(false);
-                    // Open cart directly or redirect to checkout
-                    // For now, let's open cart to show item is there, then user can click checkout
                     openCart();
                 }}
             />

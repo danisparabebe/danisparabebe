@@ -33,8 +33,10 @@ export function StepReview({ data }: StepReviewProps) {
     const handleAddToCart = () => {
         // Add each item individually to cart but with the same personalization
         selectedItems.forEach(item => {
+            const productId = `custom-${item.name.toLowerCase().replace(/\s/g, '-')}`;
             addItem({
-                productId: `custom-${item.name.toLowerCase().replace(/\s/g, '-')}`,
+                id: `${productId}-${Date.now()}`, // Unique ID for cart item
+                productId: productId,
                 name: item.name,
                 price: item.price,
                 image: item.image,

@@ -73,9 +73,16 @@ export function Footer({ simple = false }: { simple?: boolean }) {
 
             {/* Copyright */}
             <div className="border-t border-line py-4">
-                <p className="text-center text-xs text-slate">
-                    © {new Date().getFullYear()} Danis Para Bebê. Todos os direitos reservados.
-                </p>
+                <div className="border-t border-line/30 pt-8 mt-12 text-center text-sm text-slate-400">
+                    <p>&copy; {new Date().getFullYear()} Danis Para Bebê. Todos os direitos reservados.</p>
+                    <div className="mt-2 space-x-4">
+                        <a href="/politicas/privacidade" className="hover:text-dusty-rose transition-colors">Privacidade</a>
+                        <span className="text-line">•</span>
+                        <a href="/politicas/termos" className="hover:text-dusty-rose transition-colors">Termos de Uso</a>
+                        <span className="text-line">•</span>
+                        <a href="/politicas/trocas" className="hover:text-dusty-rose transition-colors">Trocas e Devoluções</a>
+                    </div>
+                </div>
             </div>
         </footer>
     );

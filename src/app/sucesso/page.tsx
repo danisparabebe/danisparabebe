@@ -1,109 +1,63 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, Suspense } from 'react';
+import { useCartStore } from '@/store/cart-store';
 import Link from 'next/link';
-import { CheckCircle, Package, Home } from 'lucide-react';
-import { useEffect } from 'react';
-import { useBuilderStore } from '@/store/builder-store';
+import { CheckCircle } from 'lucide-react';
 
-export default function SuccessPage() {
-    const resetBuilder = useBuilderStore((state) => state.resetBuilder);
+function SuccessContent() {
+    const searchParams = useSearchParams();
+    const sessionId = searchParams.get('session_id');
+    const { clearCart } = useCartStore();
 
     useEffect(() => {
-        resetBuilder();
-    }, [resetBuilder]);
+        if (sessionId) {
+            clearCart();
+        }
+    }, [sessionId, clearCart]);
 
     return (
-        <div className="min-h-screen bg-creme flex items-center justify-center px-4">
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="max-w-2xl w-full"
-            >
-                {/* Success Card */}
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-                    {/* Header */}
-                    <div className="bg-gradient-to-r from-rosa to-rosa/80 text-white px-8 py-12 text-center">
-                        <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 0.3, type: 'spring' }}
-                            className="flex justify-center mb-6"
-                        >
-                            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center">
-                                <CheckCircle className="w-16 h-16 text-rosa" />
-                            </div>
-                        </motion.div>
-                        <h1 className="text-3xl md:text-4xl font-playfair font-bold mb-4">
-                            Pagamento Confirmado!
-                        </h1>
-                        <p className="text-lg opacity-90">
-                            Seu pedido foi recebido com sucesso
-                        </p>
-                    </div>
+        <div className="bg-white p-8 rounded-2xl shadow-soft max-w-md w-full text-center">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-10 h-10 text-green-600" />
+            </div>
 
-                    {/* Content */}
-                    <div className="p-8 md:p-12">
-                        <div className="space-y-6 mb-8">
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-rosa/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                                    <Package className="w-6 h-6 text-rosa" />
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800 mb-1">
-                                        O que acontece agora?
-                                    </h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Você receberá um e-mail de confirmação com todos os detalhes do seu pedido.
-                                        Nossa equipe já começou a preparar seu enxoval personalizado com todo carinho.
-                                    </p>
-                                </div>
-                            </div>
+            <h1 className="text-3xl font-heading font-bold text-charcoal mb-4">
+                Pedido Confirmado!
+            </h1>
 
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-azul/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                                    <span className="text-2xl">📱</span>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800 mb-1">
-                                        Fique de olho no WhatsApp
-                                    </h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Entraremos em contato via WhatsApp para acompanhar o andamento
-                                        da produção e combinar a entrega.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <p className="text-slate mb-8">
+                Obrigado por escolher a Danis Para Bebê.
+                Seu pedido foi recebido com sucesso e já vamos começar a preparar tudo com muito carinho.
+            </p>
 
-                        {/* Actions */}
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <Link
-                                href="/"
-                                className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-3xl font-semibold transition-all"
-                            >
-                                <Home className="w-5 h-5" />
-                                Voltar ao Início
-                            </Link>
-                            <Link
-                                href="/montar-enxoval"
-                                className="flex items-center justify-center gap-2 bg-rosa hover:bg-rosa/90 text-white py-3 px-6 rounded-3xl font-semibold transition-all shadow-lg hover:shadow-xl"
-                            >
-                                <Package className="w-5 h-5" />
-                                Criar Outro Enxoval
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+            <div className="space-y-4">
+                <a
+                    href="https://wa.me/5511999999999?text=Olá, acabei de fazer o pedido pelo site!"
+                    target="_blank"
+                    className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-full transition-colors"
+                >
+                    Confirmar no WhatsApp
+                </a>
 
-                {/* Info Box */}
-                <div className="mt-6 p-4 bg-white/60 backdrop-blur rounded-2xl text-center">
-                    <p className="text-sm text-gray-600">
-                        Restou alguma dúvida? Entre em contato conosco pelo WhatsApp
-                    </p>
-                </div>
-            </motion.div>
+                <Link
+                    href="/"
+                    className="block w-full bg-line text-slate hover:bg-slate/20 font-medium py-3 rounded-full transition-colors"
+                >
+                    Voltar para a Loja
+                </Link>
+            </div>
+        </div>
+    );
+}
+
+export default function SuccessPage() {
+    return (
+        <div className="min-h-screen bg-dots-texture flex flex-col items-center justify-center p-4">
+            <Suspense fallback={<div className="text-center">Carregando confirmação...</div>}>
+                <SuccessContent />
+            </Suspense>
         </div>
     );
 }

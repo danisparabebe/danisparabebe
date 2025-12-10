@@ -3,10 +3,36 @@
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function CartSidebar() {
     const { items, isOpen, closeCart, removeItem, updateQuantity, total } = useCartStore();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleCheckout = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ items }),
+            });
+
+            const data = await response.json();
+
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                console.error('Erro ao criar sessão de checkout');
+                setIsLoading(false);
+            }
+        } catch (error) {
+            console.error('Erro ao processar checkout:', error);
+            setIsLoading(false);
+        }
+    };
 
     // Prevent scrolling when cart is open
     useEffect(() => {
@@ -114,6 +140,49 @@ export function CartSidebar() {
                     )}
                 </div>
 
+                {/* Shipping Calculator */}
+                {items.length > 0 && (
+                    <div className="p-4 border-t border-line bg-warm-stone/20">
+                        <p className="text-sm font-medium text-charcoal mb-2">Calcular Frete</p>
+                        <div className="flex gap-2 mb-3">
+                            <input
+                                type="text"
+                                placeholder="Seu CEP"
+                                className="flex-1 px-3 py-2 border border-line rounded-lg text-sm focus:border-dusty-rose outline-none"
+                                maxLength={9}
+                                onChange={(e) => {
+                                    // Mask 00000-000
+                                    let v = e.target.value.replace(/\D/g, '');
+                                    if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5, 8);
+                                    e.target.value = v;
+                                }}
+                                onBlur={async (e) => {
+                                    const cep = e.target.value.replace(/\D/g, '');
+                                    if (cep.length === 8) {
+                                        try {
+                                            const res = await fetch('/api/shipping', {
+                                                method: 'POST',
+                                                body: JSON.stringify({ cep })
+                                            });
+                                            const options = await res.json();
+                                            // Auto-select first option for now or show list
+                                            // For simplicity in this step, let's just pick the first one and show it
+                                            if (options && options.length > 0) {
+                                                const cheapest = options[0]; // Assuming sorted or picking first
+                                                // Ideally show a selector, but let's effectively set it
+                                                useCartStore.getState().setShipping(cheapest.price);
+                                            }
+                                        } catch (err) {
+                                            console.error(err);
+                                        }
+                                    }
+                                }}
+                            />
+                            <button className="text-xs font-bold text-dusty-rose uppercase">Calcular</button>
+                        </div>
+                    </div>
+                )}
+
                 {/* Footer */}
                 {items.length > 0 && (
                     <div className="p-4 border-t border-line bg-warm-stone/30">
@@ -121,8 +190,13 @@ export function CartSidebar() {
                             <span className="text-slate">Total</span>
                             <span className="text-xl font-bold text-charcoal">R$ {total().toFixed(2)}</span>
                         </div>
-                        <button className="w-full bg-dusty-rose hover:bg-deep-rose text-white py-3 rounded-full font-bold shadow-soft transition-all transform active:scale-95">
-                            FINALIZAR COMPRA
+                        <button
+                            onClick={handleCheckout}
+                            disabled={isLoading}
+                            className={`w-full bg-dusty-rose hover:bg-deep-rose text-white py-3 rounded-full font-bold shadow-soft transition-all transform active:scale-95 ${isLoading ? 'opacity-70 cursor-wait' : ''
+                                }`}
+                        >
+                            {isLoading ? 'PROCESSANDO...' : 'FINALIZAR COMPRA'}
                         </button>
                     </div>
                 )}

@@ -18,13 +18,15 @@ export interface CartItem {
 interface CartStore {
     items: CartItem[];
     isOpen: boolean;
-    addItem: (item: Omit<CartItem, 'id'>) => void;
+    addItem: (item: CartItem) => void;
     removeItem: (id: string) => void;
     updateQuantity: (id: string, quantity: number) => void;
     clearCart: () => void;
     toggleCart: () => void;
     openCart: () => void;
     closeCart: () => void;
+    shipping: number;
+    setShipping: (value: number) => void;
     total: () => number;
 }
 
@@ -33,44 +35,43 @@ export const useCartStore = create<CartStore>()(
         (set, get) => ({
             items: [],
             isOpen: false,
+            shipping: 0,
             addItem: (item) => {
-                const id = `${item.productId}-${JSON.stringify(item.personalization)}`;
                 set((state) => {
-                    const existingItem = state.items.find((i) => i.id === id);
+                    const existingItem = state.items.find((i) => i.id === item.id);
                     if (existingItem) {
                         return {
                             items: state.items.map((i) =>
-                                i.id === id
+                                i.id === item.id
                                     ? { ...i, quantity: i.quantity + item.quantity }
                                     : i
                             ),
                             isOpen: true,
                         };
                     }
-                    return { items: [...state.items, { ...item, id }], isOpen: true };
+                    return { items: [...state.items, item], isOpen: true };
                 });
             },
             removeItem: (id) =>
-                set((state) => ({
-                    items: state.items.filter((i) => i.id !== id),
-                })),
+                set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
             updateQuantity: (id, quantity) =>
                 set((state) => ({
                     items: state.items.map((i) =>
                         i.id === id ? { ...i, quantity } : i
                     ),
                 })),
-            clearCart: () => set({ items: [] }),
+            clearCart: () => set({ items: [], shipping: 0 }),
             toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
             openCart: () => set({ isOpen: true }),
             closeCart: () => set({ isOpen: false }),
+            setShipping: (value) => set({ shipping: value }),
             total: () => {
-                const state = get();
-                return state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+                const itemsTotal = get().items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+                return itemsTotal + get().shipping;
             },
         }),
         {
-            name: 'danis-cart-storage',
+            name: 'cart-storage',
         }
     )
 );
