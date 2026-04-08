@@ -904,7 +904,7 @@ export default function GestaoFotosPage() {
                                         {currentList.map(photo => (
                                             <div key={photo.filename} className="group relative aspect-square border overflow-hidden rounded-xl bg-gray-100 hover:border-blue-500 hover:shadow-lg transition-all">
                                                 <div className="absolute inset-0 cursor-pointer" onClick={() => openEditor(photo)}>
-                                                    <Image unoptimized={true} loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-cover group-hover:scale-105 transition-transform" />
+                                                    <Image loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-cover group-hover:scale-105 transition-transform" />
                                                 </div>
                                                 <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex gap-1">
                                                     <button onClick={(e) => { e.stopPropagation(); runAction('delete', photo); }} className="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-full shadow cursor-pointer" title="Excluir (Mover para Lixeira)">
@@ -931,7 +931,7 @@ export default function GestaoFotosPage() {
                                         {currentList.map(photo => (
                                             <div key={photo.filename} className="group relative aspect-square border overflow-hidden rounded-xl bg-gray-100 hover:border-orange-400 hover:shadow-lg transition-all">
                                                 <div className="absolute inset-0 cursor-pointer" onClick={() => openEditor(photo)}>
-                                                    <Image unoptimized={true} loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-cover group-hover:scale-105 transition-transform" />
+                                                    <Image loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-cover group-hover:scale-105 transition-transform" />
                                                 </div>
                                                 <div className="absolute top-2 right-2 bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold pointer-events-none">CONFERIR</div>
                                                 <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex gap-1">
@@ -1021,7 +1021,7 @@ export default function GestaoFotosPage() {
                                     }).map(photo => (
                                         <div key={photo.filename} className="border rounded-2xl overflow-hidden bg-gray-50 shadow-sm hover:shadow-md transition-all">
                                             <div className="aspect-square relative flex items-center justify-center bg-white cursor-pointer" onClick={() => openEditor(photo)}>
-                                                <Image unoptimized={true} loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-contain" />
+                                                <Image loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-contain" />
                                             </div>
                                             <div className="p-4">
                                                 <p className="font-bold text-gray-800 text-sm truncate" title={photo.customName}>{photo.customName || 'Sem nome'}</p>
@@ -1082,7 +1082,7 @@ export default function GestaoFotosPage() {
                                                 <tr key={photo.filename} className="hover:bg-blue-50 transition-colors">
                                                     <td className="px-6 py-3" onClick={() => openEditor(photo)}>
                                                         <div className="w-16 h-16 rounded overflow-hidden relative border bg-white cursor-pointer">
-                                                            <Image unoptimized={true} loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-cover" />
+                                                            <Image loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="Thumb" fill className="object-cover" />
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-3">
@@ -1111,7 +1111,7 @@ export default function GestaoFotosPage() {
                                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 p-4 gap-4">
                                         {allPhotos.map((photo) => (
                                             <div key={photo.filename} onClick={() => openEditor(photo)} className="border rounded-xl aspect-[3/4] relative bg-white cursor-pointer hover:shadow-lg transition-all group overflow-hidden">
-                                                <Image unoptimized={true} loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="T" fill className="object-cover group-hover:scale-105 transition-transform" />
+                                                <Image loading="lazy" src={`/${photo.folder}/${photo.filename}`} alt="T" fill className="object-cover group-hover:scale-105 transition-transform" />
                                                 <div className="absolute top-2 left-2 flex flex-col gap-1">
                                                     {photo.status === 'pendente' || photo.status === 'upload' ? <span className="text-[9px] font-bold px-1.5 py-0.5 rounded shadow bg-yellow-500 text-white">NOVO</span> : null}
                                                     {photo.status === 'conferido' ? <span className="text-[9px] font-bold px-1.5 py-0.5 rounded shadow bg-orange-500 text-white">CONFERIDO</span> : null}
@@ -1204,7 +1204,7 @@ export default function GestaoFotosPage() {
                                                     {filteredLibrary.map((libItem) => (
                                                         <div key={libItem.filename} onClick={() => importFromLibrary(libItem)} className="flex-shrink-0 w-20 group cursor-pointer">
                                                             <div className="relative aspect-[3/4] rounded-md overflow-hidden mb-1 border border-transparent group-hover:border-indigo-400 shadow-sm group-hover:shadow-md transition-all bg-white">
-                                                                <Image unoptimized={true} loading="lazy" src={libItem.image || '/api/placeholder/80/100'} alt={libItem.name} fill sizes="80px" className="object-cover group-hover:scale-105 transition-transform" />
+                                                                <Image loading="lazy" src={libItem.image || '/api/placeholder/80/100'} alt={libItem.name} fill sizes="80px" className="object-cover group-hover:scale-105 transition-transform" />
                                                                 <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity gap-0.5">
                                                                     <Plus className="text-white w-4 h-4 transform group-hover:rotate-90 transition-transform" />
                                                                     <span className="text-white text-[8px] font-bold uppercase tracking-widest">Add</span>
@@ -1363,7 +1363,7 @@ export default function GestaoFotosPage() {
                         <div className="fixed inset-0 bg-gray-900 z-50 flex">
                             {/* LEFT: IMAGE & NAVIGATION */}
                             <div className="w-2/3 h-full relative flex items-center justify-center p-4 bg-gray-100 shadow-inner">
-                                <Image unoptimized={true} loading="lazy"
+                                <Image loading="lazy"
                                     src={`/${editingPhoto.folder}/${editingPhoto.filename}`}
                                     alt="Preview"
                                     fill
@@ -1586,7 +1586,7 @@ const MemoizedProductCard = React.memo(function MemoizedProductCard({ product, i
                         className="relative w-full aspect-square rounded-md overflow-hidden bg-slate-100 border border-slate-200 cursor-pointer hover:border-indigo-400 group/img flex items-center justify-center max-w-full mx-auto"
                         onClick={() => document.getElementById(`upload-${product.id}-0`)?.click()}
                     >
-                        <Image unoptimized={true} loading="lazy" src={product.images[0] || '/api/placeholder/400/400'} alt={product.name} fill sizes="400px" className="object-cover opacity-90 group-hover/img:opacity-100 transition-opacity" />
+                        <Image loading="lazy" src={product.images[0] || '/api/placeholder/400/400'} alt={product.name} fill sizes="400px" className="object-cover opacity-90 group-hover/img:opacity-100 transition-opacity" />
                         <Badge className="absolute top-1.5 left-1.5 bg-slate-900 shadow-md text-white text-[9px] px-1.5 py-0 z-10 font-bold border-none">{product.gridPosition}</Badge>
                         
                         {/* Hover Overlay for Upload */}

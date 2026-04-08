@@ -141,8 +141,7 @@ function SuccessContent() {
                         width={100}
                         height={38}
                         className="mx-auto object-contain"
-                        unoptimized
-                    />
+                        />
                 </motion.div>
 
                 {/* Animated Check */}

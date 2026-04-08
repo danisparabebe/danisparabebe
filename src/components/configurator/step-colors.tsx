@@ -64,8 +64,7 @@ function ImageFinishGrid({
                                     alt={opt.label}
                                     fill
                                     className={objectFit}
-                                    unoptimized
-                                />
+                                    />
                             </div>
                             <span className={`text-[10px] font-black uppercase tracking-wider transition-colors text-center leading-[1.1]
                                 ${active ? 'text-[#1f2937]' : 'text-slate group-hover:text-charcoal'}

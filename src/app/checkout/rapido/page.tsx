@@ -232,7 +232,7 @@ export default function CheckoutRapidoPage() {
                             {/* Product Image */}
                             <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center p-2 shrink-0">
                                 {item.image ? (
-                                    <Image src={item.image} alt={item.name} fill className="object-contain p-2" unoptimized />
+                                    <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                                 ) : (
                                     <span className="text-slate/50 font-bold uppercase text-[9px]">Sem foto</span>
                                 )}

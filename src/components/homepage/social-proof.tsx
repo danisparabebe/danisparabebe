@@ -101,7 +101,7 @@ export function SocialProof() {
                             onClick={() => setSelectedImage(src)}
                             className="w-[180px] md:w-[260px] h-[320px] md:h-[460px] relative rounded-2xl overflow-hidden shadow-[0_12px_40px_rgb(0,0,0,0.12)] border-[6px] md:border-[8px] border-white shrink-0 bg-white group hover:z-30 hover:-translate-y-4 hover:scale-105 hover:rotate-1 transition-all duration-300 origin-bottom cursor-zoom-in"
                         >
-                            <Image src={src} alt="Feedback" fill className="object-cover align-top" unoptimized />
+                            <Image src={src} alt="Feedback" fill className="object-cover align-top" />
                             <div className="absolute inset-0 bg-sage-green-dark/0 group-hover:bg-sage-green-dark/10 transition-colors duration-300" />
                         </div>
                     ))}
@@ -119,7 +119,7 @@ export function SocialProof() {
                             onClick={() => setSelectedImage(src)}
                             className="w-[180px] md:w-[260px] h-[320px] md:h-[460px] relative rounded-2xl overflow-hidden shadow-[0_12px_40px_rgb(0,0,0,0.12)] border-[6px] md:border-[8px] border-white shrink-0 bg-white group hover:z-30 hover:-translate-y-4 hover:scale-105 hover:-rotate-1 transition-all duration-300 origin-bottom cursor-zoom-in"
                         >
-                            <Image src={src} alt="Feedback" fill className="object-cover align-top" unoptimized />
+                            <Image src={src} alt="Feedback" fill className="object-cover align-top" />
                             <div className="absolute inset-0 bg-sage-green-dark/0 group-hover:bg-sage-green-dark/10 transition-colors duration-300" />
                         </div>
                     ))}
@@ -154,8 +154,7 @@ export function SocialProof() {
                                 alt="Feedback em tela cheia" 
                                 fill 
                                 className="object-contain bg-black/5" 
-                                unoptimized 
-                            />
+                                />
                             
                             <button 
                                 onClick={() => setSelectedImage(null)}

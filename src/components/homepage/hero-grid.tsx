@@ -67,7 +67,6 @@ function HeroCarouselPanel({ slides, intervalMs = 3500 }: HeroCarouselPanelProps
                         >
                             {isNear && (
                                 <Image
-                                    unoptimized={true}
                                     src={slide.image}
                                     alt={slide.name}
                                     fill

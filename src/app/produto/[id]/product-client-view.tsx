@@ -402,8 +402,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                                 fill
                                 className="object-contain pointer-events-none"
                                 quality={100}
-                                unoptimized
-                            />
+                                />
                         </div>
 
                         {/* Zoom Level Indicator Badges */}

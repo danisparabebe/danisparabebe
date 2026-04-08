@@ -230,7 +230,7 @@ export default function GestaoBordadosPage() {
                                         >
                                             <div className="w-full aspect-square rounded-xl bg-slate-100 border border-slate-200 overflow-hidden relative shrink-0">
                                                 {product.images?.[0] ? (
-                                                    <Image src={product.images[0]} alt={product.name} fill className="object-cover hover:scale-105 transition-transform duration-500" unoptimized />
+                                                    <Image src={product.images[0]} alt={product.name} fill className="object-cover hover:scale-105 transition-transform duration-500" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center text-slate-300 text-xs font-bold text-center p-4">Sem Foto</div>
                                                 )}
@@ -374,8 +374,7 @@ export default function GestaoBordadosPage() {
                                                         alt={bordado.name} 
                                                         fill 
                                                         className="object-contain p-2 group-hover:scale-105 transition-transform duration-500" 
-                                                        unoptimized
-                                                    />
+                                                        />
                                                     
                                                     {/* Checkbox Overlay */}
                                                     <div className={`absolute top-2 right-2 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shadow-sm backdrop-blur-sm ${isLinked ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white/80 border-slate-300 text-transparent group-hover:border-indigo-400'}`}>

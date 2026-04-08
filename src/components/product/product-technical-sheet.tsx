@@ -226,7 +226,7 @@ export function ProductTechnicalSheet({
                             /* ── PRE-CONFIGURED KIT: single large product photo ── */
                             <div className="relative w-full aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center p-2">
                                 {productImage ? (
-                                    <Image src={productImage} alt={productName} fill className="object-contain p-2" unoptimized />
+                                    <Image src={productImage} alt={productName} fill className="object-contain p-2" />
                                 ) : (
                                     <span className="text-slate/50 font-bold uppercase text-[10px]">Sem foto</span>
                                 )}
@@ -241,7 +241,7 @@ export function ProductTechnicalSheet({
                                     {/* Embroidery Photo (Large) */}
                                     <div className="relative flex-1 aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center p-2">
                                         {productImage ? (
-                                            <Image src={productImage} alt={productName} fill className="object-contain p-2" unoptimized />
+                                            <Image src={productImage} alt={productName} fill className="object-contain p-2" />
                                         ) : (
                                             <span className="text-slate/50 font-bold uppercase text-[10px]">Sem bordado</span>
                                         )}
@@ -256,7 +256,7 @@ export function ProductTechnicalSheet({
                                             <p className="text-[8px] font-black text-[#1f2937] uppercase tracking-wider text-center leading-none">Babado<br/><span className="text-dusty-rose">{babadoColor}</span></p>
                                             <div className="relative w-full flex-1 rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center">
                                                 {babadoImg ? (
-                                                    <Image src={babadoImg} alt="Babado" fill className="object-cover" unoptimized />
+                                                    <Image src={babadoImg} alt="Babado" fill className="object-cover" />
                                                 ) : (
                                                     <span className="text-slate/40 text-[8px] font-bold uppercase">S/ Foto</span>
                                                 )}
@@ -266,7 +266,7 @@ export function ProductTechnicalSheet({
                                             <p className="text-[8px] font-black text-[#1f2937] uppercase tracking-wider text-center leading-none">Passa-Fita<br/><span className="text-dusty-rose">{passaFitaLabel}</span></p>
                                             <div className="relative w-full flex-1 rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center">
                                                 {passafitaImg ? (
-                                                    <Image src={passafitaImg} alt="Passa-Fita" fill className="object-cover" unoptimized />
+                                                    <Image src={passafitaImg} alt="Passa-Fita" fill className="object-cover" />
                                                 ) : (
                                                     <span className="text-slate/40 text-[8px] font-bold uppercase">S/ Foto</span>
                                                 )}

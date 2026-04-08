@@ -146,8 +146,7 @@ export default function CheckoutPage() {
                                             alt={item.name}
                                             fill
                                             className="object-cover"
-                                            unoptimized
-                                        />
+                                            />
                                     </div>
 
                                     {/* Info */}

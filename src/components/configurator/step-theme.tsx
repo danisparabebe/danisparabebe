@@ -459,7 +459,7 @@ export function StepTheme() {
                                                         : 'border-transparent border-slate-200 hover:border-sage-green-dark/50 hover:shadow-md'
                                                     }`}
                                             >
-                                                <Image src={bordado.url} alt={bordado.name} fill className="object-contain p-2" unoptimized />
+                                                <Image src={bordado.url} alt={bordado.name} fill className="object-contain p-2" />
                                                 {chosen && (
                                                     <div className="absolute top-3 right-3 bg-sage-green text-[#1f2937] w-8 h-8 rounded-full flex items-center justify-center shadow-md">
                                                         <Check className="w-4 h-4" strokeWidth={3} />
