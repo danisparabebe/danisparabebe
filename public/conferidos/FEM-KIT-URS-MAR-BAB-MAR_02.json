@@ -1,0 +1,24 @@
+{
+  "themeName": "Ursinha",
+  "colorName": "Marsala",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "MAR",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-01-26T22:19:58.942Z"
+}

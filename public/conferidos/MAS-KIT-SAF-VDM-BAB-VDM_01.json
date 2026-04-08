@@ -1,0 +1,28 @@
+{
+  "themeName": "Safari",
+  "colorName": "Verde Militar",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "SAF",
+  "color": "VDM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T22:18:05.828Z"
+}

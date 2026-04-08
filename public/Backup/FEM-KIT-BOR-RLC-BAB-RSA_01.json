@@ -1,0 +1,24 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosê Claro",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BOR",
+  "color": "RLC",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Essencial",
+  "updatedAt": "2026-02-24T20:44:59.682Z"
+}

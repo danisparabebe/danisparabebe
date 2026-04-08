@@ -1,0 +1,20 @@
+{
+  "themeName": "Variados",
+  "colorName": "Lilás",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "LIL",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 4
+    },
+    {
+      "type": "FRG",
+      "qty": 4
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-29T20:25:30.992Z"
+}

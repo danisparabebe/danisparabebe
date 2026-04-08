@@ -1,7 +1,9 @@
+import React from 'react';
 import { ProductCard } from './product-card';
 
 interface Product {
     id: string;
+    shortCode?: string;
     name: string;
     category?: string;
     price: number;
@@ -9,10 +11,11 @@ interface Product {
     installments?: number;
     image: string;
     badge?: string;
+    isHot?: boolean;
 }
 
 interface ProductGridProps {
-    title: string;
+    title: React.ReactNode;
     products: Product[];
 }
 

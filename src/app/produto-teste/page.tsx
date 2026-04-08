@@ -110,7 +110,7 @@ export default function TestProductPage() {
                         disabled={isProcessing}
                         className="w-full rounded-none bg-text text-white hover:bg-black uppercase tracking-widest h-14"
                     >
-                        {isProcessing ? 'Processando...' : `Comprar Agora - R$ ${product.totalPrice.toFixed(2)}`}
+                        {isProcessing ? 'Processando...' : `QUERO PERSONALIZAR! - R$ ${product.totalPrice.toFixed(2)}`}
                     </Button>
 
                     <div className="flex items-center justify-center gap-2 text-[10px] text-subtle uppercase tracking-widest font-nunito">

@@ -43,14 +43,15 @@ Wizard de 5 passos com state management via Zustand:
 ## 🎨 Design System
 
 ```css
---creme: #EFE9C3    /* Background */
---rosa: #F082A3     /* Primary/Actions */
---azul: #C4D5F1     /* Secondary */
+--warm-stone: #FDFAF6 /* Background Premium */
+--sage-green: #ADCEB3 /* Primary/Actions (Confiança e Orgânico) */
+--charcoal:   #20283B /* Texts/Headings (Elegância e Clareza) */
+--line:       #00000010 /* Subtle Borders */
 ```
 
-- **Tipografia**: Playfair Display (headings), Nunito (body)
-- **Bordas**: `rounded-3xl` em todos os elementos
-- **Estética**: "Soft Luxury" - fofo mas premium
+- **Tipografia**: Fraunces (Headings clássicos), Inter (Interface limpa), UI normal de navegação para legibilidade, com toques Premium.
+- **Bordas**: `rounded-3xl` e `rounded-2xl` em elementos orgânicos.
+- **Estética**: "Soft Luxury" - Unissex, sofisticado, natural e premium.
 
 ## 🚀 Início Rápido
 

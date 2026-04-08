@@ -68,7 +68,7 @@ export const realProducts = [
         image: '/produtos/Faixa de cabelo.jpeg',
         includes: ['1 faixa de cabelo bordada personalizada']
     },
-    // Mock Products for Grid Population
+    // Mock Products for Grid Population (Using actual existing images as requested)
     {
         id: 'kit-manta-luxo',
         name: 'Kit Manta Luxo Bordada',
@@ -77,65 +77,65 @@ export const realProducts = [
         price: 210.00,
         installmentPrice: 70.00,
         installments: 3,
-        image: '', // Placeholder
+        image: '/produtos/conferidos/FEM-MNT-BOR-RSA-BAB-RSA_01.jpeg',
         includes: ['1 manta luxo', '1 fralda grande']
     },
     {
         id: 'kit-fraldas-simples',
-        name: 'Kit Fraldas Passeio',
+        name: 'Kit Fraldas Menino',
         category: 'Kit Fraldas',
-        description: 'Kit com 3 fraldas de boca.',
+        description: 'Kit com fraldas para o dia a dia.',
         price: 65.00,
         installmentPrice: 21.66,
         installments: 3,
-        image: '',
+        image: '/produtos/conferidos/MAS-FRP-SAF-AZM-BAB-AZM-BCO_01.jpeg',
         includes: ['3 fraldas de boca']
     },
     {
         id: 'toalha-fralda',
-        name: 'Toalha Fralda Bordada',
+        name: 'Toalha de Banho Bordada',
         category: 'Toalhas',
-        description: 'Toalha fralda macia para recém nascido.',
-        price: 89.90,
-        installmentPrice: 29.96,
+        description: 'Toalha macia para recém nascido.',
+        price: 189.90,
+        installmentPrice: 63.30,
         installments: 3,
-        image: '',
-        includes: ['1 toalha fralda']
+        image: '/produtos/conferidos/FEM-TOB-BOR-RSA-RSA_01.jpeg',
+        includes: ['1 toalha forrada']
     },
     {
         id: 'body-manga-longa',
-        name: 'Body Manga Longa Bordado',
+        name: 'Body Manga Longa Bordado Menina',
         category: 'Body',
         description: 'Body manga longa suedine 100% algodão.',
         price: 62.00,
         installmentPrice: 20.66,
         installments: 3,
-        image: '',
+        image: '/produtos/conferidos/FEM-BDL-BOR-LIL-BAB-LIL_01.jpeg',
         includes: ['1 body manga longa']
     },
     {
         id: 'body-oferta',
-        name: 'Body Básico (Oferta)',
+        name: 'Body Personalizado (Oferta)',
         category: 'Body',
-        description: 'Body básico para dia a dia.',
+        description: 'Body personalizado para dia a dia.',
         price: 39.90,
         installmentPrice: 13.30,
         installments: 3,
         originalPrice: 59.90,
-        image: '',
+        image: '/produtos/conferidos/Body personalizado.jpeg',
         badge: 'Oferta',
         includes: ['1 body básico']
     },
     {
         id: 'kit-manta-oferta',
-        name: 'Kit Manta Promocional',
-        category: 'Kit Manta',
-        description: 'Kit manta com valor especial.',
-        price: 159.90,
-        installmentPrice: 53.30,
+        name: 'Kit Completo Sonho',
+        category: 'Kits',
+        description: 'Kit completo com valor especial para Menino.',
+        price: 259.90,
+        installmentPrice: 86.63,
         installments: 3,
-        originalPrice: 199.90,
-        image: '',
+        originalPrice: 299.90,
+        image: '/produtos/conferidos/MAS-KIT-MON-BGE-BAB-BCO_01.jpeg',
         badge: 'Oferta',
         includes: ['1 manta', '1 fralda']
     }
@@ -143,18 +143,21 @@ export const realProducts = [
 
 export const heroItems = [
     {
-        title: 'Kit Manta Bordada',
-        subtitle: 'Personalizado com muito carinho',
-        image: '/produtos/Kit manta - produto campeão 2.jpeg',
-        link: '/produto/kit-manta-bordada',
-        ctaText: 'COMPRAR AGORA'
+        title: 'Kit Manta Borboleta',
+        subtitle: 'Personalizado à beira de luxo',
+        image: '/produtos/conferidos/FEM-KIT-BAI-MAR-BAB-MAR_01.jpeg',
+        link: '/produto/FEM-KIT-BAI-MAR-BAB-MAR_01',
+        ctaText: 'QUERO ESSE',
+        badge: 'MAIS VENDIDO',
+        urgencyText: 'Em Alta'
     },
     {
-        title: 'Presentes Especiais',
-        subtitle: 'Kit Fraldas Bordadas',
-        image: '/produtos/Kit fraldas - produto campeão 1.jpeg',
-        link: '/produto/kit-fraldas-bordadas',
-        ctaText: 'COMPRAR AGORA'
+        title: 'Kit Fraldas Ninho Safari',
+        subtitle: 'O presente inesquecível',
+        image: '/produtos/conferidos/MAS-KIT-MON-ABB-TCB-BCO-ABB_01.jpeg',
+        link: '/produto/MAS-KIT-MON-ABB-TCB-BCO-ABB_01',
+        ctaText: 'QUERO ESSE',
+        badge: 'IDEAL PARA PRESENTES'
     }
 ];
 
@@ -162,15 +165,15 @@ export const categoryShowcase = [
     {
         title: 'Body Bordado',
         subtitle: 'Personalizado para seu bebê',
-        image: '/produtos/Body personalizado.jpeg',
-        link: '/produto/body-bordado',
+        image: '/produtos/conferidos/FEM-BDL-BOR-LIL-BAB-LIL_01.jpeg',
+        link: '/produto/FEM-BDL-BOR-LIL-BAB-LIL_01',
         ctaText: 'DESCOBRIR'
     },
     {
         title: 'Baby Essentials',
         subtitle: 'Touca Bordada Personalizada',
-        image: '/produtos/Touca.jpeg',
-        link: '/produto/touca-personalizada',
-        ctaText: 'COMPRAR AGORA'
+        image: '/produtos/conferidos/MAS-TOU-VAR-VDC_01.jpeg',
+        link: '/produto/MAS-TOU-VAR-VDC_01',
+        ctaText: 'QUERO ESSE'
     }
 ];

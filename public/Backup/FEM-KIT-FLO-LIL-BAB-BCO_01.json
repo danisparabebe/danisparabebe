@@ -1,0 +1,24 @@
+{
+  "themeName": "Floral",
+  "colorName": "Lilás",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "LIL",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRM",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Trio",
+  "updatedAt": "2026-02-24T20:53:39.893Z"
+}

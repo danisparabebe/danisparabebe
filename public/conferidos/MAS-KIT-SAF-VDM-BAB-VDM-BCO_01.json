@@ -1,0 +1,28 @@
+{
+  "themeName": "Safari",
+  "colorName": "Verde Militar",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "SAF",
+  "color": "VDM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Ninho",
+  "updatedAt": "2026-01-26T22:01:30.617Z"
+}

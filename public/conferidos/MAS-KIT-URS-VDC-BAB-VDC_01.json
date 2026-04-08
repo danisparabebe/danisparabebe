@@ -1,0 +1,24 @@
+{
+  "themeName": "Ursinho",
+  "colorName": "Verde Claro",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "VDC",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-01-29T20:23:39.208Z"
+}

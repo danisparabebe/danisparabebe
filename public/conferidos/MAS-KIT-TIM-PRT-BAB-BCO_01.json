@@ -1,0 +1,20 @@
+{
+  "themeName": "Times",
+  "colorName": "Preto",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "TIM",
+  "color": "PRT",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-01-26T22:18:33.593Z"
+}

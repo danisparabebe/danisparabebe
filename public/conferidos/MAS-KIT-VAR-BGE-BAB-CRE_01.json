@@ -1,0 +1,44 @@
+{
+  "themeName": "Variados",
+  "colorName": "Bege",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "BGE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "MIJ",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "TOB",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-29T22:56:47.198Z"
+}

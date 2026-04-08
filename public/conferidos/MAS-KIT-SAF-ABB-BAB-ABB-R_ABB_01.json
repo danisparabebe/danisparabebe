@@ -1,0 +1,28 @@
+{
+  "themeName": "Safari",
+  "colorName": "Azul Bebê",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "SAF",
+  "color": "ABB",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T21:40:26.253Z"
+}

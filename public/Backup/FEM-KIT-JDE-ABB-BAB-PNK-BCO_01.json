@@ -1,0 +1,24 @@
+{
+  "themeName": "Jardim Encantado",
+  "colorName": "Azul Bebê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "ABB",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-02-24T20:59:50.249Z"
+}

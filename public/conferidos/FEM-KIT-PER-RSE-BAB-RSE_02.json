@@ -1,0 +1,36 @@
+{
+  "themeName": "Personagens",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "PER",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "MIJ",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T21:35:18.028Z"
+}

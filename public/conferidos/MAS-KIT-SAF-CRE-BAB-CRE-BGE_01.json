@@ -1,0 +1,24 @@
+{
+  "themeName": "Safari",
+  "colorName": "Creme",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "SAF",
+  "color": "CRE",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRG",
+      "qty": 2
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T21:53:15.242Z"
+}

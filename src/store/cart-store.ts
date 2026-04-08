@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface CartItem {
-    id: string; // unique cart item id (product id + options)
-    productId: string;
+    id: string; // Unique ID for the cart instance (e.g., timestamp)
+    productId: string; // Base product ID
     name: string;
     price: number;
     image: string;
@@ -12,22 +12,31 @@ export interface CartItem {
         name?: string;
         color?: string;
         theme?: string;
+        finishDetail?: string;
+        finishColor?: string;
+        size?: string;
+        observations?: string;
     };
 }
 
 interface CartStore {
     items: CartItem[];
     isOpen: boolean;
+    shipping: number;
+    // Actions
     addItem: (item: CartItem) => void;
     removeItem: (id: string) => void;
     updateQuantity: (id: string, quantity: number) => void;
     clearCart: () => void;
-    toggleCart: () => void;
+    // UI Actions
     openCart: () => void;
     closeCart: () => void;
-    shipping: number;
-    setShipping: (value: number) => void;
+    toggleCart: () => void;
+    // Shipping
+    setShipping: (price: number) => void;
+    // Computed
     total: () => number;
+    itemCount: () => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -36,42 +45,66 @@ export const useCartStore = create<CartStore>()(
             items: [],
             isOpen: false,
             shipping: 0,
-            addItem: (item) => {
+
+            addItem: (newItem) => {
                 set((state) => {
-                    const existingItem = state.items.find((i) => i.id === item.id);
-                    if (existingItem) {
-                        return {
-                            items: state.items.map((i) =>
-                                i.id === item.id
-                                    ? { ...i, quantity: i.quantity + item.quantity }
-                                    : i
-                            ),
-                            isOpen: true,
-                        };
+                    // Check if identical item exists (same ID or exactly same personalization)
+                    // For custom baby items, it's safer to just add as new unless it's a generic product.
+                    // If it has no personalization, we can merge quantities.
+                    const existingItemIndex = state.items.findIndex(
+                        (i) => i.productId === newItem.productId && !i.personalization && !newItem.personalization
+                    );
+
+                    if (existingItemIndex >= 0) {
+                        const newItems = [...state.items];
+                        newItems[existingItemIndex].quantity += newItem.quantity;
+                        return { items: newItems };
                     }
-                    return { items: [...state.items, item], isOpen: true };
+
+                    return { items: [...state.items, newItem] };
                 });
             },
-            removeItem: (id) =>
-                set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
-            updateQuantity: (id, quantity) =>
+
+            removeItem: (id) => {
                 set((state) => ({
-                    items: state.items.map((i) =>
-                        i.id === id ? { ...i, quantity } : i
+                    items: state.items.filter((item) => item.id !== id),
+                }));
+            },
+
+            updateQuantity: (id, quantity) => {
+                if (quantity <= 0) return;
+                set((state) => ({
+                    items: state.items.map((item) =>
+                        item.id === id ? { ...item, quantity } : item
                     ),
-                })),
+                }));
+            },
+
             clearCart: () => set({ items: [], shipping: 0 }),
-            toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+
             openCart: () => set({ isOpen: true }),
             closeCart: () => set({ isOpen: false }),
-            setShipping: (value) => set({ shipping: value }),
+            toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+
+            setShipping: (price) => set({ shipping: price }),
+
             total: () => {
-                const itemsTotal = get().items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-                return itemsTotal + get().shipping;
+                const { items, shipping } = get();
+                const subtotal = items.reduce(
+                    (sum, item) => sum + item.price * item.quantity,
+                    0
+                );
+                return subtotal + shipping;
+            },
+
+            itemCount: () => {
+                const { items } = get();
+                return items.reduce((sum, item) => sum + item.quantity, 0);
             },
         }),
         {
-            name: 'cart-storage',
+            name: 'danis-cart-storage', // saves to local storage
+            partialize: (state) => ({ items: state.items }), // Only save items, not UI state like isOpen
         }
     )
 );

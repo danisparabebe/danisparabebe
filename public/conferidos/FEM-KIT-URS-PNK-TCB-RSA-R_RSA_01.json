@@ -1,0 +1,24 @@
+{
+  "themeName": "Ursinha",
+  "colorName": "Pink",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "PNK",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-01-26T22:20:27.947Z"
+}

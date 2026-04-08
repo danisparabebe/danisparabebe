@@ -1,0 +1,20 @@
+{
+  "themeName": "Variados",
+  "colorName": "Cinza",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "CNZ",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-23T22:09:41.392Z"
+}

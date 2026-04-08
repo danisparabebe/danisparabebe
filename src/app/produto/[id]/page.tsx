@@ -1,207 +1,120 @@
-
-'use client';
-
-import { realProducts } from '@/data/homepage-data';
-import { TopBar } from '@/components/homepage/top-bar';
-import { Header } from '@/components/homepage/header';
-import { Navigation } from '@/components/homepage/navigation';
-import { Footer } from '@/components/homepage/footer';
-import { notFound, useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { ChevronLeft, Truck, ShieldCheck, CreditCard } from 'lucide-react';
-import { useState, use } from 'react';
+import fs from 'fs';
+import path from 'path';
+import { notFound, redirect } from 'next/navigation';
+import { calculateProductPrice } from '@/lib/pricing';
+import { formatCategoryName } from '@/lib/utils';
+import { ProductClientView } from './product-client-view';
+import { productControl } from '@/data/product-control';
+import { getFinalPrice } from '@/lib/utils';
+import { resolveProductId, getShortCode } from '@/lib/short-codes';
 
 interface PageProps {
-    params: Promise<{
+    params: {
         id: string;
-    }>
+    }
 }
 
-import { useCartStore } from '@/store/cart-store';
-import { ProductPersonalizationModal } from '@/components/product/personalization-modal';
-
-export default function ProductPage({ params }: PageProps) {
-    const router = useRouter();
-    const { id } = use(params);
-    const product = realProducts.find(p => p.id === id);
-    const [selectedColor, setSelectedColor] = useState<string | null>(null);
-    const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
-    const { addItem, openCart } = useCartStore();
-
-    if (!product) {
-        return <div className="p-10 text-center">Produto não encontrado</div>;
+async function getProduct(rawId: string) {
+    // Resolve short code (DPB-0042) to real ID, or pass through if already a real ID
+    const id = resolveProductId(rawId);
+    
+    // 1. Try to find in Product Control Center (MVP Priority)
+    const managedProduct = productControl.find(p => p.id === id);
+    if (managedProduct) {
+        const pixPrice = managedProduct.pixPrice || getFinalPrice(managedProduct);
+        return {
+            id: managedProduct.id,
+            name: managedProduct.name,
+            category: managedProduct.category || 'Geral',
+            priceFull: managedProduct.priceFull,
+            originalPrice: managedProduct.originalPriceFull && managedProduct.originalPriceFull > managedProduct.priceFull ? managedProduct.originalPriceFull : undefined,
+            pixPrice: pixPrice,
+            installments: 3,
+            images: managedProduct.images,
+            description: managedProduct.description,
+            discountPct: managedProduct.discountPct,
+            features: managedProduct.features || [],
+            metadata: { type: (managedProduct.category || 'Geral').toUpperCase() }
+        };
     }
 
-    const images = product.image ? [product.image] : ['/api/placeholder/600/800'];
-    // Mock additional images for thumbnail view
-    const allImages = [...images, ...images, ...images].slice(0, 4);
+    // 2. Fallback to conferidos legacy files
+    const productsDir = path.join(process.cwd(), 'public', 'produtos', 'conferidos');
+    const jsonPath = path.join(productsDir, `${id}.json`);
+
+    if (!fs.existsSync(jsonPath)) {
+        return null;
+    }
+
+    try {
+        const content = fs.readFileSync(jsonPath, 'utf8');
+        const metadata = JSON.parse(content);
+        const price = calculateProductPrice(metadata.composition || [], !!metadata.customName);
+
+        const imgExtensions = ['.jpeg', '.jpg', '.png', '.JPG'];
+        const allImages = [];
+        const baseDir = path.join(process.cwd(), 'public');
+
+        // Check primary and alternate images in public/produtos/conferidos
+        for (const ext of imgExtensions) {
+            if (fs.existsSync(path.join(productsDir, id + ext))) {
+                allImages.push(`/produtos/conferidos/${id + ext}`);
+                break;
+            }
+        }
+
+        // Add 2nd image if exists
+        for (const ext of imgExtensions) {
+            const altId = id.replace('_01', '_02');
+            if (fs.existsSync(path.join(productsDir, altId + ext))) {
+                allImages.push(`/produtos/conferidos/${altId + ext}`);
+                break;
+            }
+        }
+
+        if (allImages.length === 0) allImages.push('/api/placeholder/600/800');
+
+        return {
+            id,
+            name: metadata.customName || `${metadata.type} ${metadata.themeName}`,
+            category: formatCategoryName(metadata.type),
+            priceFull: price,
+            pixPrice: price * 0.95, // Fallback legacy logic
+            installments: 3,
+            images: allImages,
+            description: metadata.observations || `Produto ${metadata.type} com tema ${metadata.themeName}.`,
+            discountPct: 5, // Fallback legacy logic
+            metadata,
+        };
+    } catch (e) {
+        console.error('Error parsing legacy product', e);
+        return null;
+    }
+}
+
+export default async function ProductPage({ params }: PageProps) {
+    const { id } = await Promise.resolve(params);
+    const decodedId = decodeURIComponent(id);
+
+    // If it's a long product ID, check if we have a shortCode for it and redirect to clean the URL
+    if (!/^DPB-\d+$/i.test(decodedId)) {
+        const mappedShortCode = getShortCode(decodedId);
+        if (mappedShortCode) {
+            redirect(`/produto/${mappedShortCode}`);
+        }
+    }
+
+    const product = await getProduct(decodedId);
+
+    if (!product) {
+        notFound();
+    }
 
     return (
         <div className="min-h-screen bg-dots-texture">
-            <TopBar />
-            <Header />
-            <Navigation />
-
-            <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-                {/* Back Button */}
-                <button
-                    onClick={() => router.back()}
-                    className="mb-6 flex items-center text-sm font-medium text-slate hover:text-dusty-rose transition-colors"
-                >
-                    <ChevronLeft className="mr-1 h-4 w-4" />
-                    Voltar
-                </button>
-
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-                    {/* Left Column: Images */}
-                    <div className="flex flex-col-reverse gap-4 md:flex-row">
-                        {/* Thumbnails */}
-                        <div className="flex gap-4 md:flex-col overflow-x-auto md:w-24">
-                            {allImages.map((img, idx) => (
-                                <button key={idx} className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-line hover:border-dusty-rose">
-                                    <Image
-                                        src={img}
-                                        alt={`Thumbnail ${idx}`}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Main Image */}
-                        <div className="relative aspect-[3/4] w-full flex-1 overflow-hidden rounded-lg bg-white shadow-sm border border-line">
-                            <Image
-                                src={images[0]}
-                                alt={product.name}
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-                    </div>
-
-                    {/* Right Column: Info */}
-                    <div className="flex flex-col">
-                        <span className="text-sm text-dusty-rose font-medium mb-2">{product.category}</span>
-                        <h1 className="text-2xl font-bold text-charcoal sm:text-3xl mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
-                            {product.name}
-                        </h1>
-
-                        <div className="mb-6">
-                            <div className="flex items-baseline gap-2">
-                                <span className="text-3xl font-bold text-charcoal">R$ {product.price.toFixed(2)}</span>
-                                {product.originalPrice && (
-                                    <span className="text-lg text-slate line-through">R$ {product.originalPrice.toFixed(2)}</span>
-                                )}
-                            </div>
-                            <p className="text-sm text-slate mt-1">
-                                ou {product.installments}x de R$ {(product.price / product.installments!).toFixed(2)} sem juros
-                            </p>
-                        </div>
-
-                        {/* Description */}
-                        <div className="mb-8 border-t border-line pt-6">
-                            <h3 className="text-sm font-medium text-charcoal mb-2">Descrição</h3>
-                            <p className="text-sm text-slate leading-relaxed mb-4">
-                                {product.description}
-                            </p>
-                            {product.includes && (
-                                <ul className="list-disc list-inside text-sm text-slate space-y-1">
-                                    {product.includes.map(item => (
-                                        <li key={item}>{item}</li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-
-                        {/* Colors / Customization Mock */}
-                        <div className="mb-8">
-                            <h3 className="text-sm font-medium text-charcoal mb-3">Opções de Cor do Bordado</h3>
-                            <div className="flex gap-3">
-                                {['Rosa', 'Azul', 'Bege', 'Verde', 'Cinza'].map((color) => (
-                                    <button
-                                        key={color}
-                                        onClick={() => setSelectedColor(color)}
-                                        className={`px-4 py-2 rounded-full text-sm border ${selectedColor === color
-                                            ? 'border-dusty-rose bg-dusty-rose/10 text-dusty-rose font-medium'
-                                            : 'border-line text-slate hover:border-dusty-rose'
-                                            }`}
-                                    >
-                                        {color}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex flex-col gap-3 mt-auto">
-                            <button
-                                onClick={() => setIsPersonalizationOpen(true)}
-                                className="w-full bg-dusty-rose hover:bg-deep-rose text-white py-4 rounded-full font-bold text-lg shadow-soft transition-colors flex items-center justify-center gap-2"
-                            >
-                                COMPRAR AGORA
-                            </button>
-                            <button
-                                onClick={() => {
-                                    if (!product) return;
-                                    addItem({
-                                        id: `${product.id}-default`,
-                                        productId: product.id,
-                                        name: product.name,
-                                        price: product.price,
-                                        image: product.image,
-                                        quantity: 1
-                                    });
-                                    openCart();
-                                }}
-                                className="w-full bg-white border border-dusty-rose text-dusty-rose hover:bg-dusty-rose/5 py-4 rounded-full font-bold text-lg transition-colors"
-                            >
-                                Adicionar ao Carrinho
-                            </button>
-                        </div>
-
-                        {/* Features */}
-                        <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-line">
-                            <div className="flex flex-col items-center text-center">
-                                <Truck className="h-6 w-6 text-dusty-rose mb-2" />
-                                <span className="text-xs text-charcoal font-medium">Entrega em 10 dias</span>
-                            </div>
-                            <div className="flex flex-col items-center text-center">
-                                <ShieldCheck className="h-6 w-6 text-dusty-rose mb-2" />
-                                <span className="text-xs text-charcoal font-medium">Garantia Danis</span>
-                            </div>
-                            <div className="flex flex-col items-center text-center">
-                                <CreditCard className="h-6 w-6 text-dusty-rose mb-2" />
-                                <span className="text-xs text-charcoal font-medium">3x sem juros</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <main>
+                <ProductClientView product={product} />
             </main>
-
-            <ProductPersonalizationModal
-                isOpen={isPersonalizationOpen}
-                onClose={() => setIsPersonalizationOpen(false)}
-                productName={product.name}
-                productImage={images[0]}
-                onConfirm={(data) => {
-                    if (!product) return;
-                    addItem({
-                        id: `${product.id}-personalized-${Date.now()}`,
-                        productId: product.id,
-                        name: product.name,
-                        price: product.price,
-                        image: product.image,
-                        quantity: 1,
-                        personalization: data
-                    });
-                    setIsPersonalizationOpen(false);
-                    openCart();
-                }}
-            />
-
-            <Footer simple />
         </div>
     );
 }

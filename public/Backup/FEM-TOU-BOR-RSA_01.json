@@ -1,0 +1,16 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "TOU",
+  "theme": "BOR",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "1x Touca",
+  "updatedAt": "2026-02-24T20:52:11.111Z"
+}

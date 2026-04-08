@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import { CookieBanner } from "@/components/ui/cookie-banner";
 
 export const metadata: Metadata = {
     title: "Danis Para Bebê - Enxovais Personalizados Premium",
@@ -13,10 +15,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="pt-BR">
+        <html lang="pt-BR" suppressHydrationWarning>
             <body className="antialiased">
                 {children}
                 <CartSidebar />
+                <Toaster position="top-center" />
+                <CookieBanner />
             </body>
         </html>
     );

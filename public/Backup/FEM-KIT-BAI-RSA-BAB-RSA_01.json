@@ -1,0 +1,20 @@
+{
+  "themeName": "Bailarina",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BAI",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T20:43:01.300Z"
+}

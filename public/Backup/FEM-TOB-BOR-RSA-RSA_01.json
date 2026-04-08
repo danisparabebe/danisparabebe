@@ -1,0 +1,16 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "TOB",
+  "theme": "BOR",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "TOB",
+      "qty": 1
+    }
+  ],
+  "customName": "1x Toalha de Banho",
+  "updatedAt": "2026-02-24T20:52:02.049Z"
+}

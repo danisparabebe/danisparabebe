@@ -11,6 +11,7 @@ if (!stripeKey || stripeKey.includes('placeholder')) {
 }
 
 const stripe = new Stripe(stripeKey || 'sk_test_placeholder', {
+    // @ts-expect-error Ignoring strict Stripe SDK literal types for local builds
     apiVersion: '2025-11-17.clover',
 });
 

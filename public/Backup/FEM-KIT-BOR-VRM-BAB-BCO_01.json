@@ -1,0 +1,28 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Vermelho",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BOR",
+  "color": "VRM",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T20:50:47.005Z"
+}

@@ -1,0 +1,28 @@
+{
+  "themeName": "Floral",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T20:56:02.354Z"
+}

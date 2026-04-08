@@ -1,0 +1,24 @@
+{
+  "themeName": "Variados",
+  "colorName": "Azul Turquesa",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "AZT",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-01-29T22:55:47.990Z"
+}

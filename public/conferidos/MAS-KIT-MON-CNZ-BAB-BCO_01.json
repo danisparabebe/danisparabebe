@@ -1,0 +1,24 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Cinza",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "CNZ",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-23T22:13:07.670Z"
+}

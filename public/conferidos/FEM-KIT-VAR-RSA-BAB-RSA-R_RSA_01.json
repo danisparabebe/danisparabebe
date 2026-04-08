@@ -1,0 +1,20 @@
+{
+  "themeName": "Variados",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-01-29T20:42:16.907Z"
+}

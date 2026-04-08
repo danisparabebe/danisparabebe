@@ -1,0 +1,24 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Bege",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "BGE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 2
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:11:04.712Z"
+}

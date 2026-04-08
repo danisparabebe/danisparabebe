@@ -58,6 +58,16 @@ const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
 );
 CardContent.displayName = 'CardContent';
 
+interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> { }
+
+const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
+    ({ className, ...props }, ref) => {
+        return <div ref={ref} className={cn('p-6 flex flex-col space-y-1.5', className)} {...props} />;
+    }
+);
+CardHeader.displayName = 'CardHeader';
+
+
 interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> { }
 
 const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
@@ -88,4 +98,4 @@ const CardPrice = React.forwardRef<HTMLParagraphElement, CardPriceProps>(
 );
 CardPrice.displayName = 'CardPrice';
 
-export { Card, CardImage, CardContent, CardTitle, CardPrice };
+export { Card, CardImage, CardContent, CardTitle, CardPrice, CardHeader };

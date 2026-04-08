@@ -1,0 +1,28 @@
+{
+  "themeName": "Safari",
+  "colorName": "Azul Marinho",
+  "category": "MAS",
+  "type": "FRP",
+  "theme": "SAF",
+  "color": "AZM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T21:39:32.798Z"
+}

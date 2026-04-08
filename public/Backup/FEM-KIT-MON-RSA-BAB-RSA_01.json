@@ -1,0 +1,24 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Prático",
+  "updatedAt": "2026-02-24T21:01:37.612Z"
+}

@@ -30,9 +30,24 @@ ts-debug.log*
 # vercel
 .vercel
 
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 env.local
 
+# Security & Large Local Folders
+.env
+banco_de_dados_backup.json
+backup_home/
+site_modelo/
+Catálogo/
+Capas dos temas/
+Produtos/
+Bordados/
+Prova social/
+Logos/
+*.js
+tsc_out.txt
+INICIAR_ORGANIZADOR.bat

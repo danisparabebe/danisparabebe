@@ -1,0 +1,24 @@
+{
+  "themeName": "Ursinha",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T22:22:18.792Z"
+}

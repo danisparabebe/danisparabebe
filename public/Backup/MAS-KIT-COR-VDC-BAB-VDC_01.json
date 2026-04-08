@@ -1,0 +1,28 @@
+{
+  "themeName": "Coroa",
+  "colorName": "Verde Claro",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "COR",
+  "color": "VDC",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Ninho",
+  "updatedAt": "2026-02-24T20:53:17.579Z"
+}

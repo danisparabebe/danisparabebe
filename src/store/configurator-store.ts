@@ -1,122 +1,133 @@
 import { create } from 'zustand';
+import { BASE_PRICES } from '@/lib/pricing';
 
-interface Item {
-    id: string;
-    name: string;
-    price: number;
-}
+export type StepId = 'name' | 'theme' | 'colors' | 'items' | 'review';
+export const STEP_ORDER: StepId[] = ['name', 'theme', 'colors', 'items', 'review'];
 
-interface Fabric {
-    id: string;
-    name: string;
-    priceModifier: number;
-}
+export interface ConfiguratorState {
+    currentStep: StepId;
+    visitedSteps: Set<StepId>;
 
-interface Embroidery {
-    id: string;
-    name: string;
-    priceModifier: number;
-}
+    // Step 1: Name
+    babyName: string;
 
-interface ConfiguratorState {
-    currentStep: 'items' | 'fabrics' | 'embroidery' | 'personalization' | 'review';
-    selectedItems: Item[];
-    selectedFabric: Fabric | null;
-    selectedEmbroidery: Embroidery | null;
-    personalizationName: string;
+    // Step 2: Theme + specific embroidery
+    selectedProduct: null | any; // Used to fetch linked embroideries
+    selectedTheme: string;
+    selectedThemeName: string;
+    selectedEmbroideryPhoto: string; // path of the exact photo chosen
+
+    // Step 3: Color
+    acabamentoColor: string;   // cor do babado
+    passafitaColor: string;    // cor do passa-fita
+    observations: string;
+
+    // Step 4: Items
+    itemQuantities: Record<string, number>;
 
     // Actions
-    setStep: (step: ConfiguratorState['currentStep']) => void;
+    setStep: (step: StepId) => void;
     nextStep: () => void;
     previousStep: () => void;
-    toggleItem: (item: Item) => void;
-    setFabric: (fabric: Fabric) => void;
-    setEmbroidery: (embroidery: Embroidery) => void;
-    setPersonalizationName: (name: string) => void;
+    setSelectedProduct: (product: any) => void;
+    setBabyName: (name: string) => void;
+    setTheme: (id: string, name: string) => void;
+    setEmbroideryPhoto: (path: string) => void;
+    setAcabamentoColor: (color: string) => void;
+    setPassafitaColor: (color: string) => void;
+    setObservations: (text: string) => void;
+
+    setItemQuantity: (itemId: string, qty: number) => void;
+
     getTotalPrice: () => number;
+    getDiscountPercentage: () => number;
+    getItemCount: () => number;
     reset: () => void;
 }
 
-const stepOrder: ConfiguratorState['currentStep'][] = [
-    'items',
-    'fabrics',
-    'embroidery',
-    'personalization',
-    'review',
-];
+const initialState = {
+    currentStep: 'name' as StepId,
+    visitedSteps: new Set<StepId>(['name']),
+    babyName: '',
+    selectedProduct: null,
+    selectedTheme: '',
+    selectedThemeName: '',
+    selectedEmbroideryPhoto: '',
+    acabamentoColor: '',
+    passafitaColor: '',
+    observations: '',
+    itemQuantities: {},
+};
 
 export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
-    currentStep: 'items',
-    selectedItems: [],
-    selectedFabric: null,
-    selectedEmbroidery: null,
-    personalizationName: '',
+    ...initialState,
 
-    setStep: (step) => set({ currentStep: step }),
+    setStep: (step) =>
+        set((s) => ({
+            currentStep: step,
+            visitedSteps: new Set([...s.visitedSteps, step]),
+        })),
 
     nextStep: () => {
-        const currentIndex = stepOrder.indexOf(get().currentStep);
-        if (currentIndex < stepOrder.length - 1) {
-            set({ currentStep: stepOrder[currentIndex + 1] });
+        const idx = STEP_ORDER.indexOf(get().currentStep);
+        if (idx < STEP_ORDER.length - 1) {
+            const next = STEP_ORDER[idx + 1];
+            set((s) => ({
+                currentStep: next,
+                visitedSteps: new Set([...s.visitedSteps, next]),
+            }));
         }
     },
 
     previousStep: () => {
-        const currentIndex = stepOrder.indexOf(get().currentStep);
-        if (currentIndex > 0) {
-            set({ currentStep: stepOrder[currentIndex - 1] });
-        }
+        const idx = STEP_ORDER.indexOf(get().currentStep);
+        if (idx > 0) set({ currentStep: STEP_ORDER[idx - 1] });
     },
 
-    toggleItem: (item) => {
+    setSelectedProduct: (product) => set({ selectedProduct: product }),
+    setBabyName: (name) => set({ babyName: name }),
+    setTheme: (id, name) => set({ selectedTheme: id, selectedThemeName: name, selectedEmbroideryPhoto: '' }),
+    setEmbroideryPhoto: (path) => set({ selectedEmbroideryPhoto: path }),
+    setAcabamentoColor: (color) => set({ acabamentoColor: color }),
+    setPassafitaColor: (color) => set({ passafitaColor: color }),
+    setObservations: (text) => set({ observations: text }),
+
+    setItemQuantity: (itemId, qty) =>
         set((state) => {
-            const exists = state.selectedItems.find((i) => i.id === item.id);
-            if (exists) {
-                return {
-                    selectedItems: state.selectedItems.filter((i) => i.id !== item.id),
-                };
-            } else {
-                return {
-                    selectedItems: [...state.selectedItems, item],
-                };
-            }
-        });
+            const next = { ...state.itemQuantities };
+            if (qty <= 0) delete next[itemId];
+            else next[itemId] = qty;
+            return { itemQuantities: next };
+        }),
+
+    getDiscountPercentage: () => {
+        const count = Object.values(get().itemQuantities).reduce((sum, q) => sum + q, 0);
+        if (count >= 10) return 20; // 20% desconto
+        if (count >= 6) return 15;  // 15% desconto
+        if (count >= 4) return 10;  // 10% desconto
+        if (count >= 2) return 5;   // 5% desconto
+        return 0;
     },
-
-    setFabric: (fabric) => set({ selectedFabric: fabric }),
-
-    setEmbroidery: (embroidery) => set({ selectedEmbroidery: embroidery }),
-
-    setPersonalizationName: (name) => set({ personalizationName: name }),
 
     getTotalPrice: () => {
-        const state = get();
-        let total = 0;
-
-        // Sum items
-        state.selectedItems.forEach((item) => {
-            total += item.price;
+        const s = get();
+        let itemsTotal = 0;
+        Object.entries(s.itemQuantities).forEach(([id, qty]) => {
+            itemsTotal += (BASE_PRICES[id] || 0) * qty;
         });
 
-        // Add fabric modifier
-        if (state.selectedFabric) {
-            total += state.selectedFabric.priceModifier;
-        }
+        const discountMultiplier = 1 - (s.getDiscountPercentage() / 100);
+        const finalTotal = itemsTotal * discountMultiplier;
 
-        // Add embroidery modifier
-        if (state.selectedEmbroidery) {
-            total += state.selectedEmbroidery.priceModifier;
-        }
-
-        return total;
+        return finalTotal;
     },
+
+    getItemCount: () =>
+        Object.values(get().itemQuantities).reduce((sum, q) => sum + q, 0),
 
     reset: () =>
         set({
-            currentStep: 'items',
-            selectedItems: [],
-            selectedFabric: null,
-            selectedEmbroidery: null,
-            personalizationName: '',
+            ...initialState,
+            visitedSteps: new Set<StepId>(['name']),
         }),
 }));

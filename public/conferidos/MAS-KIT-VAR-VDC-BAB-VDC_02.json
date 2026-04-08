@@ -1,0 +1,24 @@
+{
+  "themeName": "Variados",
+  "colorName": "Verde Claro",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "VDC",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-02-23T22:13:38.267Z"
+}

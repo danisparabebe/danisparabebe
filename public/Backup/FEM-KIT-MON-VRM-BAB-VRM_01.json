@@ -1,0 +1,24 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Vermelho",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "VRM",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Essencial",
+  "updatedAt": "2026-02-24T21:02:30.967Z"
+}

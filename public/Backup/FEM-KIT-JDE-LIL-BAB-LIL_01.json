@@ -1,0 +1,20 @@
+{
+  "themeName": "Jardim Encantado",
+  "colorName": "Lilás",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "LIL",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Passeio",
+  "updatedAt": "2026-02-24T21:00:01.185Z"
+}

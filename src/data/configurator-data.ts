@@ -1,3 +1,5 @@
+import { EMBROIDERY_THEME_PRICE } from '@/lib/pricing';
+
 export const baseItems = [
     {
         id: 'item-1',
@@ -52,17 +54,17 @@ export const fabrics = [
 export const embroideries = [
     {
         id: 'embroidery-1',
-        name: 'Sem Bordado',
+        name: 'Sem Bordado Tático',
         priceModifier: 0,
     },
     {
         id: 'embroidery-2',
-        name: 'Bordado Simples',
-        priceModifier: 19.90,
+        name: 'Bordado Tema Padrão',
+        priceModifier: EMBROIDERY_THEME_PRICE,
     },
     {
         id: 'embroidery-3',
-        name: 'Bordado Premium',
-        priceModifier: 39.90,
+        name: 'Bordado Tema Super Preenchido',
+        priceModifier: EMBROIDERY_THEME_PRICE + 20,
     },
 ];

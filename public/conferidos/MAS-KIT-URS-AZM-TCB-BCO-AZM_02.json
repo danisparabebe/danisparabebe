@@ -1,0 +1,28 @@
+{
+  "themeName": "Ursinho",
+  "colorName": "Azul Marinho",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "AZM",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "TOB",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRG",
+      "qty": 2
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-29T20:08:02.303Z"
+}

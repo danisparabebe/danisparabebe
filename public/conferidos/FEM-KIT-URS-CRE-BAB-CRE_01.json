@@ -1,0 +1,32 @@
+{
+  "themeName": "Ursinha",
+  "colorName": "Creme",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "CRE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MIJ",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-01-26T22:19:36.734Z"
+}

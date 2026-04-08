@@ -1,0 +1,24 @@
+{
+  "themeName": "Floral",
+  "colorName": "Rosê Claro",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "RLC",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-02-24T20:55:10.941Z"
+}

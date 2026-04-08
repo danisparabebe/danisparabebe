@@ -1,0 +1,24 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BOR",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 2
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T20:45:44.763Z"
+}
