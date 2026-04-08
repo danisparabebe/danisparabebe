@@ -1,0 +1,26 @@
+{
+  "themeName": "Bailarina",
+  "colorName": "Marsala",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BAI",
+  "color": "MAR",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-02-24T21:47:56.248Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:47:56.356Z"
+}

@@ -1,0 +1,31 @@
+{
+  "themeName": "Variados",
+  "colorName": "Azul Marinho",
+  "detailColorName": "Azul Marinho",
+  "detailColorName2": "Padrão",
+  "category": "MAS",
+  "theme": "VAR",
+  "color": "AZM",
+  "detailColor": "AZM",
+  "detailColor2": "PAD",
+  "ribbonColor": "R_BCO",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-03-03T01:22:36.408Z",
+  "type": "KIT",
+  "published": true,
+  "publishedAt": "2026-03-03T01:22:36.423Z"
+}

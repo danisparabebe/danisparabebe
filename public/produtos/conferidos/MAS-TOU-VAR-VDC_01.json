@@ -1,0 +1,18 @@
+{
+  "themeName": "Variados",
+  "colorName": "Verde Claro",
+  "category": "MAS",
+  "type": "TOU",
+  "theme": "VAR",
+  "color": "VDC",
+  "composition": [
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "1x Touca",
+  "updatedAt": "2026-02-24T21:48:50.772Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:50.782Z"
+}

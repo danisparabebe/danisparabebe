@@ -1,0 +1,22 @@
+{
+  "themeName": "Variados",
+  "colorName": "Laranja",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "LRJ",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-02-24T21:48:49.655Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:49.665Z"
+}

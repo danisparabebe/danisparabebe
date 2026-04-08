@@ -1,0 +1,23 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "FRM",
+  "theme": "BOR",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "FRM",
+      "qty": 1
+    }
+  ],
+  "customName": "Fralda Média Borboletas Rosa",
+  "updatedAt": "2026-03-11T20:14:57.502Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:00.068Z",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false
+}

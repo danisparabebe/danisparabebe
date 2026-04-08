@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "VRM",
+  "detail": "BAB",
+  "detailColor": "ABB",
+  "detailColor2": "LIL",
+  "ribbonColor": "PAD",
+  "hasFrufru": true,
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRG",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Fraldas Triplo",
+  "updatedAt": "2026-03-12T00:25:52.237Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:49.121Z"
+}

@@ -1,0 +1,41 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BAI",
+  "color": "LIL",
+  "detail": "BAB",
+  "detailColor": "LIL",
+  "detailColor2": "R",
+  "ribbonColor": "PAD",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "MIJ",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "FAI",
+      "qty": 1
+    }
+  ],
+  "customName": "KIT Minha Primeira Roupinha Bailarina Lilás",
+  "updatedAt": "2026-03-11T19:27:34.113Z",
+  "hasFrufru": false,
+  "published": true,
+  "publishedAt": "2026-03-06T01:47:48.366Z"
+}

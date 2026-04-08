@@ -1,0 +1,18 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "MNT",
+  "theme": "BOR",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "1x Manta",
+  "updatedAt": "2026-02-24T21:48:07.285Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:07.295Z"
+}

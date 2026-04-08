@@ -1,0 +1,26 @@
+{
+  "themeName": "Ursinho",
+  "colorName": "Azul Bebê",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "ABB",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Essencial",
+  "updatedAt": "2026-02-24T21:48:43.078Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:43.088Z"
+}

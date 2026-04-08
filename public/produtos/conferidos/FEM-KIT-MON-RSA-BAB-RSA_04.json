@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "RSA",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "Kit Fraldas Trio Monograma Rosa",
+  "updatedAt": "2026-03-12T00:15:15.813Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:50.161Z"
+}

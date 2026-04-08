@@ -1,0 +1,32 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "ABB",
+  "detail": "BAB",
+  "detailColor": "PNK",
+  "detailColor2": "BCO",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-03-30T19:41:45.936Z",
+  "published": true,
+  "publishedAt": "2026-03-11T22:55:02.419Z",
+  "detailColor3": "ABB",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD"
+}

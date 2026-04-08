@@ -1,0 +1,34 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BOR",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 2
+    },
+    {
+      "type": "FRP",
+      "qty": 4
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Doce Chegada",
+  "updatedAt": "2026-02-24T21:48:05.633Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:05.643Z"
+}

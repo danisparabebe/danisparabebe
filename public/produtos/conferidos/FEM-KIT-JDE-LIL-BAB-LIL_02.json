@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "LIL",
+  "detail": "BAB",
+  "detailColor": "LIL",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "Kit Fraldas Trio Jardim Encantado Lilás",
+  "updatedAt": "2026-03-12T00:14:38.424Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:47.989Z"
+}

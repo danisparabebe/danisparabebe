@@ -1,0 +1,26 @@
+{
+  "themeName": "Floral",
+  "colorName": "Rosê Claro",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "RLC",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRM",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Prático",
+  "updatedAt": "2026-02-24T21:48:11.616Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:11.631Z"
+}

@@ -1,0 +1,22 @@
+{
+  "themeName": "Floral",
+  "colorName": "Lilás",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "LIL",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 2
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:10.639Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:10.683Z"
+}

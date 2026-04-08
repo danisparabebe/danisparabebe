@@ -1,0 +1,33 @@
+{
+  "themeName": "Floral",
+  "colorName": "Pink",
+  "detailColorName": "Padrão",
+  "detailColorName2": "Padrão",
+  "category": "FEM",
+  "theme": "MON",
+  "color": "PNK",
+  "detailColor": "PNK",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-03-11T20:57:03.654Z",
+  "type": "KIT",
+  "published": true,
+  "publishedAt": "2026-03-03T01:23:52.375Z",
+  "detail": "BAB",
+  "hasFrufru": false
+}

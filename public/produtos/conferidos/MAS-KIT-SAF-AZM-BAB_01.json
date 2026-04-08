@@ -1,0 +1,34 @@
+{
+  "themeName": "Safari",
+  "colorName": "Azul Marinho",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "SAF",
+  "color": "AZM",
+  "composition": [
+    {
+      "type": "BDC",
+      "qty": 1
+    },
+    {
+      "type": "SHO",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:33.786Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:33.796Z"
+}

@@ -1,0 +1,26 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Rosa Chiclete",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "RCH",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-02-24T21:48:21.591Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:21.603Z"
+}

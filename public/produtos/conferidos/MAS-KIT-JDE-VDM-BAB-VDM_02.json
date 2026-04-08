@@ -1,0 +1,25 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "VDM",
+  "detail": "BAB",
+  "detailColor": "VDM",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-03-12T00:24:13.203Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:51.480Z"
+}

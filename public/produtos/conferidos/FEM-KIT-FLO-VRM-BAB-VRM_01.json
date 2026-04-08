@@ -1,0 +1,30 @@
+{
+  "themeName": "Floral",
+  "colorName": "Vermelho",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "VRM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:16.806Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:16.821Z"
+}

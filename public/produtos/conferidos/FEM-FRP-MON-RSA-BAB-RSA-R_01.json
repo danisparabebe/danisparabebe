@@ -1,0 +1,29 @@
+{
+  "category": "FEM",
+  "type": "FRP",
+  "theme": "MON",
+  "color": "RSA",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "R",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-03-03T23:44:58.079Z",
+  "published": true,
+  "publishedAt": "2026-03-03T23:47:49.721Z"
+}

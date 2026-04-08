@@ -1,0 +1,25 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "detailColorName": "Rosa",
+  "detailColorName2": "Padrão",
+  "category": "FEM",
+  "theme": "BOR",
+  "color": "RSA",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "composition": [
+    {
+      "type": "BDC",
+      "qty": 1
+    }
+  ],
+  "customName": "Body Manga Curta Borboletas Rosa",
+  "updatedAt": "2026-03-11T20:13:28.655Z",
+  "type": "BDC",
+  "published": true,
+  "publishedAt": "2026-03-03T01:20:18.508Z",
+  "detail": "",
+  "hasFrufru": false
+}

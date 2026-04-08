@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "LIL",
+  "detail": "BAB",
+  "detailColor": "LIL",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Passeio Jardim Encantado Lilás",
+  "updatedAt": "2026-03-11T23:07:05.976Z",
+  "published": true,
+  "publishedAt": "2026-03-11T23:07:08.914Z"
+}

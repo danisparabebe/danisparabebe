@@ -1,0 +1,22 @@
+{
+  "themeName": "Variados",
+  "colorName": "Verde Militar",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "VDM",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-02-24T21:48:47.015Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:47.026Z"
+}

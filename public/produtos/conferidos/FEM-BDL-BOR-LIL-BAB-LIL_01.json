@@ -1,0 +1,23 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Lilás",
+  "category": "FEM",
+  "type": "BDL",
+  "theme": "BOR",
+  "color": "LIL",
+  "composition": [
+    {
+      "type": "BDL",
+      "qty": 1
+    }
+  ],
+  "customName": "Body Manga Longa Borboletas Lilás",
+  "updatedAt": "2026-03-11T20:14:20.054Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:47:58.450Z",
+  "detail": "BAB",
+  "detailColor": "LIL",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false
+}

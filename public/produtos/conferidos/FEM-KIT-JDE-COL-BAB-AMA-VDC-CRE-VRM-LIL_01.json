@@ -1,0 +1,24 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "COL",
+  "detail": "BAB",
+  "detailColor": "AMA",
+  "detailColor2": "VDC",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 5
+    }
+  ],
+  "customName": "Kit Babita",
+  "updatedAt": "2026-03-30T19:39:48.352Z",
+  "published": true,
+  "publishedAt": "2026-03-11T22:57:35.470Z",
+  "detailColor3": "CRE",
+  "detailColor4": "VRM",
+  "detailColor5": "LIL"
+}

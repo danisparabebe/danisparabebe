@@ -1,0 +1,18 @@
+{
+  "themeName": "Variados",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 4
+    }
+  ],
+  "customName": "4x Fralda Grande",
+  "updatedAt": "2026-02-24T21:48:46.424Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:46.440Z"
+}

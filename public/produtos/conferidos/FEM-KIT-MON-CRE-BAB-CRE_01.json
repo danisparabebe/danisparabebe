@@ -1,0 +1,22 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Creme",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "CRE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Passeio",
+  "updatedAt": "2026-02-24T21:48:20.832Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:20.843Z"
+}

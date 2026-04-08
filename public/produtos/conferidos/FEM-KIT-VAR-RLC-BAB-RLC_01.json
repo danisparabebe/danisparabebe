@@ -1,0 +1,30 @@
+{
+  "themeName": "Variados",
+  "colorName": "Rosê Claro",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "RLC",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:45.853Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:45.864Z"
+}

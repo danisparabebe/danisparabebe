@@ -1,0 +1,29 @@
+{
+  "category": "FEM",
+  "type": "FRP",
+  "theme": "BOR",
+  "color": "RSE",
+  "detail": "BAB",
+  "detailColor": "RSE",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta Borboletas Rosê",
+  "updatedAt": "2026-03-11T20:18:46.061Z",
+  "published": true,
+  "publishedAt": "2026-03-03T23:46:29.212Z"
+}

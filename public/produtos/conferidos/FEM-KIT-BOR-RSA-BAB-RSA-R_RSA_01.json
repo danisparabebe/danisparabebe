@@ -1,0 +1,37 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BOR",
+  "color": "RSA",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "R_RSA",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FAI",
+      "qty": 1
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Luxinho",
+  "updatedAt": "2026-03-06T02:45:24.596Z",
+  "published": true,
+  "publishedAt": "2026-03-06T02:46:18.182Z"
+}

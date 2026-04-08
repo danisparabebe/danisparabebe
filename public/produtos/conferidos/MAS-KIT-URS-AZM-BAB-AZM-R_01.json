@@ -1,0 +1,29 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "AZM",
+  "detail": "BAB",
+  "detailColor": "AZM",
+  "detailColor2": "R",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-03-06T01:10:25.565Z",
+  "published": true,
+  "publishedAt": "2026-03-06T01:47:34.126Z"
+}

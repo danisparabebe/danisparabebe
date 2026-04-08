@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "CRE",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "BCO",
+  "ribbonColor": "PAD",
+  "hasFrufru": true,
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRG",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Fraldas Triplo 3 Jogos de cores",
+  "updatedAt": "2026-03-12T00:18:53.216Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:35.916Z"
+}

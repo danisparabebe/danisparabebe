@@ -1,0 +1,25 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "ABB",
+  "detail": "BAB",
+  "detailColor": "ABB",
+  "detailColor2": "PAD",
+  "ribbonColor": "R_ABB",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-03-12T00:17:02.432Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:45.826Z"
+}

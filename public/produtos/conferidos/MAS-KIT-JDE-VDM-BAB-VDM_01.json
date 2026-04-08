@@ -1,0 +1,25 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "VDM",
+  "detail": "BAB",
+  "detailColor": "VDM",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "Kit Fraldas Trio Safari",
+  "updatedAt": "2026-03-12T00:23:32.637Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:38.900Z"
+}

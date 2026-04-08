@@ -1,0 +1,43 @@
+{
+  "themeName": "Personagens",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "PER",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "MIJ",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "KIT Minha Primeira Roupinha Rosê",
+  "updatedAt": "2026-03-11T19:28:35.375Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:30.092Z",
+  "detail": "BAB",
+  "detailColor": "RSE",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false
+}

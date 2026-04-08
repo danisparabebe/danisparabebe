@@ -1,0 +1,33 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "detailColorName": "Rosa",
+  "detailColorName2": "Padrão",
+  "category": "FEM",
+  "theme": "BOR",
+  "color": "RSA",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta Borboletas Rosa",
+  "updatedAt": "2026-03-11T20:15:57.585Z",
+  "type": "FRP",
+  "published": true,
+  "publishedAt": "2026-03-03T01:20:26.910Z",
+  "detail": "BAB",
+  "hasFrufru": false
+}

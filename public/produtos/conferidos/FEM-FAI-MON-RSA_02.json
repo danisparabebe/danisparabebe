@@ -1,0 +1,23 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Rosa",
+  "category": "FEM",
+  "type": "FAI",
+  "theme": "MON",
+  "color": "RSA",
+  "composition": [
+    {
+      "type": "FAI",
+      "qty": 1
+    }
+  ],
+  "customName": "Faixa de Cabelo Rosa",
+  "updatedAt": "2026-03-11T20:14:11.918Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:20.216Z",
+  "detail": "",
+  "detailColor": "PAD",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false
+}

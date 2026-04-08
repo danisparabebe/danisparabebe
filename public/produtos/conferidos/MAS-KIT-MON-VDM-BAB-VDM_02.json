@@ -1,0 +1,22 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Verde Militar",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "VDM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:27.582Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:27.593Z"
+}

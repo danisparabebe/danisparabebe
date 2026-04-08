@@ -1,0 +1,30 @@
+{
+  "themeName": "Variados",
+  "colorName": "Salmão",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "SLM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 2
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDC",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:46.820Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:46.831Z"
+}

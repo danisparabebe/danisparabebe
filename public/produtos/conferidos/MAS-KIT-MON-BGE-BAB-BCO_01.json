@@ -1,0 +1,30 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Bege",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "BGE",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Ninho",
+  "updatedAt": "2026-02-24T21:48:25.021Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:25.032Z"
+}

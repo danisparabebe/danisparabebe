@@ -1,0 +1,23 @@
+{
+  "themeName": "Borboletas",
+  "colorName": "Rosa",
+  "detailColorName": "Rosa",
+  "detailColorName2": "Padrão",
+  "category": "FEM",
+  "theme": "BOR",
+  "color": "RSA",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "composition": [
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "1x Touca",
+  "updatedAt": "2026-03-03T01:20:54.309Z",
+  "type": "TOU",
+  "published": true,
+  "publishedAt": "2026-03-03T01:20:54.324Z"
+}

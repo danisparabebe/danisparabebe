@@ -1,0 +1,38 @@
+{
+  "themeName": "Variados",
+  "colorName": "Verde Militar",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "VDM",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 2
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "TOB",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:50.277Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:50.292Z"
+}

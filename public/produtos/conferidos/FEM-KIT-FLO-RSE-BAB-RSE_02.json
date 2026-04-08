@@ -1,0 +1,29 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "RSE",
+  "detail": "BAB",
+  "detailColor": "RSE",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Manta",
+  "updatedAt": "2026-03-10T22:13:28.635Z",
+  "published": true,
+  "publishedAt": "2026-03-10T22:33:36.547Z"
+}

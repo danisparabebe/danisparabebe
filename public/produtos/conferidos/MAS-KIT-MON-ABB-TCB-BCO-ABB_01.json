@@ -1,0 +1,22 @@
+{
+  "themeName": "Monograma",
+  "colorName": "Azul Bebê",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "MON",
+  "color": "ABB",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-02-24T21:48:23.943Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:23.954Z"
+}

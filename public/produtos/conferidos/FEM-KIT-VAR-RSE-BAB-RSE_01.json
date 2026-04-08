@@ -1,0 +1,34 @@
+{
+  "themeName": "Variados",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 4
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 3
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "TOB",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Imperial",
+  "updatedAt": "2026-02-24T21:48:46.623Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:46.637Z"
+}

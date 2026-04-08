@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "BOR",
+  "color": "RLC",
+  "detail": "BAB",
+  "detailColor": "RLC",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-03-12T00:12:41.757Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:41.939Z"
+}

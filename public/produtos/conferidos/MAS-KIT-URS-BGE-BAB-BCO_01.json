@@ -1,0 +1,30 @@
+{
+  "themeName": "Ursinho",
+  "colorName": "Bege",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "BGE",
+  "composition": [
+    {
+      "type": "TOB",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:44.515Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:44.525Z"
+}

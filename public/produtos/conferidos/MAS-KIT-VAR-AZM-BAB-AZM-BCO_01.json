@@ -1,0 +1,30 @@
+{
+  "themeName": "Variados",
+  "colorName": "Azul Marinho",
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "AZM",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:47.605Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:47.615Z"
+}

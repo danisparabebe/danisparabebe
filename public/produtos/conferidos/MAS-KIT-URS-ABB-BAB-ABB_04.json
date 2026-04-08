@@ -1,0 +1,29 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "ABB",
+  "detail": "BAB",
+  "detailColor": "ABB",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-03-10T22:32:16.458Z",
+  "published": true,
+  "publishedAt": "2026-03-10T22:34:02.059Z"
+}

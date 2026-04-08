@@ -1,0 +1,30 @@
+{
+  "themeName": "Floral",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-02-24T21:48:16.324Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:16.337Z"
+}

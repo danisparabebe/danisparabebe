@@ -1,0 +1,22 @@
+{
+  "themeName": "Ursinha",
+  "colorName": "Rosê",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "RSE",
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Fraldas",
+  "updatedAt": "2026-02-24T21:48:41.954Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:41.966Z"
+}

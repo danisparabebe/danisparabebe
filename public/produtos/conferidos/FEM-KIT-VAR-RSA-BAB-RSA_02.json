@@ -1,0 +1,25 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "RSA",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    }
+  ],
+  "customName": "Kit Fraldas Trio Arco-Iris Rosa",
+  "updatedAt": "2026-03-12T00:15:48.787Z",
+  "published": true,
+  "publishedAt": "2026-03-12T00:26:44.707Z"
+}

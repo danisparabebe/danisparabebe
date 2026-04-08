@@ -1,0 +1,22 @@
+{
+  "themeName": "Variados",
+  "colorName": "Pink",
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "VAR",
+  "color": "PNK",
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 3
+    }
+  ],
+  "customName": "Kit Passeio",
+  "updatedAt": "2026-02-24T21:48:45.470Z",
+  "published": true,
+  "publishedAt": "2026-02-24T21:48:45.481Z"
+}
