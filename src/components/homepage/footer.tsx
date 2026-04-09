@@ -22,19 +22,7 @@ export function Footer({ simple = false }: { simple?: boolean }) {
                 </div>
             </div>
 
-            {/* Payment Methods */}
-            <div className="border-b border-line py-6">
-                <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-6 px-4">
-                    <span className="text-sm font-medium">Formas de Pagamento:</span>
-                    <div className="flex flex-wrap items-center gap-4">
-                        {['Visa', 'Mastercard', 'Elo', 'PIX', 'Boleto'].map((method) => (
-                            <div key={method} className="rounded border border-line bg-white px-3 py-1 text-xs">
-                                {method}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+
 
             {/* Footer Links - Only show if not simple */}
             {!simple && (
