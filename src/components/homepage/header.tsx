@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 export function Header() {
     const { openCart, items } = useCartStore();
-    const { user, login, logout, loginFacebook } = useAuthStore();
+    const { user, login, logout } = useAuthStore();
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
