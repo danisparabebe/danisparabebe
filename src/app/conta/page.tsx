@@ -12,7 +12,7 @@ import { Footer } from '@/components/homepage/footer';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, doc, getDoc } from 'firebase/firestore';
 import { useFavoritesStore } from '@/store/favorites-store';
-import { productMap } from '@/data/product-control';
+import { productControl } from '@/data/product-control';
 import { saveUserAddress, deleteUserAddress } from '@/lib/user-db';
 import { toast } from 'sonner';
 
