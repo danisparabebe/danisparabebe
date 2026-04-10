@@ -136,7 +136,7 @@ function ContaContent() {
     ];
 
     // Mapear os Favoritos da nuvem e extrair os Objetos Reais cruzando com Banco de Mockado Local
-    const favoriteProducts = favoriteIds.map(id => productMap.get(id)).filter(Boolean);
+    const favoriteProducts = favoriteIds.map(id => productControl.find(p => p.id === id)).filter(Boolean);
 
     return (
         <div className="min-h-screen bg-surface-white flex flex-col">
