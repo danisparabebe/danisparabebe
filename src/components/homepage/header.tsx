@@ -1,29 +1,43 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, Heart, ShoppingCart, Menu, X } from 'lucide-react';
+import { Search, Heart, ShoppingCart, Menu, X, User as UserIcon, LogOut, Package } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
+import { useAuthStore, initAuthListener } from '@/store/auth-store';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export function Header() {
     const { openCart, items } = useCartStore();
+    const { user, login, logout, loginFacebook } = useAuthStore();
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showUserMenu, setShowUserMenu] = useState(false);
+    const [showLoginMenu, setShowLoginMenu] = useState(false);
 
     const router = useRouter();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const mobileDropdownRef = useRef<HTMLDivElement>(null);
+    const userMenuRef = useRef<HTMLDivElement>(null);
 
-    // Close dropdown when clicking outside
+    // Initializador global do Auth
+    useEffect(() => {
+        initAuthListener();
+    }, []);
+
+    // Close dropdowns when clicking outside
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) &&
                 mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target as Node)) {
                 setShowDropdown(false);
+            }
+            if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+                setShowUserMenu(false);
+                setShowLoginMenu(false);
             }
         }
         document.addEventListener('mousedown', handleClickOutside);
@@ -173,11 +187,87 @@ export function Header() {
                     </div>
 
                     {/* Icons - Right wing (Desktop & Mobile) */}
-                    <div className="flex shrink-0 lg:w-[200px] xl:w-[240px] items-center justify-end space-x-2 sm:space-x-4 relative z-20">
-                        {/* Only show heart on desktop */}
-                        <button className="hidden lg:block p-2 text-charcoal hover:text-sage-green transition-all duration-300 cursor-pointer group/header-heart hover:scale-110 active:scale-95">
-                            <Heart className="h-5 w-5 group-hover/header-heart:fill-dusty-rose/20" />
-                        </button>
+                    <div className="flex shrink-0 lg:w-[200px] xl:w-[240px] items-center justify-end space-x-1 sm:space-x-3 relative z-[70]">
+                        
+                        {/* ─── CONTAS & LOGIN ─── */}
+                        <div className="relative group/auth" ref={userMenuRef}>
+                            {!user ? (
+                                <>
+                                    <button onClick={() => setShowLoginMenu(!showLoginMenu)} className="p-2 flex items-center justify-center gap-1.5 text-charcoal hover:text-sage-green transition-all duration-300 outline-none">
+                                        <UserIcon className="h-5 w-5 sm:h-[22px] sm:w-[22px]" />
+                                        <span className="hidden xl:block text-[10px] font-bold font-heading py-0.5 uppercase tracking-widest mt-0.5">Entrar</span>
+                                    </button>
+                                    
+                                    {showLoginMenu && (
+                                        <div className="absolute right-0 top-[110%] w-[240px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-line/50 p-2 z-50">
+                                            <div className="text-center mb-2 mt-1">
+                                                <p className="text-[11px] font-bold text-slate uppercase tracking-wider">Acesse sua conta</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => { login(); setShowLoginMenu(false); }} 
+                                                className="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-[#F2F2F2] hover:bg-[#E5E5E5] text-charcoal text-[13px] font-bold rounded-lg transition-colors border border-[#E5E5E5]"
+                                            >
+                                                <svg className="w-4 h-4" viewBox="0 0 48 48">
+                                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"/>
+                                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                                                    <path fill="none" d="M0 0h48v48H0z"/>
+                                                </svg>
+                                                Entrar com Google
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1 sm:p-2 flex items-center gap-2 hover:scale-105 transition-all outline-none">
+                                        {user.photoURL ? (
+                                            <img src={user.photoURL} alt="Minha Conta" className="h-6 w-6 sm:h-7 sm:w-7 rounded-full border-2 border-sage-green/20 shadow-sm" />
+                                        ) : (
+                                            <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-sage-green text-white flex items-center justify-center font-bold text-xs">
+                                                {user.displayName?.charAt(0).toUpperCase() || 'U'}
+                                            </div>
+                                        )}
+                                    </button>
+                                        
+                                    {/* Menu Dropdown Logado */}
+                                    {showUserMenu && (
+                                        <div className="absolute right-0 top-[110%] mt-1 w-[220px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-line/50 overflow-hidden z-50">
+                                            <div className="px-4 py-3 bg-sage-green/5 border-b border-line/40">
+                                                <p className="text-[13px] font-bold text-charcoal truncate" style={{ fontFamily: 'var(--font-heading)' }}>{user.displayName}</p>
+                                                <p className="text-[11px] text-slate truncate">{user.email}</p>
+                                            </div>
+                                            <ul className="py-1.5">
+                                                <li>
+                                                    <Link href="/conta?aba=pedidos" onClick={() => setShowUserMenu(false)} className="flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-charcoal hover:bg-sage-green/10 transition-colors">
+                                                        <Package className="w-4 h-4 text-sage-green-dark" /> Meus Pedidos
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link href="/conta?aba=favoritos" onClick={() => setShowUserMenu(false)} className="flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-charcoal hover:bg-sage-green/10 transition-colors">
+                                                        <Heart className="w-4 h-4 text-dusty-rose" /> Favoritos
+                                                    </Link>
+                                                </li>
+                                                <div className="h-px w-full bg-line/30 my-1"></div>
+                                                <li>
+                                                    <button onClick={() => { logout(); setShowUserMenu(false); }} className="w-full text-left flex items-center gap-3 px-4 py-2.5 text-[13px] font-bold text-red-500/80 hover:bg-red-50 hover:text-red-600 transition-colors">
+                                                        <LogOut className="w-4 h-4" /> Sair da Conta
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+
+                        {/* Only show pure heart on desktop when not logged inside menu */}
+                        {!user && (
+                           <button className="hidden lg:block p-2 text-charcoal hover:text-dusty-rose transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95">
+                               <Heart className="h-5 w-5" />
+                           </button>
+                        )}
                         <button onClick={openCart} className="p-2 text-charcoal hover:text-sage-green relative transition-all duration-300 cursor-pointer group/cart hover:scale-110 active:scale-95">
                             <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
                             {items.length > 0 && (

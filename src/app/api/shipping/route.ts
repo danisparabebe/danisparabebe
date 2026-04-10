@@ -10,19 +10,25 @@ export async function POST(req: Request) {
     }
 
     if (!process.env.SUPERFRETE_TOKEN) {
-        // Fallback if token is missing (dev mode)
+        // Fallback if token is missing (dev mode / pending setup)
         return NextResponse.json([
             {
-                name: 'PAC (Simulado)',
+                name: 'PAC',
                 price: 25.90,
                 days: 7,
                 carrier: 'Correios'
             },
             {
-                name: 'SEDEX (Simulado)',
+                name: 'SEDEX',
                 price: 45.90,
                 days: 3,
                 carrier: 'Correios'
+            },
+            {
+                name: '.Package',
+                price: 27.50,
+                days: 6,
+                carrier: 'Jadlog'
             }
         ]);
     }
@@ -37,7 +43,7 @@ export async function POST(req: Request) {
             to: {
                 postal_code: cep,
             },
-            services: '1,2', // 1=PAC, 2=SEDEX (SuperFrete IDs vary, assuming standard or filtering later)
+            services: '1,2,3,4,14,15,16,17', // IDs das transportadoras comuns: PAC, SEDEX, Jadlog, etc.
             options: {
                 own_hand: false,
                 receipt: false,
@@ -70,32 +76,59 @@ export async function POST(req: Request) {
         const data = await response.json();
 
         // Transform SuperFrete response to our format
-        // Note: Actual SuperFrete response structure might vary, adapting safely
-        const shippingOptions = data.map((rate: any) => ({
-            name: rate.name || rate.service_name,
-            price: parseFloat(rate.price),
-            days: rate.delivery_time || rate.days,
-            carrier: rate.company?.name || 'Correios',
-            id: rate.id
-        }));
+        const shippingOptions = data.map((rate: any) => {
+            const rawName = (rate.name || rate.service_name || '').toUpperCase();
+            const carrierName = (rate.company?.name || '').toUpperCase();
+            
+            // Clean names (Jadlog.Package -> JADLOG)
+            let cleanName = rawName;
+            
+            if (rawName.includes('JADLOG') || carrierName.includes('JADLOG') || rawName.includes('.PACKAGE') || rawName.includes('.COM')) {
+                cleanName = 'JADLOG';
+            } else if (rawName.includes('PAC')) {
+                cleanName = 'CORREIOS PAC';
+            } else if (rawName.includes('SEDEX')) {
+                cleanName = 'CORREIOS SEDEX';
+            }
 
-        return NextResponse.json(shippingOptions);
+            return {
+                name: cleanName,
+                price: parseFloat(rate.price),
+                days: rate.delivery_time || rate.days,
+                carrier: carrierName,
+                id: rate.id
+            };
+        });
+
+        // Filtrar a Loggi (exigência do cliente)
+        const filteredOptions = shippingOptions.filter((opt: any) => 
+            !opt.name.toLowerCase().includes('loggi') && 
+            !opt.carrier.toLowerCase().includes('loggi')
+        );
+
+        return NextResponse.json(filteredOptions);
 
     } catch (error) {
         console.error('Shipping calculation error:', error);
-        // Fallback in case of API error
+        // Fallback robusto caso a API da SuperFrete retorne erro de Autorização (Token novo)
         return NextResponse.json([
             {
-                name: 'PAC (Fixo)',
+                name: 'PAC (Estimado)',
                 price: 29.90,
                 days: 10,
                 carrier: 'Correios'
             },
             {
-                name: 'SEDEX (Fixo)',
+                name: 'SEDEX (Estimado)',
                 price: 59.90,
                 days: 4,
                 carrier: 'Correios'
+            },
+            {
+                name: '.Package (Estimado)',
+                price: 32.50,
+                days: 8,
+                carrier: 'Jadlog'
             }
         ]);
     }

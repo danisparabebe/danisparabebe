@@ -173,8 +173,7 @@ export function generateProductDescription(input: DescriptionInput): string {
         sizesSection,
         finishSection,
         `§QUALITY§\n${quality}`,
-        `§TIMEFRAME§\n${timeframe}`,
-        `§CLOSING§\n${closing}`,
+        `§TIMEFRAME§\n${timeframe}`
     ].filter(Boolean);
 
     return sections.join('\n\n');

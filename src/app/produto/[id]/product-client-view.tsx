@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useConfiguratorStore } from '@/store/configurator-store';
+import { useFavoritesStore } from '@/store/favorites-store';
 import { ProductPersonalizationModal } from '@/components/product/personalization-modal';
 import { formatCategoryName, getCategoryDetails } from '@/lib/utils';
 
@@ -35,7 +36,10 @@ export function ProductClientView({ product }: { product: ProductData }) {
     const [panPos, setPanPos] = useState({ x: 0, y: 0 });
     const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, moved: false });
     const { addItem, openCart } = useCartStore();
+    const { toggle, isFavorite } = useFavoritesStore();
     const { setSelectedProduct } = useConfiguratorStore();
+    
+    const fav = isFavorite(product?.id);
 
     // Injeta o produto no store para que o personalizador saiba carregar os bordados dele
     useEffect(() => {
@@ -71,7 +75,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
             {/* Breadcrumb / Back Navigation */}
             <button
                 onClick={() => router.push('/')}
-                className="mb-4 flex items-center text-sm font-medium text-slate hover:text-dusty-rose transition-colors"
+                className="mb-4 flex items-center text-sm font-medium text-slate hover:text-sage-green-dark transition-colors"
             >
                 <ChevronLeft className="mr-1 h-5 w-5" />
                 Voltar para a loja
@@ -87,7 +91,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             <button
                                 key={idx}
                                 onClick={() => setSelectedImageIdx(idx)}
-                                className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all ${selectedImageIdx === idx ? 'border-dusty-rose shadow-md' : 'border-transparent hover:border-line'}`}
+                                className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all ${selectedImageIdx === idx ? 'border-sage-green-dark shadow-md' : 'border-transparent hover:border-line'}`}
                             >
                                 <Image src={img} alt={`Thumbnail ${idx}`} fill className="object-cover" />
                             </button>
@@ -108,11 +112,11 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             priority
                         />
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm text-charcoal px-4 py-2 rounded-full text-xs font-bold shadow-sm flex items-center gap-2 opacity-90 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-                            <ZoomIn className="w-3.5 h-3.5 text-dusty-rose" />
+                            <ZoomIn className="w-3.5 h-3.5 text-sage-green-dark" />
                             Ampliar
                         </div>
-                        <button onClick={(e) => { e.stopPropagation(); }} className="absolute top-3 right-3 p-2.5 bg-white/80 backdrop-blur-md rounded-full text-slate hover:text-dusty-rose transition-colors shadow-sm z-10">
-                            <Heart className="w-4 h-4" />
+                        <button onClick={(e) => { e.stopPropagation(); toggle(product.id); }} className="absolute top-3 right-3 p-2.5 bg-white/80 backdrop-blur-md rounded-full shadow-sm z-20 cursor-pointer hover:scale-110 active:scale-95 transition-all outline-none">
+                            <Heart className={`w-4 h-4 transition-colors duration-300 ${fav ? 'fill-dusty-rose text-dusty-rose' : 'text-slate hover:text-dusty-rose'}`} />
                         </button>
                     </div>
                 </div>
@@ -120,7 +124,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                 {/* Right Column: Product Info — grows freely, page scrolls naturally */}
                 <div className="flex flex-col space-y-4 pb-8">
                     <div>
-                        <span className="inline-block text-xs font-bold tracking-wider uppercase text-dusty-rose mb-1">{product.category}</span>
+                        <span className="inline-block text-xs font-bold tracking-wider uppercase text-sage-green-dark mb-1">{product.category}</span>
                         <h1 className="text-2xl md:text-3xl font-bold text-charcoal leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
                             {product.name}
                         </h1>
@@ -129,7 +133,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                     {/* Pricing */}
                     <div className="flex flex-col gap-0.5 mb-2">
                         {product.originalPrice && (
-                            <div className="text-sm text-slate line-through decoration-dusty-rose/50">
+                            <div className="text-sm text-slate line-through decoration-charcoal/30">
                                 R$ {product.originalPrice.toFixed(2).replace('.', ',')}
                             </div>
                         )}
@@ -194,8 +198,8 @@ export function ProductClientView({ product }: { product: ProductData }) {
                                             );
                                         } else if (sectionType === 'PERSONAL') {
                                             rendered.push(
-                                                <div key="personal" className="flex items-start gap-2 bg-dusty-rose/8 p-3 rounded-lg border border-dusty-rose/15">
-                                                    <Wand2 className="w-3.5 h-3.5 text-dusty-rose mt-0.5 flex-shrink-0" />
+                                                <div key="personal" className="flex items-start gap-2 bg-sage-green/10 p-3 rounded-lg border border-sage-green/20">
+                                                    <Wand2 className="w-3.5 h-3.5 text-sage-green-dark mt-0.5 flex-shrink-0" />
                                                     <p className="text-[12px] text-charcoal/70 leading-relaxed">{content}</p>
                                                 </div>
                                             );
@@ -209,7 +213,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                                                     <ul className="space-y-1">
                                                         {items.map((item, idx) => (
                                                             <li key={idx} className="flex items-center gap-2">
-                                                                <div className="h-1.5 w-1.5 rounded-full bg-dusty-rose flex-shrink-0" />
+                                                                <div className="h-1.5 w-1.5 rounded-full bg-sage-green-dark flex-shrink-0" />
                                                                 <span className="text-[12px] font-semibold text-charcoal">
                                                                     {item.replace('• ', '')}
                                                                 </span>
@@ -246,12 +250,6 @@ export function ProductClientView({ product }: { product: ProductData }) {
                                                     <p className="text-[12px] text-amber-800/70 leading-relaxed font-medium">{content}</p>
                                                 </div>
                                             );
-                                        } else if (sectionType === 'CLOSING') {
-                                            rendered.push(
-                                                <div key="closing" className="border-t border-line pt-3">
-                                                    <p className="text-[12px] text-charcoal/60 leading-relaxed font-semibold">{content}</p>
-                                                </div>
-                                            );
                                         }
                                     }
                                     return <>{rendered}</>;
@@ -277,7 +275,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
 
                         <button
                             onClick={() => handleActionClick('cart')}
-                            className="w-full relative overflow-hidden group/add bg-white border-2 border-dusty-rose text-dusty-rose hover:bg-dusty-rose hover:text-white font-bold py-3 px-6 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] shadow-sm"
+                            className="w-full relative overflow-hidden group/add bg-white border-2 border-charcoal text-charcoal hover:bg-charcoal hover:text-white font-bold py-3 px-6 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] shadow-sm"
                         >
                             <ShoppingBag className="w-4 h-4 relative z-10" />
                             <span className="relative z-10">Adicionar ao Carrinho</span>
@@ -293,7 +291,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             { icon: CreditCard, title: 'Pag. Seguro', sub: 'Até 3x S/Juros' },
                         ].map(({ icon: Icon, title, sub }) => (
                             <div key={title} className="flex flex-col items-center text-center p-2 rounded-xl bg-warm-stone/10 border border-line">
-                                <Icon className="h-4 w-4 text-dusty-rose mb-1" />
+                                <Icon className="h-4 w-4 text-sage-green-dark mb-1" />
                                 <span className="text-[10px] text-charcoal font-bold leading-tight">{title}</span>
                                 <span className="text-[9px] text-slate mt-0.5">{sub}</span>
                             </div>
@@ -302,7 +300,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
 
                     {/* Production Time Notice */}
                     <div className="flex items-start gap-2 p-3 mt-3 bg-warm-stone/20 rounded-xl border border-line">
-                        <Info className="w-4 h-4 text-dusty-rose mt-0.5 shrink-0" />
+                        <Info className="w-4 h-4 text-sage-green-dark mt-0.5 shrink-0" />
                         <p className="text-[10px] text-slate leading-relaxed">
                             <strong className="text-charcoal block mb-0.5">Prazo de Produção: Máximo 12 dias úteis</strong>
                             Cada peça é feita sob medida com carinho. Se o seu pedido ficar pronto antes, enviaremos imediatamente!

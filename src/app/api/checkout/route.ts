@@ -32,6 +32,7 @@ const checkoutSchema = z.object({
     state: z.string().max(2).optional(),
     cep: z.string().max(20).optional()
   }),
+  userId: z.string().optional(),
   cancelPath: z.string().optional()
 });
 
@@ -76,10 +77,10 @@ export async function POST(request: Request) {
         }
         
         // Agora usamos os dados higienizados ("Limpos e verificados")
-        const { items, shipping, customer, cancelPath } = parseResult.data;
+        const { items, shipping, customer, userId, cancelPath } = parseResult.data;
 
         console.log('\n========== DEBUG CHECKOUT ==========');
-        console.log('📦 Segurança passou. Request limpo:', customer.name);
+        console.log('📦 Segurança passou. Request limpo:', customer.name, 'UID:', userId || 'Deslogado');
 
         // 1. Structure Line Items for InfinitePay
         const ipItems = items.map((item: any) => {
@@ -135,6 +136,7 @@ export async function POST(request: Request) {
                 items: items,
                 totalAmount: totalAmount / 100,
                 shippingAmount: shipping || 0,
+                userId: userId || '',
                 createdAt: now.toISOString(),
                 deadlineDate: deadline.toISOString(),
                 status: 'pendente'

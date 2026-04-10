@@ -7,7 +7,7 @@ import { BASE_PRICES, formatPrice } from '@/lib/pricing';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2 } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL, isEligibleForFreeShipping } from '@/lib/shipping-rules';
 
@@ -43,6 +43,7 @@ export function StepReview() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [shippingOption, setShippingOption] = useState<any | null>(null);
     const [shippingOptions, setShippingOptions] = useState<any[]>([]);
+    const [showAllShipping, setShowAllShipping] = useState(false);
 
     // --- CACHE ON MOUNT ---
     useEffect(() => {
@@ -397,40 +398,92 @@ export function StepReview() {
                         <div className="bg-[#faf9f7] rounded-lg p-3 border border-black/5 mt-2 shrink-0">
                             {addressLoaded && shippingOptions.length > 0 && (
                                 <div className="space-y-1 mt-1 mb-2 border-b border-black/5 pb-2">
-                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Opção de Envio</label>
+                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Opções de Envio</label>
+                                    
                                     <div className="flex flex-col gap-1.5">
-                                        {shippingOptions.map((option) => {
-                                            const isCheapest = option.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
+                                        {/* Render the selected or cheapest option as primary */}
+                                        {(() => {
+                                            const cheapestOption = [...shippingOptions].sort((a, b) => a.price - b.price)[0];
+                                            const primaryOption = shippingOption || cheapestOption;
                                             const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                            const displayPrice = ((total >= FREE_SHIPPING_THRESHOLD) && isCheapest && isStateEligible) ? 0 : option.price;
-                                            
+                                            const primaryDisplayPrice = ((total >= FREE_SHIPPING_THRESHOLD) && (primaryOption.id === cheapestOption.id) && isStateEligible) ? 0 : primaryOption.price;
+
                                             return (
                                                 <button
-                                                    key={option.id}
                                                     type="button"
-                                                    onClick={() => setShippingOption(option)}
+                                                    onClick={() => !showAllShipping ? setShowAllShipping(true) : null}
                                                     className={`relative w-full text-left flex flex-col justify-between p-2 rounded-lg border-2 transition-all ${
-                                                        shippingOption?.id === option.id 
-                                                        ? 'border-[#1f2937] bg-[#f8fafc]' 
-                                                        : 'border-black/5 bg-white hover:border-black/10'
+                                                        !showAllShipping ? 'border-[#1f2937] bg-[#f8fafc]' : 'border-black/5 bg-white'
                                                     }`}
                                                 >
                                                     <div className="flex items-center gap-1.5 mb-1.5 w-full">
-                                                        <div className={`shrink-0 w-3 h-3 rounded-full border-2 flex items-center justify-center ${shippingOption?.id === option.id ? 'border-[#1f2937]' : 'border-black/20'}`}>
-                                                            {shippingOption?.id === option.id && <div className="w-1.5 h-1.5 rounded-full bg-[#1f2937]" />}
+                                                        <div className={`shrink-0 w-3 h-3 rounded-full border-2 flex items-center justify-center border-[#1f2937]`}>
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-[#1f2937]" />
                                                         </div>
-                                                        <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{option.name}</p>
+                                                        <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{primaryOption.name}</p>
+                                                        {!showAllShipping && (
+                                                            <div className="ml-auto flex items-center gap-1 text-[8px] text-slate font-bold uppercase transition-transform">
+                                                                Mais Opções <ChevronDown className="w-3 h-3" />
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     
                                                     <div className="flex items-end justify-between w-full mt-auto">
-                                                        <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {option.days}d</p>
-                                                        <span className={`text-[10px] font-black shrink-0 ${displayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
-                                                            {displayPrice === 0 ? 'GRÁTIS' : formatPrice(displayPrice)}
+                                                        <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {primaryOption.days} dias úteis</p>
+                                                        <span className={`text-[10px] font-black shrink-0 ${primaryDisplayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
+                                                            {primaryDisplayPrice === 0 ? 'GRÁTIS' : formatPrice(primaryDisplayPrice)}
                                                         </span>
                                                     </div>
                                                 </button>
-                                            );
+                                            )
+                                        })()}
+
+                                        {/* Render remaining options when expanded */}
+                                        {showAllShipping && shippingOptions
+                                            .filter(option => option.id !== (shippingOption?.id || [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id))
+                                            .sort((a, b) => a.price - b.price)
+                                            .map((option) => {
+                                                const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                                // Grátis logic technically only applies to cheapest, but just in case we map it:
+                                                const isCheapest = option.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
+                                                const displayPrice = ((total >= FREE_SHIPPING_THRESHOLD) && isCheapest && isStateEligible) ? 0 : option.price;
+                                                
+                                                return (
+                                                    <button
+                                                        key={option.id}
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setShippingOption(option);
+                                                            setShowAllShipping(false);
+                                                        }}
+                                                        className={`relative w-full text-left flex flex-col justify-between p-2 rounded-lg border-2 border-black/5 bg-white hover:border-black/10 transition-all`}
+                                                    >
+                                                        <div className="flex items-center gap-1.5 mb-1.5 w-full">
+                                                            <div className="shrink-0 w-3 h-3 rounded-full border-2 border-black/20 flex items-center justify-center">
+                                                            </div>
+                                                            <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{option.name}</p>
+                                                        </div>
+                                                        
+                                                        <div className="flex items-end justify-between w-full mt-auto">
+                                                            <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {option.days} dias úteis</p>
+                                                            <span className={`text-[10px] font-black shrink-0 ${displayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
+                                                                {displayPrice === 0 ? 'GRÁTIS' : formatPrice(displayPrice)}
+                                                            </span>
+                                                        </div>
+                                                    </button>
+                                                );
                                         })}
+                                        
+                                        {/* Optional collapse button */}
+                                        {showAllShipping && shippingOptions.length > 1 && (
+                                            <button 
+                                                type="button" 
+                                                onClick={() => setShowAllShipping(false)}
+                                                className="w-full flex items-center justify-center gap-1 text-[8px] font-bold uppercase text-slate hover:text-charcoal mt-1 py-1"
+                                            >
+                                                Ver Menos <ChevronUp className="w-3 h-3" />
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             )}

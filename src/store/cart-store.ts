@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { auth } from '@/lib/firebase';
+import { pushCartToCloud } from '@/lib/user-db';
 
 export interface CartItem {
     id: string; // Unique ID for the cart instance (e.g., timestamp)
@@ -39,6 +41,12 @@ interface CartStore {
     itemCount: () => number;
 }
 
+const triggerCloudSync = (items: CartItem[]) => {
+    if (auth.currentUser) {
+        pushCartToCloud(auth.currentUser.uid, items);
+    }
+};
+
 export const useCartStore = create<CartStore>()(
     persist(
         (set, get) => ({
@@ -58,29 +66,39 @@ export const useCartStore = create<CartStore>()(
                     if (existingItemIndex >= 0) {
                         const newItems = [...state.items];
                         newItems[existingItemIndex].quantity += newItem.quantity;
+                        triggerCloudSync(newItems);
                         return { items: newItems };
                     }
 
-                    return { items: [...state.items, newItem] };
+                    const newItemsList = [...state.items, newItem];
+                    triggerCloudSync(newItemsList);
+                    return { items: newItemsList };
                 });
             },
 
             removeItem: (id) => {
-                set((state) => ({
-                    items: state.items.filter((item) => item.id !== id),
-                }));
+                set((state) => {
+                    const filtered = state.items.filter((item) => item.id !== id);
+                    triggerCloudSync(filtered);
+                    return { items: filtered };
+                });
             },
 
             updateQuantity: (id, quantity) => {
                 if (quantity <= 0) return;
-                set((state) => ({
-                    items: state.items.map((item) =>
+                set((state) => {
+                    const altered = state.items.map((item) =>
                         item.id === id ? { ...item, quantity } : item
-                    ),
-                }));
+                    );
+                    triggerCloudSync(altered);
+                    return { items: altered };
+                });
             },
 
-            clearCart: () => set({ items: [], shipping: 0 }),
+            clearCart: () => {
+                triggerCloudSync([]);
+                set({ items: [], shipping: 0 });
+            },
 
             openCart: () => set({ isOpen: true }),
             closeCart: () => set({ isOpen: false }),

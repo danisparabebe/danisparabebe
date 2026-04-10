@@ -22,6 +22,7 @@ interface HeroCarouselPanelProps {
 function HeroCarouselPanel({ slides, intervalMs = 3500 }: HeroCarouselPanelProps) {
     const [current, setCurrent] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
     const total = slides.length;
 
     const goTo = useCallback((idx: number) => {
@@ -41,9 +42,21 @@ function HeroCarouselPanel({ slides, intervalMs = 3500 }: HeroCarouselPanelProps
 
     return (
         <div
-            className="w-full flex flex-col group/hero"
+            className="w-full flex flex-col group/hero touch-pan-y"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={(e) => setTouchStart(e.targetTouches[0].clientX)}
+            onTouchEnd={(e) => {
+                if (!touchStart) return;
+                const diff = touchStart - e.changedTouches[0].clientX;
+                if (diff > 50) next();
+                else if (diff < -50) prev();
+                setTouchStart(null);
+                
+                // Pause resuming giving 10sec of uninterrupted browse
+                setIsPaused(true);
+                setTimeout(() => setIsPaused(false), 8000);
+            }}
         >
             {/* ─── Slides Image Area ─── */}
             <div className="relative w-full h-[clamp(280px,40vw,480px)] overflow-hidden rounded-[20px] md:rounded-[32px] shadow-lg border border-black/5">

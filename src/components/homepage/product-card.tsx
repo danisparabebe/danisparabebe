@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
+import { useFavoritesStore } from '@/store/favorites-store';
 import { toast } from 'sonner';
 
 interface ProductCardProps {
@@ -22,6 +23,9 @@ interface ProductCardProps {
 
 export function ProductCard({ id, shortCode, name, category, price, originalPrice, installmentPrice, installments = 3, image, badge, isHot }: ProductCardProps) {
     const { addItem, openCart } = useCartStore();
+    const { toggle, isFavorite } = useFavoritesStore();
+    
+    const fav = isFavorite(id);
 
     const handleAddToCart = () => {
         addItem({
@@ -60,8 +64,11 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                 </div>
             </Link>
 
-            <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full shadow-sm hover:shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300 z-10 cursor-pointer group/heart">
-                <Heart className="h-4 w-4 text-slate group-hover/heart:text-dusty-rose transition-colors duration-300" />
+            <button 
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(id); }}
+                className="absolute top-3 right-3 p-2 bg-white/90 rounded-full shadow-sm hover:shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300 z-20 cursor-pointer group/heart"
+            >
+                <Heart className={`h-4 w-4 transition-colors duration-300 ${fav ? 'fill-dusty-rose text-dusty-rose' : 'text-slate group-hover/heart:text-dusty-rose'}`} />
             </button>
 
             <div className="mt-3 flex flex-col flex-1 px-1">

@@ -2,24 +2,30 @@
 
 import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart-store';
+import { useAuthStore } from '@/store/auth-store';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowLeft, ShoppingCart, ShieldCheck, Loader2 } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, ShieldCheck, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatPrice } from '@/lib/pricing';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL, isEligibleForFreeShipping } from '@/lib/shipping-rules';
 import { productControl } from '@/data/product-control';
 import { TYPES } from '@/data/admin-options';
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const getItemLabel = (id: string) => TYPES.find(t => t.value === id)?.label || id;
 
 export default function CheckoutRapidoPage() {
     const { items, removeItem } = useCartStore();
+    const { user } = useAuthStore();
     const router = useRouter();
 
     const [hydrated, setHydrated] = useState(false);
+    const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+    const [showSavedAddresses, setShowSavedAddresses] = useState(false);
     const [formData, setFormData] = useState({
-        name: '', phone: '', cpf: '', cep: '',
+        name: '', email: '', phone: '', cpf: '', cep: '',
         street: '', number: '', complement: '',
         neighborhood: '', city: '', state: ''
     });
@@ -28,8 +34,29 @@ export default function CheckoutRapidoPage() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [shippingOption, setShippingOption] = useState<any | null>(null);
     const [shippingOptions, setShippingOptions] = useState<any[]>([]);
+    const [showAllShipping, setShowAllShipping] = useState(false);
 
     useEffect(() => { setHydrated(true); }, []);
+
+    // --- SYNC WITH AUTH ---
+    useEffect(() => {
+        if (user) {
+            setFormData(prev => ({
+                ...prev,
+                name: prev.name || user.displayName || '',
+                email: user.email || prev.email || '',
+            }));
+
+            // Busca endereços reais da nuvem
+            const fetchAddresses = async () => {
+                const snap = await getDoc(doc(db, 'users', user.uid));
+                if (snap.exists()) {
+                    setSavedAddresses(snap.data().addresses || []);
+                }
+            };
+            fetchAddresses();
+        }
+    }, [user]);
 
     // --- CACHE ON MOUNT ---
     useEffect(() => {
@@ -37,7 +64,7 @@ export default function CheckoutRapidoPage() {
         if (cached) {
             try {
                 const data = JSON.parse(cached);
-                setFormData(data);
+                setFormData(prev => ({ ...prev, ...data }));
                 if (data.street) setAddressLoaded(true);
                 if (data.cep && data.cep.replace(/\D/g, '').length === 8) {
                     handleCepLookupCache(data.cep); 
@@ -148,6 +175,24 @@ export default function CheckoutRapidoPage() {
         }
     };
 
+    const selectSavedAddress = (addr: any) => {
+        const newData = {
+            ...formData,
+            cep: addr.cep,
+            street: addr.street,
+            number: addr.number,
+            complement: addr.complement || '',
+            neighborhood: addr.neighborhood,
+            city: addr.city,
+            state: addr.state
+        };
+        setFormData(newData);
+        setAddressLoaded(true);
+        setShowSavedAddresses(false);
+        handleCepLookupCache(addr.cep);
+        localStorage.setItem('checkout_form', JSON.stringify(newData));
+    };
+
     const handleBuyNow = async () => {
         if (!formData.name || !formData.phone || !formData.cpf || !addressLoaded || !formData.number) {
             toast.error('Preencha os dados de entrega (incluindo CPF) antes de prosseguir.');
@@ -163,6 +208,7 @@ export default function CheckoutRapidoPage() {
                     items: [item], 
                     shipping: actualShippingPrice,
                     customer: formData, 
+                    userId: user?.uid,
                     cancelPath: '/checkout/rapido'
                 }),
             });
@@ -332,41 +378,117 @@ export default function CheckoutRapidoPage() {
                                     </div>
                                 )}
 
+                                {user && savedAddresses.length > 0 && (
+                                    <div className="relative">
+                                        <button 
+                                            type="button"
+                                            onClick={() => setShowSavedAddresses(!showSavedAddresses)}
+                                            className="text-[9px] font-bold text-sage-green-dark hover:text-sage-green uppercase tracking-widest transition-colors flex items-center gap-1"
+                                        >
+                                            {showSavedAddresses ? 'Fechar lista' : 'Usar um endereço salvo'}
+                                        </button>
+                                        
+                                        {showSavedAddresses && (
+                                            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-line rounded-xl shadow-xl z-50 p-2 max-h-40 overflow-y-auto custom-scrollbar animate-fadeIn">
+                                                {savedAddresses.map((addr) => (
+                                                    <button
+                                                        key={addr.id}
+                                                        type="button"
+                                                        onClick={() => selectSavedAddress(addr)}
+                                                        className="w-full text-left p-2 hover:bg-sage-green/5 rounded-lg border-b border-line last:border-0 transition-colors"
+                                                    >
+                                                        <p className="text-[10px] font-bold text-charcoal">{addr.street}, {addr.number}</p>
+                                                        <p className="text-[9px] text-slate">{addr.neighborhood} — {addr.city}/{addr.state}</p>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
                                 {addressLoaded && shippingOptions.length > 0 && (
                                     <div className="space-y-1 mt-1">
                                         <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Opção de Envio</label>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            {shippingOptions.map((option) => {
-                                                const isCheapest = option.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
-                                                const displayPrice = (freeShipping && isCheapest) ? 0 : option.price;
-                                                
+                                        <div className="flex flex-col gap-1.5">
+                                            {/* Render the selected or cheapest option as primary */}
+                                            {(() => {
+                                                const cheapestOption = [...shippingOptions].sort((a, b) => a.price - b.price)[0];
+                                                const primaryOption = shippingOption || cheapestOption;
+                                                const displayPrice = (freeShipping && primaryOption.id === cheapestOption.id) ? 0 : primaryOption.price;
+
                                                 return (
                                                     <button
-                                                        key={option.id}
                                                         type="button"
-                                                        onClick={() => setShippingOption(option)}
+                                                        onClick={() => !showAllShipping ? setShowAllShipping(true) : null}
                                                         className={`relative w-full text-left flex flex-col justify-between p-2 rounded-lg border-2 transition-all ${
-                                                            shippingOption?.id === option.id 
-                                                            ? 'border-[#1f2937] bg-[#f8fafc]' 
-                                                            : 'border-black/5 bg-white hover:border-black/10'
+                                                            !showAllShipping ? 'border-[#1f2937] bg-[#f8fafc]' : 'border-black/5 bg-white'
                                                         }`}
                                                     >
                                                         <div className="flex items-center gap-1.5 mb-1.5 w-full">
-                                                            <div className={`shrink-0 w-3 h-3 rounded-full border-2 flex items-center justify-center ${shippingOption?.id === option.id ? 'border-[#1f2937]' : 'border-black/20'}`}>
-                                                                {shippingOption?.id === option.id && <div className="w-1.5 h-1.5 rounded-full bg-[#1f2937]" />}
+                                                            <div className={`shrink-0 w-3 h-3 rounded-full border-2 flex items-center justify-center border-[#1f2937]`}>
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-[#1f2937]" />
                                                             </div>
-                                                            <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{option.name}</p>
+                                                            <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{primaryOption.name}</p>
+                                                            {!showAllShipping && (
+                                                                <div className="ml-auto flex items-center gap-1 text-[8px] text-slate font-bold uppercase transition-transform">
+                                                                    Mais Opções <ChevronDown className="w-3 h-3" />
+                                                                </div>
+                                                            )}
                                                         </div>
                                                         
                                                         <div className="flex items-end justify-between w-full mt-auto">
-                                                            <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {option.days}d</p>
+                                                            <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {primaryOption.days} dias úteis</p>
                                                             <span className={`text-[10px] font-black shrink-0 ${displayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
                                                                 {displayPrice === 0 ? 'GRÁTIS' : formatPrice(displayPrice)}
                                                             </span>
                                                         </div>
                                                     </button>
-                                                );
+                                                )
+                                            })()}
+
+                                            {/* Render remaining options when expanded */}
+                                            {showAllShipping && shippingOptions
+                                                .filter(option => option.id !== (shippingOption?.id || [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id))
+                                                .sort((a, b) => a.price - b.price)
+                                                .map((option) => {
+                                                    const displayPrice = (freeShipping && option.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id) ? 0 : option.price;
+                                                    
+                                                    return (
+                                                        <button
+                                                            key={option.id}
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setShippingOption(option);
+                                                                setShowAllShipping(false);
+                                                            }}
+                                                            className={`relative w-full text-left flex flex-col justify-between p-2 rounded-lg border-2 border-black/5 bg-white hover:border-black/10 transition-all`}
+                                                        >
+                                                            <div className="flex items-center gap-1.5 mb-1.5 w-full">
+                                                                <div className="shrink-0 w-3 h-3 rounded-full border-2 border-black/20 flex items-center justify-center">
+                                                                </div>
+                                                                <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{option.name}</p>
+                                                            </div>
+                                                            
+                                                            <div className="flex items-end justify-between w-full mt-auto">
+                                                                <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {option.days} dias úteis</p>
+                                                                <span className={`text-[10px] font-black shrink-0 ${displayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
+                                                                    {displayPrice === 0 ? 'GRÁTIS' : formatPrice(displayPrice)}
+                                                                </span>
+                                                            </div>
+                                                        </button>
+                                                    );
                                             })}
+                                            
+                                            {/* Optional collapse button */}
+                                            {showAllShipping && shippingOptions.length > 1 && (
+                                                <button 
+                                                    type="button" 
+                                                    onClick={() => setShowAllShipping(false)}
+                                                    className="w-full flex items-center justify-center gap-1 text-[8px] font-bold uppercase text-slate hover:text-charcoal mt-1 py-1"
+                                                >
+                                                    Ver Menos <ChevronUp className="w-3 h-3" />
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 )}

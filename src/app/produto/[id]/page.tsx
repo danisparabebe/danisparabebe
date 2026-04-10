@@ -111,7 +111,7 @@ export default async function ProductPage({ params }: PageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-dots-texture">
+        <div className="min-h-screen bg-[#FAF9F6]">
             <main>
                 <ProductClientView product={product} />
             </main>
