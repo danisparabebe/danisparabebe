@@ -103,6 +103,9 @@ export default async function HomePage() {
     const luxos = allProductsArray.filter(p => p.tags?.some(t => t.toLowerCase().includes('luxo') || t.toLowerCase().includes('premium')) || p.price > 250); 
     const favoritos = allProductsArray.filter(p => p.tags?.some(t => Math.abs(t.toLowerCase().localeCompare('dia a dia')) < 2 || t.toLowerCase().includes('mãe') || t.toLowerCase().includes('favorit')) || topzeraIds.includes(p.id));
 
+    // Build curated product arrays from ID lists
+    const supremos = supremoIds.map(id => productMap.get(id)).filter(Boolean) as typeof managedProducts;
+
     // Replace 6 with 12 to double the capacity
     const heroLeftSource = maisVendidos.length > 0 ? maisVendidos : supremos.slice(0, 8); 
     let heroRightSource = presentes.length > 0 ? presentes : supremos.slice(4, 12);
