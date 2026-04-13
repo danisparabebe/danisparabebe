@@ -209,7 +209,7 @@ export function StepTheme() {
     useEffect(() => {
         const fetchLinkedBordados = async () => {
             try {
-                const res = await fetch('/api/admin/bordados');
+                const res = await fetch('/api/bordados');
                 const data = await res.json();
                 if (data.success && data.relationships) {
                     if (selectedProduct?.id) {
