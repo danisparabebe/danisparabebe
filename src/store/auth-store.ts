@@ -27,7 +27,13 @@ export const useAuthStore = create<AuthState>((set) => ({
             console.error('Código do Erro:', e?.code);
             console.error('Mensagem:', e?.message);
             
-            if (e?.code === 'auth/internal-error') {
+            // Alerta visual para facilitar o debug pelo usuário
+            if (typeof window !== 'undefined') {
+                const domain = window.location.hostname;
+                alert(`Erro de Login: ${e?.code}\n\nMensagem: ${e?.message}\n\nVerifique se o domínio "${domain}" está autorizado no Console do Firebase.`);
+            }
+            
+            if (e?.code === 'auth/internal-error' || e?.code === 'auth/unauthorized-domain') {
                 console.warn("⚠️ Dica: Verifique se o Google está ATIVADO no console do Firebase e se o domínio atual está em 'Authorized Domains'.");
             }
         }

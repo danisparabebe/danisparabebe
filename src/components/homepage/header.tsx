@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Search, Heart, ShoppingCart, Menu, X, User as UserIcon, LogOut, Package } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
-import { useAuthStore, initAuthListener } from '@/store/auth-store';
+import { useAuthStore } from '@/store/auth-store';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -23,10 +23,7 @@ export function Header() {
     const mobileDropdownRef = useRef<HTMLDivElement>(null);
     const userMenuRef = useRef<HTMLDivElement>(null);
 
-    // Initializador global do Auth
-    useEffect(() => {
-        initAuthListener();
-    }, []);
+    // Open cart handler
 
     // Close dropdowns when clicking outside
     useEffect(() => {
