@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import { Menu, X, Wand2, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 const priorityLinks = [
     { name: 'Kits Prontos', href: '/categoria/kits' },
@@ -54,21 +54,7 @@ export function Navigation() {
                     </div>
 
                     {/* Desktop Navigation Layout */}
-                    <div className="hidden lg:flex w-full h-full items-center justify-between">
-
-                        {/* The Star: Personalize seu Kit (Center Aligned to match the logo axis) */}
-                        <div className="flex shrink-0 w-[220px] xl:w-[260px] justify-center">
-                            <Link
-                                href="/monte-seu-kit"
-                                className="group relative flex items-center gap-2 px-6 py-2.5 bg-[#1f2937] hover:bg-[#2d3a4a] text-white text-[11px] xl:text-[12px] font-black tracking-[0.12em] rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 whitespace-nowrap outline-none cursor-pointer shadow-[0_4px_20px_rgba(31,41,55,0.35)] hover:shadow-[0_8px_30px_rgba(31,41,55,0.45)] overflow-hidden"
-                            >
-                                {/* Shimmer effect */}
-                                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                                <Wand2 className="w-4 h-4 text-sage-green group-hover:rotate-12 transition-transform duration-300" strokeWidth={2.5} />
-                                <span>MONTE SEU KIT</span>
-                                <span className="ml-1 text-[9px] bg-sage-green text-charcoal px-1.5 py-0.5 rounded-full font-black animate-pulse">✨</span>
-                            </Link>
-                        </div>
+                    <div className="hidden lg:flex w-full h-full items-center justify-center">
 
                         {/* Desktop Priority Links (Centered in remaining space) */}
                         <div className="flex-1 flex justify-center items-center space-x-6 xl:space-x-10">
@@ -112,18 +98,6 @@ export function Navigation() {
                         </div>
                     </div>
 
-                    {/* Mobile Only: Center Personalize Button absolutely so it's always geometric center */}
-                    <div className="flex lg:hidden justify-center items-center h-full absolute inset-0 pointer-events-none z-10 w-full">
-                        <Link
-                            href="/monte-seu-kit"
-                            className="group relative flex items-center gap-2 px-5 py-2.5 bg-[#1f2937] text-white text-[10px] sm:text-[11px] font-black tracking-[0.12em] rounded-full shadow-[0_4px_20px_rgba(31,41,55,0.35)] transition-all outline-none pointer-events-auto active:scale-95 overflow-hidden"
-                        >
-                            <span className="absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-                            <Wand2 className="w-3.5 h-3.5 text-sage-green" strokeWidth={2.5} />
-                            <span>MONTE SEU KIT</span>
-                            <span className="ml-0.5 text-[9px] bg-sage-green text-charcoal px-1.5 py-0.5 rounded-full font-black">✨</span>
-                        </Link>
-                    </div>
 
                 </div>
             </div>
