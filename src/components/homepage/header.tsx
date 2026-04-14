@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, Heart, ShoppingCart, Menu, X, User as UserIcon, LogOut, Package, Wand2, ArrowRight } from 'lucide-react';
+import { Search, Heart, ShoppingCart, Menu, X, User as UserIcon, LogOut, Package } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useAuthStore } from '@/store/auth-store';
 import { useState, useEffect, useRef } from 'react';
@@ -161,18 +161,6 @@ export function Header() {
                         </Link>
                     </div>
 
-                    {/* Desktop: MONTE SEU KIT button between logo and search */}
-                    <div className="hidden lg:flex items-center ml-4">
-                        <Link
-                            href="/monte-seu-kit"
-                            className="group flex items-center gap-2 px-5 py-2.5 bg-sage-green hover:bg-[#9cbd9f] text-charcoal text-[11px] xl:text-[12px] font-black tracking-[0.1em] rounded-full transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap outline-none cursor-pointer shadow-[0_2px_12px_rgba(173,206,179,0.4)] hover:shadow-[0_6px_20px_rgba(173,206,179,0.55)] border border-charcoal/10"
-                        >
-                            <Wand2 className="w-4 h-4 text-charcoal/70 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2.5} />
-                            <span>MONTE SEU KIT</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-charcoal/50 group-hover:translate-x-0.5 transition-transform duration-300" strokeWidth={2.5} />
-                        </Link>
-                    </div>
-
                     {/* Search - Desktop (Perfectly Centered) */}
                     <div className="hidden lg:flex flex-1 max-w-2xl px-8 relative justify-center" ref={dropdownRef}>
                         <form onSubmit={handleSearch} className="relative w-full group/search">
@@ -208,7 +196,7 @@ export function Header() {
                                     </button>
                                     
                                     {showLoginMenu && (
-                                        <div className="absolute right-0 top-[110%] w-[240px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-line/50 p-2 z-50">
+                                        <div className="absolute -left-2 sm:left-auto sm:right-0 top-[110%] w-[240px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-line/50 p-2 z-50">
                                             <div className="text-center mb-2 mt-1">
                                                 <p className="text-[11px] font-bold text-slate uppercase tracking-wider">Acesse sua conta</p>
                                             </div>
@@ -242,7 +230,7 @@ export function Header() {
                                         
                                     {/* Menu Dropdown Logado */}
                                     {showUserMenu && (
-                                        <div className="absolute right-0 top-[110%] mt-1 w-[220px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-line/50 overflow-hidden z-50">
+                                        <div className="absolute -left-2 sm:left-auto sm:right-0 top-[110%] mt-1 w-[220px] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-line/50 overflow-hidden z-50">
                                             <div className="px-4 py-3 bg-sage-green/5 border-b border-line/40">
                                                 <p className="text-[13px] font-bold text-charcoal truncate" style={{ fontFamily: 'var(--font-heading)' }}>{user.displayName}</p>
                                                 <p className="text-[11px] text-slate truncate">{user.email}</p>
@@ -286,18 +274,6 @@ export function Header() {
                             )}
                         </button>
                     </div>
-                </div>
-
-                {/* Mobile: MONTE SEU KIT button */}
-                <div className="lg:hidden flex justify-center pb-2">
-                    <Link
-                        href="/monte-seu-kit"
-                        className="group flex items-center gap-2 px-5 py-2.5 bg-sage-green hover:bg-[#9cbd9f] text-charcoal text-[10px] sm:text-[11px] font-black tracking-[0.1em] rounded-full transition-all outline-none shadow-[0_2px_12px_rgba(173,206,179,0.4)] border border-charcoal/10 active:scale-95"
-                    >
-                        <Wand2 className="w-3.5 h-3.5 text-charcoal/70" strokeWidth={2.5} />
-                        <span>MONTE SEU KIT</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-charcoal/50" strokeWidth={2.5} />
-                    </Link>
                 </div>
 
                 {/* Search - Mobile */}
