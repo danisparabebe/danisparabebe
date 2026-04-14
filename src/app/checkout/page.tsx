@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart-store';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ChevronLeft, Trash2, ShieldCheck, Loader2, Lock, Truck, Clock } from 'lucide-react';
+import { ChevronLeft, Trash2, ShieldCheck, Loader2, Lock, Truck, Clock, CreditCard, QrCode } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
@@ -74,7 +74,7 @@ export default function CheckoutPage() {
         }
     };
 
-    const handleCheckout = async () => {
+    const handleCheckout = async (method: 'pix' | 'card') => {
         if (!formData.name || !formData.phone || !formData.cpf || !formData.cep || !formData.street || !formData.number || !formData.city) {
             toast.error('Preencha todos os campos obrigatorios (incluindo CPF e CEP).');
             return;
@@ -85,7 +85,7 @@ export default function CheckoutPage() {
             const response = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items, shipping, customer: formData, cancelPath: '/checkout' }),
+                body: JSON.stringify({ items, shipping, customer: formData, cancelPath: '/checkout', paymentMethod: method }),
             });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Falha ao iniciar pagamento');
@@ -283,40 +283,60 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
-                        {/* Buy Button - matching product page green style */}
-                        <button
-                            onClick={handleCheckout}
-                            disabled={isProcessing}
-                            className={`
-                                w-full relative overflow-hidden group/buy bg-[#10B981] hover:bg-[#0EA5E9] text-white
-                                py-3.5 px-6 rounded-xl
-                                shadow-[0_6px_20px_rgba(16,185,129,0.3)] hover:shadow-[0_6px_25px_rgba(14,165,233,0.4)]
-                                transition-all duration-300 active:scale-[0.98] cursor-pointer
-                                flex flex-col items-center justify-center
-                                border border-[#059669]/20
-                                ${isProcessing ? 'opacity-70 cursor-wait' : ''}
-                            `}
-                        >
-                            {isProcessing ? (
-                                <span className="flex items-center gap-2 font-bold text-sm">
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                    Processando...
-                                </span>
-                            ) : (
-                                <>
-                                    <div className="flex items-center gap-2 mb-0.5 relative z-10">
-                                        <Lock className="w-3 h-3 text-white/90" />
-                                        <span className="font-extrabold text-[9px] tracking-widest text-white/90 uppercase">Compra 100% Segura</span>
-                                    </div>
-                                    <span className="font-extrabold text-lg tracking-tight relative z-10">FINALIZAR PEDIDO</span>
-                                    <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine" />
-                                </>
-                            )}
-                        </button>
+                        {/* Action Buttons - Dual Pix / Card */}
+                        <div className="flex flex-col gap-3 mt-2">
+                            <button
+                                onClick={() => handleCheckout('pix')}
+                                disabled={isProcessing}
+                                className={`
+                                    w-full relative overflow-hidden group/buy bg-[#10B981] hover:bg-[#0EA5E9] text-white
+                                    py-3.5 px-6 rounded-xl
+                                    shadow-[0_6px_20px_rgba(16,185,129,0.3)] hover:shadow-[0_6px_25px_rgba(14,165,233,0.4)]
+                                    transition-all duration-300 active:scale-[0.98] cursor-pointer
+                                    flex flex-col items-center justify-center
+                                    border border-[#059669]/20
+                                    ${isProcessing ? 'opacity-70 cursor-wait' : ''}
+                                `}
+                            >
+                                {isProcessing ? (
+                                    <span className="flex items-center gap-2 font-bold text-sm">
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        Processando...
+                                    </span>
+                                ) : (
+                                    <>
+                                        <div className="flex items-center gap-2 mb-0.5 relative z-10 w-full justify-center">
+                                            <QrCode className="w-3.5 h-3.5 text-white/90" />
+                                            <span className="font-extrabold text-[9px] tracking-widest text-white/90 uppercase">Desconto Aplicado</span>
+                                        </div>
+                                        <span className="font-extrabold text-lg tracking-tight relative z-10">PAGAR COM PIX (-5%)</span>
+                                        <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine" />
+                                    </>
+                                )}
+                            </button>
+
+                            <button
+                                onClick={() => handleCheckout('card')}
+                                disabled={isProcessing}
+                                className={`
+                                    w-full relative overflow-hidden group/buy bg-charcoal hover:bg-black text-white
+                                    py-3 px-6 rounded-xl
+                                    transition-all duration-300 active:scale-[0.98] cursor-pointer
+                                    flex flex-col items-center justify-center
+                                    border border-black/20
+                                    ${isProcessing ? 'opacity-70 cursor-wait' : ''}
+                                `}
+                            >
+                                <div className="flex items-center gap-2 relative z-10">
+                                    <CreditCard className="w-4 h-4 text-white/80" />
+                                    <span className="font-bold text-sm">PAGAR COM CARTÃO (Até 6x)</span>
+                                </div>
+                            </button>
+                        </div>
 
                         <p className="text-[10px] text-center text-slate/60 flex items-center justify-center gap-1">
                             <ShieldCheck className="w-3 h-3 text-green-600" />
-                            Pagamento 100% seguro via Stripe
+                            Pagamento 100% seguro via InfinitePay
                         </p>
                     </div>
                 </div>

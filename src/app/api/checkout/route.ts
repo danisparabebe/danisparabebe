@@ -33,7 +33,8 @@ const checkoutSchema = z.object({
     cep: z.string().max(20).optional()
   }),
   userId: z.string().optional(),
-  cancelPath: z.string().optional()
+  cancelPath: z.string().optional(),
+  paymentMethod: z.enum(['pix', 'card']).optional()
 });
 
 function addBusinessDays(baseDate: Date, daysToAdd: number): Date {
@@ -77,7 +78,7 @@ export async function POST(request: Request) {
         }
         
         // Agora usamos os dados higienizados ("Limpos e verificados")
-        const { items, shipping, customer, userId, cancelPath } = parseResult.data;
+        const { items, shipping, customer, userId, cancelPath, paymentMethod } = parseResult.data;
 
         console.log('\n========== DEBUG CHECKOUT ==========');
         console.log('📦 Segurança passou. Request limpo:', customer.name, 'UID:', userId || 'Deslogado');
@@ -116,9 +117,12 @@ export async function POST(request: Request) {
                 }
             }
 
-            // O preço encontrado é o preço CHEIO. O desconto de PIX (se aplicável)
-            // ocorrerá no pagamento/checkout final pelo InfinitePay.
-            const priceCents = Math.round(authenticPrice * 100);
+            // O preço encontrado é o preço CHEIO. 
+            // Se o usuário selecionou o checkout via PIX, aplicamos o desconto de 5% seguro.
+            let priceCents = Math.round(authenticPrice * 100);
+            if (paymentMethod === 'pix') {
+                priceCents = Math.round(priceCents * 0.95);
+            }
 
             let desc = item.name;
             if (item.personalization?.name) {
