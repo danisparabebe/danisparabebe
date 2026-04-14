@@ -115,7 +115,7 @@ export async function POST(req: Request) {
                     'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
                 },
                 body: JSON.stringify({
-                    from: 'Danis Para Bebê <onboarding@resend.dev>', // Email teste. Mudar para contato@danis... após comprar domínio!
+                    from: 'Danis Para Bebê <contato@danisparabebe.com.br>', // Domínio configurado
                     to: customerEmail,
                     subject: `✨ Pedido Confirmado! #${orderId.replace('ORDER_', '')}`,
                     html: emailHtml,

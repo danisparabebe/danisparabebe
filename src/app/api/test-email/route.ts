@@ -9,7 +9,7 @@ export async function GET() {
         }
 
         const data = await resend.emails.send({
-            from: 'Danis Para Bebê <onboarding@resend.dev>',
+            from: 'Danis Para Bebê <contato@danisparabebe.com.br>',
             to: 'entregas@resend.dev', // Resend replaces this with your account email automatically in testing
             subject: 'Teste de Email - Danis Para Bebê',
             html: '<h1>Seu sistema de email está funcionando!</h1><p>Se você recebeu isso, a chave API está correta.</p>',
