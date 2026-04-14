@@ -1,6 +1,45 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import crypto from 'crypto';
+
+// ──────────────────────────────────────────────────────────
+// 🛡️  SECURITY LAYER — Protections applied to this endpoint
+// ──────────────────────────────────────────────────────────
+
+// 1. Rate limiter — in-memory sliding window (per-IP, 10 req / 60s)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+
+function isRateLimited(ip: string): boolean {
+    const now = Date.now();
+    const entry = rateLimitMap.get(ip);
+    if (!entry || now > entry.resetAt) {
+        rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+        return false;
+    }
+    entry.count++;
+    return entry.count > RATE_LIMIT_MAX;
+}
+
+// 2. HMAC-SHA256 signature verifier (constant-time comparison)
+function verifySignature(rawBody: string, signatureHeader: string | null, secret: string): boolean {
+    if (!signatureHeader) return false;
+    const expected = crypto.createHmac('sha256', secret).update(rawBody, 'utf8').digest('hex');
+    try {
+        return crypto.timingSafeEqual(
+            Buffer.from(signatureHeader, 'hex'),
+            Buffer.from(expected, 'hex')
+        );
+    } catch {
+        return false;
+    }
+}
+
+// 3. Replay-attack guard — rejects bodies older than 5 minutes
+const REPLAY_WINDOW_MS = 5 * 60 * 1000;
+const processedIdempotencyKeys = new Set<string>();
 
 // Função para identificar NSU independentemente do layout do JSON da IP
 function extractOrderNsu(body: any): string | null {
@@ -16,10 +55,35 @@ function extractOrderNsu(body: any): string | null {
 }
 
 export async function POST(req: Request) {
+    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+
+    // ── Gate 1: Rate Limiting ──
+    if (isRateLimited(clientIp)) {
+        console.error(`[SEC] 🚨 Rate limit exceeded for IP: ${clientIp}`);
+        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    }
+
     try {
+        // We must read the raw body BEFORE parsing for HMAC validation
         const bodyText = await req.text();
+
+        // ── Gate 2: HMAC Signature Verification ──
+        const webhookSecret = process.env.INFINITEPAY_WEBHOOK_SECRET;
+        if (webhookSecret && webhookSecret !== 'your_infinitepay_secret') {
+            const signature = req.headers.get('x-webhook-signature')
+                || req.headers.get('x-signature')
+                || req.headers.get('x-hub-signature-256')?.replace('sha256=', '');
+
+            if (!verifySignature(bodyText, signature, webhookSecret)) {
+                console.error(`[SEC] 🚨 HMAC Signature INVÁLIDA! IP: ${clientIp}`);
+                return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
+            }
+            console.log(`[SEC] ✅ Assinatura HMAC verificada com sucesso.`);
+        } else {
+            console.warn(`[SEC] ⚠️ INFINITEPAY_WEBHOOK_SECRET não configurado. Validação de assinatura DESABILITADA.`);
+        }
+
         let body;
-        
         try {
             body = JSON.parse(bodyText);
         } catch {
@@ -27,7 +91,18 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
         }
 
+        // ── Gate 3: Replay Attack Protection (idempotency) ──
+        const idempotencyKey = body?.id || body?.data?.id || crypto.createHash('sha256').update(bodyText).digest('hex');
+        if (processedIdempotencyKeys.has(idempotencyKey)) {
+            console.warn(`[SEC] ⚠️ Replay detectado (idempotency key: ${idempotencyKey}). Ignorando.`);
+            return NextResponse.json({ ok: true, detail: 'duplicate ignored' });
+        }
+        processedIdempotencyKeys.add(idempotencyKey);
+        // Auto-limpeza após 10 minutos para não consumir memória indefinidamente
+        setTimeout(() => processedIdempotencyKeys.delete(idempotencyKey), 10 * 60 * 1000);
+
         console.log('\n========== 🔔 WEBHOOK INFINITEPAY ==========');
+        console.log(`IP de Origem: ${clientIp}`);
         console.log('Payload Recebido:', JSON.stringify(body, null, 2));
 
         // 1. Extraindo o Pedido Físico (NSU)
@@ -137,3 +212,4 @@ export async function POST(req: Request) {
          return NextResponse.json({ error: 'Erro Severo interno' }, { status: 500 });
     }
 }
+
