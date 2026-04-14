@@ -26,7 +26,7 @@ export default function QuemSomosPage() {
                     {/* Placeholder for a beautiful studio/embroidery image later */}
                     <div className="bg-sage-green/5 rounded-2xl aspect-square w-full flex items-center justify-center p-8 overflow-hidden relative border border-line">
                         <div className="absolute inset-0 bg-gradient-to-tr from-warm-stone/40 to-transparent"></div>
-                        <img src="/Logos/DANIS VERDE.png" alt="Danis Para Bebê" className="w-[70%] h-auto relative z-10 object-contain drop-shadow-sm opacity-90" />
+                        <img src="/Logos/DANIS VERDE-BRANCO.png" alt="Danis Para Bebê" className="w-[70%] h-auto relative z-10 object-contain drop-shadow-sm opacity-90" />
                     </div>
 
                     <div className="space-y-6 text-charcoal/80 leading-relaxed text-lg">
@@ -79,7 +79,7 @@ export default function QuemSomosPage() {
                     <p className="text-xl md:text-2xl font-heading text-charcoal italic mb-6">
                         "Preparamos o ninho do seu bebê para ser tão acolhedor quanto o seu abraço."
                     </p>
-                    <Link href="/monte-seu-kit" className="inline-block bg-sage-green hover:bg-sage-green-dark text-white px-8 py-3 rounded-full font-bold transition-all transform active:scale-95 shadow-md">
+                    <Link href="/monte-seu-kit" className="inline-block bg-sage-green hover:bg-sage-green-dark text-charcoal px-8 py-3 rounded-full font-bold transition-all transform active:scale-95 shadow-md">
                         Comece a montar o seu enxoval
                     </Link>
                 </div>

@@ -10,7 +10,7 @@ export default function PoliticasPage() {
     return (
         <div className="min-h-screen bg-surface-white pt-6 pb-24">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Link href="/" className="inline-flex items-center text-sm font-medium text-slate hover:text-dusty-rose transition-colors mb-8">
+                <Link href="/" className="inline-flex items-center text-sm font-medium text-slate hover:text-sage-green transition-colors mb-8">
                     <ChevronLeft className="w-4 h-4 mr-1" />
                     Voltar para a loja
                 </Link>
@@ -23,10 +23,10 @@ export default function PoliticasPage() {
                 <div className="space-y-12">
                     {/* Section 1 */}
                     <section className="bg-white p-8 rounded-2xl shadow-sm border border-line">
-                        <h2 className="text-2xl font-heading font-bold text-dusty-rose mb-4">Prazos de Produção Artesanal</h2>
+                        <h2 className="text-2xl font-heading font-bold text-sage-green-dark mb-4">Prazos de Produção Artesanal</h2>
                         <div className="space-y-4 text-charcoal/80 leading-relaxed">
                             <p>
-                                Todas as nossas peças são feitas sob encomenda e personalizadas com o nome e as cores escolhidas por você. Por se tratar de um processo 100% artesanal, feito com muito cuidado e dedicação para o seu bebê, <strong>nosso prazo de produção é de 15 a 20 dias úteis</strong> após a confirmação do pagamento.
+                                Todas as nossas peças são feitas sob encomenda e personalizadas com o nome e as cores escolhidas por você. Por se tratar de um processo 100% artesanal, feito com muito cuidado e dedicação para o seu bebê, <strong>nosso prazo de produção é de 7 a 12 dias úteis</strong> após a confirmação do pagamento.
                             </p>
                             <p>
                                 Este prazo não inclui o tempo de trânsito dos Correios/Transportadora. O seu código de rastreio será enviado por e-mail e WhatsApp assim que a caixinha for despachada.
@@ -36,7 +36,7 @@ export default function PoliticasPage() {
 
                     {/* Section 2 */}
                     <section className="bg-white p-8 rounded-2xl shadow-sm border border-line">
-                        <h2 className="text-2xl font-heading font-bold text-dusty-rose mb-4">Trocas e Devoluções</h2>
+                        <h2 className="text-2xl font-heading font-bold text-sage-green-dark mb-4">Trocas e Devoluções</h2>
                         <div className="space-y-4 text-charcoal/80 leading-relaxed">
                             <h3 className="text-lg font-bold text-charcoal mt-6">Produtos Personalizados</h3>
                             <p>
@@ -55,7 +55,7 @@ export default function PoliticasPage() {
 
                     {/* Section 3 */}
                     <section className="bg-white p-8 rounded-2xl shadow-sm border border-line">
-                        <h2 className="text-2xl font-heading font-bold text-dusty-rose mb-4">Envio e Entrega</h2>
+                        <h2 className="text-2xl font-heading font-bold text-sage-green-dark mb-4">Envio e Entrega</h2>
                         <div className="space-y-4 text-charcoal/80 leading-relaxed">
                             <p>
                                 O frete é calculado no momento da compra, com base no CEP de destino. Enviamos para todo o Brasil. Não nos responsabilizamos por atrasos decorrentes de greves ou problemas logísticos exclusivos das transportadoras/Correios, mas estaremos sempre à disposição para auxiliar na cobrança de prazos.
