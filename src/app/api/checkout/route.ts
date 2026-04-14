@@ -82,36 +82,77 @@ export async function POST(request: Request) {
         console.log('\n========== DEBUG CHECKOUT ==========');
         console.log('📦 Segurança passou. Request limpo:', customer.name, 'UID:', userId || 'Deslogado');
 
-        // 1. Structure Line Items for InfinitePay
-        const ipItems = items.map((item: any) => {
+        // --- SECURITY CHECK 3: AUTHENTIC SERVER-SIDE PRICING ---
+        // NUNCA confiar no `item.price` vindo do front-end. O cliente pode manipular o payload e pagar R$ 1.
+        // Vamos varrer item a item e recalcular o preço real baseado na nossa base de dados.
+        const { productControl } = require('@/data/product-control');
+        const { calculateProductPrice } = require('@/lib/pricing');
+        const { resolveProductId } = require('@/lib/short-codes');
+        const fs = require('fs');
+        const path = require('path');
+
+        const ipItems = [];
+        let calculatedTotalAmountCents = 0;
+
+        for (const item of items) {
+            let authenticPrice = 0;
+            const resolvedId = resolveProductId(item.productId);
+
+            // 1. Tentar encontrar no Catalog (productControl)
+            const managedProduct = productControl.find((p: any) => p.id === resolvedId);
+            if (managedProduct) {
+                authenticPrice = managedProduct.priceFull;
+            } else {
+                // 2. Tentar encontrar no legado (conferidos)
+                const productsDir = path.join(process.cwd(), 'public', 'produtos', 'conferidos');
+                const jsonPath = path.join(productsDir, `${resolvedId}.json`);
+                if (fs.existsSync(jsonPath)) {
+                    const content = fs.readFileSync(jsonPath, 'utf8');
+                    const metadata = JSON.parse(content);
+                    authenticPrice = calculateProductPrice(metadata.composition || [], !!metadata.customName);
+                } else {
+                    console.error(`🚨 BLOCKED: Tentativa de compra de produto inválido/removido: ${resolvedId}`);
+                    return NextResponse.json({ error: `Produto indisponível ou inválido: ${item.name}` }, { status: 400 });
+                }
+            }
+
+            // O preço encontrado é o preço CHEIO. O desconto de PIX (se aplicável)
+            // ocorrerá no pagamento/checkout final pelo InfinitePay.
+            const priceCents = Math.round(authenticPrice * 100);
+
             let desc = item.name;
             if (item.personalization?.name) {
-                desc += ` (Bordado: ${item.personalization.name} | Tema: ${item.personalization.theme})`;
+                const temaDesc = item.personalization.theme ? ` | Tema: ${item.personalization.theme}` : '';
+                desc += ` (Bordado: ${item.personalization.name}${temaDesc})`;
             }
 
             const mapped = {
                 description: desc.substring(0, 255),
-                price: Math.round(item.price * 100),
+                price: priceCents,
                 quantity: item.quantity || 1,
             };
-            console.log('🏷️ Item mapped:', JSON.stringify(mapped));
-            return mapped;
-        });
+            
+            ipItems.push(mapped);
+            calculatedTotalAmountCents += (priceCents * mapped.quantity);
+            console.log(`🏷️ Item verificado: ${mapped.description} | Preço Segurou: R$ ${(authenticPrice).toFixed(2)}`);
+        }
 
         // 2. Add Shipping as a Line Item (if greater than 0)
         if (shipping && shipping > 0) {
+            const shippingCents = Math.round(shipping * 100);
             const shippingItem = {
                 description: `Frete`,
-                price: Math.round(shipping * 100),
+                price: shippingCents,
                 quantity: 1,
             };
             ipItems.push(shippingItem);
-            console.log('🚚 Shipping item added:', JSON.stringify(shippingItem));
+            calculatedTotalAmountCents += shippingCents;
+            console.log(`🚚 Shipping verificado: R$ ${(shipping).toFixed(2)}`);
         }
 
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
         const orderId = `ORDER_${Date.now()}`;
-        const totalAmount = ipItems.reduce((acc: number, item: any) => acc + (item.price * item.quantity), 0);
+        const totalAmount = calculatedTotalAmountCents;
 
         console.log('💰 Total amount (cents):', totalAmount);
         console.log('💰 Total amount (reais):', totalAmount / 100);
