@@ -30,7 +30,7 @@ export async function GET() {
             id: file,
             name: file.replace(/\.[^/.]+$/, ""),
             filename: file,
-            url: `/api/bordados/image?file=${encodeURIComponent(file)}`
+            url: `/bordados/${encodeURIComponent(file)}`
         }));
 
         return NextResponse.json({

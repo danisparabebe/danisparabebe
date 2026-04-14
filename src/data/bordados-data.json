@@ -4,25 +4,25 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         },
         {
             "id": "Arco Iris Coração.png",
             "name": "Arco Iris Coração",
             "filename": "Arco Iris Coração.png",
-            "url": "/api/admin/bordados/image?file=Arco%20Iris%20Cora%C3%A7%C3%A3o.png"
+            "url": "/bordados/Arco%20Iris%20Cora%C3%A7%C3%A3o.png"
         },
         {
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         },
         {
             "id": "Bailarina floral.png",
             "name": "Bailarina floral",
             "filename": "Bailarina floral.png",
-            "url": "/api/admin/bordados/image?file=Bailarina%20floral.png"
+            "url": "/bordados/Bailarina%20floral.png"
         }
     ],
     "MAS-KIT-SAF-VDM-BAB-VDM_01": [
@@ -30,13 +30,13 @@
             "id": "Safari 3 Bichinhos.png",
             "name": "Safari 3 Bichinhos",
             "filename": "Safari 3 Bichinhos.png",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Bichinhos.png"
+            "url": "/bordados/Safari%203%20Bichinhos.png"
         },
         {
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         }
     ],
     "MAS-KIT-URS-ABB-BAB-ABB-R": [
@@ -44,7 +44,7 @@
             "id": "Ursinho Príncipe Sentado.png",
             "name": "Ursinho Príncipe Sentado",
             "filename": "Ursinho Príncipe Sentado.png",
-            "url": "/api/admin/bordados/image?file=Ursinho%20Pr%C3%ADncipe%20Sentado.png"
+            "url": "/bordados/Ursinho%20Pr%C3%ADncipe%20Sentado.png"
         }
     ],
     "FEM-KIT-MON-CRE-BAB-CRE_02": [
@@ -52,7 +52,7 @@
             "id": "Monograma Raminho.png",
             "name": "Monograma Raminho",
             "filename": "Monograma Raminho.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20Raminho.png"
+            "url": "/bordados/Monograma%20Raminho.png"
         }
     ],
     "FEM-KIT-FLO-BCO-BAB-BCO_01": [
@@ -60,7 +60,7 @@
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         }
     ],
     "FEM-KIT-BAI-LIL-BAB-LIL-R_01": [
@@ -68,7 +68,7 @@
             "id": "Bailarina3.png",
             "name": "Bailarina3",
             "filename": "Bailarina3.png",
-            "url": "/api/admin/bordados/image?file=Bailarina3.png"
+            "url": "/bordados/Bailarina3.png"
         }
     ],
     "FEM-KIT-FLO-LIL-BAB-LIL_04": [
@@ -76,7 +76,7 @@
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         }
     ],
     "FEM-KIT-PER-RSE-BAB-RSE_01": [
@@ -84,7 +84,7 @@
             "id": "Miney5.png",
             "name": "Miney5",
             "filename": "Miney5.png",
-            "url": "/api/admin/bordados/image?file=Miney5.png"
+            "url": "/bordados/Miney5.png"
         }
     ],
     "MAS-KIT-MON-CNZ-BAB-BCO_01": [
@@ -92,7 +92,7 @@
             "id": "Brasão.png",
             "name": "Brasão",
             "filename": "Brasão.png",
-            "url": "/api/admin/bordados/image?file=Bras%C3%A3o.png"
+            "url": "/bordados/Bras%C3%A3o.png"
         }
     ],
     "FEM-BDC-BOR-RSA-RSA_01": [
@@ -100,7 +100,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-BDL-BOR-LIL-BAB-LIL_01": [
@@ -108,7 +108,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRG-BOR-RSA-BAB-RSA_01": [
@@ -116,7 +116,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRM-BOR-RSA-BAB-RSA_01": [
@@ -124,7 +124,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRP-BOR-RSA-BAB-RSA-R_01": [
@@ -132,7 +132,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRP-BOR-RSA-BAB-RSA_01": [
@@ -140,7 +140,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRP-BOR-RSA-BAB-RSA_02": [
@@ -148,7 +148,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRP-BOR-RSE-BAB-RSE_01": [
@@ -156,7 +156,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-FRP-MON-RSA-BAB-RSA-R_01": [
@@ -164,7 +164,7 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-BAI-MAR-BAB-MAR_01": [
@@ -172,7 +172,7 @@
             "id": "Bailarina3.png",
             "name": "Bailarina3",
             "filename": "Bailarina3.png",
-            "url": "/api/admin/bordados/image?file=Bailarina3.png"
+            "url": "/bordados/Bailarina3.png"
         }
     ],
     "FEM-KIT-BOR-RSA-BAB-RSA_03": [
@@ -180,7 +180,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-KIT-COR-RSE-BAB-RSE_03": [
@@ -188,7 +188,7 @@
             "id": "Coroa 02.png",
             "name": "Coroa 02",
             "filename": "Coroa 02.png",
-            "url": "/api/admin/bordados/image?file=Coroa%2002.png"
+            "url": "/bordados/Coroa%2002.png"
         }
     ],
     "FEM-KIT-BOR-RSE-BAB-RSE_01": [
@@ -196,7 +196,7 @@
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         }
     ],
     "FEM-KIT-FLO-LIL-BAB-LIL_01": [
@@ -204,7 +204,7 @@
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         }
     ],
     "FEM-KIT-FLO-PNK-BAB-PNK_01": [
@@ -212,7 +212,7 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-FLO-RSE-BAB-RSE-R_01": [
@@ -220,7 +220,7 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         }
     ],
     "FEM-KIT-JDE-LIL-BAB-LIL-R_01": [
@@ -228,7 +228,7 @@
             "id": "Passarinho casinha2.png",
             "name": "Passarinho casinha2",
             "filename": "Passarinho casinha2.png",
-            "url": "/api/admin/bordados/image?file=Passarinho%20casinha2.png"
+            "url": "/bordados/Passarinho%20casinha2.png"
         }
     ],
     "FEM-KIT-JDE-MAR-BAB-MAR_01": [
@@ -236,7 +236,7 @@
             "id": "Passarinho Borboleta.PNG",
             "name": "Passarinho Borboleta",
             "filename": "Passarinho Borboleta.PNG",
-            "url": "/api/admin/bordados/image?file=Passarinho%20Borboleta.PNG"
+            "url": "/bordados/Passarinho%20Borboleta.PNG"
         }
     ],
     "FEM-KIT-JDE-RSA-BAB-RSA-AMA_01": [
@@ -244,7 +244,7 @@
             "id": "Passarinho casinha2.png",
             "name": "Passarinho casinha2",
             "filename": "Passarinho casinha2.png",
-            "url": "/api/admin/bordados/image?file=Passarinho%20casinha2.png"
+            "url": "/bordados/Passarinho%20casinha2.png"
         }
     ],
     "FEM-KIT-MON-LIL-BAB-LIL_01": [
@@ -252,7 +252,7 @@
             "id": "Monograma Raminho.png",
             "name": "Monograma Raminho",
             "filename": "Monograma Raminho.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20Raminho.png"
+            "url": "/bordados/Monograma%20Raminho.png"
         }
     ],
     "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_01": [
@@ -260,7 +260,7 @@
             "id": "Monograma Raminho com Coroa.png",
             "name": "Monograma Raminho com Coroa",
             "filename": "Monograma Raminho com Coroa.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20Raminho%20com%20Coroa.png"
+            "url": "/bordados/Monograma%20Raminho%20com%20Coroa.png"
         }
     ],
     "FEM-KIT-MON-VRM-BAB-VRM_01": [
@@ -268,7 +268,7 @@
             "id": "Monograma AGF.png",
             "name": "Monograma AGF",
             "filename": "Monograma AGF.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20AGF.png"
+            "url": "/bordados/Monograma%20AGF.png"
         }
     ],
     "FEM-KIT-PER-VRM-BAB-VRM_01": [
@@ -276,7 +276,7 @@
             "id": "Miney5.png",
             "name": "Miney5",
             "filename": "Miney5.png",
-            "url": "/api/admin/bordados/image?file=Miney5.png"
+            "url": "/bordados/Miney5.png"
         }
     ],
     "FEM-KIT-VAR-LIL-BAB-LIL-R_01": [
@@ -284,7 +284,7 @@
             "id": "Elefante5.png",
             "name": "Elefante5",
             "filename": "Elefante5.png",
-            "url": "/api/admin/bordados/image?file=Elefante5.png"
+            "url": "/bordados/Elefante5.png"
         }
     ],
     "MAS-KIT-SAF-VDC-BAB-VDC_01": [
@@ -292,7 +292,7 @@
             "id": "Safari 3 Bichinhos.png",
             "name": "Safari 3 Bichinhos",
             "filename": "Safari 3 Bichinhos.png",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Bichinhos.png"
+            "url": "/bordados/Safari%203%20Bichinhos.png"
         }
     ],
     "MAS-KIT-SAF-VDM-BAB-VDM-R_01": [
@@ -300,7 +300,7 @@
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         }
     ],
     "MAS-KIT-URS-ABB-BAB-ABB-R_01": [
@@ -308,7 +308,7 @@
             "id": "Ursinho Príncipe Sentado.png",
             "name": "Ursinho Príncipe Sentado",
             "filename": "Ursinho Príncipe Sentado.png",
-            "url": "/api/admin/bordados/image?file=Ursinho%20Pr%C3%ADncipe%20Sentado.png"
+            "url": "/bordados/Ursinho%20Pr%C3%ADncipe%20Sentado.png"
         }
     ],
     "MAS-KIT-URS-AZM-BAB-AZM-R_01": [
@@ -316,7 +316,7 @@
             "id": "Ursinho aviador3.png",
             "name": "Ursinho aviador3",
             "filename": "Ursinho aviador3.png",
-            "url": "/api/admin/bordados/image?file=Ursinho%20aviador3.png"
+            "url": "/bordados/Ursinho%20aviador3.png"
         }
     ],
     "MAS-KIT-URS-VDC-BAB-VDC-R_01": [
@@ -324,7 +324,7 @@
             "id": "Urso príncipe12.png",
             "name": "Urso príncipe12",
             "filename": "Urso príncipe12.png",
-            "url": "/api/admin/bordados/image?file=Urso%20pr%C3%ADncipe12.png"
+            "url": "/bordados/Urso%20pr%C3%ADncipe12.png"
         }
     ],
     "MAS-KIT-VAR-ABB-BAB-ABB_01": [
@@ -332,7 +332,7 @@
             "id": "Cavalo Brasão.png",
             "name": "Cavalo Brasão",
             "filename": "Cavalo Brasão.png",
-            "url": "/api/admin/bordados/image?file=Cavalo%20Bras%C3%A3o.png"
+            "url": "/bordados/Cavalo%20Bras%C3%A3o.png"
         }
     ],
     "MAS-KIT-VAR-AZM-BAB-AZM-R_01": [
@@ -340,7 +340,7 @@
             "id": "Astronalta.png",
             "name": "Astronalta",
             "filename": "Astronalta.png",
-            "url": "/api/admin/bordados/image?file=Astronalta.png"
+            "url": "/bordados/Astronalta.png"
         }
     ],
     "MAS-KIT-VAR-AZM-BAB-BCO_01": [
@@ -348,7 +348,7 @@
             "id": "Bebe menino02.png",
             "name": "Bebe menino02",
             "filename": "Bebe menino02.png",
-            "url": "/api/admin/bordados/image?file=Bebe%20menino02.png"
+            "url": "/bordados/Bebe%20menino02.png"
         }
     ],
     "MAS-KIT-VAR-VDC-BAB-VDC_01": [
@@ -356,7 +356,7 @@
             "id": "Brasão 6.png",
             "name": "Brasão 6",
             "filename": "Brasão 6.png",
-            "url": "/api/admin/bordados/image?file=Bras%C3%A3o%206.png"
+            "url": "/bordados/Bras%C3%A3o%206.png"
         }
     ],
     "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_02": [
@@ -364,7 +364,7 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-PER-RSA-BAB-RSA_01": [
@@ -372,7 +372,7 @@
             "id": "Marrie.png",
             "name": "Marrie",
             "filename": "Marrie.png",
-            "url": "/api/admin/bordados/image?file=Marrie.png"
+            "url": "/bordados/Marrie.png"
         }
     ],
     "FEM-KIT-FLO-RSA-BAB-RSA_02": [
@@ -380,7 +380,7 @@
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         }
     ],
     "MAS-KIT-MON-BGE-BAB-BCO_02": [
@@ -388,7 +388,7 @@
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-VAR-ABB-BAB-ABB_02": [
@@ -396,7 +396,7 @@
             "id": "DINO.png",
             "name": "DINO",
             "filename": "DINO.png",
-            "url": "/api/admin/bordados/image?file=DINO.png"
+            "url": "/bordados/DINO.png"
         }
     ],
     "FEM-KIT-URS-RSE-BAB-RSE_01": [
@@ -404,7 +404,7 @@
             "id": "Ursinha 03.png",
             "name": "Ursinha 03",
             "filename": "Ursinha 03.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%2003.png"
+            "url": "/bordados/Ursinha%2003.png"
         }
     ],
     "MAS-KIT-VAR-LRJ-BAB-LRJ_01": [
@@ -412,7 +412,7 @@
             "id": "Raposa1.png",
             "name": "Raposa1",
             "filename": "Raposa1.png",
-            "url": "/api/admin/bordados/image?file=Raposa1.png"
+            "url": "/bordados/Raposa1.png"
         }
     ],
     "FEM-KIT-FLO-LIL-BAB-LIL_06": [
@@ -420,7 +420,7 @@
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         }
     ],
     "FEM-KIT-BAI-VRM-BAB-VRM_02": [
@@ -428,7 +428,7 @@
             "id": "Bailarina3.png",
             "name": "Bailarina3",
             "filename": "Bailarina3.png",
-            "url": "/api/admin/bordados/image?file=Bailarina3.png"
+            "url": "/bordados/Bailarina3.png"
         }
     ],
     "FEM-KIT-BOR-RSE-BAB-RSE_02": [
@@ -436,7 +436,7 @@
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         }
     ],
     "FEM-KIT-BOR-RLC-BAB-RLC_02": [
@@ -444,7 +444,7 @@
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         }
     ],
     "FEM-KIT-JDE-LIL-BAB-LIL_02": [
@@ -452,7 +452,7 @@
             "id": "PASSARO2.PNG",
             "name": "PASSARO2",
             "filename": "PASSARO2.PNG",
-            "url": "/api/admin/bordados/image?file=PASSARO2.PNG"
+            "url": "/bordados/PASSARO2.PNG"
         }
     ],
     "FEM-KIT-MON-RSA-BAB-RSA_04": [
@@ -460,7 +460,7 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-JDE-RSE-BAB-RSE_01": [
@@ -468,7 +468,7 @@
             "id": "Passarinho casinha2.png",
             "name": "Passarinho casinha2",
             "filename": "Passarinho casinha2.png",
-            "url": "/api/admin/bordados/image?file=Passarinho%20casinha2.png"
+            "url": "/bordados/Passarinho%20casinha2.png"
         }
     ],
     "FEM-KIT-VAR-RSA-BAB-RSA_02": [
@@ -476,7 +476,7 @@
             "id": "Arco Iris Coração.png",
             "name": "Arco Iris Coração",
             "filename": "Arco Iris Coração.png",
-            "url": "/api/admin/bordados/image?file=Arco%20Iris%20Cora%C3%A7%C3%A3o.png"
+            "url": "/bordados/Arco%20Iris%20Cora%C3%A7%C3%A3o.png"
         }
     ],
     "MAS-KIT-COR-VDC-BAB-VDC_01": [
@@ -484,7 +484,7 @@
             "id": "Coroa 02.png",
             "name": "Coroa 02",
             "filename": "Coroa 02.png",
-            "url": "/api/admin/bordados/image?file=Coroa%2002.png"
+            "url": "/bordados/Coroa%2002.png"
         }
     ],
     "FEM-KIT-VAR-RSA-BAB-RSA_03": [
@@ -492,7 +492,7 @@
             "id": "Raposa2.png",
             "name": "Raposa2",
             "filename": "Raposa2.png",
-            "url": "/api/admin/bordados/image?file=Raposa2.png"
+            "url": "/bordados/Raposa2.png"
         }
     ],
     "FEM-KIT-VAR-VRM-BAB-ABB-LIL_01": [
@@ -500,19 +500,19 @@
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         },
         {
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         },
         {
             "id": "Coração floral.png",
             "name": "Coração floral",
             "filename": "Coração floral.png",
-            "url": "/api/admin/bordados/image?file=Cora%C3%A7%C3%A3o%20floral.png"
+            "url": "/bordados/Cora%C3%A7%C3%A3o%20floral.png"
         }
     ],
     "FEM-KIT-BOR-RLC-BAB-RLC_01": [
@@ -520,7 +520,7 @@
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "FEM-KIT-BOR-RLC-BAB-BCO-RLC_01": [
@@ -528,7 +528,7 @@
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         }
     ],
     "FEM-KIT-BOR-RLC-BAB-RSA_01": [
@@ -536,7 +536,7 @@
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "FEM-KIT-BOR-RSA-BAB-RSA-R_RSA_01": [
@@ -544,7 +544,7 @@
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "FEM-KIT-BOR-RSE-BAB-RSE-RSA_01": [
@@ -552,13 +552,13 @@
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         },
         {
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-FLO-LIL-BAB-LIL_05": [
@@ -566,13 +566,13 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         },
         {
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         }
     ],
     "FEM-KIT-FLO-LIL-BAB-RSA-LIL_01": [
@@ -580,7 +580,7 @@
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         }
     ],
     "FEM-KIT-FLO-RLC-BAB-RSA_01": [
@@ -588,7 +588,7 @@
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         }
     ],
     "FEM-KIT-FLO-RSA-BAB-RSA_03": [
@@ -596,7 +596,7 @@
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         }
     ],
     "FEM-KIT-FLO-RSE-BAB-RSE_01": [
@@ -604,7 +604,7 @@
             "id": "Floral4.png",
             "name": "Floral4",
             "filename": "Floral4.png",
-            "url": "/api/admin/bordados/image?file=Floral4.png"
+            "url": "/bordados/Floral4.png"
         }
     ],
     "FEM-KIT-JDE-AMA-BAB-LIL-VDC_01": [
@@ -612,25 +612,25 @@
             "id": "Passarinho Borboleta.PNG",
             "name": "Passarinho Borboleta",
             "filename": "Passarinho Borboleta.PNG",
-            "url": "/api/admin/bordados/image?file=Passarinho%20Borboleta.PNG"
+            "url": "/bordados/Passarinho%20Borboleta.PNG"
         },
         {
             "id": "Passarinho casinha2.png",
             "name": "Passarinho casinha2",
             "filename": "Passarinho casinha2.png",
-            "url": "/api/admin/bordados/image?file=Passarinho%20casinha2.png"
+            "url": "/bordados/Passarinho%20casinha2.png"
         },
         {
             "id": "PASSARO2.PNG",
             "name": "PASSARO2",
             "filename": "PASSARO2.PNG",
-            "url": "/api/admin/bordados/image?file=PASSARO2.PNG"
+            "url": "/bordados/PASSARO2.PNG"
         },
         {
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "FEM-KIT-FLO-VRM-BAB-VRM_01": [
@@ -638,7 +638,7 @@
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         }
     ],
     "FEM-KIT-MON-CRE-BAB-CRE_01": [
@@ -646,7 +646,7 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-MON-RSA-BAB-RSA_01": [
@@ -654,7 +654,7 @@
             "id": "Monograma Raminho.png",
             "name": "Monograma Raminho",
             "filename": "Monograma Raminho.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20Raminho.png"
+            "url": "/bordados/Monograma%20Raminho.png"
         }
     ],
     "FEM-KIT-URS-CRE-BAB-CRE_01": [
@@ -662,7 +662,7 @@
             "id": "Ursinha Coroa.png",
             "name": "Ursinha Coroa",
             "filename": "Ursinha Coroa.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%20Coroa.png"
+            "url": "/bordados/Ursinha%20Coroa.png"
         }
     ],
     "FEM-KIT-VAR-PNK-BAB-PNK-R_01": [
@@ -670,7 +670,7 @@
             "id": "Menina Guarda chuva com flores.png",
             "name": "Menina Guarda chuva com flores",
             "filename": "Menina Guarda chuva com flores.png",
-            "url": "/api/admin/bordados/image?file=Menina%20Guarda%20chuva%20com%20flores.png"
+            "url": "/bordados/Menina%20Guarda%20chuva%20com%20flores.png"
         }
     ],
     "FEM-KIT-VAR-RSE-BAB-RSE_01": [
@@ -678,13 +678,13 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         },
         {
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         }
     ],
     "FEM-KIT-VAR-RSE-BAB-RSE-RSA_01": [
@@ -692,13 +692,13 @@
             "id": "Borboleta2.PNG",
             "name": "Borboleta2",
             "filename": "Borboleta2.PNG",
-            "url": "/api/admin/bordados/image?file=Borboleta2.PNG"
+            "url": "/bordados/Borboleta2.PNG"
         },
         {
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-VAR-SLM-BAB-BCO-RSA_01": [
@@ -706,7 +706,7 @@
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-MNT-BOR-RSA-BAB-RSA_01": [
@@ -714,7 +714,7 @@
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "MAS-FRP-SAF-AZM-BAB-AZM-BCO_01": [
@@ -722,7 +722,7 @@
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         }
     ],
     "FEM-TOB-BOR-RSA-RSA_01": [
@@ -730,7 +730,7 @@
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "MAS-KIT-MON-BGE-BAB-BGE_01": [
@@ -738,7 +738,7 @@
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-MON-BGE-BAB-BCO_01": [
@@ -746,7 +746,7 @@
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-MON-AZM-BAB-AZM_01": [
@@ -754,7 +754,7 @@
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-MON-BGE-BCO_01": [
@@ -762,7 +762,7 @@
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-MON-VDM-BAB-VDM_02": [
@@ -770,7 +770,7 @@
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-SAF-ABB-BAB-AZM-ABB_01": [
@@ -778,37 +778,37 @@
             "id": "Safari 3 Bichinhos.png",
             "name": "Safari 3 Bichinhos",
             "filename": "Safari 3 Bichinhos.png",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Bichinhos.png"
+            "url": "/bordados/Safari%203%20Bichinhos.png"
         },
         {
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         },
         {
             "id": "Safari Zebra+Elefante.png",
             "name": "Safari Zebra+Elefante",
             "filename": "Safari Zebra+Elefante.png",
-            "url": "/api/admin/bordados/image?file=Safari%20Zebra%2BElefante.png"
+            "url": "/bordados/Safari%20Zebra%2BElefante.png"
         },
         {
             "id": "Leao Menino 1.png",
             "name": "Leao Menino 1",
             "filename": "Leao Menino 1.png",
-            "url": "/api/admin/bordados/image?file=Leao%20Menino%201.png"
+            "url": "/bordados/Leao%20Menino%201.png"
         },
         {
             "id": "Macaco Safari Menino.png",
             "name": "Macaco Safari Menino",
             "filename": "Macaco Safari Menino.png",
-            "url": "/api/admin/bordados/image?file=Macaco%20Safari%20Menino.png"
+            "url": "/bordados/Macaco%20Safari%20Menino.png"
         },
         {
             "id": "Girafa menino 1.png",
             "name": "Girafa menino 1",
             "filename": "Girafa menino 1.png",
-            "url": "/api/admin/bordados/image?file=Girafa%20menino%201.png"
+            "url": "/bordados/Girafa%20menino%201.png"
         }
     ],
     "MAS-KIT-NUV-ABB-BAB-ABB_01": [
@@ -816,7 +816,7 @@
             "id": "Nuvem Menino coração.png",
             "name": "Nuvem Menino coração",
             "filename": "Nuvem Menino coração.png",
-            "url": "/api/admin/bordados/image?file=Nuvem%20Menino%20cora%C3%A7%C3%A3o.png"
+            "url": "/bordados/Nuvem%20Menino%20cora%C3%A7%C3%A3o.png"
         }
     ],
     "MAS-KIT-PER-AZM-BAB-AZM_01": [
@@ -824,7 +824,7 @@
             "id": "MICKEY 03.png",
             "name": "MICKEY 03",
             "filename": "MICKEY 03.png",
-            "url": "/api/admin/bordados/image?file=MICKEY%2003.png"
+            "url": "/bordados/MICKEY%2003.png"
         }
     ],
     "MAS-KIT-SAF-AZM-BAB-ABB-R_01": [
@@ -832,25 +832,25 @@
             "id": "Safari 3 Bichinhos.png",
             "name": "Safari 3 Bichinhos",
             "filename": "Safari 3 Bichinhos.png",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Bichinhos.png"
+            "url": "/bordados/Safari%203%20Bichinhos.png"
         },
         {
             "id": "Leao Menino 1.png",
             "name": "Leao Menino 1",
             "filename": "Leao Menino 1.png",
-            "url": "/api/admin/bordados/image?file=Leao%20Menino%201.png"
+            "url": "/bordados/Leao%20Menino%201.png"
         },
         {
             "id": "Girafa menino 1.png",
             "name": "Girafa menino 1",
             "filename": "Girafa menino 1.png",
-            "url": "/api/admin/bordados/image?file=Girafa%20menino%201.png"
+            "url": "/bordados/Girafa%20menino%201.png"
         },
         {
             "id": "Macaco Safari Menino.png",
             "name": "Macaco Safari Menino",
             "filename": "Macaco Safari Menino.png",
-            "url": "/api/admin/bordados/image?file=Macaco%20Safari%20Menino.png"
+            "url": "/bordados/Macaco%20Safari%20Menino.png"
         }
     ],
     "MAS-KIT-SAF-AZM-BAB-AZM_01": [
@@ -858,7 +858,7 @@
             "id": "Safari 3.png",
             "name": "Safari 3",
             "filename": "Safari 3.png",
-            "url": "/api/admin/bordados/image?file=Safari%203.png"
+            "url": "/bordados/Safari%203.png"
         }
     ],
     "MAS-KIT-SAF-AZM-BAB-BCO_01": [
@@ -866,7 +866,7 @@
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         }
     ],
     "MAS-KIT-SAF-AZM-BAB_01": [
@@ -874,7 +874,7 @@
             "id": "Safari 3.png",
             "name": "Safari 3",
             "filename": "Safari 3.png",
-            "url": "/api/admin/bordados/image?file=Safari%203.png"
+            "url": "/bordados/Safari%203.png"
         }
     ],
     "MAS-KIT-SAF-VDM-BAB-BCO-BGE_01": [
@@ -882,25 +882,25 @@
             "id": "Safari 3 Bichinhos.png",
             "name": "Safari 3 Bichinhos",
             "filename": "Safari 3 Bichinhos.png",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Bichinhos.png"
+            "url": "/bordados/Safari%203%20Bichinhos.png"
         },
         {
             "id": "Safari Leão+Girafa.PNG",
             "name": "Safari Leão+Girafa",
             "filename": "Safari Leão+Girafa.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%20Le%C3%A3o%2BGirafa.PNG"
+            "url": "/bordados/Safari%20Le%C3%A3o%2BGirafa.PNG"
         },
         {
             "id": "Macaco Safari Menino.png",
             "name": "Macaco Safari Menino",
             "filename": "Macaco Safari Menino.png",
-            "url": "/api/admin/bordados/image?file=Macaco%20Safari%20Menino.png"
+            "url": "/bordados/Macaco%20Safari%20Menino.png"
         },
         {
             "id": "Elefante menino7.PNG",
             "name": "Elefante menino7",
             "filename": "Elefante menino7.PNG",
-            "url": "/api/admin/bordados/image?file=Elefante%20menino7.PNG"
+            "url": "/bordados/Elefante%20menino7.PNG"
         }
     ],
     "MAS-KIT-SAF-CRE-BAB-CRE-BGE_01": [
@@ -908,7 +908,7 @@
             "id": "Safari 3.png",
             "name": "Safari 3",
             "filename": "Safari 3.png",
-            "url": "/api/admin/bordados/image?file=Safari%203.png"
+            "url": "/bordados/Safari%203.png"
         }
     ],
     "MAS-KIT-SAF-VDM-BAB-VDM-BCO_01": [
@@ -916,7 +916,7 @@
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         }
     ],
     "MAS-KIT-URS-ABB-BAB-ABB_01": [
@@ -924,7 +924,7 @@
             "id": "Safari 3.png",
             "name": "Safari 3",
             "filename": "Safari 3.png",
-            "url": "/api/admin/bordados/image?file=Safari%203.png"
+            "url": "/bordados/Safari%203.png"
         }
     ],
     "MAS-KIT-URS-ABB-BAB-ABB_03": [
@@ -932,7 +932,7 @@
             "id": "Urso na lua.png",
             "name": "Urso na lua",
             "filename": "Urso na lua.png",
-            "url": "/api/admin/bordados/image?file=Urso%20na%20lua.png"
+            "url": "/bordados/Urso%20na%20lua.png"
         }
     ],
     "MAS-KIT-URS-ABB-BAB-ABB_04": [
@@ -940,7 +940,7 @@
             "id": "Urso príncipe12.png",
             "name": "Urso príncipe12",
             "filename": "Urso príncipe12.png",
-            "url": "/api/admin/bordados/image?file=Urso%20pr%C3%ADncipe12.png"
+            "url": "/bordados/Urso%20pr%C3%ADncipe12.png"
         }
     ],
     "MAS-KIT-URS-AZM-BAB-AZM-VDM_01": [
@@ -948,13 +948,13 @@
             "id": "Urso príncipe12.png",
             "name": "Urso príncipe12",
             "filename": "Urso príncipe12.png",
-            "url": "/api/admin/bordados/image?file=Urso%20pr%C3%ADncipe12.png"
+            "url": "/bordados/Urso%20pr%C3%ADncipe12.png"
         },
         {
             "id": "Urso brasão 11.png",
             "name": "Urso brasão 11",
             "filename": "Urso brasão 11.png",
-            "url": "/api/admin/bordados/image?file=Urso%20bras%C3%A3o%2011.png"
+            "url": "/bordados/Urso%20bras%C3%A3o%2011.png"
         }
     ],
     "MAS-KIT-URS-BGE-BAB-BCO_01": [
@@ -962,7 +962,7 @@
             "id": "Urso Brasão03.png",
             "name": "Urso Brasão03",
             "filename": "Urso Brasão03.png",
-            "url": "/api/admin/bordados/image?file=Urso%20Bras%C3%A3o03.png"
+            "url": "/bordados/Urso%20Bras%C3%A3o03.png"
         }
     ],
     "MAS-KIT-VAR-AZM-BAB-AZM_01": [
@@ -970,7 +970,7 @@
             "id": "DINO.png",
             "name": "DINO",
             "filename": "DINO.png",
-            "url": "/api/admin/bordados/image?file=DINO.png"
+            "url": "/bordados/DINO.png"
         }
     ],
     "MAS-KIT-VAR-AZM-ATC-AZM_01": [
@@ -978,13 +978,13 @@
             "id": "Fazendinha  2.png",
             "name": "Fazendinha  2",
             "filename": "Fazendinha  2.png",
-            "url": "/api/admin/bordados/image?file=Fazendinha%20%202.png"
+            "url": "/bordados/Fazendinha%20%202.png"
         },
         {
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-VAR-BGE-BAB-AZM-ABB_01": [
@@ -992,13 +992,13 @@
             "id": "Urso Brasão03.png",
             "name": "Urso Brasão03",
             "filename": "Urso Brasão03.png",
-            "url": "/api/admin/bordados/image?file=Urso%20Bras%C3%A3o03.png"
+            "url": "/bordados/Urso%20Bras%C3%A3o03.png"
         },
         {
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         }
     ],
     "MAS-KIT-VAR-BGE-BAB-BCO_01": [
@@ -1006,7 +1006,7 @@
             "id": "Brasão.png",
             "name": "Brasão",
             "filename": "Brasão.png",
-            "url": "/api/admin/bordados/image?file=Bras%C3%A3o.png"
+            "url": "/bordados/Bras%C3%A3o.png"
         }
     ],
     "MAS-KIT-VAR-CNZ-BAB-BCO_01": [
@@ -1014,7 +1014,7 @@
             "id": "Elefante menino7.PNG",
             "name": "Elefante menino7",
             "filename": "Elefante menino7.PNG",
-            "url": "/api/admin/bordados/image?file=Elefante%20menino7.PNG"
+            "url": "/bordados/Elefante%20menino7.PNG"
         }
     ],
     "MAS-KIT-VAR-BGE-BAB-CRE_01": [
@@ -1022,7 +1022,7 @@
             "id": "Bebe menino02.png",
             "name": "Bebe menino02",
             "filename": "Bebe menino02.png",
-            "url": "/api/admin/bordados/image?file=Bebe%20menino02.png"
+            "url": "/bordados/Bebe%20menino02.png"
         }
     ],
     "MAS-KIT-VAR-VDM-BAB-VDM_01": [
@@ -1030,7 +1030,7 @@
             "id": "Menino frescurento.png",
             "name": "Menino frescurento",
             "filename": "Menino frescurento.png",
-            "url": "/api/admin/bordados/image?file=Menino%20frescurento.png"
+            "url": "/bordados/Menino%20frescurento.png"
         }
     ],
     "THEME_NUV": [
@@ -1038,19 +1038,19 @@
             "id": "Nuvem Frufru 05.png",
             "name": "Nuvem Frufru 05",
             "filename": "Nuvem Frufru 05.png",
-            "url": "/api/admin/bordados/image?file=Nuvem%20Frufru%2005.png"
+            "url": "/bordados/Nuvem%20Frufru%2005.png"
         },
         {
             "id": "Nuvem Frufru G.png",
             "name": "Nuvem Frufru G",
             "filename": "Nuvem Frufru G.png",
-            "url": "/api/admin/bordados/image?file=Nuvem%20Frufru%20G.png"
+            "url": "/bordados/Nuvem%20Frufru%20G.png"
         },
         {
             "id": "Nuvem Menino coração.png",
             "name": "Nuvem Menino coração",
             "filename": "Nuvem Menino coração.png",
-            "url": "/api/admin/bordados/image?file=Nuvem%20Menino%20cora%C3%A7%C3%A3o.png"
+            "url": "/bordados/Nuvem%20Menino%20cora%C3%A7%C3%A3o.png"
         }
     ],
     "THEME_JDE": [
@@ -1058,31 +1058,31 @@
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         },
         {
             "id": "Passarinho Borboleta.PNG",
             "name": "Passarinho Borboleta",
             "filename": "Passarinho Borboleta.PNG",
-            "url": "/api/admin/bordados/image?file=Passarinho%20Borboleta.PNG"
+            "url": "/bordados/Passarinho%20Borboleta.PNG"
         },
         {
             "id": "PASSARO2.PNG",
             "name": "PASSARO2",
             "filename": "PASSARO2.PNG",
-            "url": "/api/admin/bordados/image?file=PASSARO2.PNG"
+            "url": "/bordados/PASSARO2.PNG"
         },
         {
             "id": "PASSARO 03.png",
             "name": "PASSARO 03",
             "filename": "PASSARO 03.png",
-            "url": "/api/admin/bordados/image?file=PASSARO%2003.png"
+            "url": "/bordados/PASSARO%2003.png"
         },
         {
             "id": "Passarinho casinha2.png",
             "name": "Passarinho casinha2",
             "filename": "Passarinho casinha2.png",
-            "url": "/api/admin/bordados/image?file=Passarinho%20casinha2.png"
+            "url": "/bordados/Passarinho%20casinha2.png"
         }
     ],
     "THEME_FLO": [
@@ -1090,31 +1090,31 @@
             "id": "Coração floral.png",
             "name": "Coração floral",
             "filename": "Coração floral.png",
-            "url": "/api/admin/bordados/image?file=Cora%C3%A7%C3%A3o%20floral.png"
+            "url": "/bordados/Cora%C3%A7%C3%A3o%20floral.png"
         },
         {
             "id": "Floral3.png",
             "name": "Floral3",
             "filename": "Floral3.png",
-            "url": "/api/admin/bordados/image?file=Floral3.png"
+            "url": "/bordados/Floral3.png"
         },
         {
             "id": "Floral4.png",
             "name": "Floral4",
             "filename": "Floral4.png",
-            "url": "/api/admin/bordados/image?file=Floral4.png"
+            "url": "/bordados/Floral4.png"
         },
         {
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         },
         {
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         }
     ],
     "THEME_BOR": [
@@ -1122,25 +1122,25 @@
             "id": "Borboleta3.png",
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
-            "url": "/api/admin/bordados/image?file=Borboleta3.png"
+            "url": "/bordados/Borboleta3.png"
         },
         {
             "id": "Floral com Borboleta3.PNG",
             "name": "Floral com Borboleta3",
             "filename": "Floral com Borboleta3.PNG",
-            "url": "/api/admin/bordados/image?file=Floral%20com%20Borboleta3.PNG"
+            "url": "/bordados/Floral%20com%20Borboleta3.PNG"
         },
         {
             "id": "Floral6.png",
             "name": "Floral6",
             "filename": "Floral6.png",
-            "url": "/api/admin/bordados/image?file=Floral6.png"
+            "url": "/bordados/Floral6.png"
         },
         {
             "id": "Floral4.png",
             "name": "Floral4",
             "filename": "Floral4.png",
-            "url": "/api/admin/bordados/image?file=Floral4.png"
+            "url": "/bordados/Floral4.png"
         }
     ],
     "THEME_URS": [
@@ -1148,67 +1148,67 @@
             "id": "Urso príncipe12.png",
             "name": "Urso príncipe12",
             "filename": "Urso príncipe12.png",
-            "url": "/api/admin/bordados/image?file=Urso%20pr%C3%ADncipe12.png"
+            "url": "/bordados/Urso%20pr%C3%ADncipe12.png"
         },
         {
             "id": "Urso na lua.png",
             "name": "Urso na lua",
             "filename": "Urso na lua.png",
-            "url": "/api/admin/bordados/image?file=Urso%20na%20lua.png"
+            "url": "/bordados/Urso%20na%20lua.png"
         },
         {
             "id": "Urso Brasão03.png",
             "name": "Urso Brasão03",
             "filename": "Urso Brasão03.png",
-            "url": "/api/admin/bordados/image?file=Urso%20Bras%C3%A3o03.png"
+            "url": "/bordados/Urso%20Bras%C3%A3o03.png"
         },
         {
             "id": "Urso brasão 11.png",
             "name": "Urso brasão 11",
             "filename": "Urso brasão 11.png",
-            "url": "/api/admin/bordados/image?file=Urso%20bras%C3%A3o%2011.png"
+            "url": "/bordados/Urso%20bras%C3%A3o%2011.png"
         },
         {
             "id": "Ursinho Príncipe Sentado.png",
             "name": "Ursinho Príncipe Sentado",
             "filename": "Ursinho Príncipe Sentado.png",
-            "url": "/api/admin/bordados/image?file=Ursinho%20Pr%C3%ADncipe%20Sentado.png"
+            "url": "/bordados/Ursinho%20Pr%C3%ADncipe%20Sentado.png"
         },
         {
             "id": "Ursinho aviador3.png",
             "name": "Ursinho aviador3",
             "filename": "Ursinho aviador3.png",
-            "url": "/api/admin/bordados/image?file=Ursinho%20aviador3.png"
+            "url": "/bordados/Ursinho%20aviador3.png"
         },
         {
             "id": "Ursinha Princesa Floral.png",
             "name": "Ursinha Princesa Floral",
             "filename": "Ursinha Princesa Floral.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%20Princesa%20Floral.png"
+            "url": "/bordados/Ursinha%20Princesa%20Floral.png"
         },
         {
             "id": "Ursinha Coroa.png",
             "name": "Ursinha Coroa",
             "filename": "Ursinha Coroa.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%20Coroa.png"
+            "url": "/bordados/Ursinha%20Coroa.png"
         },
         {
             "id": "Ursinha com flores.png",
             "name": "Ursinha com flores",
             "filename": "Ursinha com flores.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%20com%20flores.png"
+            "url": "/bordados/Ursinha%20com%20flores.png"
         },
         {
             "id": "Ursinha 03.png",
             "name": "Ursinha 03",
             "filename": "Ursinha 03.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%2003.png"
+            "url": "/bordados/Ursinha%2003.png"
         },
         {
             "id": "Panda 2.png",
             "name": "Panda 2",
             "filename": "Panda 2.png",
-            "url": "/api/admin/bordados/image?file=Panda%202.png"
+            "url": "/bordados/Panda%202.png"
         }
     ],
     "THEME_BAI": [
@@ -1216,13 +1216,13 @@
             "id": "Bailarina3.png",
             "name": "Bailarina3",
             "filename": "Bailarina3.png",
-            "url": "/api/admin/bordados/image?file=Bailarina3.png"
+            "url": "/bordados/Bailarina3.png"
         },
         {
             "id": "Bailarina floral.png",
             "name": "Bailarina floral",
             "filename": "Bailarina floral.png",
-            "url": "/api/admin/bordados/image?file=Bailarina%20floral.png"
+            "url": "/bordados/Bailarina%20floral.png"
         }
     ],
     "THEME_MON": [
@@ -1230,49 +1230,49 @@
             "id": "Brasão 6.png",
             "name": "Brasão 6",
             "filename": "Brasão 6.png",
-            "url": "/api/admin/bordados/image?file=Bras%C3%A3o%206.png"
+            "url": "/bordados/Bras%C3%A3o%206.png"
         },
         {
             "id": "Brasão.png",
             "name": "Brasão",
             "filename": "Brasão.png",
-            "url": "/api/admin/bordados/image?file=Bras%C3%A3o.png"
+            "url": "/bordados/Bras%C3%A3o.png"
         },
         {
             "id": "Coração floral.png",
             "name": "Coração floral",
             "filename": "Coração floral.png",
-            "url": "/api/admin/bordados/image?file=Cora%C3%A7%C3%A3o%20floral.png"
+            "url": "/bordados/Cora%C3%A7%C3%A3o%20floral.png"
         },
         {
             "id": "Monograma Raminho com Coroa.png",
             "name": "Monograma Raminho com Coroa",
             "filename": "Monograma Raminho com Coroa.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20Raminho%20com%20Coroa.png"
+            "url": "/bordados/Monograma%20Raminho%20com%20Coroa.png"
         },
         {
             "id": "Monograma AGF.png",
             "name": "Monograma AGF",
             "filename": "Monograma AGF.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20AGF.png"
+            "url": "/bordados/Monograma%20AGF.png"
         },
         {
             "id": "Monograma Raminho.png",
             "name": "Monograma Raminho",
             "filename": "Monograma Raminho.png",
-            "url": "/api/admin/bordados/image?file=Monograma%20Raminho.png"
+            "url": "/bordados/Monograma%20Raminho.png"
         },
         {
             "id": "Monograma.png",
             "name": "Monograma",
             "filename": "Monograma.png",
-            "url": "/api/admin/bordados/image?file=Monograma.png"
+            "url": "/bordados/Monograma.png"
         },
         {
             "id": "MonogramaA Feminino.png",
             "name": "MonogramaA Feminino",
             "filename": "MonogramaA Feminino.png",
-            "url": "/api/admin/bordados/image?file=MonogramaA%20Feminino.png"
+            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "THEME_BBZ": [
@@ -1280,19 +1280,19 @@
             "id": "Bebe menina.png",
             "name": "Bebe menina",
             "filename": "Bebe menina.png",
-            "url": "/api/admin/bordados/image?file=Bebe%20menina.png"
+            "url": "/bordados/Bebe%20menina.png"
         },
         {
             "id": "Bebe menino02.png",
             "name": "Bebe menino02",
             "filename": "Bebe menino02.png",
-            "url": "/api/admin/bordados/image?file=Bebe%20menino02.png"
+            "url": "/bordados/Bebe%20menino02.png"
         },
         {
             "id": "Bebe2.png",
             "name": "Bebe2",
             "filename": "Bebe2.png",
-            "url": "/api/admin/bordados/image?file=Bebe2.png"
+            "url": "/bordados/Bebe2.png"
         }
     ],
     "THEME_PER": [
@@ -1300,19 +1300,19 @@
             "id": "Marrie.png",
             "name": "Marrie",
             "filename": "Marrie.png",
-            "url": "/api/admin/bordados/image?file=Marrie.png"
+            "url": "/bordados/Marrie.png"
         },
         {
             "id": "Miney5.png",
             "name": "Miney5",
             "filename": "Miney5.png",
-            "url": "/api/admin/bordados/image?file=Miney5.png"
+            "url": "/bordados/Miney5.png"
         },
         {
             "id": "MICKEY 03.png",
             "name": "MICKEY 03",
             "filename": "MICKEY 03.png",
-            "url": "/api/admin/bordados/image?file=MICKEY%2003.png"
+            "url": "/bordados/MICKEY%2003.png"
         }
     ],
     "THEME_COR": [
@@ -1320,49 +1320,49 @@
             "id": "Brasão.png",
             "name": "Brasão",
             "filename": "Brasão.png",
-            "url": "/api/admin/bordados/image?file=Bras%C3%A3o.png"
+            "url": "/bordados/Bras%C3%A3o.png"
         },
         {
             "id": "Coroa 02.png",
             "name": "Coroa 02",
             "filename": "Coroa 02.png",
-            "url": "/api/admin/bordados/image?file=Coroa%2002.png"
+            "url": "/bordados/Coroa%2002.png"
         },
         {
             "id": "Coroa com Pérola.png",
             "name": "Coroa com Pérola",
             "filename": "Coroa com Pérola.png",
-            "url": "/api/admin/bordados/image?file=Coroa%20com%20P%C3%A9rola.png"
+            "url": "/bordados/Coroa%20com%20P%C3%A9rola.png"
         },
         {
             "id": "Urso Brasão03.png",
             "name": "Urso Brasão03",
             "filename": "Urso Brasão03.png",
-            "url": "/api/admin/bordados/image?file=Urso%20Bras%C3%A3o03.png"
+            "url": "/bordados/Urso%20Bras%C3%A3o03.png"
         },
         {
             "id": "Ursinha Coroa.png",
             "name": "Ursinha Coroa",
             "filename": "Ursinha Coroa.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%20Coroa.png"
+            "url": "/bordados/Ursinha%20Coroa.png"
         },
         {
             "id": "Urso príncipe12.png",
             "name": "Urso príncipe12",
             "filename": "Urso príncipe12.png",
-            "url": "/api/admin/bordados/image?file=Urso%20pr%C3%ADncipe12.png"
+            "url": "/bordados/Urso%20pr%C3%ADncipe12.png"
         },
         {
             "id": "Ursinha Princesa Floral.png",
             "name": "Ursinha Princesa Floral",
             "filename": "Ursinha Princesa Floral.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%20Princesa%20Floral.png"
+            "url": "/bordados/Ursinha%20Princesa%20Floral.png"
         },
         {
             "id": "Ursinha 03.png",
             "name": "Ursinha 03",
             "filename": "Ursinha 03.png",
-            "url": "/api/admin/bordados/image?file=Ursinha%2003.png"
+            "url": "/bordados/Ursinha%2003.png"
         }
     ],
     "THEME_VAR": [
@@ -1370,91 +1370,91 @@
             "id": "Arco Iris Coração.png",
             "name": "Arco Iris Coração",
             "filename": "Arco Iris Coração.png",
-            "url": "/api/admin/bordados/image?file=Arco%20Iris%20Cora%C3%A7%C3%A3o.png"
+            "url": "/bordados/Arco%20Iris%20Cora%C3%A7%C3%A3o.png"
         },
         {
             "id": "Astronalta.png",
             "name": "Astronalta",
             "filename": "Astronalta.png",
-            "url": "/api/admin/bordados/image?file=Astronalta.png"
+            "url": "/bordados/Astronalta.png"
         },
         {
             "id": "CAVALINHO.PNG",
             "name": "CAVALINHO",
             "filename": "CAVALINHO.PNG",
-            "url": "/api/admin/bordados/image?file=CAVALINHO.PNG"
+            "url": "/bordados/CAVALINHO.PNG"
         },
         {
             "id": "CEREJA1.PNG",
             "name": "CEREJA1",
             "filename": "CEREJA1.PNG",
-            "url": "/api/admin/bordados/image?file=CEREJA1.PNG"
+            "url": "/bordados/CEREJA1.PNG"
         },
         {
             "id": "Cavalo Retangulos.png",
             "name": "Cavalo Retangulos",
             "filename": "Cavalo Retangulos.png",
-            "url": "/api/admin/bordados/image?file=Cavalo%20Retangulos.png"
+            "url": "/bordados/Cavalo%20Retangulos.png"
         },
         {
             "id": "Cavalo Brasão.png",
             "name": "Cavalo Brasão",
             "filename": "Cavalo Brasão.png",
-            "url": "/api/admin/bordados/image?file=Cavalo%20Bras%C3%A3o.png"
+            "url": "/bordados/Cavalo%20Bras%C3%A3o.png"
         },
         {
             "id": "DINO.png",
             "name": "DINO",
             "filename": "DINO.png",
-            "url": "/api/admin/bordados/image?file=DINO.png"
+            "url": "/bordados/DINO.png"
         },
         {
             "id": "Fazendinha  2.png",
             "name": "Fazendinha  2",
             "filename": "Fazendinha  2.png",
-            "url": "/api/admin/bordados/image?file=Fazendinha%20%202.png"
+            "url": "/bordados/Fazendinha%20%202.png"
         },
         {
             "id": "Elefante5.png",
             "name": "Elefante5",
             "filename": "Elefante5.png",
-            "url": "/api/admin/bordados/image?file=Elefante5.png"
+            "url": "/bordados/Elefante5.png"
         },
         {
             "id": "Menina Guarda chuva com flores.png",
             "name": "Menina Guarda chuva com flores",
             "filename": "Menina Guarda chuva com flores.png",
-            "url": "/api/admin/bordados/image?file=Menina%20Guarda%20chuva%20com%20flores.png"
+            "url": "/bordados/Menina%20Guarda%20chuva%20com%20flores.png"
         },
         {
             "id": "Panda 2.png",
             "name": "Panda 2",
             "filename": "Panda 2.png",
-            "url": "/api/admin/bordados/image?file=Panda%202.png"
+            "url": "/bordados/Panda%202.png"
         },
         {
             "id": "Raposa1.png",
             "name": "Raposa1",
             "filename": "Raposa1.png",
-            "url": "/api/admin/bordados/image?file=Raposa1.png"
+            "url": "/bordados/Raposa1.png"
         },
         {
             "id": "Raposa2.png",
             "name": "Raposa2",
             "filename": "Raposa2.png",
-            "url": "/api/admin/bordados/image?file=Raposa2.png"
+            "url": "/bordados/Raposa2.png"
         },
         {
             "id": "Romero.png",
             "name": "Romero",
             "filename": "Romero.png",
-            "url": "/api/admin/bordados/image?file=Romero.png"
+            "url": "/bordados/Romero.png"
         },
         {
             "id": "Trator.png",
             "name": "Trator",
             "filename": "Trator.png",
-            "url": "/api/admin/bordados/image?file=Trator.png"
+            "url": "/bordados/Trator.png"
         }
     ],
     "THEME_SAF": [
@@ -1462,109 +1462,109 @@
             "id": "ZEBRA Menino 2.png",
             "name": "ZEBRA Menino 2",
             "filename": "ZEBRA Menino 2.png",
-            "url": "/api/admin/bordados/image?file=ZEBRA%20Menino%202.png"
+            "url": "/bordados/ZEBRA%20Menino%202.png"
         },
         {
             "id": "Safari.png",
             "name": "Safari",
             "filename": "Safari.png",
-            "url": "/api/admin/bordados/image?file=Safari.png"
+            "url": "/bordados/Safari.png"
         },
         {
             "id": "Safari Zebra+Elefante.png",
             "name": "Safari Zebra+Elefante",
             "filename": "Safari Zebra+Elefante.png",
-            "url": "/api/admin/bordados/image?file=Safari%20Zebra%2BElefante.png"
+            "url": "/bordados/Safari%20Zebra%2BElefante.png"
         },
         {
             "id": "Safari Leão+Girafa.PNG",
             "name": "Safari Leão+Girafa",
             "filename": "Safari Leão+Girafa.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%20Le%C3%A3o%2BGirafa.PNG"
+            "url": "/bordados/Safari%20Le%C3%A3o%2BGirafa.PNG"
         },
         {
             "id": "Safari 3.png",
             "name": "Safari 3",
             "filename": "Safari 3.png",
-            "url": "/api/admin/bordados/image?file=Safari%203.png"
+            "url": "/bordados/Safari%203.png"
         },
         {
             "id": "Safari 3 Girafa+Leão.PNG",
             "name": "Safari 3 Girafa+Leão",
             "filename": "Safari 3 Girafa+Leão.PNG",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Girafa%2BLe%C3%A3o.PNG"
+            "url": "/bordados/Safari%203%20Girafa%2BLe%C3%A3o.PNG"
         },
         {
             "id": "Safari 3 Bichinhos.png",
             "name": "Safari 3 Bichinhos",
             "filename": "Safari 3 Bichinhos.png",
-            "url": "/api/admin/bordados/image?file=Safari%203%20Bichinhos.png"
+            "url": "/bordados/Safari%203%20Bichinhos.png"
         },
         {
             "id": "Safari 2.png",
             "name": "Safari 2",
             "filename": "Safari 2.png",
-            "url": "/api/admin/bordados/image?file=Safari%202.png"
+            "url": "/bordados/Safari%202.png"
         },
         {
             "id": "Safari  Elefante+Girafa.png",
             "name": "Safari  Elefante+Girafa",
             "filename": "Safari  Elefante+Girafa.png",
-            "url": "/api/admin/bordados/image?file=Safari%20%20Elefante%2BGirafa.png"
+            "url": "/bordados/Safari%20%20Elefante%2BGirafa.png"
         },
         {
             "id": "Macaco Safari.png",
             "name": "Macaco Safari",
             "filename": "Macaco Safari.png",
-            "url": "/api/admin/bordados/image?file=Macaco%20Safari.png"
+            "url": "/bordados/Macaco%20Safari.png"
         },
         {
             "id": "Girafa menino 1.png",
             "name": "Girafa menino 1",
             "filename": "Girafa menino 1.png",
-            "url": "/api/admin/bordados/image?file=Girafa%20menino%201.png"
+            "url": "/bordados/Girafa%20menino%201.png"
         },
         {
             "id": "Girafa menino 2.PNG",
             "name": "Girafa menino 2",
             "filename": "Girafa menino 2.PNG",
-            "url": "/api/admin/bordados/image?file=Girafa%20menino%202.PNG"
+            "url": "/bordados/Girafa%20menino%202.PNG"
         },
         {
             "id": "Leao Menino 1.png",
             "name": "Leao Menino 1",
             "filename": "Leao Menino 1.png",
-            "url": "/api/admin/bordados/image?file=Leao%20Menino%201.png"
+            "url": "/bordados/Leao%20Menino%201.png"
         },
         {
             "id": "Macaco Safari Menino.png",
             "name": "Macaco Safari Menino",
             "filename": "Macaco Safari Menino.png",
-            "url": "/api/admin/bordados/image?file=Macaco%20Safari%20Menino.png"
+            "url": "/bordados/Macaco%20Safari%20Menino.png"
         },
         {
             "id": "Elefante5.png",
             "name": "Elefante5",
             "filename": "Elefante5.png",
-            "url": "/api/admin/bordados/image?file=Elefante5.png"
+            "url": "/bordados/Elefante5.png"
         },
         {
             "id": "Elefante menino8.png",
             "name": "Elefante menino8",
             "filename": "Elefante menino8.png",
-            "url": "/api/admin/bordados/image?file=Elefante%20menino8.png"
+            "url": "/bordados/Elefante%20menino8.png"
         },
         {
             "id": "Elefante menino7.PNG",
             "name": "Elefante menino7",
             "filename": "Elefante menino7.PNG",
-            "url": "/api/admin/bordados/image?file=Elefante%20menino7.PNG"
+            "url": "/bordados/Elefante%20menino7.PNG"
         },
         {
             "id": "Elefante 4.png",
             "name": "Elefante 4",
             "filename": "Elefante 4.png",
-            "url": "/api/admin/bordados/image?file=Elefante%204.png"
+            "url": "/bordados/Elefante%204.png"
         }
     ]
 }
