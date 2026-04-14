@@ -36,7 +36,7 @@ const securityHeaders = [
   },
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://*.firebaseapp.com https://www.gstatic.com https://*.infinitepay.io https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://*.googleapis.com https://firebasestorage.googleapis.com https://*.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.infinitepay.io https://api.stripe.com https://accounts.google.com; frame-src 'self' https://*.firebaseapp.com https://apis.google.com https://*.infinitepay.io https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://*.firebaseapp.com https://www.gstatic.com https://*.infinitepay.io https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://*.googleapis.com https://firebasestorage.googleapis.com https://*.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.infinitepay.io https://accounts.google.com; frame-src 'self' https://*.firebaseapp.com https://apis.google.com https://*.infinitepay.io https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self';"
   }
 ];
 
