@@ -23,22 +23,7 @@ function isRateLimited(ip: string): boolean {
     return entry.count > RATE_LIMIT_MAX;
 }
 
-// 2. HMAC-SHA256 signature verifier (constant-time comparison)
-function verifySignature(rawBody: string, signatureHeader: string | null, secret: string): boolean {
-    if (!signatureHeader) return false;
-    const expected = crypto.createHmac('sha256', secret).update(rawBody, 'utf8').digest('hex');
-    try {
-        return crypto.timingSafeEqual(
-            Buffer.from(signatureHeader, 'hex'),
-            Buffer.from(expected, 'hex')
-        );
-    } catch {
-        return false;
-    }
-}
-
-// 3. Replay-attack guard — rejects bodies older than 5 minutes
-const REPLAY_WINDOW_MS = 5 * 60 * 1000;
+// 2. Replay-attack guard — rejects duplicate webhook deliveries
 const processedIdempotencyKeys = new Set<string>();
 
 // Função para identificar NSU independentemente do layout do JSON da IP
@@ -64,24 +49,8 @@ export async function POST(req: Request) {
     }
 
     try {
-        // We must read the raw body BEFORE parsing for HMAC validation
+        // We must read the raw body BEFORE parsing
         const bodyText = await req.text();
-
-        // ── Gate 2: HMAC Signature Verification ──
-        const webhookSecret = process.env.INFINITEPAY_WEBHOOK_SECRET;
-        if (webhookSecret && webhookSecret !== 'your_infinitepay_secret') {
-            const signature = req.headers.get('x-webhook-signature')
-                || req.headers.get('x-signature')
-                || req.headers.get('x-hub-signature-256')?.replace('sha256=', '');
-
-            if (!verifySignature(bodyText, signature, webhookSecret)) {
-                console.error(`[SEC] 🚨 HMAC Signature INVÁLIDA! IP: ${clientIp}`);
-                return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
-            }
-            console.log(`[SEC] ✅ Assinatura HMAC verificada com sucesso.`);
-        } else {
-            console.warn(`[SEC] ⚠️ INFINITEPAY_WEBHOOK_SECRET não configurado. Validação de assinatura DESABILITADA.`);
-        }
 
         let body;
         try {
@@ -89,6 +58,39 @@ export async function POST(req: Request) {
         } catch {
             console.error('🚨 Webhook Received Invalid JSON');
             return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+        }
+
+        // ── Gate 2: Verificação direta na API da InfinitePay ──
+        // A InfinitePay não usa webhook secrets/HMAC.
+        // A forma oficial de validar é consultar a API deles para confirmar o status do pagamento.
+        const orderNsu = extractOrderNsu(body);
+        if (orderNsu) {
+            try {
+                const ipHandle = process.env.NEXT_PUBLIC_INFINITEPAY_HANDLE;
+                const verifyResponse = await fetch('https://api.infinitepay.io/invoices/public/checkout/payment_check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ handle: ipHandle, order_nsu: orderNsu }),
+                });
+
+                if (verifyResponse.ok) {
+                    const verifyData = await verifyResponse.json();
+                    const verifyStatus = JSON.stringify(verifyData).toLowerCase();
+                    const isVerifiedPaid = verifyStatus.includes('approved') || verifyStatus.includes('paid') || verifyStatus.includes('pago');
+
+                    if (!isVerifiedPaid) {
+                        console.error(`[SEC] 🚨 Pagamento NÃO CONFIRMADO pela InfinitePay para NSU: ${orderNsu}. Possível webhook forjado!`);
+                        return NextResponse.json({ error: 'Payment not verified' }, { status: 403 });
+                    }
+                    console.log(`[SEC] ✅ Pagamento VERIFICADO diretamente com a InfinitePay para NSU: ${orderNsu}`);
+                } else {
+                    // Se a API da InfinitePay estiver fora, logamos mas deixamos passar
+                    // para não bloquear pedidos legítimos por causa de indisponibilidade temporária deles
+                    console.warn(`[SEC] ⚠️ Não foi possível verificar pagamento com a API da InfinitePay (status ${verifyResponse.status}). Prosseguindo com cautela.`);
+                }
+            } catch (verifyError) {
+                console.warn(`[SEC] ⚠️ Erro ao consultar API da InfinitePay para verificação:`, verifyError);
+            }
         }
 
         // ── Gate 3: Replay Attack Protection (idempotency) ──
