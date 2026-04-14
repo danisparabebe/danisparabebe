@@ -266,11 +266,11 @@ function ContaContent() {
                                         {favoriteProducts.map((p: any) => (
                                             <Link key={p.id} href={`/produto/${p.shortCode || p.id}`} className="group relative border border-line rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                                                 <div className="aspect-square relative w-full bg-warm-stone/20">
-                                                    <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                                                    <Image src={p.images?.[0] || p.image || '/placeholder.png'} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                                                 </div>
                                                 <div className="p-4">
                                                     <h4 className="font-bold text-sm text-charcoal line-clamp-1 mb-1">{p.name}</h4>
-                                                    <p className="text-xs font-semibold text-sage-green-dark">R$ {p.price?.toFixed(2).replace('.',',') || 'Sob Consulta'}</p>
+                                                    <p className="text-xs font-semibold text-sage-green-dark">R$ {(p.pixPrice ?? p.priceFull ?? p.price)?.toFixed(2).replace('.',',') || 'Sob Consulta'}</p>
                                                 </div>
                                                 <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 shadow-sm flex items-center justify-center">
                                                     <Heart className="w-4 h-4 fill-dusty-rose text-dusty-rose" />
