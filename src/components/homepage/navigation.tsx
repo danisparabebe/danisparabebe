@@ -57,13 +57,16 @@ export function Navigation() {
                     <div className="hidden lg:flex w-full h-full items-center justify-between">
 
                         {/* The Star: Personalize seu Kit (Center Aligned to match the logo axis) */}
-                        <div className="flex shrink-0 w-[200px] xl:w-[240px] justify-center">
+                        <div className="flex shrink-0 w-[220px] xl:w-[260px] justify-center">
                             <Link
                                 href="/monte-seu-kit"
-                                className="group flex items-center gap-1.5 px-5 py-1.5 bg-sage-green hover:bg-[#9cbd9f] text-charcoal shadow-[0_4px_10px_rgba(173,206,179,0.3)] hover:shadow-[0_6px_15px_rgba(173,206,179,0.5)] text-[10px] xl:text-[11px] font-bold tracking-[0.15em] rounded-full transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap outline-none border border-charcoal/5 cursor-pointer"
+                                className="group relative flex items-center gap-2 px-6 py-2.5 bg-[#1f2937] hover:bg-[#2d3a4a] text-white text-[11px] xl:text-[12px] font-black tracking-[0.12em] rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 whitespace-nowrap outline-none cursor-pointer shadow-[0_4px_20px_rgba(31,41,55,0.35)] hover:shadow-[0_8px_30px_rgba(31,41,55,0.45)] overflow-hidden"
                             >
-                                <Wand2 className="w-3.5 h-3.5 text-charcoal/80 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2.5} />
-                                <span>PERSONALIZE SEU KIT</span>
+                                {/* Shimmer effect */}
+                                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                                <Wand2 className="w-4 h-4 text-sage-green group-hover:rotate-12 transition-transform duration-300" strokeWidth={2.5} />
+                                <span>MONTE SEU KIT</span>
+                                <span className="ml-1 text-[9px] bg-sage-green text-charcoal px-1.5 py-0.5 rounded-full font-black animate-pulse">✨</span>
                             </Link>
                         </div>
 
@@ -113,10 +116,12 @@ export function Navigation() {
                     <div className="flex lg:hidden justify-center items-center h-full absolute inset-0 pointer-events-none z-10 w-full">
                         <Link
                             href="/monte-seu-kit"
-                            className="group flex items-center gap-2 px-5 py-2 bg-sage-green hover:bg-[#9cbd9f] text-charcoal text-[10px] sm:text-[11px] font-bold tracking-[0.15em] rounded-full shadow-[0_4px_10px_rgba(173,206,179,0.3)] transition-all outline-none border border-charcoal/5 pointer-events-auto active:scale-95"
+                            className="group relative flex items-center gap-2 px-5 py-2.5 bg-[#1f2937] text-white text-[10px] sm:text-[11px] font-black tracking-[0.12em] rounded-full shadow-[0_4px_20px_rgba(31,41,55,0.35)] transition-all outline-none pointer-events-auto active:scale-95 overflow-hidden"
                         >
-                            <Wand2 className="w-3.5 h-3.5 text-charcoal/80" strokeWidth={2.5} />
-                            <span>PERSONALIZE SEU KIT</span>
+                            <span className="absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                            <Wand2 className="w-3.5 h-3.5 text-sage-green" strokeWidth={2.5} />
+                            <span>MONTE SEU KIT</span>
+                            <span className="ml-0.5 text-[9px] bg-sage-green text-charcoal px-1.5 py-0.5 rounded-full font-black">✨</span>
                         </Link>
                     </div>
 
