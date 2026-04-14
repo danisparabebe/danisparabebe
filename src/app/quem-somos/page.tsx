@@ -24,9 +24,9 @@ export default function QuemSomosPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
                     {/* Placeholder for a beautiful studio/embroidery image later */}
-                    <div className="bg-sage-green/5 rounded-2xl aspect-square w-full flex items-center justify-center p-8 overflow-hidden relative border border-line">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-warm-stone/40 to-transparent"></div>
-                        <img src="/Logos/DANIS VERDE-BRANCO.png" alt="Danis Para Bebê" className="w-[70%] h-auto relative z-10 object-contain drop-shadow-sm opacity-90" />
+                    <div className="rounded-2xl aspect-square w-full overflow-hidden relative border border-line shadow-sm group">
+                        <img src="/Logos/DANIS VERDE-BRANCO.png" alt="Danis Para Bebê" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-warm-stone/10 mix-blend-multiply pointer-events-none"></div>
                     </div>
 
                     <div className="space-y-6 text-charcoal/80 leading-relaxed text-lg">
