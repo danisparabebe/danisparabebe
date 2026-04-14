@@ -26,12 +26,12 @@ export default function PrivacidadePage() {
                         <h3>2. Uso das Informações</h3>
                         <p>
                             Usamos seus dados para:
-                            <ul className="list-disc pl-5">
-                                <li>Processar e entregar seus pedidos;</li>
-                                <li>Comunicar sobre o status da compra;</li>
-                                <li>Melhorar sua experiência em nossa loja.</li>
-                            </ul>
                         </p>
+                        <ul className="list-disc pl-5 pt-2">
+                            <li>Processar e entregar seus pedidos;</li>
+                            <li>Comunicar sobre o status da compra;</li>
+                            <li>Melhorar sua experiência em nossa loja.</li>
+                        </ul>
 
                         <h3>3. Compartilhamento de Dados</h3>
                         <p>
