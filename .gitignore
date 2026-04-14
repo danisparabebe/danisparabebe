@@ -44,7 +44,7 @@ backup_home/
 site_modelo/
 Catálogo/
 Capas dos temas/
-Bordados/
+/Bordados/
 *.js
 tsc_out.txt
 INICIAR_ORGANIZADOR.bat
