@@ -107,7 +107,7 @@ export default function CheckoutPage() {
     const subtotal = total() - shipping;
     const pixDiscount = subtotal * 0.05;
     const pixTotal = subtotal - pixDiscount + shipping;
-    const installment6x = (total() / 6);
+    const installment3x = (total() / 3);
 
     const inputClass = "w-full px-3 py-2 text-xs rounded-lg border border-black/10 focus:border-dusty-rose focus:ring-1 focus:ring-dusty-rose/30 outline-none transition-all bg-white placeholder:text-black/25";
     const labelClass = "text-[11px] font-semibold text-charcoal/70 uppercase tracking-wider";
@@ -199,7 +199,7 @@ export default function CheckoutPage() {
                                 <span className="text-base font-black text-dusty-rose">R$ {total().toFixed(2)}</span>
                             </div>
                             <div className="text-[10px] text-slate text-right space-y-0.5 pt-1">
-                                <p>ou 6x de <strong className="text-charcoal">R$ {installment6x.toFixed(2)}</strong> no cartão</p>
+                                <p>ou 3x de <strong className="text-charcoal">R$ {installment3x.toFixed(2)}</strong> no cartão</p>
                                 <p>ou <strong className="text-green-700">R$ {pixTotal.toFixed(2)}</strong> no PIX <span className="text-green-600 font-bold">(5% off)</span></p>
                             </div>
                         </div>
@@ -329,7 +329,7 @@ export default function CheckoutPage() {
                             >
                                 <div className="flex items-center gap-2 relative z-10">
                                     <CreditCard className="w-4 h-4 text-white/80" />
-                                    <span className="font-bold text-sm">PAGAR COM CARTÃO (Até 6x)</span>
+                                    <span className="font-bold text-sm">PAGAR COM CARTÃO (Até 3x)</span>
                                 </div>
                             </button>
                         </div>

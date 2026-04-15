@@ -184,7 +184,8 @@ export async function POST(request: Request) {
                 userId: userId || '',
                 createdAt: now.toISOString(),
                 deadlineDate: deadline.toISOString(),
-                status: 'pendente'
+                status: 'pendente',
+                requestedMethod: paymentMethod || 'card'
             };
 
             const sanitizedData = JSON.parse(JSON.stringify(orderData));
