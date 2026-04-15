@@ -20,6 +20,7 @@ export default function CheckoutPage() {
     });
     const [isLoadingAddress, setIsLoadingAddress] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
 
     useEffect(() => { setHydrated(true); }, []);
 
@@ -43,6 +44,7 @@ export default function CheckoutPage() {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newData = { ...formData, [e.target.name]: e.target.value };
         setFormData(newData);
+        setErrors(prev => ({ ...prev, [e.target.name]: false }));
         localStorage.setItem('checkout_form', JSON.stringify(newData));
     };
 
@@ -75,8 +77,25 @@ export default function CheckoutPage() {
     };
 
     const handleCheckout = async (method: 'pix' | 'card') => {
-        if (!formData.name || !formData.phone || !formData.cpf || !formData.cep || !formData.street || !formData.number || !formData.city) {
-            toast.error('Preencha todos os campos obrigatorios (incluindo CPF e CEP).');
+        const requiredFields = ['name', 'phone', 'cpf', 'cep', 'street', 'number', 'city'];
+        const newErrors: { [key: string]: boolean } = {};
+        let hasError = false;
+
+        requiredFields.forEach(field => {
+            const val = formData[field as keyof typeof formData];
+            if (!val || val.trim() === '') {
+                newErrors[field] = true;
+                hasError = true;
+            }
+        });
+
+        if (hasError) {
+            setErrors(newErrors);
+            if (newErrors.number && !newErrors.street && !newErrors.cep) {
+                toast.error('Ops! Faltou preencher o Número da casa.', { icon: '🏠' });
+            } else {
+                toast.error('Preencha os campos obrigatórios destacados em vermelho.');
+            }
             return;
         }
         setIsProcessing(true);
@@ -214,23 +233,23 @@ export default function CheckoutPage() {
                         {/* Name + WhatsApp */}
                         <div className="grid grid-cols-2 gap-3">
                             <div className="space-y-1">
-                                <label className={labelClass}>Nome Completo</label>
-                                <input type="text" name="name" value={formData.name} onChange={handleInput} placeholder="Nome e sobrenome" className={inputClass} />
+                                <label className={`${labelClass} ${errors.name ? 'text-red-500' : ''}`}>Nome Completo</label>
+                                <input type="text" name="name" value={formData.name} onChange={handleInput} placeholder="Nome e sobrenome" className={`${inputClass} ${errors.name ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
                             </div>
                             <div className="space-y-1">
-                                <label className={labelClass}>WhatsApp</label>
-                                <input type="tel" name="phone" value={formData.phone} onChange={handleInput} placeholder="(00) 00000-0000" className={inputClass} />
+                                <label className={`${labelClass} ${errors.phone ? 'text-red-500' : ''}`}>WhatsApp</label>
+                                <input type="tel" name="phone" value={formData.phone} onChange={handleInput} placeholder="(00) 00000-0000" className={`${inputClass} ${errors.phone ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
                             </div>
                         </div>
 
                         {/* CPF + CEP */}
                         <div className="grid grid-cols-2 gap-3">
                             <div className="space-y-1">
-                                <label className={labelClass}>CPF <span className="font-normal text-slate/60">(Para Envio)</span></label>
-                                <input type="text" name="cpf" value={formData.cpf} onChange={handleInput} placeholder="000.000.000-00" className={inputClass} />
+                                <label className={`${labelClass} ${errors.cpf ? 'text-red-500' : ''}`}>CPF <span className={`font-normal ${errors.cpf ? 'text-red-400' : 'text-slate/60'}`}>(Para Envio)</span></label>
+                                <input type="text" name="cpf" value={formData.cpf} onChange={handleInput} placeholder="000.000.000-00" className={`${inputClass} ${errors.cpf ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
                             </div>
                             <div className="space-y-1">
-                                <label className={labelClass}>CEP</label>
+                                <label className={`${labelClass} ${errors.cep ? 'text-red-500' : ''}`}>CEP</label>
                                 <input 
                                     type="text" name="cep" 
                                     value={formData.cep} 
@@ -239,10 +258,11 @@ export default function CheckoutPage() {
                                         if (v.length > 5) v = `${v.slice(0, 5)}-${v.slice(5, 8)}`;
                                         const newData = { ...formData, cep: v };
                                         setFormData(newData);
+                                        setErrors(prev => ({ ...prev, cep: false }));
                                         localStorage.setItem('checkout_form', JSON.stringify(newData));
                                     }} 
                                     onBlur={handleCepBlur} 
-                                    maxLength={9} placeholder="00000-000" className={inputClass} 
+                                    maxLength={9} placeholder="00000-000" className={`${inputClass} ${errors.cep ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
                                 />
                             </div>
                         </div>
@@ -250,12 +270,12 @@ export default function CheckoutPage() {
                         {/* Street + Number */}
                         <div className="grid grid-cols-4 gap-3">
                             <div className="col-span-3 space-y-1">
-                                <label className={labelClass}>Rua</label>
-                                <input type="text" name="street" value={formData.street} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50`} />
+                                <label className={`${labelClass} ${errors.street ? 'text-red-500' : ''}`}>Rua</label>
+                                <input type="text" name="street" value={formData.street} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.street ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
                             </div>
                             <div className="space-y-1">
-                                <label className={labelClass}>N.</label>
-                                <input type="text" name="number" value={formData.number} onChange={handleInput} className={inputClass} />
+                                <label className={`${labelClass} ${errors.number ? 'text-red-500' : ''}`}>N.</label>
+                                <input type="text" name="number" value={formData.number} onChange={handleInput} className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} />
                             </div>
                         </div>
 
@@ -274,8 +294,8 @@ export default function CheckoutPage() {
                         {/* Cidade + Estado */}
                         <div className="grid grid-cols-4 gap-3">
                             <div className="col-span-3 space-y-1">
-                                <label className={labelClass}>Cidade</label>
-                                <input type="text" name="city" value={formData.city} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50`} />
+                                <label className={`${labelClass} ${errors.city ? 'text-red-500' : ''}`}>Cidade</label>
+                                <input type="text" name="city" value={formData.city} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.city ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
                             </div>
                             <div className="space-y-1">
                                 <label className={labelClass}>UF</label>

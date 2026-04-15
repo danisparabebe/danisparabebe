@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useFavoritesStore } from '@/store/favorites-store';
 import { toast } from 'sonner';
+import { ProductPersonalizationModal } from '@/components/product/personalization-modal';
 
 interface ProductCardProps {
     id: string;
@@ -24,17 +26,20 @@ interface ProductCardProps {
 export function ProductCard({ id, shortCode, name, category, price, originalPrice, installmentPrice, installments = 3, image, badge, isHot }: ProductCardProps) {
     const { addItem, openCart } = useCartStore();
     const { toggle, isFavorite } = useFavoritesStore();
+    const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
     
     const fav = isFavorite(id);
 
-    const handleAddToCart = () => {
+    const handleConfirmPersonalization = (data: any) => {
+        setIsPersonalizationOpen(false);
         addItem({
-            id: `${id}-${Date.now()}`,
+            id: `${id}-personalized-${Date.now()}`,
             productId: id,
             name: name,
             price: price,
             image: image,
             quantity: 1,
+            personalization: data
         });
         toast.success(`${name} adicionado ao carrinho! ✨`);
         openCart();
@@ -91,7 +96,7 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        handleAddToCart();
+                        setIsPersonalizationOpen(true);
                     }}
                     className="mt-4 w-full relative overflow-hidden group/add bg-sage-green text-charcoal hover:bg-[#9CBD9F] py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/5"
                 >
@@ -99,6 +104,15 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                     <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/add:animate-shine" />
                 </button>
             </div>
+
+            <ProductPersonalizationModal
+                isOpen={isPersonalizationOpen}
+                onClose={() => setIsPersonalizationOpen(false)}
+                productName={name}
+                productImage={image}
+                onConfirm={handleConfirmPersonalization}
+                features={[]}
+            />
         </div>
     );
 }
