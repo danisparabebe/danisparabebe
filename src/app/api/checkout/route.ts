@@ -14,6 +14,7 @@ const MAX_REQUESTS_PER_WINDOW = 5; // Limite rigoroso (5 compras por minuto por 
 const checkoutSchema = z.object({
   items: z.array(z.object({
     id: z.string().max(100),
+    productId: z.string().max(100).optional(),
     name: z.string().max(150),
     price: z.number().nonnegative(),
     quantity: z.number().int().positive().max(100),
@@ -33,8 +34,7 @@ const checkoutSchema = z.object({
     cep: z.string().max(20).optional()
   }),
   userId: z.string().optional(),
-  cancelPath: z.string().optional(),
-  paymentMethod: z.enum(['pix', 'card']).optional()
+  cancelPath: z.string().optional()
 });
 
 function addBusinessDays(baseDate: Date, daysToAdd: number): Date {
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
         }
         
         // Agora usamos os dados higienizados ("Limpos e verificados")
-        const { items, shipping, customer, userId, cancelPath, paymentMethod } = parseResult.data;
+        const { items, shipping, customer, userId, cancelPath } = parseResult.data;
 
         console.log('\n========== DEBUG CHECKOUT ==========');
         console.log('📦 Segurança passou. Request limpo:', customer.name, 'UID:', userId || 'Deslogado');
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
         // NUNCA confiar no `item.price` vindo do front-end. O cliente pode manipular o payload e pagar R$ 1.
         // Vamos varrer item a item e recalcular o preço real baseado na nossa base de dados.
         const { productControl } = require('@/data/product-control');
-        const { calculateProductPrice } = require('@/lib/pricing');
+        const { calculateProductPrice, BASE_PRICES } = require('@/lib/pricing');
         const { resolveProductId } = require('@/lib/short-codes');
         const fs = require('fs');
         const path = require('path');
@@ -95,34 +95,53 @@ export async function POST(request: Request) {
         const ipItems = [];
         let calculatedTotalAmountCents = 0;
 
+        // Calcula quantidade total de peças customizadas do "Monte seu Kit" para aplicar o desconto de volume
+        const customItemsCount = items.reduce((acc: number, it: any) => {
+            const rid = resolveProductId(it.productId || it.id);
+            return acc + (rid.startsWith('custom-') ? it.quantity : 0);
+        }, 0);
+
+        let kitDiscountPct = 0;
+        if (customItemsCount >= 10) kitDiscountPct = 20;
+        else if (customItemsCount >= 6) kitDiscountPct = 15;
+        else if (customItemsCount >= 4) kitDiscountPct = 10;
+        else if (customItemsCount >= 2) kitDiscountPct = 5;
+
         for (const item of items) {
             let authenticPrice = 0;
-            const resolvedId = resolveProductId(item.productId);
+            const resolvedId = resolveProductId(item.productId || item.id);
 
             // 1. Tentar encontrar no Catalog (productControl)
             const managedProduct = productControl.find((p: any) => p.id === resolvedId);
             if (managedProduct) {
-                authenticPrice = managedProduct.priceFull;
+                authenticPrice = managedProduct.pixPrice;
+            } else if (resolvedId.startsWith('custom-')) {
+                // 2. Produto montado no "Monte seu Kit"
+                const typeId = resolvedId.replace('custom-', '');
+                const basePrice = BASE_PRICES[typeId];
+                if (!basePrice) {
+                    console.error(`🚨 BLOCKED: Peça customizada inválida: ${typeId}`);
+                    return NextResponse.json({ error: `Peça customizada não encontrada: ${item.name}` }, { status: 400 });
+                }
+                // Aplica o desconto de volume progressivo do kit
+                authenticPrice = basePrice * (1 - kitDiscountPct / 100);
             } else {
-                // 2. Tentar encontrar no legado (conferidos)
+                // 3. Tentar encontrar no legado (conferidos)
                 const productsDir = path.join(process.cwd(), 'public', 'produtos', 'conferidos');
                 const jsonPath = path.join(productsDir, `${resolvedId}.json`);
                 if (fs.existsSync(jsonPath)) {
                     const content = fs.readFileSync(jsonPath, 'utf8');
                     const metadata = JSON.parse(content);
-                    authenticPrice = calculateProductPrice(metadata.composition || [], !!metadata.customName);
+                    authenticPrice = calculateProductPrice(metadata.composition || [], !!metadata.customName) * 0.95;
                 } else {
                     console.error(`🚨 BLOCKED: Tentativa de compra de produto inválido/removido: ${resolvedId}`);
                     return NextResponse.json({ error: `Produto indisponível ou inválido: ${item.name}` }, { status: 400 });
                 }
             }
 
-            // O preço encontrado é o preço CHEIO. 
-            // Se o usuário selecionou o checkout via PIX, aplicamos o desconto de 5% seguro.
+            // O preço agora é unificado na opção 1 (Preço Seco/Pix-base). 
+            // A InfinitePay repassará as taxas de cartão de crédito no gateway caso essa forma de pgto seja escolhida.
             let priceCents = Math.round(authenticPrice * 100);
-            if (paymentMethod === 'pix') {
-                priceCents = Math.round(priceCents * 0.95);
-            }
 
             let desc = item.name;
             if (item.personalization?.name) {
@@ -185,7 +204,7 @@ export async function POST(request: Request) {
                 createdAt: now.toISOString(),
                 deadlineDate: deadline.toISOString(),
                 status: 'pendente',
-                requestedMethod: paymentMethod || 'card'
+                requestedMethod: 'infinitepay'
             };
 
             const sanitizedData = JSON.parse(JSON.stringify(orderData));

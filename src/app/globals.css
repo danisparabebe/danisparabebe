@@ -139,9 +139,7 @@
     }
 
     body {
-        background-color: #FDFAF6;
-        background-image: radial-gradient(rgba(214, 166, 166, 0.15) 1.5px, transparent 1.5px);
-        background-size: 24px 24px;
+        background-color: #F7FAF7;
         color: #20283B;
         font-family: var(--font-body);
     }

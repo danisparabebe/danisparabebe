@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 
 const messages = [
     'Frete grátis acima de R$ 350 para SP, MG, RJ, PR, RS, GO e DF',
-    '5% de desconto no PIX — Pagamento instantâneo',
-    'Produção artesanal em até 12 dias úteis',
-    'Parcelamento em até 3x sem juros no cartão'
+    'Produção 100% artesanal em até 12 dias úteis',
+    'Personalização inclusa com o nome do bebê',
+    'Pagamento 100% seguro e protegido'
 ];
 
 export function TopBar() {

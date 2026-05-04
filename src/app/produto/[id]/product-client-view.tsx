@@ -140,17 +140,15 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         
                         <div className="flex items-baseline gap-2">
                             <span className="text-3xl font-extrabold text-charcoal tracking-tight">
-                                {product.installments}x R$ {(product.priceFull / product.installments).toFixed(2).replace('.', ',')}
+                                R$ {product.pixPrice.toFixed(2).replace('.', ',')}
                             </span>
-                            <span className="text-sm font-medium text-slate">sem juros</span>
+                            <span className="text-sm font-bold text-sage-green-dark">no PIX</span>
                         </div>
                         
                         <div className="flex items-center gap-2 mt-1">
-                            <span className="text-sm font-bold text-charcoal">
-                                ou R$ {product.pixPrice.toFixed(2).replace('.', ',')} no PIX
-                            </span>
-                            <span className="bg-sage-green/20 text-sage-green-dark text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">
-                                -{Math.max(product.discountPct, product.originalPrice ? Math.round(((product.originalPrice - product.priceFull) / product.originalPrice) * 100) : 0)}%
+                            <ShieldCheck className="w-3.5 h-3.5 text-sage-green-dark" />
+                            <span className="text-[11px] font-medium text-slate uppercase tracking-wider">
+                                ou 3x de R$ {((product.pixPrice * 1.0754) / 3).toFixed(2).replace('.', ',')} no cartão via InfinitePay
                             </span>
                         </div>
                     </div>
@@ -288,7 +286,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         {[
                             { icon: Wand2, title: 'Feito à Mão', sub: 'Até 12 dias úteis' },
                             { icon: ShieldCheck, title: 'Garantia Danis', sub: 'Qualidade total' },
-                            { icon: CreditCard, title: 'Pag. Seguro', sub: 'Até 3x S/Juros' },
+                            { icon: CreditCard, title: 'Pag. Seguro', sub: 'Via InfinitePay' },
                         ].map(({ icon: Icon, title, sub }) => (
                             <div key={title} className="flex flex-col items-center text-center p-2 rounded-xl bg-warm-stone/10 border border-line">
                                 <Icon className="h-4 w-4 text-sage-green-dark mb-1" />

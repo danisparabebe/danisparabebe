@@ -143,20 +143,12 @@ export async function POST(req: Request) {
              return NextResponse.json({ ok: true, detail: 'already processed' });
         }
 
-        // 3. Atualizando a "Etiqueta" do Pedido e Detectando Fraude de PIX
+        // 3. Atualizando a "Etiqueta" do Pedido
         const isCreditCardPayment = stringified.includes('credit_card') || stringified.includes('cartao');
-        let paymentMethodAlert = false;
-
-        // Se o cliente pediu PIX (e ganhou 5% de desconto no total gerado) mas passou cartão na tela:
-        if (orderData.requestedMethod === 'pix' && isCreditCardPayment) {
-            console.warn(`[SEC-ALERT] 🚨 Fraude de PIX detectada no NSU: ${orderId}. Ganhou desconto PIX mas pagou no cartão!`);
-            paymentMethodAlert = true;
-        }
 
         await updateDoc(orderRef, {
             status: 'pago_aprovado',
             paymentDate: new Date().toISOString(),
-            pixFraudAlert: paymentMethodAlert,
             actualPaymentMethod: isCreditCardPayment ? 'credit_card' : 'pix'
         });
         

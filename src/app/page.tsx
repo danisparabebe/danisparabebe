@@ -40,7 +40,10 @@ export default async function HomePage() {
     // 1. Prepare all products with calculated pricing
     const managedProducts = productControl.map(p => {
         const pixPrice = p.pixPrice || getFinalPrice(p);
-        const cardPrice = p.priceFull;
+        
+        // InfinitePay 3x fee is roughly 7.54% when passing fees to the customer
+        const realInstallment3x = (pixPrice * 1.0754) / 3;
+
         return {
             id: p.id,
             shortCode: p.shortCode,
@@ -48,7 +51,7 @@ export default async function HomePage() {
             category: p.category || 'Geral',
             price: pixPrice,
             originalPrice: p.originalPriceFull && p.originalPriceFull > p.priceFull ? p.originalPriceFull : undefined,
-            installmentPrice: cardPrice / 3,
+            installmentPrice: realInstallment3x,
             installments: 3,
             image: p.images?.[0] ? encodeURI(p.images[0]) : '/Logos/Logomarca%20Rose.png',
             badge: p.badge || (p.tags?.includes('oferta') ? 'Oferta' : undefined),
@@ -133,7 +136,7 @@ export default async function HomePage() {
     }));
 
     return (
-        <div className="min-h-screen bg-warm-stone">
+        <div className="min-h-screen">
             <TopBar />
             <Header />
             <Navigation />

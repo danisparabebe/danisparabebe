@@ -72,33 +72,7 @@ export function StepName() {
                         </div>
                     </div>
 
-                    {/* Live cursive preview - Emotional Hook */}
-                    <AnimatePresence>
-                        {local.trim() && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                className="overflow-hidden"
-                            >
-                                <div className="mt-4 bg-gradient-to-br from-[#faf9f7] to-white rounded-xl p-4 md:p-6 border border-black/5 text-center relative shadow-inner">
-                                    {/* Quote markings for aesthetics */}
-                                    <span className="absolute top-2 left-3 text-3xl text-black/5 font-serif">"</span>
-                                    <span className="absolute bottom-0 right-3 text-3xl text-black/5 font-serif leading-none">"</span>
 
-                                    <p className="text-[9px] text-slate/50 uppercase tracking-[0.2em] font-black mb-2">
-                                        Como ficará no bordado (Simulação)
-                                    </p>
-                                    <p
-                                        className="text-4xl md:text-5xl text-[#1f2937] italic tracking-tight"
-                                        style={{ fontFamily: 'Fraunces, serif' }}
-                                    >
-                                        {local}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
             </motion.div>
 

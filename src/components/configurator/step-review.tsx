@@ -549,37 +549,16 @@ export function StepReview() {
                                     </div>
                                 )}
                                 <div className="border-t border-black/10 mt-2.5 pt-2.5 flex flex-col gap-2.5">
-                                    {/* 3x Sem Juros - Maior */}
-                                    <div className="flex justify-between items-start">
-                                        <div className="flex flex-col text-left">
-                                            <span className="text-[9px] font-black text-[#1f2937] uppercase tracking-widest leading-none">Ao parcelar:</span>
-                                            <span className="text-[8px] font-bold text-slate uppercase mt-1">S/ JUROS NO CARTÃO</span>
-                                        </div>
-                                        <div className="text-right">
-                                            <span className="text-xl font-black text-[#1f2937] leading-none">
-                                                {(() => {
-                                                    const isCheapest = shippingOption?.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
-                                                    const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                                    const actualPrice = (total >= FREE_SHIPPING_THRESHOLD && isCheapest && isStateEligible) ? 0 : (shippingOption?.price || 0);
-                                                    return `3x de ${formatPrice((total + actualPrice) / 3)}`;
-                                                })()}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* PIX com destaque luxuoso verde */}
-                                    <div className="bg-[#1a9e52]/10 border border-[#1a9e52]/30 rounded-lg p-2.5 flex justify-between items-center w-full shadow-sm relative overflow-hidden">
-                                        {/* Detalhe de luz para ficar premium */}
+                                    <div className="bg-sage-green/10 border border-sage-green/30 rounded-lg p-2.5 flex justify-between items-center w-full shadow-sm relative overflow-hidden">
                                         <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-white/40 to-transparent blur-md transform translate-x-1/2 -translate-y-1/2 pointer-events-none" />
                                         
                                         <div className="flex flex-col text-left relative z-10">
-                                            <span className="text-[10px] font-black text-[#158043] uppercase tracking-widest leading-none">À vista no PIX</span>
-                                            <span className="text-[8.5px] font-black text-[#1a9e52] uppercase bg-[#1a9e52]/15 px-1.5 py-0.5 mt-1 rounded shadow-sm inline-block w-max border border-[#1a9e52]/20 shadow-[0_2px_4px_rgba(26,158,82,0.1)]">5% DE DESCONTO</span>
+                                            <span className="text-[10px] font-black text-sage-green-dark uppercase tracking-widest leading-none">Preço do Enxoval</span>
+                                            <span className="text-[8.5px] font-black text-sage-green-dark uppercase bg-sage-green/20 px-1.5 py-0.5 mt-1 rounded shadow-sm inline-block w-max border border-sage-green/30">PAGAMENTO SEGURO</span>
                                         </div>
                                         <div className="text-right relative z-10">
-                                            {/* Font reduzida de 2xl para lg como clássico gatilho mental de "preço pequeno" */}
-                                            <span className="text-lg font-black text-[#158043] leading-none tabular-nums tracking-tight">
-                                                {formatPrice((total + (shippingOption ? shippingOption.price : 0)) * 0.95)}
+                                            <span className="text-xl font-black text-sage-green-dark leading-none tabular-nums tracking-tight">
+                                                {formatPrice(total + (shippingOption ? shippingOption.price : 0))}
                                             </span>
                                         </div>
                                     </div>
@@ -611,7 +590,7 @@ export function StepReview() {
                                 ) : (
                                     <>
                                         <span className="font-black text-sm leading-none pt-0.5">PAGAR AGORA</span>
-                                        <span className="text-[7.5px] text-white/90 normal-case tracking-normal">Ambiente Seguro Stripe</span>
+                                        <span className="text-[7.5px] text-white/90 normal-case tracking-normal">Ambiente Seguro InfinitePay</span>
                                     </>
                                 )}
                             </button>

@@ -76,7 +76,7 @@ export default function CheckoutPage() {
         }
     };
 
-    const handleCheckout = async (method: 'pix' | 'card') => {
+    const handleCheckout = async () => {
         const requiredFields = ['name', 'phone', 'cpf', 'cep', 'street', 'number', 'city'];
         const newErrors: { [key: string]: boolean } = {};
         let hasError = false;
@@ -104,7 +104,7 @@ export default function CheckoutPage() {
             const response = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items, shipping, customer: formData, cancelPath: '/checkout', paymentMethod: method }),
+                body: JSON.stringify({ items, shipping, customer: formData, cancelPath: '/checkout' }),
             });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Falha ao iniciar pagamento');
@@ -124,9 +124,9 @@ export default function CheckoutPage() {
     if (items.length === 0) return null;
 
     const subtotal = total() - shipping;
-    const pixDiscount = subtotal * 0.05;
-    const pixTotal = subtotal - pixDiscount + shipping;
-    const installment3x = (total() / 3);
+    // O total() do carrinho já é a soma dos preços secos (pixPrice).
+    // A parcela real na InfinitePay (repasse de taxas) para 3x adiciona ~7.54% de juros no valor transacionado.
+    const realInstallment3x = (total() * 1.0754) / 3;
 
     const inputClass = "w-full px-3 py-2 text-xs rounded-lg border border-black/10 focus:border-dusty-rose focus:ring-1 focus:ring-dusty-rose/30 outline-none transition-all bg-white placeholder:text-black/25";
     const labelClass = "text-[11px] font-semibold text-charcoal/70 uppercase tracking-wider";
@@ -218,8 +218,8 @@ export default function CheckoutPage() {
                                 <span className="text-base font-black text-dusty-rose">R$ {total().toFixed(2)}</span>
                             </div>
                             <div className="text-[10px] text-slate text-right space-y-0.5 pt-1">
-                                <p>ou 3x de <strong className="text-charcoal">R$ {installment3x.toFixed(2)}</strong> no cartão</p>
-                                <p>ou <strong className="text-green-700">R$ {pixTotal.toFixed(2)}</strong> no PIX <span className="text-green-600 font-bold">(5% off)</span></p>
+                                <p>ou 3x de <strong className="text-charcoal">R$ {realInstallment3x.toFixed(2)}</strong> no cartão</p>
+                                <p><strong className="text-green-700">R$ {total().toFixed(2)}</strong> no PIX</p>
                             </div>
                         </div>
                     </div>
@@ -303,15 +303,15 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
-                        {/* Action Buttons - Dual Pix / Card */}
+                        {/* Action Buttons - Unified */}
                         <div className="flex flex-col gap-3 mt-2">
                             <button
-                                onClick={() => handleCheckout('pix')}
+                                onClick={handleCheckout}
                                 disabled={isProcessing}
                                 className={`
-                                    w-full relative overflow-hidden group/buy bg-[#10B981] hover:bg-[#0EA5E9] text-white
+                                    w-full relative overflow-hidden group/buy bg-[#1a9e52] hover:bg-[#158043] text-white
                                     py-3.5 px-6 rounded-xl
-                                    shadow-[0_6px_20px_rgba(16,185,129,0.3)] hover:shadow-[0_6px_25px_rgba(14,165,233,0.4)]
+                                    shadow-[0_6px_20px_rgba(26,158,82,0.3)] hover:shadow-[0_6px_25px_rgba(21,128,67,0.4)]
                                     transition-all duration-300 active:scale-[0.98] cursor-pointer
                                     flex flex-col items-center justify-center
                                     border border-[#059669]/20
@@ -326,38 +326,15 @@ export default function CheckoutPage() {
                                 ) : (
                                     <>
                                         <div className="flex items-center gap-2 mb-0.5 relative z-10 w-full justify-center">
-                                            <QrCode className="w-3.5 h-3.5 text-white/90" />
-                                            <span className="font-extrabold text-[9px] tracking-widest text-white/90 uppercase">Desconto Aplicado</span>
+                                            <ShieldCheck className="w-3.5 h-3.5 text-white/90" />
+                                            <span className="font-extrabold text-[9px] tracking-widest text-white/90 uppercase">Ambiente Seguro InfinitePay</span>
                                         </div>
-                                        <span className="font-extrabold text-lg tracking-tight relative z-10">PAGAR COM PIX (-5%)</span>
+                                        <span className="font-extrabold text-lg tracking-tight relative z-10">CONFIRMAR E PAGAR</span>
                                         <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine" />
                                     </>
                                 )}
                             </button>
-
-                            <button
-                                onClick={() => handleCheckout('card')}
-                                disabled={isProcessing}
-                                className={`
-                                    w-full relative overflow-hidden group/buy bg-charcoal hover:bg-black text-white
-                                    py-3 px-6 rounded-xl
-                                    transition-all duration-300 active:scale-[0.98] cursor-pointer
-                                    flex flex-col items-center justify-center
-                                    border border-black/20
-                                    ${isProcessing ? 'opacity-70 cursor-wait' : ''}
-                                `}
-                            >
-                                <div className="flex items-center gap-2 relative z-10">
-                                    <CreditCard className="w-4 h-4 text-white/80" />
-                                    <span className="font-bold text-sm">PAGAR COM CARTÃO (Até 3x)</span>
-                                </div>
-                            </button>
                         </div>
-
-                        <p className="text-[10px] text-center text-slate/60 flex items-center justify-center gap-1">
-                            <ShieldCheck className="w-3 h-3 text-green-600" />
-                            Pagamento 100% seguro via InfinitePay
-                        </p>
                     </div>
                 </div>
             </main>

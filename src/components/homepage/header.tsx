@@ -134,7 +134,7 @@ export function Header() {
     };
 
     return (
-        <header className="bg-warm-stone pt-2 pb-1 relative z-[60]">
+        <header className="bg-[#F7FAF7] pt-2 pb-1 relative z-[60]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
 
                 <div className="flex h-16 items-center justify-between w-full relative">
