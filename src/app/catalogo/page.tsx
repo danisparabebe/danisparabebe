@@ -1,15 +1,31 @@
 import fs from "fs";
 import path from "path";
 import Image from "next/image";
-import Link from "next/link";
 import { Instagram } from "lucide-react";
-import { PrintButton } from "./print-button";
+import type { Metadata } from "next";
 
 interface CatalogoProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function CatalogoPage({ searchParams }: CatalogoProps) {
+export async function generateMetadata({ searchParams }: CatalogoProps): Promise<Metadata> {
+    const params = await searchParams;
+    const rawGender = params.gender;
+    const gender = rawGender === "menina" ? "Meninas" : "Meninos";
+    const title = gender === "Meninas" ? "Coleção Meninas" : "Coleção Meninos";
+
+    return {
+        title: `Danis Para Bebê · ${title}`,
+        description: `Conheça nossa ${title}. O mais puro capricho em formato de enxoval para o seu bebê. Bordados personalizados com o nome do seu bebê.`,
+        openGraph: {
+            title: `Danis Para Bebê · ${title}`,
+            description: `Conheça nossa ${title}. Bordados personalizados com o nome do seu bebê.`,
+            type: "website",
+        },
+    };
+}
+
+export default async function CatalogoPublicoPage({ searchParams }: CatalogoProps) {
     const params = await searchParams;
     const rawGender = params.gender;
     const gender = rawGender === "menina" ? "Meninas" : "Meninos";
@@ -25,7 +41,6 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
                 const ext = path.extname(f).toLowerCase();
                 return [".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext);
             });
-            // Sort to ensure consistent order
             images.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
         }
     } catch (e) {
@@ -39,8 +54,6 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
         ? "from-dusty-rose/20 to-dusty-rose/5"
         : "from-sage-green/20 to-sage-green/5";
 
-    // Use specific "logomarca" for the Cover, and "logo" for the watermark
-    // These are in the public/Logos folder, so they can be accessed directly
     const coverLogoSrc = gender === "Meninas"
         ? `/Logos/DANIS ROSÊ.png`
         : `/Logos/DANIS VERDE.png`;
@@ -50,50 +63,12 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
         : `/Logos/logo simples verde.png`;
 
     return (
-        <div id="catalogo-root" className="min-h-screen bg-warm-stone font-dmSans text-charcoal">
-            {/* Global Print Styles just for this page */}
+        <div className="min-h-screen bg-warm-stone font-dmSans text-charcoal">
             <style dangerouslySetInnerHTML={{
                 __html: `
-                @media print {
-                    @page {
-                        size: portrait;
-                        margin: 0;
-                    }
-                    body {
-                        -webkit-print-color-adjust: exact !important;
-                        print-color-adjust: exact !important;
-                        color-adjust: exact !important;
-                    }
-                    /* Ensure backgrounds and images inside absolutely positioned elements are printed */
-                    * {
-                        -webkit-print-color-adjust: exact !important;
-                        print-color-adjust: exact !important;
-                    }
-                    /* Hides cart sidebar and other absolute UI elements from root layout */
-                    nav, header, footer, [role="navigation"], [data-radix-popper-content-wrapper], #sonner-toaster {
-                        display: none !important;
-                    }
-                    .print-hide {
-                        display: none !important;
-                    }
-                    /* Chromium PDF generator chokes on backdrop-filter and renders elements completely blank. We must reset it for print. */
-                    .glass-card {
-                        backdrop-filter: none !important;
-                        -webkit-backdrop-filter: none !important;
-                        background: rgba(255, 255, 255, 0.95) !important;
-                        box-shadow: none !important;
-                        border: 1px solid rgba(0,0,0,0.05) !important;
-                    }
-                    /* Heavy CSS filters (like 100px blur radii) on full-page elements cause the Chrome Print Spooler to freeze for minutes. */
-                    .blur-\\[80px\\], .blur-\\[100px\\] {
-                        filter: none !important;
-                        opacity: 0.03 !important; /* Keep a faint shape so the background isn't entirely bare, but don't crash the spooler */
-                    }
-                    /* Complex SVG noise filters (feTurbulence) cause mobile PDF viewers to lag for several seconds per page */
-                    .bg-luxury-texture {
-                        background-image: none !important;
-                        background-color: #fafaf9 !important;
-                    }
+                /* Hide the site's global navigation, header, footer, cart sidebar */
+                nav, header, footer, [role="navigation"], [data-radix-popper-content-wrapper], #sonner-toaster {
+                    display: none !important;
                 }
                 
                 .bg-luxury-texture {
@@ -111,36 +86,11 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
                 }
             `}} />
 
-            {/* CONTROLS (Hidden in Print) */}
-            <div className="print-hide sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-charcoal/5 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
-                <div className="flex items-center gap-4">
-                    <h2 className="font-fraunces text-xl text-charcoal">Visualização do Catálogo</h2>
-                    <div className="flex gap-2 bg-slate/10 p-1 rounded-full">
-                        <Link
-                            href="?gender=menino"
-                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${gender === "Meninos" ? "bg-white text-sage-green shadow-sm" : "text-slate hover:text-charcoal"}`}
-                        >
-                            Meninos
-                        </Link>
-                        <Link
-                            href="?gender=menina"
-                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${gender === "Meninas" ? "bg-white text-dusty-rose shadow-sm" : "text-slate hover:text-charcoal"}`}
-                        >
-                            Meninas
-                        </Link>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3">
-                    <p className="text-sm text-slate">{images.length} fotos carregadas</p>
-                    <PrintButton />
-                </div>
-            </div>
-
             {/* CATALOG CONTENT */}
-            <div className="w-full max-w-[500px] mx-auto bg-white print:max-w-none print:w-full">
+            <div className="w-full max-w-[500px] mx-auto bg-white">
 
-                {/* 1. COVER PAGE - REVERTED TO EXACT MINIMALIST STATE */}
-                <div className="relative w-full h-[100svh] print:h-[100vh] flex flex-col justify-center items-center overflow-hidden page-break-after bg-white">
+                {/* 1. COVER PAGE */}
+                <div className="relative w-full h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-white">
                     
                     <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full px-8 pt-20">
                         <div className="w-80 h-80 relative mb-16">
@@ -186,7 +136,7 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
                     </div>
                 ) : (
                     images.map((image, index) => (
-                        <div key={index} className="relative w-full h-[100svh] print:h-[100vh] flex flex-col justify-center items-center overflow-hidden page-break-after bg-luxury-texture">
+                        <div key={index} className="relative w-full h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-luxury-texture">
 
                             {/* Product Background - Delicate and airy */}
                             <div className={`absolute inset-0 bg-gradient-to-t ${themeGradient} opacity-60 z-0`}></div>
@@ -195,16 +145,15 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
 
                             {/* Product Image Container */}
                             <div className="relative z-10 w-full flex-1 flex flex-col justify-center items-center py-12 px-8">
-                                {/* The actual image, using exact dimensions with object-contain to never zoom forcefully */}
                                 <div className="relative w-full h-full max-h-[80vh] rounded-[2rem] overflow-hidden glass-card p-2 flex items-center justify-center">
                                     <Image
                                         src={`/api/local-image?path=${encodeURIComponent(`Catálogo/${gender}/${image}`)}`}
                                         alt={`Produto ${index + 1}`}
                                         fill
-                                        quality={60}
-                                        sizes="1000px"
+                                        quality={75}
+                                        sizes="500px"
                                         className="object-contain"
-                                        priority={true}
+                                        loading="lazy"
                                     />
                                 </div>
                             </div>
@@ -216,25 +165,42 @@ export default async function CatalogoPage({ searchParams }: CatalogoProps) {
                                 <span className="font-fraunces tracking-wide text-[15px] text-charcoal/80">@danisparabebe</span>
                             </div>
 
-                            {/* Page Indicator (Visible in print) */}
+                            {/* Page Indicator */}
                             <div className="absolute bottom-8 left-8 z-20">
                                 <span className="glass-card text-charcoal/60 font-dmSans text-[13px] font-medium px-4 py-2 rounded-full shadow-soft border border-white/60">
-                                    Página {index + 1}
+                                    {index + 1} / {images.length}
                                 </span>
                             </div>
                         </div>
                     ))
                 )}
 
+                {/* 3. BACK COVER / CTA */}
+                <div className="relative w-full h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-white">
+                    <div className="text-center space-y-8 px-8">
+                        <div className="w-40 h-40 relative mx-auto mb-8">
+                            <img src={coverLogoSrc} alt="Danis Para Bebê" className="object-contain w-full h-full" />
+                        </div>
+                        <p className="text-xl text-charcoal/70 font-fraunces italic leading-relaxed max-w-[350px] mx-auto">
+                            Gostou de algum modelo?
+                        </p>
+                        <a
+                            href="https://wa.me/5518997518078?text=Ol%C3%A1!%20Vi%20o%20cat%C3%A1logo%20e%20gostei%20de%20um%20modelo!"
+                            className="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-[#20bd5a] transition-colors shadow-lg"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                            </svg>
+                            Fale Conosco no WhatsApp
+                        </a>
+                        <div className="flex items-center justify-center gap-2 text-charcoal/50 text-sm mt-6">
+                            <Instagram size={16} />
+                            <span>@danisparabebe</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            {/* Some CSS rules to break pages correctly for printing */}
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                .page-break-after {
-                    page-break-after: always;
-                    break-after: page;
-                }
-            `}} />
         </div>
     );
 }
