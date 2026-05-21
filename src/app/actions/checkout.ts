@@ -2,8 +2,7 @@
 
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { adminDb, admin } from '@/lib/firebase-admin';
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 if (!stripeKey || stripeKey.includes('placeholder')) {
@@ -29,7 +28,7 @@ export async function createCheckoutSession(orderData: {
         const origin = (await headers()).get('origin') || 'http://localhost:3000';
 
         // Create order in Firebase first (pending status)
-        const orderRef = await addDoc(collection(db, 'orders'), {
+        const orderRef = await adminDb.collection('orders').add({
             productId: orderData.productId,
             productName: orderData.productName,
             fabricId: orderData.fabricId,
@@ -39,7 +38,7 @@ export async function createCheckoutSession(orderData: {
             babyName: orderData.babyName,
             totalPrice: orderData.totalPrice,
             status: 'pending',
-            createdAt: serverTimestamp(),
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
         });
 
         // Create Stripe Checkout Session

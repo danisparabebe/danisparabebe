@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { adminDb } from '@/lib/firebase-admin';
 import { z } from 'zod';
 
 // --- SECURITY: RATE LIMITING IN-MEMORY (Anti-Bot) ---
@@ -209,7 +208,7 @@ export async function POST(request: Request) {
 
             const sanitizedData = JSON.parse(JSON.stringify(orderData));
             
-            setDoc(doc(db, 'orders', orderId), sanitizedData)
+            adminDb.collection('orders').doc(orderId).set(sanitizedData)
                 .then(() => console.log(`✅ Pre-registered Order ${orderId} in Firebase.`))
                 .catch(err => console.error("❌ Failed to pre-register in Firebase:", err));
 

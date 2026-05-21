@@ -51,7 +51,7 @@ function ContaContent() {
             try {
                 const q = query(
                     collection(db, 'orders'),
-                    where('customer.email', '==', user.email),
+                    where('customerEmail', '==', user.email),
                     orderBy('createdAt', 'desc')
                 );
                 const snapshot = await getDocs(q);

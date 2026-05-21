@@ -342,34 +342,37 @@ export function ProductTechnicalSheet({
                         </div>
 
                         {/* Dados de Frete / Endereço (Focus on completeness for label generation) */}
-                        <div className="border-l-4 border-[#1f2937] pl-3 py-1">
-                            <p className="text-[10px] font-bold text-slate uppercase tracking-widest mb-1.5">Ficha de Frete</p>
-                            {customerCpf ? (
-                                <p className="text-xs font-semibold text-charcoal mb-0.5">
-                                    <span className="opacity-60 uppercase font-bold text-[10px] mr-1">CPF:</span> {customerCpf}
-                                </p>
-                            ) : (
-                                <div className="bg-amber-50 border border-amber-300 rounded-md px-2 py-1.5 mb-1.5 flex items-center gap-1.5">
-                                    <span className="text-amber-700 text-[10px] font-black uppercase tracking-wider">CPF Pendente</span>
-                                    <span className="text-amber-600 text-[9px]">— Solicitar ao cliente via WhatsApp</span>
-                                </div>
-                            )}
-                            {shippingAddress && (
-                                <>
+                        {shippingAddress ? (
+                            <div className="border-l-4 border-[#1f2937] pl-3 py-1">
+                                <p className="text-[10px] font-bold text-slate uppercase tracking-widest mb-1.5">Ficha de Frete</p>
+                                {customerCpf ? (
                                     <p className="text-xs font-semibold text-charcoal mb-0.5">
-                                        <span className="opacity-60 uppercase font-bold text-[10px] mr-1">Rua:</span> {shippingAddress.line1}
+                                        <span className="opacity-60 uppercase font-bold text-[10px] mr-1">CPF:</span> {customerCpf}
                                     </p>
-                                    {shippingAddress.line2 && (
-                                        <p className="text-xs font-semibold text-charcoal mb-0.5">
-                                            <span className="opacity-60 uppercase font-bold text-[10px] mr-1">Compl/Bairro:</span> {shippingAddress.line2}
-                                        </p>
-                                    )}
-                                    <p className="text-xs font-bold text-[#1f2937] uppercase mt-1">
-                                        {shippingAddress.city} - {shippingAddress.state} <span className="text-slate font-medium ml-1">/ CEP: {shippingAddress.postal_code}</span>
+                                ) : (
+                                    <div className="bg-amber-50 border border-amber-300 rounded-md px-2 py-1.5 mb-1.5 flex items-center gap-1.5">
+                                        <span className="text-amber-700 text-[10px] font-black uppercase tracking-wider">CPF Pendente</span>
+                                        <span className="text-amber-600 text-[9px]">— Solicitar ao cliente via WhatsApp</span>
+                                    </div>
+                                )}
+                                <p className="text-xs font-semibold text-charcoal mb-0.5">
+                                    <span className="opacity-60 uppercase font-bold text-[10px] mr-1">Rua:</span> {shippingAddress.line1}
+                                </p>
+                                {shippingAddress.line2 && (
+                                    <p className="text-xs font-semibold text-charcoal mb-0.5">
+                                        <span className="opacity-60 uppercase font-bold text-[10px] mr-1">Compl/Bairro:</span> {shippingAddress.line2}
                                     </p>
-                                </>
-                            )}
-                        </div>
+                                )}
+                                <p className="text-xs font-bold text-[#1f2937] uppercase mt-1">
+                                    {shippingAddress.city} - {shippingAddress.state} <span className="text-slate font-medium ml-1">/ CEP: {shippingAddress.postal_code}</span>
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="border-l-4 border-dusty-rose pl-3 py-1 bg-dusty-rose/5 rounded-r">
+                                <p className="text-[10px] font-bold text-dusty-rose uppercase tracking-widest mb-0.5">Privacidade LGPD</p>
+                                <p className="text-[10px] font-semibold text-slate">Endereço, CPF e contato ocultos na versão de produção.</p>
+                            </div>
+                        )}
 
                         {/* Deadline Box (Highly Emphasized) */}
                         {deadline && (

@@ -168,11 +168,12 @@ export default function AdminPedidosPage() {
                                 const urgent = order.status !== 'enviado' && isUrgent(order.deadlineDate);
                                 
                                 // Generate Ficha Link using the exact same logic as webhook
+                                // SECURITY: (LGPD) Scoped down the payload to remove PII (Address, Full Name, Phone, etc)
+                                const firstName = order.customerName ? order.customerName.split(' ')[0] : 'Cliente';
                                 const fichaDataPayload = JSON.stringify({
                                     items: order.items,
                                     customer: { 
-                                        name: order.customerName,
-                                        address: order.address,
+                                        name: firstName,
                                         deadline: order.deadlineDate 
                                     },
                                     orderId: order.id

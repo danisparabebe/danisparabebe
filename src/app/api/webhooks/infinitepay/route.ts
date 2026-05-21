@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { adminDb } from '@/lib/firebase-admin';
 import crypto from 'crypto';
 
 // ──────────────────────────────────────────────────────────
@@ -127,10 +126,10 @@ export async function POST(req: Request) {
         }
 
         // 2. Buscando o Pedido Oficial no Cérebro (Firebase)
-        const orderRef = doc(db, 'orders', orderId);
-        const orderSnap = await getDoc(orderRef);
+        const orderRef = adminDb.collection('orders').doc(orderId);
+        const orderSnap = await orderRef.get();
 
-        if (!orderSnap.exists()) {
+        if (!orderSnap.exists) {
             console.error(`🚨 Pedido Fantasma: NSU ${orderId} não existe no Firebase.`);
             return NextResponse.json({ error: 'Order not found' }, { status: 404 });
         }
@@ -146,7 +145,7 @@ export async function POST(req: Request) {
         // 3. Atualizando a "Etiqueta" do Pedido
         const isCreditCardPayment = stringified.includes('credit_card') || stringified.includes('cartao');
 
-        await updateDoc(orderRef, {
+        await orderRef.update({
             status: 'pago_aprovado',
             paymentDate: new Date().toISOString(),
             actualPaymentMethod: isCreditCardPayment ? 'credit_card' : 'pix'
