@@ -136,6 +136,11 @@ export async function POST(req: Request) {
 
         const orderData = orderSnap.data();
 
+        if (!orderData) {
+            console.error(`🚨 Dados do Pedido Ausentes: NSU ${orderId}.`);
+            return NextResponse.json({ error: 'Order data is missing' }, { status: 500 });
+        }
+
         // Evitar execução duplicada ou disparo duplo de e-mail se IP mandar 2 pings
         if (orderData.status === 'pago_aprovado') {
              console.log(`⚠️ Pedido ${orderId} já estava marcado como PAGO. Ignorando Duplicata.`);

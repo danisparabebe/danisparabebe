@@ -102,10 +102,9 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
     getDiscountPercentage: () => {
         const count = Object.values(get().itemQuantities).reduce((sum, q) => sum + q, 0);
-        if (count >= 10) return 20; // 20% desconto
-        if (count >= 6) return 15;  // 15% desconto
-        if (count >= 4) return 10;  // 10% desconto
-        if (count >= 2) return 5;   // 5% desconto
+        if (count >= 6) return 8;   // 8% desconto (Máximo)
+        if (count >= 4) return 5;   // 5% desconto
+        if (count >= 2) return 3;   // 3% desconto
         return 0;
     },
 
