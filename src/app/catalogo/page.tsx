@@ -1,8 +1,7 @@
-import fs from "fs";
-import path from "path";
 import Image from "next/image";
 import { Instagram } from "lucide-react";
 import type { Metadata } from "next";
+import catalogManifest from "@/data/catalog-manifest.json";
 
 interface CatalogoProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -31,21 +30,10 @@ export default async function CatalogoPublicoPage({ searchParams }: CatalogoProp
     const gender = rawGender === "menina" ? "Meninas" : "Meninos";
     const title = gender === "Meninas" ? "Coleção Meninas" : "Coleção Meninos";
 
-    const baseDir = path.join(process.cwd(), "Catálogo", gender);
-    let images: string[] = [];
-
-    try {
-        if (fs.existsSync(baseDir)) {
-            const files = await fs.promises.readdir(baseDir);
-            images = files.filter(f => {
-                const ext = path.extname(f).toLowerCase();
-                return [".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext);
-            });
-            images.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-        }
-    } catch (e) {
-        console.error("Failed to read images", e);
-    }
+    // Read from pre-generated manifest instead of filesystem
+    const images: string[] = gender === "Meninas"
+        ? catalogManifest.Meninas
+        : catalogManifest.Meninos;
 
     // Determine branding color
     const themeColor = gender === "Meninas" ? "bg-dusty-rose" : "bg-sage-green";
@@ -106,7 +94,7 @@ export default async function CatalogoPublicoPage({ searchParams }: CatalogoProp
                             </h2>
                             <div className="w-20 h-[1px] bg-charcoal/20 mx-auto mt-10 mb-10"></div>
                             <p className="text-xl text-slate font-fraunces italic leading-relaxed max-w-[350px] mx-auto">
-                                "O mais puro capricho em formato de enxoval para o seu bebê."
+                                &quot;O mais puro capricho em formato de enxoval para o seu bebê.&quot;
                             </p>
                         </div>
                     </div>
@@ -143,11 +131,11 @@ export default async function CatalogoPublicoPage({ searchParams }: CatalogoProp
                             <div className={`absolute top-[-10%] left-[-10%] w-[70%] h-[70%] rounded-full ${themeColor} opacity-[0.1] blur-[80px] z-0`}></div>
                             <div className={`absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] rounded-full ${themeColor} opacity-[0.12] blur-[80px] z-0`}></div>
 
-                            {/* Product Image Container */}
+                            {/* Product Image Container — served directly from public/ via CDN */}
                             <div className="relative z-10 w-full flex-1 flex flex-col justify-center items-center py-12 px-8">
                                 <div className="relative w-full h-full max-h-[80vh] rounded-[2rem] overflow-hidden glass-card p-2 flex items-center justify-center">
                                     <Image
-                                        src={`/api/local-image?path=${encodeURIComponent(`Catálogo/${gender}/${image}`)}`}
+                                        src={`/Catálogo/${gender}/${image}`}
                                         alt={`Produto ${index + 1}`}
                                         fill
                                         quality={75}

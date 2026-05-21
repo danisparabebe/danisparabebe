@@ -41,6 +41,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  outputFileTracingExcludes: {
+    '*': ['./Catálogo/**', './Bordados/**', './public/Catálogo/**'],
+  },
   images: {
     localPatterns: [
       {

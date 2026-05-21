@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "next build",
+    "prebuild": "node scripts/generate-catalog-manifest.mjs",
+    "build": "node scripts/generate-catalog-manifest.mjs && next build",
     "start": "next start",
     "lint": "eslint"
   },

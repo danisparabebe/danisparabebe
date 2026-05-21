@@ -46,3 +46,7 @@ Capas dos temas/
 *.js
 tsc_out.txt
 INICIAR_ORGANIZADOR.bat
+
+# Root-level media folders (images live in public/ for static serving)
+/Catálogo/
+/Bordados/
