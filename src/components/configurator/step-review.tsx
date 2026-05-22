@@ -7,7 +7,7 @@ import { BASE_PRICES, formatPrice } from '@/lib/pricing';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp, Truck } from 'lucide-react';
 import Image from 'next/image';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL, isEligibleForFreeShipping } from '@/lib/shipping-rules';
 
@@ -341,249 +341,186 @@ export function StepReview() {
                     <div className="p-3 flex-1 flex flex-col gap-3 justify-between">
                         
                         {/* Form Area */}
-                        <div className="space-y-2.5 shrink-0">
-                            {/* Nomes */}
-                            <div className="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Nome Completo</label>
-                                    <input type="text" name="name" value={formData.name} onChange={handleInput} placeholder="Seu nome" className="w-full border border-black/15 rounded-lg px-2 py-1.5 text-xs focus:border-sage-green outline-none placeholder:text-black/25" />
-                                </div>
-                                <div>
-                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">WhatsApp</label>
-                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInput} placeholder="(00) 00000-0000" className="w-full border border-black/15 rounded-lg px-2 py-1.5 text-xs focus:border-sage-green outline-none placeholder:text-black/25" />
-                                </div>
-                            </div>
 
-                            {/* CPF */}
-                            <div className="w-1/2">
-                                <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">CPF (Obrigatório p/ Nota Fiscal)</label>
-                                <input type="text" name="cpf" value={formData.cpf} onChange={handleInput} placeholder="000.000.000-00" maxLength={14} className="w-full border border-black/15 rounded-lg px-2 py-1.5 text-xs focus:border-sage-green outline-none placeholder:text-black/25" />
-                            </div>
+                        <div className="flex flex-col gap-4">
+                            <h3 className="font-fraunces text-xl text-[#1f2937] border-b-2 border-black/5 pb-2">Entrega & Contato</h3>
 
-                            {/* Endereço */}
-                            <div className="grid grid-cols-[80px_1fr] gap-2">
-                                <div>
-                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">CEP</label>
-                                    <input type="text" name="cep" value={formData.cep} onChange={handleCepChange} maxLength={9} placeholder="00000-000" className="w-full border border-black/15 rounded-lg px-2 py-1.5 text-xs focus:border-sage-green outline-none placeholder:text-black/25" />
+                            <div className="grid grid-cols-1 gap-3">
+                                <input type="text" name="name" value={formData.name || ''} onChange={handleInput} placeholder="Nome Completo" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937] placeholder:text-slate/40 shadow-sm" />
+                                
+                                <div className="grid grid-cols-2 gap-3">
+                                    <input type="tel" name="phone" value={formData.phone || ''} onChange={handleInput} placeholder="WhatsApp" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937] placeholder:text-slate/40 shadow-sm" />
+                                    <input type="text" name="cpf" value={formData.cpf || ''} onChange={handleInput} placeholder="CPF" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937] placeholder:text-slate/40 shadow-sm" />
                                 </div>
-                                <div>
-                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1 opacity-0">Status</label>
-                                    <div className="min-h-[30px] flex items-center">
-                                        {isLoadingAddress ? (
-                                            <span className="text-[10px] text-sage-green-dark font-medium flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Buscando...</span>
-                                        ) : addressLoaded ? (
-                                            <span className="text-[9px] leading-tight text-slate font-medium line-clamp-2">{formData.street}, {formData.neighborhood} - {formData.city}/{formData.state}</span>
-                                        ) : (
-                                            <span className="text-[10px] text-slate/50 font-medium">Digite o CEP para calcular</span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
 
-                            {addressLoaded && (
-                                <div className="grid grid-cols-[80px_1fr] gap-2">
-                                    <div>
-                                        <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Nº</label>
-                                        <input type="text" name="number" value={formData.number} onChange={handleInput} placeholder="Ex: 123" className="w-full border border-black/15 rounded-lg px-2 py-1.5 text-xs focus:border-sage-green outline-none" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Complemento</label>
-                                        <input type="text" name="complement" value={formData.complement} onChange={handleInput} placeholder="Apto, Bloco (Opcional)" className="w-full border border-black/15 rounded-lg px-2 py-1.5 text-xs focus:border-sage-green outline-none" />
-                                    </div>
+                                <div className="relative">
+                                    <input 
+                                        type="text" name="cep" value={formData.cep || ''} onChange={handleCepChange} 
+                                        maxLength={9} placeholder="CEP" 
+                                        className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937] placeholder:text-slate/40 shadow-sm" 
+                                    />
+                                    {isLoadingAddress && (
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                            <Loader2 className="w-4 h-4 text-sage-green animate-spin" />
+                                        </div>
+                                    )}
                                 </div>
-                            )}
+
+                                {addressLoaded && (
+                                    <div className="grid grid-cols-1 gap-3">
+                                        <input type="text" name="street" value={formData.street || ''} onChange={handleInput} placeholder="Rua" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
+                                        <div className="grid grid-cols-3 gap-3">
+                                            <input type="text" name="number" value={formData.number || ''} onChange={handleInput} placeholder="Número" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
+                                            <input type="text" name="complement" value={formData.complement || ''} onChange={handleInput} placeholder="Complemento" className="col-span-2 w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <input type="text" name="neighborhood" value={formData.neighborhood || ''} onChange={handleInput} placeholder="Bairro" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
+                                            <div className="flex gap-2">
+                                                <input type="text" name="city" value={formData.city || ''} onChange={handleInput} placeholder="Cidade" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
+                                                <input type="text" name="state" value={formData.state || ''} onChange={handleInput} placeholder="UF" maxLength={2} className="w-16 text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937] uppercase text-center" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
-                        {/* Totals Box */}
-                        <div className="bg-[#faf9f7] rounded-lg p-3 border border-black/5 mt-2 shrink-0">
-                            {addressLoaded && shippingOptions.length > 0 && (
-                                <div className="space-y-1 mt-1 mb-2 border-b border-black/5 pb-2">
-                                    <label className="block text-[8px] font-bold text-slate uppercase tracking-widest mb-1">Opções de Envio</label>
-                                    
-                                    <div className="flex flex-col gap-1.5">
-                                        {/* Render the selected or cheapest option as primary */}
-                                        {(() => {
-                                            const cheapestOption = [...shippingOptions].sort((a, b) => a.price - b.price)[0];
-                                            const primaryOption = shippingOption || cheapestOption;
+                        {addressLoaded && shippingOptions.length > 0 && (
+                            <div className="bg-white border-2 border-black/5 rounded-xl p-3 md:p-4 shadow-sm">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <Truck className="w-4 h-4 text-sage-green" />
+                                    <span className="font-bold text-xs text-[#1f2937] uppercase tracking-widest">Opções de Envio</span>
+                                </div>
+                                
+                                <div className="flex flex-col gap-2">
+                                    {(() => {
+                                        const cheapestOption = [...shippingOptions].sort((a, b) => (a.price || 0) - (b.price || 0))[0];
+                                        const primaryOption = shippingOption || cheapestOption;
+                                        if (!primaryOption) return null;
+                                        
+                                        const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                        const isCheapestPrimary = primaryOption.id === cheapestOption?.id;
+                                        const primaryDisplayPrice = ((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible) ? 0 : (primaryOption.price || 0);
+
+                                        return (
+                                            <button
+                                                type="button"
+                                                onClick={() => !showAllShipping ? setShowAllShipping(true) : null}
+                                                className={`relative w-full text-left flex flex-col justify-between p-3 rounded-lg border-2 transition-all ${
+                                                    !showAllShipping ? 'border-sage-green bg-sage-green/5 shadow-sm' : 'border-black/5 bg-slate-50'
+                                                }`}
+                                            >
+                                                <div className="flex items-center gap-2 mb-1.5">
+                                                    <div className={`shrink-0 w-4 h-4 rounded-full border-2 flex items-center justify-center border-sage-green`}>
+                                                        <div className="w-2 h-2 rounded-full bg-sage-green" />
+                                                    </div>
+                                                    <p className="font-bold text-[#1f2937] uppercase truncate">{primaryOption.name || 'Envio'}</p>
+                                                    {primaryDisplayPrice === 0 && (
+                                                        <span className="ml-2 bg-[#1a9e52] text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-wider shadow-sm uppercase">Grátis</span>
+                                                    )}
+                                                </div>
+                                                <div className="flex justify-between items-end pl-6">
+                                                    <p className="text-[10px] font-medium text-slate uppercase pr-1">Prazo: {primaryOption.days || '-'} dias úteis</p>
+                                                    <span className={`text-xs font-black shrink-0 ${primaryDisplayPrice === 0 ? 'text-[#1a9e52]' : 'text-[#1f2937]'}`}>
+                                                        {primaryDisplayPrice === 0 ? 'GRÁTIS' : formatPrice(primaryDisplayPrice)}
+                                                    </span>
+                                                </div>
+                                                {!showAllShipping && shippingOptions.length > 1 && (
+                                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-white rounded-full shadow-sm border border-black/5">
+                                                        <ChevronDown className="w-3.5 h-3.5 text-slate" />
+                                                    </div>
+                                                )}
+                                            </button>
+                                        );
+                                    })()}
+
+                                    {showAllShipping && shippingOptions
+                                        .filter(option => option !== shippingOption && option !== [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0])
+                                        .sort((a, b) => (a.price || 0) - (b.price || 0))
+                                        .map((option, idx) => {
                                             const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                            const primaryDisplayPrice = ((total >= FREE_SHIPPING_THRESHOLD) && (primaryOption.id === cheapestOption.id) && isStateEligible) ? 0 : primaryOption.price;
+                                            const isCheapest = option === [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                            const displayPrice = ((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapest && isStateEligible) ? 0 : (option.price || 0);
 
                                             return (
                                                 <button
+                                                    key={option.id || `ship-${idx}`}
                                                     type="button"
-                                                    onClick={() => !showAllShipping ? setShowAllShipping(true) : null}
-                                                    className={`relative w-full text-left flex flex-col justify-between p-2 rounded-lg border-2 transition-all ${
-                                                        !showAllShipping ? 'border-[#1f2937] bg-[#f8fafc]' : 'border-black/5 bg-white'
-                                                    }`}
+                                                    onClick={() => { setShippingOption(option); setShowAllShipping(false); }}
+                                                    className="w-full text-left flex flex-col justify-between p-3 rounded-lg border-2 border-black/5 bg-white hover:border-sage-green/50 hover:bg-sage-green/5 transition-all"
                                                 >
-                                                    <div className="flex items-center gap-1.5 mb-1.5 w-full">
-                                                        <div className={`shrink-0 w-3 h-3 rounded-full border-2 flex items-center justify-center border-[#1f2937]`}>
-                                                            <div className="w-1.5 h-1.5 rounded-full bg-[#1f2937]" />
-                                                        </div>
-                                                        <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{primaryOption.name}</p>
-                                                        {!showAllShipping && (
-                                                            <div className="ml-auto flex items-center gap-1 text-[8px] text-slate font-bold uppercase transition-transform">
-                                                                Mais Opções <ChevronDown className="w-3 h-3" />
-                                                            </div>
-                                                        )}
+                                                    <div className="flex items-center gap-2 mb-1.5">
+                                                        <div className="shrink-0 w-4 h-4 rounded-full border-2 border-slate-300" />
+                                                        <p className="font-bold text-[#1f2937] uppercase truncate">{option.name || 'Envio'}</p>
                                                     </div>
-                                                    
-                                                    <div className="flex items-end justify-between w-full mt-auto">
-                                                        <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {primaryOption.days} dias úteis</p>
-                                                        <span className={`text-[10px] font-black shrink-0 ${primaryDisplayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
-                                                            {primaryDisplayPrice === 0 ? 'GRÁTIS' : formatPrice(primaryDisplayPrice)}
+                                                    <div className="flex justify-between items-end pl-6">
+                                                        <p className="text-[10px] font-medium text-slate uppercase pr-1">Prazo: {option.days || '-'} dias úteis</p>
+                                                        <span className="text-xs font-black text-[#1f2937] shrink-0">
+                                                            {formatPrice(displayPrice)}
                                                         </span>
                                                     </div>
                                                 </button>
-                                            )
-                                        })()}
-
-                                        {/* Render remaining options when expanded */}
-                                        {showAllShipping && shippingOptions
-                                            .filter(option => option.id !== (shippingOption?.id || [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id))
-                                            .sort((a, b) => a.price - b.price)
-                                            .map((option) => {
-                                                const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                                // Grátis logic technically only applies to cheapest, but just in case we map it:
-                                                const isCheapest = option.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
-                                                const displayPrice = ((total >= FREE_SHIPPING_THRESHOLD) && isCheapest && isStateEligible) ? 0 : option.price;
-                                                
-                                                return (
-                                                    <button
-                                                        key={option.id}
-                                                        type="button"
-                                                        onClick={() => {
-                                                            setShippingOption(option);
-                                                            setShowAllShipping(false);
-                                                        }}
-                                                        className={`relative w-full text-left flex flex-col justify-between p-2 rounded-lg border-2 border-black/5 bg-white hover:border-black/10 transition-all`}
-                                                    >
-                                                        <div className="flex items-center gap-1.5 mb-1.5 w-full">
-                                                            <div className="shrink-0 w-3 h-3 rounded-full border-2 border-black/20 flex items-center justify-center">
-                                                            </div>
-                                                            <p className="text-[10px] font-bold text-[#1f2937] leading-none uppercase truncate pr-1">{option.name}</p>
-                                                        </div>
-                                                        
-                                                        <div className="flex items-end justify-between w-full mt-auto">
-                                                            <p className="text-[8px] text-slate font-medium uppercase min-w-0 pr-1 truncate">Prazo: {option.days} dias úteis</p>
-                                                            <span className={`text-[10px] font-black shrink-0 ${displayPrice === 0 ? 'text-green-600' : 'text-[#1f2937]'}`}>
-                                                                {displayPrice === 0 ? 'GRÁTIS' : formatPrice(displayPrice)}
-                                                            </span>
-                                                        </div>
-                                                    </button>
-                                                );
-                                        })}
-                                        
-                                        {/* Optional collapse button */}
-                                        {showAllShipping && shippingOptions.length > 1 && (
-                                            <button 
-                                                type="button" 
-                                                onClick={() => setShowAllShipping(false)}
-                                                className="w-full flex items-center justify-center gap-1 text-[8px] font-bold uppercase text-slate hover:text-charcoal mt-1 py-1"
-                                            >
-                                                Ver Menos <ChevronUp className="w-3 h-3" />
-                                            </button>
-                                        )}
-                                    </div>
+                                            );
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    
+                    <div className="mt-4 pt-4 border-t-2 border-black/5 flex flex-col gap-3">
+                        <div className="bg-[#1f2937] rounded-xl p-4 shadow-md text-white">
+                            <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2 text-white/80">
+                                <span>Subtotal Enxoval</span>
+                                <span>{formatPrice(total)}</span>
+                            </div>
+                            
+                            {shippingOption && (
+                                <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2 text-white/80">
+                                    <span>Frete</span>
+                                    <span>{(() => {
+                                        const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                        const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                        const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
+                                        if ((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible) return 'GRÁTIS';
+                                        return formatPrice(shippingOption.price || 0);
+                                    })()}</span>
                                 </div>
                             )}
 
-                            {/* Produção Artesanal Aviso */}
-                            <div className="bg-amber-50 border border-amber-200 rounded p-2 mb-2 flex items-start gap-1.5">
-                                <span className="text-amber-600 text-[10px] leading-none mt-0.5">⚠️</span>
-                                <p className="text-[8px] font-bold uppercase text-amber-800 leading-snug tracking-wider">
-                                    Atenção: Por conter peças exclusivas e artesanais sob encomenda, 
-                                    o envio será realizado somente após o prazo de produção de <span className="text-amber-950">até 12 dias úteis</span>.
-                                </p>
-                            </div>
-
-                            <div className="space-y-1 text-right">
-                                <div className="flex justify-between items-center text-[10px] font-bold uppercase text-slate mb-0.5">
-                                    <span>Subtotal:</span>
-                                    <span className="text-[#1f2937]">{formatPrice(total)}</span>
-                                </div>
-                                <div className="flex justify-between items-start text-[10px] font-bold uppercase text-slate">
-                                    <span className="pt-0.5">Frete {shippingOption ? `(${shippingOption.name} - ${shippingOption.days}d)` : ''}:</span>
-                                    <div className="flex flex-col items-end">
-                                        <span className={shippingOption ? 'text-[#1f2937]' : 'text-slate/60'}>
-                                            {(() => {
-                                                if (!shippingOption) return addressLoaded ? 'Indisponível' : 'A calcular';
-                                                const isCheapest = shippingOption.id === [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
-                                                const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                                const actualPrice = (total >= FREE_SHIPPING_THRESHOLD && isCheapest && isStateEligible) ? 0 : shippingOption.price;
-                                                return actualPrice === 0 ? 'GRÁTIS' : formatPrice(actualPrice);
-                                            })()}
-                                        </span>
-                                    </div>
-                                </div>
-                                {(() => {
-                                    const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                    if (!isStateEligible && addressLoaded) {
-                                        return (
-                                            <div className="text-[8px] text-slate/70 font-bold uppercase mb-1">
-                                                Frete grátis disponível apenas para {FREE_SHIPPING_REGIONS_LABEL}
-                                            </div>
-                                        );
-                                    }
-                                    if (FREE_SHIPPING_THRESHOLD - total > 0 && isStateEligible) {
-                                        return (
-                                            <div className="text-[8px] text-amber-600 font-bold uppercase mb-1">
-                                                Faltam apenas {formatPrice(FREE_SHIPPING_THRESHOLD - total)} para <span className="text-amber-700">Frete Grátis</span>!
-                                            </div>
-                                        );
-                                    }
-                                    if (total >= FREE_SHIPPING_THRESHOLD && isStateEligible) {
-                                        return (
-                                            <div className="text-[8px] text-[#1a9e52] font-bold uppercase mb-1">
-                                                ✨ Você ganhou Frete Grátis!
-                                            </div>
-                                        );
-                                    }
-                                    return null;
-                                })()}
-
-                                {discountPct > 0 && (
-                                    <div className="flex justify-between text-[10px] font-bold uppercase text-[#1a9e52]">
-                                        <span>Desconto Kit:</span>
-                                        <span>-{discountPct}% OFF</span>
-                                    </div>
-                                )}
-                                <div className="border-t border-black/10 mt-2.5 pt-2.5 flex flex-col gap-2.5">
-                                    <div className="bg-sage-green/10 border border-sage-green/30 rounded-lg p-2.5 flex justify-between items-center w-full shadow-sm relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-white/40 to-transparent blur-md transform translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-                                        
-                                        <div className="flex flex-col text-left relative z-10">
-                                            <span className="text-[10px] font-black text-sage-green-dark uppercase tracking-widest leading-none">Preço do Enxoval</span>
-                                            <span className="text-[8.5px] font-black text-sage-green-dark uppercase bg-sage-green/20 px-1.5 py-0.5 mt-1 rounded shadow-sm inline-block w-max border border-sage-green/30">PAGAMENTO SEGURO</span>
-                                        </div>
-                                        <div className="text-right relative z-10">
-                                            <span className="text-xl font-black text-sage-green-dark leading-none tabular-nums tracking-tight">
-                                                {formatPrice(total + (shippingOption ? shippingOption.price : 0))}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className="h-px bg-white/20 w-full my-3" />
+                            
+                            <div className="flex justify-between items-end">
+                                <span className="font-black text-sm uppercase tracking-widest text-sage-green">Total</span>
+                                <span className="text-2xl font-black tabular-nums tracking-tight">
+                                    {(() => {
+                                        let finalShipping = 0;
+                                        if (shippingOption) {
+                                            const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                            const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                            const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
+                                            if (!((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible)) {
+                                                finalShipping = shippingOption.price || 0;
+                                            }
+                                        }
+                                        return formatPrice(total + finalShipping);
+                                    })()}
+                                </span>
                             </div>
                         </div>
 
-                        {/* CTAs */}
-                        <div className="flex items-center gap-2 pt-1 shrink-0">
+                        <div className="flex gap-3">
                             <button
                                 onClick={previousStep}
                                 disabled={isProcessing}
-                                className="cursor-pointer w-12 h-12 flex items-center justify-center rounded-xl border-2 border-[#1f2937] text-[#1f2937] hover:bg-[#1f2937] hover:text-white transition-all bg-white shadow-sm shrink-0 disabled:opacity-50"
-                                title="Voltar"
+                                className="cursor-pointer shrink-0 w-14 h-14 bg-white border-2 border-black/5 hover:bg-slate-50 text-slate rounded-xl flex items-center justify-center transition-all active:scale-95 disabled:opacity-50"
                             >
-                                <ArrowLeft className="w-4 h-4" />
+                                <ArrowLeft className="w-5 h-5" />
                             </button>
-
                             <button
                                 onClick={handleBuyNow}
                                 disabled={isProcessing || !formData.name || !formData.phone || !addressLoaded || !formData.number}
-                                className="cursor-pointer flex-1 flex flex-col items-center justify-center gap-0.5
-                                           bg-[#1a9e52] hover:bg-[#158043] text-white h-12 rounded-xl shadow-[0_4px_14px_rgba(26,158,82,0.3)]
-                                           transition-all duration-200 uppercase tracking-widest
-                                           disabled:opacity-60 disabled:cursor-not-allowed border border-[#158043]/50"
+                                className="cursor-pointer flex-1 flex flex-col items-center justify-center gap-0.5 bg-[#1a9e52] hover:bg-[#158043] text-white h-14 rounded-xl shadow-[0_4px_14px_rgba(26,158,82,0.3)] transition-all duration-200 uppercase tracking-widest disabled:opacity-60 disabled:cursor-not-allowed border border-[#158043]/50"
                             >
                                 {isProcessing ? (
                                     <span className="flex items-center gap-2 text-xs font-bold"><Loader2 className="w-4 h-4 animate-spin" /> PROCESSANDO...</span>
