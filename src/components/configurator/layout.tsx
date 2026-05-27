@@ -108,13 +108,13 @@ export function ConfiguratorLayout() {
 
             {/* ── Content ── */}
             <main className="flex-1 px-4 py-8 md:py-12 max-w-4xl mx-auto w-full">
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                     <motion.div
                         key={currentStep}
-                        initial={{ opacity: 0, y: 14 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.22, ease: 'easeOut' }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
                     >
                         {renderStep()}
                     </motion.div>
