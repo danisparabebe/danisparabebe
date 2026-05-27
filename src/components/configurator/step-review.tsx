@@ -86,24 +86,38 @@ export function StepReview() {
         if (clean.length !== 8) return;
         
         setIsLoadingAddress(true);
-        try {
-            const res = await fetch(`https://viacep.com.br/ws/${clean}/json/`);
-            const data = await res.json();
-            if (!data.erro) {
-                const addressAdd = {
-                    street: data.logradouro,
-                    neighborhood: data.bairro,
-                    city: data.localidade,
-                    state: data.uf
-                };
-                setFormData(prev => {
-                    const next = { ...prev, ...addressAdd };
-                    localStorage.setItem('checkout_form', JSON.stringify(next));
-                    return next;
-                });
-                setAddressLoaded(true);
-                
-                // Fetch shipping naturally
+        
+        // 1. Fetch ViaCEP for address autocomplete
+        const fetchAddress = async () => {
+            try {
+                const res = await fetch(`https://viacep.com.br/ws/${clean}/json/`);
+                const data = await res.json();
+                if (!data.erro) {
+                    const addressAdd = {
+                        street: data.logradouro,
+                        neighborhood: data.bairro,
+                        city: data.localidade,
+                        state: data.uf
+                    };
+                    setFormData(prev => {
+                        const next = { ...prev, ...addressAdd };
+                        localStorage.setItem('checkout_form', JSON.stringify(next));
+                        return next;
+                    });
+                } else {
+                    toast.error('CEP não encontrado. Preencha manualmente.');
+                }
+            } catch (error) {
+                console.error('ViaCEP Error:', error);
+                toast.error('Não foi possível autocompletar o endereço. Preencha manualmente.');
+            } finally {
+                setAddressLoaded(true); // Always show fields
+            }
+        };
+
+        // 2. Fetch Shipping Options from backend
+        const fetchShipping = async () => {
+            try {
                 const shipRes = await fetch('/api/shipping', { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' },
@@ -118,21 +132,19 @@ export function StepReview() {
                     } else {
                         setShippingOption(null);
                         setShippingOptions([]);
-                        toast.info('Frete não disponível para este CEP.');
+                        toast.error('Nenhuma transportadora disponível para este CEP.');
                     }
                 }
-            } else {
-                toast.error('CEP não encontrado.');
-                setAddressLoaded(false);
-                setShippingOption(null);
+            } catch (err) {
+                console.error('Erro ao buscar frete:', err);
+                toast.error('Falha ao calcular opções de frete.');
             }
-        } catch (error) {
-            console.error('ViaCEP Error:', error);
-            toast.error('Erro ao buscar CEP. Preencha o endereço manualmente.');
-            setAddressLoaded(true);
-        } finally {
-            setIsLoadingAddress(false);
-        }
+        };
+
+        // Run both in parallel
+        await Promise.all([fetchAddress(), fetchShipping()]);
+        
+        setIsLoadingAddress(false);
     };
 
     const passafitaLabel = PASSA_FITAS.find(p => p.id === passafitaColor)?.label || passafitaColor;
