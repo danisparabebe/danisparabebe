@@ -90,7 +90,7 @@ export function StepReview() {
         // 1. Fetch ViaCEP for address autocomplete
         const fetchAddress = async () => {
             try {
-                const res = await fetch(`https://viacep.com.br/ws/${clean}/json/`);
+                const res = await fetch(`/api/viacep?cep=${clean}`);
                 const data = await res.json();
                 if (!data.erro) {
                     const addressAdd = {
