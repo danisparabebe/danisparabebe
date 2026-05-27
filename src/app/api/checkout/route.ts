@@ -217,7 +217,7 @@ export async function POST(request: Request) {
         }
 
         // 4. Create InfinitePay Checkout Session
-        const ipHandle = process.env.NEXT_PUBLIC_INFINITEPAY_HANDLE;
+        const ipHandle = process.env.NEXT_PUBLIC_INFINITEPAY_HANDLE || 'danisparabebe';
         console.log('🏪 Handle:', ipHandle);
         if (!ipHandle) throw new Error("NEXT_PUBLIC_INFINITEPAY_HANDLE is missing in .env.local");
         
