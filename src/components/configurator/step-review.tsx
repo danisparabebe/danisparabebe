@@ -51,10 +51,12 @@ export function StepReview() {
         if (cached) {
             try {
                 const data = JSON.parse(cached);
-                setFormData(data);
-                if (data.street) setAddressLoaded(true);
-                if (data.cep && data.cep.replace(/\D/g, '').length === 8) {
-                    handleCepLookup(data.cep); // Auto-fetch shipping
+                if (data && typeof data === 'object') {
+                    setFormData(prev => ({ ...prev, ...data }));
+                    if (data.street) setAddressLoaded(true);
+                    if (data.cep && typeof data.cep === 'string' && data.cep.replace(/\D/g, '').length === 8) {
+                        handleCepLookup(data.cep); // Auto-fetch shipping
+                    }
                 }
             } catch (e) {}
         }
