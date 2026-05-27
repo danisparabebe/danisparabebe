@@ -2,7 +2,7 @@
 
 import { useConfiguratorStore, StepId, STEP_ORDER } from '@/store/configurator-store';
 import { formatPrice } from '@/lib/pricing';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import Link from 'next/link';
 import { ArrowLeft, Check } from 'lucide-react';
 
@@ -108,17 +108,9 @@ export function ConfiguratorLayout() {
 
             {/* ── Content ── */}
             <main className="flex-1 px-4 py-8 md:py-12 max-w-4xl mx-auto w-full">
-                <AnimatePresence>
-                    <motion.div
-                        key={currentStep}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.18, ease: 'easeOut' }}
-                    >
-                        {renderStep()}
-                    </motion.div>
-                </AnimatePresence>
+                <div key={currentStep} className="animate-fadeIn">
+                    {renderStep()}
+                </div>
             </main>
 
             {/* ── Persistent bottom back button (all steps except first) ── */}
