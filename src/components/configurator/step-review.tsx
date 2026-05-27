@@ -126,8 +126,10 @@ export function StepReview() {
                 setAddressLoaded(false);
                 setShippingOption(null);
             }
-        } catch { 
-            /* silent */ 
+        } catch (error) {
+            console.error('ViaCEP Error:', error);
+            toast.error('Erro ao buscar CEP. Preencha o endereço manualmente.');
+            setAddressLoaded(true);
         } finally {
             setIsLoadingAddress(false);
         }
@@ -168,7 +170,7 @@ export function StepReview() {
     };
 
     const handleBuyNow = async () => {
-        if (!formData.name || !formData.phone || !addressLoaded || !formData.number) {
+        if (!formData.name || !formData.phone || !formData.cep || !formData.number) {
             toast.error('Preencha os dados de entrega antes de prosseguir.');
             return;
         }
@@ -368,7 +370,7 @@ export function StepReview() {
                                     )}
                                 </div>
 
-                                {addressLoaded && (
+                                {(addressLoaded || (formData.cep && formData.cep.replace(/\D/g, '').length === 8)) && (
                                     <div className="grid grid-cols-1 gap-3">
                                         <input type="text" name="street" value={formData.street || ''} onChange={handleInput} placeholder="Rua" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
                                         <div className="grid grid-cols-3 gap-3">
@@ -387,7 +389,7 @@ export function StepReview() {
                             </div>
                         </div>
 
-                        {addressLoaded && shippingOptions.length > 0 && (
+                        {(addressLoaded || (formData.cep && formData.cep.replace(/\D/g, '').length === 8)) && shippingOptions.length > 0 && (
                             <div className="bg-white border-2 border-black/5 rounded-xl p-3 md:p-4 shadow-sm">
                                 <div className="flex items-center gap-2 mb-3">
                                     <Truck className="w-4 h-4 text-sage-green" />
@@ -521,7 +523,7 @@ export function StepReview() {
                             </button>
                             <button
                                 onClick={handleBuyNow}
-                                disabled={isProcessing || !formData.name || !formData.phone || !addressLoaded || !formData.number}
+                                disabled={isProcessing || !formData.name || !formData.phone || !formData.cep || !formData.number}
                                 className="cursor-pointer flex-1 flex flex-col items-center justify-center gap-0.5 bg-[#1a9e52] hover:bg-[#158043] text-white h-14 rounded-xl shadow-[0_4px_14px_rgba(26,158,82,0.3)] transition-all duration-200 uppercase tracking-widest disabled:opacity-60 disabled:cursor-not-allowed border border-[#158043]/50"
                             >
                                 {isProcessing ? (
