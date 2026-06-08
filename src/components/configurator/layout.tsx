@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useConfiguratorStore, StepId, STEP_ORDER } from '@/store/configurator-store';
 import { formatPrice } from '@/lib/pricing';
 
@@ -21,11 +22,18 @@ const STEP_META: { id: StepId; label: string }[] = [
 ];
 
 export function ConfiguratorLayout() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
     const { currentStep, visitedSteps, setStep, previousStep, getTotalPrice } = useConfiguratorStore();
     const total = getTotalPrice();
     const currentIdx = STEP_ORDER.indexOf(currentStep);
 
     const canNavigateTo = (stepId: StepId) => visitedSteps.has(stepId);
+
+    if (!mounted) {
+        return <div className="min-h-screen bg-[#faf9f7] flex flex-col" />;
+    }
 
     const renderStep = () => {
         switch (currentStep) {

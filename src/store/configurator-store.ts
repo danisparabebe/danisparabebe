@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { BASE_PRICES } from '@/lib/pricing';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { BASE_PRICES, getKitDiscountPercentage } from '@/lib/pricing';
 
 export type StepId = 'name' | 'theme' | 'colors' | 'items' | 'review';
 export const STEP_ORDER: StepId[] = ['name', 'theme', 'colors', 'items', 'review'];
@@ -59,7 +60,9 @@ const initialState = {
     itemQuantities: {},
 };
 
-export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
+export const useConfiguratorStore = create<ConfiguratorState>()(
+    persist(
+        (set, get) => ({
     ...initialState,
 
     setStep: (step) =>
@@ -102,10 +105,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
     getDiscountPercentage: () => {
         const count = Object.values(get().itemQuantities).reduce((sum, q) => sum + q, 0);
-        if (count >= 6) return 8;   // 8% desconto (Máximo)
-        if (count >= 4) return 5;   // 5% desconto
-        if (count >= 2) return 3;   // 3% desconto
-        return 0;
+        return getKitDiscountPercentage(count);
     },
 
     getTotalPrice: () => {
@@ -129,4 +129,29 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
             ...initialState,
             visitedSteps: new Set<StepId>(['name']),
         }),
-}));
+        }),
+        {
+            name: 'danis-configurator-storage',
+            storage: createJSONStorage(() => sessionStorage),
+            partialize: (state) => ({
+                currentStep: state.currentStep,
+                visitedSteps: Array.from(state.visitedSteps), // Set -> Array for JSON
+                babyName: state.babyName,
+                selectedProduct: state.selectedProduct,
+                selectedTheme: state.selectedTheme,
+                selectedThemeName: state.selectedThemeName,
+                selectedEmbroideryPhoto: state.selectedEmbroideryPhoto,
+                acabamentoColor: state.acabamentoColor,
+                passafitaColor: state.passafitaColor,
+                observations: state.observations,
+                itemQuantities: state.itemQuantities,
+            }),
+            onRehydrateStorage: () => (state) => {
+                // Convert visitedSteps array back to Set after rehydration
+                if (state && Array.isArray(state.visitedSteps)) {
+                    state.visitedSteps = new Set(state.visitedSteps as unknown as StepId[]);
+                }
+            },
+        }
+    )
+);

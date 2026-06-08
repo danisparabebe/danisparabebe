@@ -181,6 +181,17 @@ export function StepReview() {
         reset(); openCart(); router.push('/');
     };
 
+    const getActualShippingCost = (): number => {
+        if (!shippingOption) return 0;
+        const cheapestOption = [...shippingOptions].sort((a, b) => (a.price || 0) - (b.price || 0))[0];
+        const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+        const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
+        if ((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible) {
+            return 0; // Frete grátis!
+        }
+        return shippingOption.price || 0;
+    };
+
     const handleBuyNow = async () => {
         if (!formData.name || !formData.phone || !formData.cep || !formData.number) {
             toast.error('Preencha os dados de entrega antes de prosseguir.');
@@ -189,6 +200,7 @@ export function StepReview() {
 
         buildCartItems();
         const { items } = useCartStore.getState();
+        const actualShipping = getActualShippingCost();
 
         setIsProcessing(true);
         const loadingToast = toast.loading('Preparando pagamento seguro...');
@@ -198,7 +210,7 @@ export function StepReview() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     items: items,
-                    shipping: shippingOption ? shippingOption.price : 0,
+                    shipping: actualShipping,
                     customer: formData,
                     cancelPath: '/monte-seu-kit'
                 }),
@@ -421,16 +433,16 @@ export function StepReview() {
                                         return (
                                             <button
                                                 type="button"
-                                                onClick={() => !showAllShipping ? setShowAllShipping(true) : null}
+                                                onClick={() => shippingOptions.length > 1 ? setShowAllShipping(!showAllShipping) : null}
                                                 className={`relative w-full text-left flex flex-col justify-between p-3 rounded-lg border-2 transition-all ${
-                                                    !showAllShipping ? 'border-sage-green bg-sage-green/5 shadow-sm' : 'border-black/5 bg-slate-50'
+                                                    !showAllShipping ? 'border-sage-green bg-sage-green/5 shadow-sm' : 'border-sage-green/30 bg-slate-50'
                                                 }`}
                                             >
                                                 <div className="flex items-center gap-2 mb-1.5">
                                                     <div className={`shrink-0 w-4 h-4 rounded-full border-2 flex items-center justify-center border-sage-green`}>
                                                         <div className="w-2 h-2 rounded-full bg-sage-green" />
                                                     </div>
-                                                    <p className="font-bold text-[#1f2937] uppercase truncate">{primaryOption.name || 'Envio'}</p>
+                                                    <p className="text-xs font-bold text-[#1f2937] uppercase truncate">{primaryOption.name || 'Envio'}</p>
                                                     {primaryDisplayPrice === 0 && (
                                                         <span className="ml-2 bg-[#1a9e52] text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-wider shadow-sm uppercase">Grátis</span>
                                                     )}
@@ -441,9 +453,13 @@ export function StepReview() {
                                                         {primaryDisplayPrice === 0 ? 'GRÁTIS' : formatPrice(primaryDisplayPrice)}
                                                     </span>
                                                 </div>
-                                                {!showAllShipping && shippingOptions.length > 1 && (
+                                                {shippingOptions.length > 1 && (
                                                     <div className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-white rounded-full shadow-sm border border-black/5">
-                                                        <ChevronDown className="w-3.5 h-3.5 text-slate" />
+                                                        {showAllShipping ? (
+                                                            <ChevronUp className="w-3.5 h-3.5 text-slate" />
+                                                        ) : (
+                                                            <ChevronDown className="w-3.5 h-3.5 text-slate" />
+                                                        )}
                                                     </div>
                                                 )}
                                             </button>
@@ -467,7 +483,7 @@ export function StepReview() {
                                                 >
                                                     <div className="flex items-center gap-2 mb-1.5">
                                                         <div className="shrink-0 w-4 h-4 rounded-full border-2 border-slate-300" />
-                                                        <p className="font-bold text-[#1f2937] uppercase truncate">{option.name || 'Envio'}</p>
+                                                        <p className="text-xs font-bold text-[#1f2937] uppercase truncate">{option.name || 'Envio'}</p>
                                                     </div>
                                                     <div className="flex justify-between items-end pl-6">
                                                         <p className="text-[10px] font-medium text-slate uppercase pr-1">Prazo: {option.days || '-'} dias úteis</p>

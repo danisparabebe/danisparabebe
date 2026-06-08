@@ -51,6 +51,14 @@ export function calculateProductPrice(
     return total;
 }
 
+// Logic for progressive discounts based on number of items in a custom kit
+export function getKitDiscountPercentage(itemCount: number): number {
+    if (itemCount >= 6) return 8;   // 8% desconto (Máximo)
+    if (itemCount >= 4) return 5;   // 5% desconto
+    if (itemCount >= 2) return 3;   // 3% desconto
+    return 0;
+}
+
 export function formatPrice(value: number): string {
     return new Intl.NumberFormat('pt-BR', {
         style: 'currency',

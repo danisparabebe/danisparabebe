@@ -100,11 +100,8 @@ export async function POST(request: Request) {
             return acc + (rid.startsWith('custom-') ? it.quantity : 0);
         }, 0);
 
-        let kitDiscountPct = 0;
-        if (customItemsCount >= 10) kitDiscountPct = 20;
-        else if (customItemsCount >= 6) kitDiscountPct = 15;
-        else if (customItemsCount >= 4) kitDiscountPct = 10;
-        else if (customItemsCount >= 2) kitDiscountPct = 5;
+        const { getKitDiscountPercentage } = require('@/lib/pricing');
+        const kitDiscountPct = getKitDiscountPercentage(customItemsCount);
 
         for (const item of items) {
             let authenticPrice = 0;

@@ -134,7 +134,7 @@ export function ProductPersonalizationModal({
                             <textarea
                                 value={observations}
                                 onChange={(e) => setObservations(e.target.value)}
-                                placeholder="Algum detalhe especial?"
+                                placeholder="Ex: Quero o kit sem os laços..."
                                 rows={3}
                                 className="w-full px-4 py-2 rounded-lg border border-line focus:ring-2 focus:ring-sage-green outline-none transition-all resize-none"
                             />
