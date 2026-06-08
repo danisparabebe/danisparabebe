@@ -45,6 +45,12 @@ const nextConfig: NextConfig = {
     '*': ['./Catálogo/**', './Bordados/**', './public/Catálogo/**'],
   },
   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.googleusercontent.com',
+      },
+    ],
     localPatterns: [
       {
         pathname: '/**',

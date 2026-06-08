@@ -151,7 +151,7 @@ function ContaContent() {
                         {/* Perfil Header */}
                         <div className="bg-white p-6 rounded-[24px] shadow-sm border border-line mb-6 flex flex-col items-center text-center">
                             {user.photoURL ? (
-                                <img src={user.photoURL} alt="Foto de Perfil" className="w-20 h-20 rounded-full border-4 border-sage-green/10 mb-4" />
+                                <img src={user.photoURL} referrerPolicy="no-referrer" alt="Foto de Perfil" className="w-20 h-20 rounded-full border-4 border-sage-green/10 mb-4" />
                             ) : (
                                 <div className="w-20 h-20 rounded-full bg-sage-green text-white flex items-center justify-center text-2xl font-bold font-heading mb-4">
                                     {user.displayName?.charAt(0) || 'U'}

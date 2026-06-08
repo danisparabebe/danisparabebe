@@ -220,7 +220,7 @@ export function Header() {
                                 <>
                                     <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1 sm:p-2 flex items-center gap-2 hover:scale-105 transition-all outline-none">
                                         {user.photoURL ? (
-                                            <img src={user.photoURL} alt="Minha Conta" className="h-6 w-6 sm:h-7 sm:w-7 rounded-full border-2 border-sage-green/20 shadow-sm" />
+                                            <img src={user.photoURL} referrerPolicy="no-referrer" alt="Minha Conta" className="h-6 w-6 sm:h-7 sm:w-7 rounded-full border-2 border-sage-green/20 shadow-sm" />
                                         ) : (
                                             <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-sage-green text-white flex items-center justify-center font-bold text-xs">
                                                 {user.displayName?.charAt(0).toUpperCase() || 'U'}
