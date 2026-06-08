@@ -517,26 +517,26 @@ export default function GestaoFotosPage() {
             
             let newP = { ...p, [field]: value };
             
-            const STRIPE_CARD_PCT = 0.085;
-            const STRIPE_PIX_PCT = 0.0199;
-            const STRIPE_FIXED = 0.39;
+            const IP_CARD_PCT = 0.0315;
+            const IP_PIX_PCT = 0;
+            const IP_FIXED = 0;
             
             const gross = field === 'originalPriceFull' ? value : (newP.originalPriceFull || newP.priceFull || 0);
 
             if (field === 'netValue') {
-                newP.priceFull = Math.ceil((value / (1 - STRIPE_CARD_PCT)) + STRIPE_FIXED);
-                newP.pixPrice = Math.ceil(value / (1 - STRIPE_PIX_PCT));
+                newP.priceFull = Math.ceil((value / (1 - IP_CARD_PCT)) + IP_FIXED);
+                newP.pixPrice = Math.ceil(value / (1 - IP_PIX_PCT || 1));
                 newP.discountPct = gross > 0 ? Math.round(((gross - newP.priceFull) / gross) * 100) : 0;
             } 
             else if (field === 'priceFull') { 
-                newP.netValue = (value - STRIPE_FIXED) * (1 - STRIPE_CARD_PCT);
-                newP.pixPrice = Math.ceil((newP.netValue > 0 ? newP.netValue : 0) / (1 - STRIPE_PIX_PCT));
+                newP.netValue = (value - IP_FIXED) * (1 - IP_CARD_PCT);
+                newP.pixPrice = Math.ceil((newP.netValue > 0 ? newP.netValue : 0) / (1 - IP_PIX_PCT || 1));
                 newP.discountPct = gross > 0 ? Math.round(((gross - value) / gross) * 100) : 0;
             }
             else if (field === 'discountPct') {
                 newP.priceFull = Math.ceil(gross * (1 - (value / 100)));
-                newP.netValue = (newP.priceFull - STRIPE_FIXED) * (1 - STRIPE_CARD_PCT);
-                newP.pixPrice = Math.ceil((newP.netValue > 0 ? newP.netValue : 0) / (1 - STRIPE_PIX_PCT));
+                newP.netValue = (newP.priceFull - IP_FIXED) * (1 - IP_CARD_PCT);
+                newP.pixPrice = Math.ceil((newP.netValue > 0 ? newP.netValue : 0) / (1 - IP_PIX_PCT || 1));
             }
             else if (field === 'originalPriceFull') {
                 newP.discountPct = value > 0 ? Math.round(((value - newP.priceFull) / value) * 100) : 0;
@@ -1296,7 +1296,7 @@ export default function GestaoFotosPage() {
                                 <div className="bg-blue-50/50 border border-blue-100 p-4 rounded-xl flex gap-3 text-blue-800 shadow-sm">
                                     <ShieldCheck className="w-5 h-5 shrink-0 text-blue-600 mt-0.5" />
                                     <div className="text-sm font-medium leading-relaxed">
-                                        <strong>Inteligência Automática:</strong> Altere os valores na coluna "Valor Líquido Desejado". O sistema calcula as taxas da Stripe na hora e mostra quanto ficará o valor Bruto final para o cliente. 
+                                        <strong>Inteligência Automática:</strong> Altere os valores na coluna &quot;Valor Líquido Desejado&quot;. O sistema calcula as taxas da InfinitePay na hora (Pix 0% · Cartão 3,15%) e mostra quanto ficará o valor Bruto final para o cliente. 
                                         Ao salvar, todos os Kits compostos por estas peças serão reajustados instantaneamente.
                                     </div>
                                 </div>
@@ -1313,13 +1313,13 @@ export default function GestaoFotosPage() {
                                         {Object.entries(unitPrices).map(([key, netValue]) => {
                                             const typeLabel = TYPES.find(t => t.value === key)?.label || key;
                                             
-                                            // Realtime Math
-                                            const STRIPE_CARD_PCT = 0.085;
-                                            const STRIPE_PIX_PCT = 0.0199;
-                                            const STRIPE_FIXED = 0.39;
+                                            // Realtime Math — InfinitePay (faixa até R$20k/mês)
+                                            const IP_CARD_PCT = 0.0315;
+                                            const IP_PIX_PCT = 0;
+                                            const IP_FIXED = 0;
                                             
-                                            const pPix = Math.ceil(netValue / (1 - STRIPE_PIX_PCT));
-                                            const pCard = Math.ceil((netValue / (1 - STRIPE_CARD_PCT)) + STRIPE_FIXED);
+                                            const pPix = IP_PIX_PCT > 0 ? Math.ceil(netValue / (1 - IP_PIX_PCT)) : netValue;
+                                            const pCard = Math.ceil((netValue / (1 - IP_CARD_PCT)) + IP_FIXED);
 
                                             return (
                                                 <div key={key} className="grid grid-cols-[2.5fr_1.5fr_1.5fr_1.5fr] gap-4 p-4 items-center hover:bg-gray-50/50 transition-colors">
