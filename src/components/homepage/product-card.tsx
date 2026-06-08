@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
@@ -27,8 +27,11 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
     const { addItem, openCart } = useCartStore();
     const { toggle, isFavorite } = useFavoritesStore();
     const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
+    const [hasMounted, setHasMounted] = useState(false);
+
+    useEffect(() => { setHasMounted(true); }, []);
     
-    const fav = isFavorite(id);
+    const fav = hasMounted && isFavorite(id);
 
     const handleConfirmPersonalization = (data: any) => {
         setIsPersonalizationOpen(false);
