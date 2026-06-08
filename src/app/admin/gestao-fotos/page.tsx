@@ -1720,8 +1720,8 @@ const MemoizedProductCard = React.memo(function MemoizedProductCard({ product, i
                             <div className="h-px bg-indigo-200/50 my-1" />
                             <div className="flex justify-between items-center" title="Valor líquido exato programado na aba de Precificação.">
                                 <span className="text-[10px] font-bold uppercase text-emerald-600">VOCÊ RECEBE (-):</span>
-                                {/* User explicitly requests to use the calculated precise netValue instead of localized inaccurate math */}
-                                <span className="text-[13px] font-black text-emerald-700 tabular-nums">R$ {(product.netValue || ((product.pixPrice || 0) * (1 - 0.0199))).toFixed(2)}</span>
+                                {/* InfinitePay Pix = 0%, so pixPrice = netValue */}
+                                <span className="text-[13px] font-black text-emerald-700 tabular-nums">R$ {(product.netValue || product.pixPrice || 0).toFixed(2)}</span>
                             </div>
                         </div>
 

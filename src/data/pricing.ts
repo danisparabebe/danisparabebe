@@ -5,10 +5,15 @@
  * O sistema embutirá as taxas (Cartão/PIX) no preço bruto final.
  */
 
-// ─── TAXAS GATEWAY (STRIPE) ──────────────────────────────────
-export const STRIPE_CARD_PCT = 0.085;   // ~8.5% no cartão (3x sem juros: 4% base + ~4.5% antecipação parcelamento)
-export const STRIPE_PIX_PCT = 0.0199;   // 1.99% no PIX
-export const STRIPE_FIXED = 0.39;       // R$ 0,39 fixo por transação
+// ─── TAXAS GATEWAY (INFINITEPAY — faixa até R$20k/mês) ──────
+export const IP_CARD_PCT = 0.0315;   // 3.15% no cartão crédito à vista
+export const IP_PIX_PCT = 0;         // 0% no PIX (grátis!)
+export const IP_FIXED = 0;           // R$ 0,00 — sem tarifa fixa
+
+// Aliases legados para não quebrar imports externos
+export const STRIPE_CARD_PCT = IP_CARD_PCT;
+export const STRIPE_PIX_PCT = IP_PIX_PCT;
+export const STRIPE_FIXED = IP_FIXED;
 
 import { UNIT_PRICES_NET, KIT_PRICES_NET } from './pricing-data';
 
@@ -16,17 +21,17 @@ import { UNIT_PRICES_NET, KIT_PRICES_NET } from './pricing-data';
 
 export function calculateGrossCard(netValue: number): number {
     if (netValue <= 0) return 0;
-    // Líquido / (1 - 5%) + 0.39 -> e arredonda para cima para garantir o valor
-    const raw = (netValue / (1 - STRIPE_CARD_PCT)) + STRIPE_FIXED;
-    return Math.ceil(raw); // Preços redondos, ex: R$ 56,00
+    // Líquido / (1 - 3.15%) → arredonda para cima
+    const raw = (netValue / (1 - IP_CARD_PCT)) + IP_FIXED;
+    return Math.ceil(raw);
 }
 
 export function calculateGrossPix(netValue: number): number {
     if (netValue <= 0) return 0;
-    // Líquido / (1 - 1.99%)
-    const raw = netValue / (1 - STRIPE_PIX_PCT);
-    return Math.ceil(raw);
+    // PIX é gratuito na InfinitePay — cliente paga o valor líquido
+    return netValue;
 }
+
 
 // ─── FUNÇÕES AUXILIARES ──────────────────────────────────────
 
