@@ -83,6 +83,7 @@ export async function POST() {
             product.pixPrice = pricing.pixPrice;
             product.pixDiscountPct = pricing.pixDiscountPct;
             product.discountPct = pricing.discountPct;
+            product.netValue = pricing.netValue;
 
             updatedCount++;
         }

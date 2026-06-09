@@ -137,6 +137,7 @@ export default function GestaoFotosPage() {
             });
             if (!res.ok) throw new Error("Erro no servidor");
             toast.success("Custos atualizados e kits reprocessados com sucesso! 🚀", { id: 'save-prices' });
+            await fetchMvp();
         } catch (e: any) {
             toast.error("Falha ao salvar. Tente novamente.", { id: 'save-prices' });
         } finally {

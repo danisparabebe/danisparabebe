@@ -1,6 +1,6 @@
 // PREÇOS LÍQUIDOS AVULSOS
 export const UNIT_PRICES_NET: Record<string, number> = {
-    "FRP": 40,
+    "FRP": 42,
     "FRP_FRU": 42,
     "FRM": 46,
     "FRG": 55,
