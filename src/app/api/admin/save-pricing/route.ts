@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { revalidatePath } from 'next/cache';
+import { performReprice } from '../reprice/route';
 
 export async function POST(req: Request) {
     try {
@@ -29,13 +30,12 @@ export const KIT_PRICES_NET: Record<string, number> = ${JSON.stringify(kitPrices
         fs.writeFileSync(filePath, code, 'utf8');
 
         // Immediately trigger the reprice script to update all kits with the new part costs
-        // Pass the new prices to the reprice route so it bypasses Next.js stale imports cache
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-        await fetch(`${baseUrl}/api/admin/reprice`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ unitPrices, kitPrices })
-        }).catch(err => console.error("Auto-reprice after save-pricing failed:", err));
+        // We call it directly to avoid Next.js dev server fetch deadlocks
+        try {
+            await performReprice(unitPrices, kitPrices);
+        } catch (err) {
+            console.error("Auto-reprice after save-pricing failed:", err);
+        }
 
         revalidatePath('/admin/precificacao');
 
