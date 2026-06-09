@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { productControl } from '@/data/product-control';
 import { getProductPricing } from '@/data/pricing';
-import { UNIT_PRICES_NET } from '@/data/pricing-data';
+import { UNIT_PRICES_NET, KIT_PRICES_NET } from '@/data/pricing-data';
 import { KIT_RECIPES } from '@/data/admin-options';
 
 /**
@@ -20,14 +20,24 @@ import { KIT_RECIPES } from '@/data/admin-options';
  * Quando a composição é resolvida, atualiza o features com códigos reais
  * para que futuras execuções funcionem diretamente na camada 1.
  */
-export async function POST() {
+export async function POST(req: Request) {
     try {
+        let reqData: any = {};
+        try {
+            reqData = await req.json();
+        } catch (e) {
+            // Body is empty or invalid JSON, ignore
+        }
+
+        const customUnitPrices = reqData.unitPrices || UNIT_PRICES_NET;
+        const customKitPrices = reqData.kitPrices || KIT_PRICES_NET;
+
         const filePath = path.join(process.cwd(), 'src', 'data', 'product-control.ts');
         let fileContent = fs.readFileSync(filePath, 'utf8');
 
         let updatedCount = 0;
         let fixedFeatures = 0;
-        const validTypes = new Set(Object.keys(UNIT_PRICES_NET));
+        const validTypes = new Set(Object.keys(customUnitPrices));
 
         // Helper: tenta encontrar uma receita de kit apenas se o nome for exato
         function findRecipeMatch(searchTexts: string[]): typeof KIT_RECIPES[number] | null {
@@ -75,7 +85,7 @@ export async function POST() {
             }
 
             // Calculo da precificação inteligente
-            const pricing = getProductPricing(composition, product.name);
+            const pricing = getProductPricing(composition, product.name, false, customUnitPrices, customKitPrices);
 
             // Directly modify the object in memory
             product.priceFull = pricing.priceFull;

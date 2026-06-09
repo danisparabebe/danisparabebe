@@ -38,22 +38,29 @@ export function calculateGrossPix(netValue: number): number {
 /**
  * Calcula o preço líquido bruto (soma dos avulsos líquidos).
  */
-export function calculateBrutoNetPrice(composition: { type: string; qty: number }[], hasFrufru: boolean = false): number {
+export function calculateBrutoNetPrice(
+    composition: { type: string; qty: number }[],
+    hasFrufru: boolean = false,
+    unitPricesNet: Record<string, number> = UNIT_PRICES_NET
+): number {
     return composition.reduce((total, item) => {
         let typeKey = item.type;
         if (hasFrufru && typeKey === 'FRP') typeKey = 'FRP_FRU';
         if (hasFrufru && typeKey === 'FRG') typeKey = 'FRG_FRU';
 
-        const unitPriceNet = UNIT_PRICES_NET[typeKey] || 0;
+        const unitPriceNet = unitPricesNet[typeKey] || 0;
         return total + (unitPriceNet * item.qty);
     }, 0);
 }
 
-export function getKitPriceNet(kitName: string): number | null {
-    if (KIT_PRICES_NET[kitName] !== undefined) return KIT_PRICES_NET[kitName];
-    for (const key of Object.keys(KIT_PRICES_NET)) {
+export function getKitPriceNet(
+    kitName: string,
+    kitPricesNet: Record<string, number> = KIT_PRICES_NET
+): number | null {
+    if (kitPricesNet[kitName] !== undefined) return kitPricesNet[kitName];
+    for (const key of Object.keys(kitPricesNet)) {
         if (kitName.toLowerCase().includes(key.toLowerCase())) {
-            return KIT_PRICES_NET[key];
+            return kitPricesNet[key];
         }
     }
     return null;
@@ -63,7 +70,10 @@ export function getKitPriceNet(kitName: string): number | null {
  * Identify manual kit discounts strictly via mathematical exact composition!
  * ZERO reliance on the typed commercial name.
  */
-export function getKitPriceByComposition(composition: { type: string; qty: number }[]): number | null {
+export function getKitPriceByComposition(
+    composition: { type: string; qty: number }[],
+    kitPricesNet: Record<string, number> = KIT_PRICES_NET
+): number | null {
     // Helper to get piece counts regardless of fru-fru modifier
     const getQty = (t: string) => composition.find(c => c.type === t || c.type === `${t}_FRU`)?.qty || 0;
     
@@ -74,12 +84,12 @@ export function getKitPriceByComposition(composition: { type: string; qty: numbe
 
     // Kit Manta Default Recipe = exactly 3 pieces (1x MNT, 1x FRG, 1x FRP)
     if (totalPieces === 3 && mnt === 1 && frg === 1 && frp === 1) {
-        return KIT_PRICES_NET["Kit Manta"] || null;
+        return kitPricesNet["Kit Manta"] || null;
     }
     
     // Kit Fraldas Default Recipe = exactly 2 pieces (1x FRG, 1x FRP)
     if (totalPieces === 2 && frg === 1 && frp === 1) {
-        return KIT_PRICES_NET["Kit Fraldas"] || null;
+        return kitPricesNet["Kit Fraldas"] || null;
     }
 
     return null;
@@ -103,12 +113,14 @@ export interface ProductPricingInfo {
 export function getProductPricing(
     composition: { type: string; qty: number }[],
     productName: string,
-    hasFrufru: boolean = false
+    hasFrufru: boolean = false,
+    unitPricesNet: Record<string, number> = UNIT_PRICES_NET,
+    kitPricesNet: Record<string, number> = KIT_PRICES_NET
 ): ProductPricingInfo {
-    const netSomaAvulsos = calculateBrutoNetPrice(composition, hasFrufru);
+    const netSomaAvulsos = calculateBrutoNetPrice(composition, hasFrufru, unitPricesNet);
     
     // Strict composition match - no fuzzy name guessing!
-    const netKitExactMatch = getKitPriceByComposition(composition);
+    const netKitExactMatch = getKitPriceByComposition(composition, kitPricesNet);
     
     // Se o kit tem Fru-fru, o valor do kit pronto não pode ser o padrão.
     let finalNetValue = netSomaAvulsos;
@@ -123,7 +135,7 @@ export function getProductPricing(
         if (hasFrufru && typeKey === 'FRP') typeKey = 'FRP_FRU';
         if (hasFrufru && typeKey === 'FRG') typeKey = 'FRG_FRU';
 
-        const unitNet = UNIT_PRICES_NET[typeKey] || 0;
+        const unitNet = unitPricesNet[typeKey] || 0;
         return total + (calculateGrossCard(unitNet) * item.qty);
     }, 0);
 
