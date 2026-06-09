@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { revalidatePath } from 'next/cache';
 import { productControl } from '@/data/product-control';
 import { getProductPricing } from '@/data/pricing';
 import { UNIT_PRICES_NET, KIT_PRICES_NET } from '@/data/pricing-data';
@@ -105,6 +106,11 @@ export async function POST(req: Request) {
         fileContent = fileContent.replace(/export const productControl: ManagedProduct\[\] = \[\s*([\s\S]*?)\s*\];/, `export const productControl: ManagedProduct[] = ${newArrStr};`);
 
         fs.writeFileSync(filePath, fileContent, 'utf8');
+
+        // Force Next.js to drop cached pages so the UI updates instantly
+        revalidatePath('/');
+        revalidatePath('/admin/gestao-fotos');
+        revalidatePath('/admin/precificacao');
 
         return NextResponse.json({ 
             success: true, 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: Request) {
     try {
@@ -35,6 +36,8 @@ export const KIT_PRICES_NET: Record<string, number> = ${JSON.stringify(kitPrices
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ unitPrices, kitPrices })
         }).catch(err => console.error("Auto-reprice after save-pricing failed:", err));
+
+        revalidatePath('/admin/precificacao');
 
         return NextResponse.json({ success: true });
     } catch (error: any) {
