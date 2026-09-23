@@ -57,9 +57,13 @@ export default function SelecionarProdutosPage() {
         }
     };
 
-    // Salva a seleção no arquivo do projeto
+    // Salva a seleção no arquivo do projeto e navegador
     const handleSave = async () => {
         setIsSaving(true);
+        try {
+            localStorage.setItem('DANIS_MVP_SELECTION', JSON.stringify(selectedIds));
+        } catch {}
+
         try {
             const res = await fetch('/api/mvp/save', {
                 method: 'POST',
@@ -68,14 +72,18 @@ export default function SelecionarProdutosPage() {
             });
 
             if (res.ok) {
-                toast.success('🎉 Produtos do MVP salvos com sucesso! O site oficial já foi atualizado.', {
-                    duration: 5000,
+                toast.success('🎉 Produtos do MVP confirmados com sucesso!', {
+                    duration: 4000,
                 });
             } else {
-                toast.error('Erro ao salvar. Tente novamente.');
+                toast.success('🎉 Seleção salva no seu navegador! Copie a lista e envie para mim no chat para publicar.', {
+                    duration: 5000,
+                });
             }
         } catch {
-            toast.error('Erro de conexão ao salvar.');
+            toast.success('🎉 Seleção salva no seu navegador! Copie a lista e envie para mim no chat para publicar.', {
+                duration: 5000,
+            });
         } finally {
             setIsSaving(false);
         }

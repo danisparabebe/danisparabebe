@@ -1,31 +1,19 @@
 /**
  * =====================================================================
  * CONFIGURAÇÃO DOS PRODUTOS DO PROTÓTIPO MVP (www.danisparabebe.com.br)
+ * 10 Produtos Selecionados para a Inauguração do Site
  * =====================================================================
- * 
- * Aqui estão os 10 slots reservados para os produtos que você vai selecionar.
- * 
- * Como preencher:
- * Basta substituir as aspas vazias "" pelo código do produto (ex: 'DPB-0001')
- * ou pelo SKU do produto (ex: 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO').
- * 
- * Exemplo quando você escolher:
- *   "DPB-0001", // Monograma Rosé
- *   "DPB-0002", // Safari Militar
- *   ...
- * 
- * Deixados em branco ("") conforme solicitado, prontos para sua seleção!
  */
 
 export const MVP_PRODUCT_SELECTION: string[] = [
-    "", // 1º Produto Selecionado
-    "", // 2º Produto Selecionado
-    "", // 3º Produto Selecionado
-    "", // 4º Produto Selecionado
-    "", // 5º Produto Selecionado
-    "", // 6º Produto Selecionado
-    "", // 7º Produto Selecionado
-    "", // 8º Produto Selecionado
-    "", // 9º Produto Selecionado
-    "", // 10º Produto Selecionado
+    "DPB-0018", // 1. Borboletas Rosé · Kit Manta
+    "DPB-0021", // 2. Borboletas Rosa · Kit Manta
+    "DPB-0001", // 3. Monograma Rosé · Kit Manta
+    "DPB-0027", // 4. Jardim Encantado Lavanda · Kit Manta
+    "DPB-0002", // 5. Safari Militar · Kit Manta
+    "DPB-0041", // 6. Astronauta Marinho · Kit Manta
+    "DPB-0039", // 7. Ursinho Verde Menta · Kit Manta
+    "DPB-0054", // 8. Borboletas Rosa Claro · Kit Fraldas
+    "DPB-0064", // 9. Jardim Encantado Militar · Kit Fraldas
+    "DPB-0015", // 10. Borboletas Rosa · Kit Fraldas
 ];

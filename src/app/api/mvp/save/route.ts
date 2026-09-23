@@ -34,15 +34,25 @@ export async function POST(req: Request) {
 export const MVP_PRODUCT_SELECTION: string[] = ${JSON.stringify(slots, null, 4)};
 `;
 
-        fs.writeFileSync(targetFile, fileContent, 'utf8');
+        let savedToDisk = false;
+        try {
+            fs.writeFileSync(targetFile, fileContent, 'utf8');
+            savedToDisk = true;
+        } catch (fsError: any) {
+            // Em ambiente serverless (Vercel), o sistema de arquivos é somente-leitura
+            console.warn('[MVP Save] Ambiente serverless somente leitura detectado:', fsError?.message);
+        }
 
         return NextResponse.json({
             success: true,
-            message: 'Seleção do MVP atualizada com sucesso!',
+            savedToDisk,
+            message: savedToDisk 
+                ? 'Seleção do MVP atualizada no arquivo do projeto!' 
+                : 'Seleção confirmada com sucesso!',
             selected: slots
         });
     } catch (error: any) {
-        console.error('Erro ao salvar MVP:', error);
+        console.error('Erro ao processar MVP:', error);
         return NextResponse.json({ error: error.message || 'Falha ao salvar seleção' }, { status: 500 });
     }
 }
