@@ -10,27 +10,23 @@ import { getFinalPrice } from '@/lib/utils';
 import { MVP_PRODUCT_SELECTION } from '@/data/mvp-config';
 import { resolveProductId } from '@/lib/short-codes';
 import { isProductAvailable } from '@/lib/mvp';
-import { Sparkles, Star } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
-// Helper function to create the Zipper pattern (Fem/Mas alternated continuously)
+// Helper function to alternate Fem and Mas products
 function getZippedProducts(products: any[], targetLength: number) {
     if (!products || products.length === 0) return [];
     
-    // Split by gender identifier
     const fem = products.filter(p => p.id.startsWith('FEM') || p.category === 'FEM');
     const mas = products.filter(p => p.id.startsWith('MAS') || p.category === 'MAS');
     
-    // If we only have one type or neither, just return standard slice
     if (fem.length === 0 || mas.length === 0) return products.slice(0, targetLength);
     
     const result = [];
     let idx = 0;
     while (result.length < targetLength) {
-        // Grab FEM
-        result.push(fem[idx % fem.length]);
+        if (idx < fem.length) result.push(fem[idx]);
         if (result.length >= targetLength) break;
-        // Grab MAS
-        result.push(mas[idx % mas.length]);
+        if (idx < mas.length) result.push(mas[idx]);
         if (result.length >= targetLength) break;
         idx++;
     }
@@ -40,11 +36,11 @@ function getZippedProducts(products: any[], targetLength: number) {
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-    // 1. Prepare all products with calculated pricing
+    // 1. Prepara todos os produtos com os preços e parcelamentos calculados
     const managedProducts = productControl.map(p => {
         const pixPrice = p.pixPrice || getFinalPrice(p);
         
-        // InfinitePay 3x fee is roughly 7.54% when passing fees to the customer
+        // Taxa InfinitePay 3x
         const realInstallment3x = (pixPrice * 1.0754) / 3;
         const available = isProductAvailable(p.id) || isProductAvailable(p.shortCode || '');
 
@@ -66,79 +62,44 @@ export default async function HomePage() {
         };
     });
 
-    // Helper map for quick lookup
     const productMap = new Map(managedProducts.map(p => [p.id, p]));
     const productByCodeMap = new Map(managedProducts.map(p => [p.shortCode || '', p]));
 
-    // --- CURATED HERO LISTS (Os 2 Heros originais mantidos intactos) ---
-    const supremoIds = [
-        "FEM-KIT-BOR-RSA-BAB-RSA-R_RSA_01",
-        "FEM-KIT-JDE-LIL-BAB-LIL-R_01",
-        "FEM-FRP-BOR-RSE-BAB-RSE_01",
-        "FEM-FRP-BOR-RSA-BAB-RSA-R_01",
-        "FEM-KIT-BAI-LIL-BAB-LIL-R_01",
-        "MAS-KIT-SAF-VDM-BAB-VDM_01",
-        "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO"
-    ];
-
-    const allProductsArray = [...managedProducts];
-    const maisVendidos = allProductsArray.filter(p => p.tags?.some(t => t.toLowerCase().includes('vendid') || t.toLowerCase().includes('bestseller')));
-    const presentes = allProductsArray.filter(p => p.tags?.some(t => t.toLowerCase().includes('present') || t.toLowerCase().includes('benef') || t.toLowerCase().includes('custo')));
-    const supremos = supremoIds.map(id => productMap.get(id)).filter(Boolean) as typeof managedProducts;
-
-    const heroLeftSource = maisVendidos.length > 0 ? maisVendidos : supremos.slice(0, 8); 
-    let heroRightSource = presentes.length > 0 ? presentes : supremos.slice(4, 12);
-    
-    // De-duplication: Ensure Hero 2 doesn't show identical first items as Hero 1
-    const leftIds = new Set(heroLeftSource.map((p: any) => p.id));
-    const distinctRight = heroRightSource.filter((p: any) => !leftIds.has(p.id));
-    if (distinctRight.length >= 2) { 
-        heroRightSource = distinctRight; 
-    }
-    
-    // Split for the Dual Carousel Hero applying the Zipper Logic with limit 12
-    const heroLeftSlides = getZippedProducts(heroLeftSource, 12).map((p) => ({
-        name: p.name,
-        image: p.image,
-        link: `/produto/${p.shortCode || p.id}`,
-        isHot: p.isHot || false
-    }));
-
-    const heroRightSlides = getZippedProducts(heroRightSource, 12).map((p) => ({
-        name: p.name,
-        image: p.image,
-        link: `/produto/${p.shortCode || p.id}`,
-        isHot: p.isHot || false
-    }));
-
-    // --- SEÇÃO DE BAIXO: OS ~10 PRODUTOS DO MVP (DEIXADOS EM BRANCO PARA SELEÇÃO) ---
-    // Mapeia os 10 slots configurados em mvp-config.ts
-    const mvpProducts = MVP_PRODUCT_SELECTION.slice(0, 10).map((slotInput, idx) => {
-        const trimmed = slotInput?.trim();
-        if (trimmed) {
-            const resolvedId = resolveProductId(trimmed);
-            const found = productMap.get(resolvedId) || productMap.get(trimmed) || productByCodeMap.get(trimmed);
-            if (found) {
-                return {
-                    ...found,
-                    comingSoon: false,
-                    badge: found.badge || 'Destaque',
-                };
-            }
+    // 2. Extrai exatamente os 10 produtos selecionados do MVP
+    const mvpProducts = MVP_PRODUCT_SELECTION.map((code) => {
+        const trimmed = code.trim();
+        const resolvedId = resolveProductId(trimmed);
+        const found = productMap.get(resolvedId) || productMap.get(trimmed) || productByCodeMap.get(trimmed);
+        if (found) {
+            return {
+                ...found,
+                comingSoon: false, // 100% disponível no MVP
+                badge: found.badge || 'Destaque',
+            };
         }
+        return null;
+    }).filter(Boolean) as typeof managedProducts;
 
-        // Slot em branco aguardando seleção da Dani
-        return {
-            id: `slot-mvp-${idx + 1}`,
-            shortCode: `SLOT-${idx + 1}`,
-            name: `Produto Selecionado #${idx + 1}`,
-            category: 'Em Seleção',
-            price: 0,
-            image: '/Logos/Logomarca%20Rose.png',
-            badge: 'Em Breve',
-            comingSoon: true,
-        };
-    });
+    // 3. HERO ESQUERDO ("Mais Vendidos"): Filtra os Kits Manta dentre os 10 produtos do MVP
+    const kitMantaProducts = mvpProducts.filter(p => p.name.toLowerCase().includes('manta'));
+    const heroLeftSlides = getZippedProducts(kitMantaProducts, kitMantaProducts.length).map((p) => ({
+        name: p.name,
+        image: p.image,
+        link: `/produto/${p.shortCode || p.id}`,
+        isHot: p.isHot || false
+    }));
+
+    // 4. HERO DIREITO ("Ideal para Presentes"): Filtra os Kits Fraldas dentre os 10 produtos do MVP
+    const kitFraldasProducts = mvpProducts.filter(p => p.name.toLowerCase().includes('fralda'));
+    const heroRightSlides = getZippedProducts(kitFraldasProducts, kitFraldasProducts.length).map((p) => ({
+        name: p.name,
+        image: p.image,
+        link: `/produto/${p.shortCode || p.id}`,
+        isHot: p.isHot || false
+    }));
+
+    // 5. GRADE INFERIOR: Exatamente os 10 produtos do MVP ordenados do MENOR para o MAIOR preço (5 em cima e 5 embaixo)
+    const sortedMvpProducts = [...mvpProducts].sort((a, b) => a.price - b.price);
 
     return (
         <div className="min-h-screen">
@@ -147,16 +108,16 @@ export default async function HomePage() {
             <Navigation />
 
             <main className="pb-20">
-                {/* Hero Section — Dual Carousel (mantidos os dois heros, um de cada lado como está) */}
+                {/* Hero Section — Carrosséis Duplos com os produtos dos 10 kits MVP */}
                 <HeroGrid
                     leftSlides={heroLeftSlides}
                     rightSlides={heroRightSlides}
                     leftTitle="Mais Vendidos"
-                    rightTitle="Presentes Perfeitos"
+                    rightTitle="Ideal para Presentes"
                 />
 
-                {/* --- SEÇÃO DE BAIXO: OS 10 PRODUTOS SELECIONADOS DO MVP --- */}
-                <div className="mt-16 sm:mt-20">
+                {/* Grade com os 10 produtos do MVP (5 em cima e 5 embaixo, do menor para o maior valor) */}
+                <div className="mt-14 sm:mt-18">
                     <ProductGrid
                         title={
                             <span className="flex items-center justify-center gap-2">
@@ -164,11 +125,12 @@ export default async function HomePage() {
                                 Coleção de Inauguração · Os Escolhidos
                             </span>
                         }
-                        products={mvpProducts}
+                        products={sortedMvpProducts}
+                        columns={5}
                     />
                 </div>
 
-                {/* --- INTEGRAÇÃO PROVA SOCIAL INSTAGRAM 50K (mantida intacta) --- */}
+                {/* Seção de Prova Social com Instagram 50K mantida intacta */}
                 <div className="mt-16 sm:mt-24 relative">
                      <div className="absolute inset-0 bg-gradient-to-b from-warm-stone/30 to-transparent -z-10 h-[500px]" />
                      <SocialProof />
