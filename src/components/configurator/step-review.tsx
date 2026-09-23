@@ -394,19 +394,44 @@ export function StepReview() {
                                     )}
                                 </div>
 
-                                {(addressLoaded || (formData.cep && formData.cep.replace(/\D/g, '').length === 8)) && (
-                                    <div className="grid grid-cols-1 gap-3">
-                                        <input type="text" name="street" value={formData.street || ''} onChange={handleInput} placeholder="Rua" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
-                                        <div className="grid grid-cols-3 gap-3">
-                                            <input type="text" name="number" value={formData.number || ''} onChange={handleInput} placeholder="Número" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
-                                            <input type="text" name="complement" value={formData.complement || ''} onChange={handleInput} placeholder="Complemento" className="col-span-2 w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <input type="text" name="neighborhood" value={formData.neighborhood || ''} onChange={handleInput} placeholder="Bairro" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
-                                            <div className="flex gap-2">
-                                                <input type="text" name="city" value={formData.city || ''} onChange={handleInput} placeholder="Cidade" className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" />
-                                                <input type="text" name="state" value={formData.state || ''} onChange={handleInput} placeholder="UF" maxLength={2} className="w-16 text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937] uppercase text-center" />
+                                {(addressLoaded || (formData.cep && formData.cep.replace(/\D/g, '').length === 8) || formData.street) && (
+                                    <div className="space-y-3 animate-fadeIn">
+                                        {/* Card do Endereço Encontrado */}
+                                        <div className="bg-[#faf9f7] border border-black/10 rounded-lg p-2.5 text-xs">
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <p className="text-[9px] font-bold text-slate uppercase tracking-wider">Endereço Encontrado</p>
+                                                    <p className="font-bold text-[#1f2937] text-xs mt-0.5">{formData.street || 'Logradouro não mapeado'}</p>
+                                                    <p className="text-[11px] text-slate font-medium">{formData.neighborhood} — {formData.city}/{formData.state}</p>
+                                                </div>
+                                                <button 
+                                                    type="button" 
+                                                    onClick={() => { setAddressLoaded(false); setFormData(p => ({ ...p, street: '', neighborhood: '', city: '', state: '' })); }} 
+                                                    className="text-[10px] text-dusty-rose underline hover:text-[#1f2937] font-medium"
+                                                >
+                                                    Alterar
+                                                </button>
                                             </div>
+                                        </div>
+
+                                        {/* Campos: Número e Complemento */}
+                                        <div className="grid grid-cols-3 gap-3">
+                                            <input 
+                                                type="text" 
+                                                name="number" 
+                                                value={formData.number || ''} 
+                                                onChange={handleInput} 
+                                                placeholder="Número *" 
+                                                className="w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" 
+                                            />
+                                            <input 
+                                                type="text" 
+                                                name="complement" 
+                                                value={formData.complement || ''} 
+                                                onChange={handleInput} 
+                                                placeholder="Complemento (Opcional)" 
+                                                className="col-span-2 w-full text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-3 outline-none focus:border-sage-green focus:ring-2 focus:ring-sage-green/20 transition-all font-medium text-[#1f2937]" 
+                                            />
                                         </div>
                                     </div>
                                 )}

@@ -7,6 +7,7 @@ import { ProductClientView } from './product-client-view';
 import { productControl } from '@/data/product-control';
 import { getFinalPrice } from '@/lib/utils';
 import { resolveProductId, getShortCode } from '@/lib/short-codes';
+import { isProductAvailable } from '@/lib/mvp';
 
 interface PageProps {
     params: {
@@ -22,6 +23,7 @@ async function getProduct(rawId: string) {
     const managedProduct = productControl.find(p => p.id === id);
     if (managedProduct) {
         const pixPrice = managedProduct.pixPrice || getFinalPrice(managedProduct);
+        const available = isProductAvailable(managedProduct.id) || isProductAvailable(managedProduct.shortCode || '');
         return {
             id: managedProduct.id,
             name: managedProduct.name,
@@ -34,7 +36,8 @@ async function getProduct(rawId: string) {
             description: managedProduct.description,
             discountPct: managedProduct.discountPct,
             features: managedProduct.features || [],
-            metadata: { type: (managedProduct.category || 'Geral').toUpperCase() }
+            metadata: { type: (managedProduct.category || 'Geral').toUpperCase() },
+            comingSoon: !available,
         };
     }
 

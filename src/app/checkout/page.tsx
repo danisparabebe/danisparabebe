@@ -18,6 +18,7 @@ export default function CheckoutPage() {
         street: '', number: '', complement: '',
         neighborhood: '', city: '', state: ''
     });
+    const [addressLoaded, setAddressLoaded] = useState(false);
     const [isLoadingAddress, setIsLoadingAddress] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
@@ -31,8 +32,7 @@ export default function CheckoutPage() {
             try {
                 const data = JSON.parse(cached);
                 setFormData(data);
-                if (data.street) setIsLoadingAddress(false); // just a flag, we already have it
-                // Note: standard checkout doesn't compute shipping locally, so we don't need handleCepLookup
+                if (data.street) setAddressLoaded(true);
             } catch (e) {}
         }
     }, []);
@@ -48,31 +48,46 @@ export default function CheckoutPage() {
         localStorage.setItem('checkout_form', JSON.stringify(newData));
     };
 
-    const handleCepBlur = async () => {
-        const cep = formData.cep.replace(/\D/g, '');
-        if (cep.length === 8) {
+    const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 5) v = `${v.slice(0, 5)}-${v.slice(5, 8)}`;
+        
+        const newData = { ...formData, cep: v };
+        setFormData(newData);
+        setErrors(prev => ({ ...prev, cep: false }));
+        localStorage.setItem('checkout_form', JSON.stringify(newData));
+
+        const raw = v.replace(/\D/g, '');
+        if (raw.length === 8) {
             setIsLoadingAddress(true);
             try {
-                const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
                 const data = await res.json();
                 if (!data.erro) {
                     const addressAdd = {
-                        street: data.logradouro,
-                        neighborhood: data.bairro,
-                        city: data.localidade,
-                        state: data.uf
+                        street: data.logradouro || '',
+                        neighborhood: data.bairro || '',
+                        city: data.localidade || '',
+                        state: data.uf || ''
                     };
                     setFormData(prev => {
                         const next = { ...prev, ...addressAdd };
                         localStorage.setItem('checkout_form', JSON.stringify(next));
                         return next;
                     });
+                    setAddressLoaded(true);
                 } else {
-                    toast.error('CEP nao encontrado.');
+                    toast.error('CEP não encontrado.');
+                    setAddressLoaded(false);
                 }
-            } catch { /* silent */ } finally {
+            } catch {
+                toast.error('Erro ao buscar CEP.');
+                setAddressLoaded(false);
+            } finally {
                 setIsLoadingAddress(false);
             }
+        } else {
+            setAddressLoaded(false);
         }
     };
 
@@ -250,58 +265,105 @@ export default function CheckoutPage() {
                             </div>
                             <div className="space-y-1">
                                 <label className={`${labelClass} ${errors.cep ? 'text-red-500' : ''}`}>CEP</label>
-                                <input 
-                                    type="text" name="cep" 
-                                    value={formData.cep} 
-                                    onChange={(e) => {
-                                        let v = e.target.value.replace(/\D/g, '');
-                                        if (v.length > 5) v = `${v.slice(0, 5)}-${v.slice(5, 8)}`;
-                                        const newData = { ...formData, cep: v };
-                                        setFormData(newData);
-                                        setErrors(prev => ({ ...prev, cep: false }));
-                                        localStorage.setItem('checkout_form', JSON.stringify(newData));
-                                    }} 
-                                    onBlur={handleCepBlur} 
-                                    maxLength={9} placeholder="00000-000" className={`${inputClass} ${errors.cep ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
-                                />
+                                <div className="relative">
+                                    <input 
+                                        type="text" name="cep" 
+                                        value={formData.cep} 
+                                        onChange={handleCepChange} 
+                                        maxLength={9} placeholder="00000-000" 
+                                        className={`${inputClass} ${errors.cep ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
+                                    />
+                                    {isLoadingAddress && (
+                                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[10px] text-dusty-rose font-medium">
+                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
-                        {/* Street + Number */}
-                        <div className="grid grid-cols-4 gap-3">
-                            <div className="col-span-3 space-y-1">
-                                <label className={`${labelClass} ${errors.street ? 'text-red-500' : ''}`}>Rua</label>
-                                <input type="text" name="street" value={formData.street} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.street ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                            </div>
-                            <div className="space-y-1">
-                                <label className={`${labelClass} ${errors.number ? 'text-red-500' : ''}`}>N.</label>
-                                <input type="text" name="number" value={formData.number} onChange={handleInput} className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} />
-                            </div>
-                        </div>
+                        {/* Bloco de Endereço Preenchido + Número e Complemento */}
+                        {addressLoaded || formData.street ? (
+                            <div className="space-y-3 pt-1 border-t border-black/5 animate-fadeIn">
+                                {/* Endereço Encontrado */}
+                                <div className="bg-[#faf9f7] border border-black/10 rounded-xl p-3 text-xs space-y-0.5">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate uppercase tracking-wider">Endereço Encontrado</p>
+                                            <p className="font-bold text-charcoal text-xs mt-0.5">{formData.street || 'Logradouro não mapeado'}</p>
+                                            <p className="text-[11px] text-slate font-medium">{formData.neighborhood} — {formData.city}/{formData.state}</p>
+                                        </div>
+                                        <button 
+                                            type="button" 
+                                            onClick={() => { setAddressLoaded(false); setFormData(p => ({ ...p, street: '', neighborhood: '', city: '', state: '' })); }} 
+                                            className="text-[10px] text-dusty-rose underline hover:text-charcoal font-medium"
+                                        >
+                                            Alterar
+                                        </button>
+                                    </div>
+                                </div>
 
-                        {/* Complement + Bairro */}
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="space-y-1">
-                                <label className={labelClass}>Compl. <span className="font-normal text-slate/60">(opc.)</span></label>
-                                <input type="text" name="complement" value={formData.complement} onChange={handleInput} placeholder="Apto, Bloco..." className={inputClass} />
+                                {/* Aba / Campos: Número e Complemento */}
+                                <div className="grid grid-cols-3 gap-3">
+                                    <div className="space-y-1 col-span-1">
+                                        <label className={`${labelClass} ${errors.number ? 'text-red-500' : ''}`}>Número *</label>
+                                        <input 
+                                            type="text" 
+                                            name="number" 
+                                            value={formData.number} 
+                                            onChange={handleInput} 
+                                            placeholder="Ex: 123" 
+                                            className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} 
+                                        />
+                                    </div>
+                                    <div className="space-y-1 col-span-2">
+                                        <label className={labelClass}>Complemento <span className="font-normal text-slate/60">(opcional)</span></label>
+                                        <input 
+                                            type="text" 
+                                            name="complement" 
+                                            value={formData.complement} 
+                                            onChange={handleInput} 
+                                            placeholder="Apto, Bloco, Casa..." 
+                                            className={inputClass} 
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="space-y-1">
-                                <label className={labelClass}>Bairro</label>
-                                <input type="text" name="neighborhood" value={formData.neighborhood} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50`} />
+                        ) : (
+                            /* Preenchimento Manual (caso CEP seja digitado ou alterado) */
+                            <div className="space-y-3">
+                                <div className="grid grid-cols-4 gap-3">
+                                    <div className="col-span-3 space-y-1">
+                                        <label className={`${labelClass} ${errors.street ? 'text-red-500' : ''}`}>Rua</label>
+                                        <input type="text" name="street" value={formData.street} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.street ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className={`${labelClass} ${errors.number ? 'text-red-500' : ''}`}>N.</label>
+                                        <input type="text" name="number" value={formData.number} onChange={handleInput} className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="space-y-1">
+                                        <label className={labelClass}>Compl. <span className="font-normal text-slate/60">(opc.)</span></label>
+                                        <input type="text" name="complement" value={formData.complement} onChange={handleInput} placeholder="Apto, Bloco..." className={inputClass} />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className={labelClass}>Bairro</label>
+                                        <input type="text" name="neighborhood" value={formData.neighborhood} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50`} />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-3">
+                                    <div className="col-span-3 space-y-1">
+                                        <label className={`${labelClass} ${errors.city ? 'text-red-500' : ''}`}>Cidade</label>
+                                        <input type="text" name="city" value={formData.city} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.city ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className={labelClass}>UF</label>
+                                        <input type="text" name="state" value={formData.state} onChange={handleInput} disabled={isLoadingAddress} maxLength={2} placeholder="SP" className={`${inputClass} uppercase disabled:bg-gray-50`} />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        {/* Cidade + Estado */}
-                        <div className="grid grid-cols-4 gap-3">
-                            <div className="col-span-3 space-y-1">
-                                <label className={`${labelClass} ${errors.city ? 'text-red-500' : ''}`}>Cidade</label>
-                                <input type="text" name="city" value={formData.city} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.city ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                            </div>
-                            <div className="space-y-1">
-                                <label className={labelClass}>UF</label>
-                                <input type="text" name="state" value={formData.state} onChange={handleInput} disabled={isLoadingAddress} maxLength={2} placeholder="SP" className={`${inputClass} uppercase disabled:bg-gray-50`} />
-                            </div>
-                        </div>
+                        )}
 
                         {/* Action Buttons - Unified */}
                         <div className="flex flex-col gap-3 mt-2">

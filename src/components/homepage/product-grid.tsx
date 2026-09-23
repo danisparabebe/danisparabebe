@@ -12,6 +12,7 @@ interface Product {
     image: string;
     badge?: string;
     isHot?: boolean;
+    comingSoon?: boolean;
 }
 
 interface ProductGridProps {

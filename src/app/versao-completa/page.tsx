@@ -7,10 +7,8 @@ import { SocialProof } from '@/components/homepage/social-proof';
 import { Footer } from '@/components/homepage/footer';
 import { productControl } from '@/data/product-control';
 import { getFinalPrice } from '@/lib/utils';
-import { MVP_PRODUCT_SELECTION } from '@/data/mvp-config';
-import { resolveProductId } from '@/lib/short-codes';
-import { isProductAvailable } from '@/lib/mvp';
-import { Sparkles, Star } from 'lucide-react';
+import { Heart, Gift, Flame, Gem, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 // Helper function to create the Zipper pattern (Fem/Mas alternated continuously)
 function getZippedProducts(products: any[], targetLength: number) {
@@ -39,14 +37,13 @@ function getZippedProducts(products: any[], targetLength: number) {
 
 export const dynamic = 'force-dynamic';
 
-export default async function HomePage() {
+export default async function VersaoCompletaPage() {
     // 1. Prepare all products with calculated pricing
     const managedProducts = productControl.map(p => {
         const pixPrice = p.pixPrice || getFinalPrice(p);
         
         // InfinitePay 3x fee is roughly 7.54% when passing fees to the customer
         const realInstallment3x = (pixPrice * 1.0754) / 3;
-        const available = isProductAvailable(p.id) || isProductAvailable(p.shortCode || '');
 
         return {
             id: p.id,
@@ -58,19 +55,17 @@ export default async function HomePage() {
             installmentPrice: realInstallment3x,
             installments: 3,
             image: p.images?.[0] ? encodeURI(p.images[0]) : '/Logos/Logomarca%20Rose.png',
-            badge: available ? (p.badge || (p.tags?.includes('oferta') ? 'Oferta' : undefined)) : 'Em Breve',
+            badge: p.badge || (p.tags?.includes('oferta') ? 'Oferta' : undefined),
             gridPosition: p.gridPosition,
             tags: p.tags || [],
-            isHot: p.isHot || false,
-            comingSoon: !available,
+            isHot: p.isHot || false
         };
     });
 
-    // Helper map for quick lookup
+    // Helper map for quick ID lookup
     const productMap = new Map(managedProducts.map(p => [p.id, p]));
-    const productByCodeMap = new Map(managedProducts.map(p => [p.shortCode || '', p]));
 
-    // --- CURATED HERO LISTS (Os 2 Heros originais mantidos intactos) ---
+    // --- USER CURATED LISTS ---
     const supremoIds = [
         "FEM-KIT-BOR-RSA-BAB-RSA-R_RSA_01",
         "FEM-KIT-JDE-LIL-BAB-LIL-R_01",
@@ -81,73 +76,83 @@ export default async function HomePage() {
         "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO"
     ];
 
+    const topzeraIds = [
+        "FEM-KIT-MON-LIL-BAB-LIL_01",
+        "MAS-KIT-URS-ABB-BAB-ABB_03",
+        "MAS-KIT-URS-ABB-BAB-ABB_04",
+        "MAS-KIT-SAF-AZM-BAB-AZM_01",
+        "FEM-KIT-JDE-AMA-BAB-LIL-VDC_01",
+        "FEM-KIT-FLO-RSA-BAB-RSA_03",
+        "FEM-KIT-BOR-RLC-BAB-BCO-RLC_01",
+        "FEM-KIT-FLO-RSA-BAB-RSA_02",
+        "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_02"
+    ];
+
+    const presentesIds = [
+        "MAS-KIT-JDE-VDM-BAB-VDM_01",
+        "MAS-KIT-JDE-ABB-BAB-ABB-R_ABB_01",
+        "FEM-KIT-JDE-LIL-BAB-LIL_02",
+        "FEM-KIT-BOR-RLC-BAB-RLC_02",
+        "FEM-KIT-BAI-VRM-BAB-VRM_02",
+        "FEM-KIT-FLO-LIL-BAB-LIL_06",
+        "FEM-KIT-FLO-RSA-BAB-RSA_02",
+        "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_02"
+    ];
+
+    // Build the arrays safely dynamically from User Tags
     const allProductsArray = [...managedProducts];
+    
     const maisVendidos = allProductsArray.filter(p => p.tags?.some(t => t.toLowerCase().includes('vendid') || t.toLowerCase().includes('bestseller')));
     const presentes = allProductsArray.filter(p => p.tags?.some(t => t.toLowerCase().includes('present') || t.toLowerCase().includes('benef') || t.toLowerCase().includes('custo')));
+    const luxos = allProductsArray.filter(p => p.tags?.some(t => t.toLowerCase().includes('luxo') || t.toLowerCase().includes('premium')) || p.price > 250); 
+    const favoritos = allProductsArray.filter(p => p.tags?.some(t => Math.abs(t.toLowerCase().localeCompare('dia a dia')) < 2 || t.toLowerCase().includes('mãe') || t.toLowerCase().includes('favorit')) || topzeraIds.includes(p.id));
+
+    // Build curated product arrays from ID lists
     const supremos = supremoIds.map(id => productMap.get(id)).filter(Boolean) as typeof managedProducts;
 
+    // Replace 6 with 12 to double the capacity
     const heroLeftSource = maisVendidos.length > 0 ? maisVendidos : supremos.slice(0, 8); 
     let heroRightSource = presentes.length > 0 ? presentes : supremos.slice(4, 12);
     
-    // De-duplication: Ensure Hero 2 doesn't show identical first items as Hero 1
+    // De-duplication: Ensure Hero 2 doesn't show identical first items as Hero 1 just because they share tags
     const leftIds = new Set(heroLeftSource.map((p: any) => p.id));
     const distinctRight = heroRightSource.filter((p: any) => !leftIds.has(p.id));
     if (distinctRight.length >= 2) { 
         heroRightSource = distinctRight; 
     }
     
-    // Split for the Dual Carousel Hero applying the Zipper Logic with limit 12
-    const heroLeftSlides = getZippedProducts(heroLeftSource, 12).map((p) => ({
+    // Split supremos for the Dual Carousel Hero applying the ZIpper Logic with limit 12
+    const heroLeftSlides = getZippedProducts(heroLeftSource, 12).map((p, idx) => ({
         name: p.name,
         image: p.image,
         link: `/produto/${p.shortCode || p.id}`,
         isHot: p.isHot || false
     }));
 
-    const heroRightSlides = getZippedProducts(heroRightSource, 12).map((p) => ({
+    const heroRightSlides = getZippedProducts(heroRightSource, 12).map((p, idx) => ({
         name: p.name,
         image: p.image,
         link: `/produto/${p.shortCode || p.id}`,
         isHot: p.isHot || false
     }));
-
-    // --- SEÇÃO DE BAIXO: OS ~10 PRODUTOS DO MVP (DEIXADOS EM BRANCO PARA SELEÇÃO) ---
-    // Mapeia os 10 slots configurados em mvp-config.ts
-    const mvpProducts = MVP_PRODUCT_SELECTION.slice(0, 10).map((slotInput, idx) => {
-        const trimmed = slotInput?.trim();
-        if (trimmed) {
-            const resolvedId = resolveProductId(trimmed);
-            const found = productMap.get(resolvedId) || productMap.get(trimmed) || productByCodeMap.get(trimmed);
-            if (found) {
-                return {
-                    ...found,
-                    comingSoon: false,
-                    badge: found.badge || 'Destaque',
-                };
-            }
-        }
-
-        // Slot em branco aguardando seleção da Dani
-        return {
-            id: `slot-mvp-${idx + 1}`,
-            shortCode: `SLOT-${idx + 1}`,
-            name: `Produto Selecionado #${idx + 1}`,
-            category: 'Em Seleção',
-            price: 0,
-            image: '/Logos/Logomarca%20Rose.png',
-            badge: 'Em Breve',
-            comingSoon: true,
-        };
-    });
 
     return (
         <div className="min-h-screen">
+            {/* Banner Informativo da Versão Completa */}
+            <div className="bg-charcoal text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-sage-green" />
+                <span>Você está visualizando a <strong>Versão Completa</strong> do catálogo Danis Para Bebê.</span>
+                <Link href="/" className="underline text-sage-green hover:text-white ml-2 transition-colors">
+                    Ir para a Loja Oficial
+                </Link>
+            </div>
+
             <TopBar />
             <Header />
             <Navigation />
 
             <main className="pb-20">
-                {/* Hero Section — Dual Carousel (mantidos os dois heros, um de cada lado como está) */}
+                {/* Hero Section — Dual Carousel with Supremos */}
                 <HeroGrid
                     leftSlides={heroLeftSlides}
                     rightSlides={heroRightSlides}
@@ -155,20 +160,37 @@ export default async function HomePage() {
                     rightTitle="Presentes Perfeitos"
                 />
 
-                {/* --- SEÇÃO DE BAIXO: OS 10 PRODUTOS SELECIONADOS DO MVP --- */}
-                <div className="mt-16 sm:mt-20">
-                    <ProductGrid
-                        title={
-                            <span className="flex items-center justify-center gap-2">
-                                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-dusty-rose" />
-                                Coleção de Inauguração · Os Escolhidos
-                            </span>
-                        }
-                        products={mvpProducts}
-                    />
-                </div>
+                {/* --- Grid 1: Luxo e Exclusividade --- */}
+                {luxos.length > 0 && (
+                    <div className="mt-20">
+                        <ProductGrid
+                            title={
+                                <span className="flex items-center justify-center gap-2">
+                                    <Gem className="w-6 h-6 sm:w-8 sm:h-8 text-charcoal/80" />
+                                    Luxo e Exclusividade
+                                </span>
+                            }
+                            products={luxos.slice(0, 8)}
+                        />
+                    </div>
+                )}
 
-                {/* --- INTEGRAÇÃO PROVA SOCIAL INSTAGRAM 50K (mantida intacta) --- */}
+                {/* --- Grid 2: Os Favoritos das Mamães --- */}
+                {favoritos.length > 0 && (
+                    <div className="mt-16 sm:mt-24">
+                        <ProductGrid
+                            title={
+                                <span className="flex items-center justify-center gap-2">
+                                    <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-charcoal/80" />
+                                    Os Favoritos das Mamães
+                                </span>
+                            }
+                            products={favoritos.slice(0, 8)} 
+                        />
+                    </div>
+                )}
+
+                {/* --- INTEGRAÇÃO PROVA SOCIAL INSTAGRAM 50K --- */}
                 <div className="mt-16 sm:mt-24 relative">
                      <div className="absolute inset-0 bg-gradient-to-b from-warm-stone/30 to-transparent -z-10 h-[500px]" />
                      <SocialProof />

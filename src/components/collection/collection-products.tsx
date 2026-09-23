@@ -6,6 +6,7 @@ import { ChevronDown, Filter } from 'lucide-react';
 
 interface Product {
     id: string;
+    shortCode?: string;
     name: string;
     category?: string;
     price: number;
@@ -15,6 +16,7 @@ interface Product {
     badge?: string;
     gender?: 'Menina' | 'Menino' | 'Unissex';
     isHot?: boolean;
+    comingSoon?: boolean;
 }
 
 interface CollectionProductsProps {

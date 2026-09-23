@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
+import { Heart, Clock } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useFavoritesStore } from '@/store/favorites-store';
 import { toast } from 'sonner';
@@ -21,9 +21,10 @@ interface ProductCardProps {
     image: string;
     badge?: string;
     isHot?: boolean;
+    comingSoon?: boolean;
 }
 
-export function ProductCard({ id, shortCode, name, category, price, originalPrice, installmentPrice, installments = 3, image, badge, isHot }: ProductCardProps) {
+export function ProductCard({ id, shortCode, name, category, price, originalPrice, installmentPrice, installments = 3, image, badge, isHot, comingSoon }: ProductCardProps) {
     const { addItem, openCart } = useCartStore();
     const { toggle, isFavorite } = useFavoritesStore();
     const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
@@ -50,6 +51,52 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
 
     const linkHref = `/produto/${shortCode || id}`;
 
+    // --- COMING SOON VARIANT ---
+    if (comingSoon) {
+        return (
+            <div className="group relative flex flex-col h-full">
+                <div className="block">
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] bg-[#FAF9F8] shadow-sm border border-black/5">
+                        <Image
+                            src={image}
+                            alt={name}
+                            fill
+                            className="object-cover grayscale-[30%] opacity-70"
+                        />
+                        {/* Overlay suave */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/20 to-transparent" />
+                        
+                        {/* Badge "Em Breve" */}
+                        <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5">
+                            <div className="bg-charcoal/80 backdrop-blur-sm text-white border border-white/20 px-3 py-1.5 rounded-full text-[10px] tracking-widest uppercase font-semibold shadow-md flex items-center gap-1.5">
+                                <Clock className="w-3 h-3" />
+                                Em Breve
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-3 flex flex-col flex-1 px-1">
+                    {category && <p className="text-[11px] text-slate uppercase tracking-wider font-medium">{category}</p>}
+                    <h3 className="text-sm font-semibold text-charcoal/60 line-clamp-2 min-h-[2.5rem] mt-1 pr-8 leading-snug">{name}</h3>
+                    <div className="space-y-1 mt-auto pt-3">
+                        <div className="text-sm text-charcoal/40">
+                            <span className="font-medium text-[12px]">Preço disponível em breve</span>
+                        </div>
+                    </div>
+                    <button
+                        disabled
+                        className="mt-4 w-full bg-charcoal/10 text-charcoal/40 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase cursor-not-allowed border border-charcoal/5 flex items-center justify-center gap-1.5"
+                    >
+                        <Clock className="w-3.5 h-3.5" />
+                        Em Breve
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    // --- NORMAL VARIANT (unchanged) ---
     return (
         <div className="group relative flex flex-col h-full">
             <Link href={linkHref} className="block" target="_blank">

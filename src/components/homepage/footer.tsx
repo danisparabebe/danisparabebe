@@ -33,6 +33,7 @@ export function Footer({ simple = false }: { simple?: boolean }) {
                             <h3 className="font-heading font-bold text-lg mb-6 text-charcoal">Sobre a Loja</h3>
                             <ul className="space-y-3">
                                 <li><Link href="/quem-somos" className="text-sm text-slate hover:text-sage-green transition-colors">Quem Somos</Link></li>
+                                <li><Link href="/selecionar-produtos" className="text-xs text-slate/60 hover:text-dusty-rose transition-colors">✨ Painel MVP (Escolher 10 Produtos)</Link></li>
                             </ul>
                         </div>
 

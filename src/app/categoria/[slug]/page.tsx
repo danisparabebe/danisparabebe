@@ -1,4 +1,5 @@
 import { productControl } from '@/data/product-control';
+import { isProductAvailable } from '@/lib/mvp';
 import { CollectionProducts } from '@/components/collection/collection-products';
 import { TopBar } from '@/components/homepage/top-bar';
 import { Header } from '@/components/homepage/header';
@@ -51,6 +52,7 @@ export default async function CategoryPage({ params }: PageProps) {
 
     const products = mvpProducts.map(p => {
         const finalPrice = p.priceFull * (1 - (p.discountPct || 0) / 100);
+        const available = isProductAvailable(p.id) || isProductAvailable(p.shortCode || '');
 
         let gender: 'Menina' | 'Menino' | 'Unissex' = 'Unissex';
         if (p.id.startsWith('FEM-') || p.tags?.includes('feminino') || p.tags?.includes('menina')) gender = 'Menina';
@@ -58,14 +60,16 @@ export default async function CategoryPage({ params }: PageProps) {
 
         return {
             id: p.id,
+            shortCode: p.shortCode,
             name: p.name,
             category: p.category,
             price: finalPrice,
             installmentPrice: finalPrice / 3,
             installments: 3,
             image: p.images?.[0] ? encodeURI(p.images[0]) : '/Logos/Logomarca%20Rose.png',
-            badge: p.tags?.includes('oferta') ? 'Oferta' : undefined,
-            gender
+            badge: available ? (p.tags?.includes('oferta') ? 'Oferta' : undefined) : 'Em Breve',
+            gender,
+            comingSoon: !available,
         };
     });
 

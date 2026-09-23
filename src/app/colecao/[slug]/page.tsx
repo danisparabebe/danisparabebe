@@ -1,4 +1,5 @@
 import { productControl } from '@/data/product-control';
+import { isProductAvailable } from '@/lib/mvp';
 import { TopBar } from '@/components/homepage/top-bar';
 import { Header } from '@/components/homepage/header';
 import { Navigation } from '@/components/homepage/navigation';
@@ -33,9 +34,11 @@ async function getCategoryProducts(slug: string) {
         if (isMatch) {
             const pixPrice = metadata.pixPrice || metadata.priceFull * (1 - (metadata.discountPct || 0) / 100);
             const cardPrice = metadata.priceFull;
+            const available = isProductAvailable(metadata.id) || isProductAvailable(metadata.shortCode || '');
 
             products.push({
                 id: metadata.id,
+                shortCode: metadata.shortCode,
                 name: metadata.name,
                 category: metadata.category,
                 price: pixPrice,
@@ -43,8 +46,9 @@ async function getCategoryProducts(slug: string) {
                 installmentPrice: cardPrice / 3,
                 installments: 3,
                 image: metadata.images?.[0] ? encodeURI(metadata.images[0]) : '/Logos/Logomarca%20Rose.png',
-                badge: metadata.badge || (metadata.tags?.includes('oferta') ? 'Oferta' : undefined),
+                badge: available ? (metadata.badge || (metadata.tags?.includes('oferta') ? 'Oferta' : undefined)) : 'Em Breve',
                 isHot: metadata.isHot || false,
+                comingSoon: !available,
                 gender
             });
         }

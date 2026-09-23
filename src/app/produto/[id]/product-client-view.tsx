@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useConfiguratorStore } from '@/store/configurator-store';
 import { useFavoritesStore } from '@/store/favorites-store';
@@ -23,6 +23,7 @@ interface ProductData {
     discountPct: number;
     features?: string[];
     metadata: any;
+    comingSoon?: boolean;
 }
 
 export function ProductClientView({ product }: { product: ProductData }) {
@@ -258,28 +259,48 @@ export function ProductClientView({ product }: { product: ProductData }) {
 
 
                     {/* Buy Actions — directly below description */}
-                    <div className="flex flex-col gap-3">
-                        <button
-                            onClick={() => handleActionClick('checkout')}
-                            className="w-full relative overflow-hidden group/buy bg-sage-green hover:bg-[#9cbd9f] text-charcoal py-3.5 px-6 rounded-xl shadow-[0_6px_20px_rgba(173,206,179,0.4)] hover:shadow-[0_6px_25px_rgba(173,206,179,0.5)] transition-all duration-300 active:scale-[0.98] cursor-pointer flex flex-col items-center justify-center border border-charcoal/5"
-                        >
-                            <div className="flex items-center gap-2 mb-0.5 relative z-10">
-                                <Lock className="w-3 h-3 text-charcoal/80" />
-                                <span className="font-extrabold text-[9px] tracking-widest text-charcoal/80 uppercase">Compra 100% Segura</span>
+                    {product.comingSoon ? (
+                        <div className="flex flex-col gap-3">
+                            <div className="p-4 bg-warm-stone/40 border border-warm-stone-dark/20 rounded-2xl flex items-center gap-3 text-charcoal">
+                                <Clock className="w-5 h-5 text-dusty-rose shrink-0" />
+                                <div>
+                                    <p className="font-bold text-sm">Disponível em Breve! ✨</p>
+                                    <p className="text-xs text-charcoal/70">Este item fará parte dos próximos lançamentos do nosso ateliê. Acompanhe nossas novidades no Instagram!</p>
+                                </div>
                             </div>
-                            <span className="font-extrabold text-lg tracking-tight relative z-10 text-charcoal group-hover/buy:scale-105 transition-transform duration-300 inline-block">QUERO PERSONALIZAR!</span>
-                            <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-30 group-hover/buy:animate-shine" />
-                        </button>
 
-                        <button
-                            onClick={() => handleActionClick('cart')}
-                            className="w-full relative overflow-hidden group/add bg-white border-2 border-charcoal text-charcoal hover:bg-charcoal hover:text-white font-bold py-3 px-6 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] shadow-sm"
-                        >
-                            <ShoppingBag className="w-4 h-4 relative z-10" />
-                            <span className="relative z-10">Adicionar ao Carrinho</span>
-                            <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/add:animate-shine" />
-                        </button>
-                    </div>
+                            <button
+                                disabled
+                                className="w-full py-3.5 px-6 rounded-xl bg-charcoal/10 text-charcoal/40 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 cursor-not-allowed border border-charcoal/5"
+                            >
+                                <Clock className="w-4 h-4" />
+                                Item em Breve
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-3">
+                            <button
+                                onClick={() => handleActionClick('checkout')}
+                                className="w-full relative overflow-hidden group/buy bg-sage-green hover:bg-[#9cbd9f] text-charcoal py-3.5 px-6 rounded-xl shadow-[0_6px_20px_rgba(173,206,179,0.4)] hover:shadow-[0_6px_25px_rgba(173,206,179,0.5)] transition-all duration-300 active:scale-[0.98] cursor-pointer flex flex-col items-center justify-center border border-charcoal/5"
+                            >
+                                <div className="flex items-center gap-2 mb-0.5 relative z-10">
+                                    <Lock className="w-3 h-3 text-charcoal/80" />
+                                    <span className="font-extrabold text-[9px] tracking-widest text-charcoal/80 uppercase">Compra 100% Segura</span>
+                                </div>
+                                <span className="font-extrabold text-lg tracking-tight relative z-10 text-charcoal group-hover/buy:scale-105 transition-transform duration-300 inline-block">QUERO PERSONALIZAR!</span>
+                                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-30 group-hover/buy:animate-shine" />
+                            </button>
+
+                            <button
+                                onClick={() => handleActionClick('cart')}
+                                className="w-full relative overflow-hidden group/add bg-white border-2 border-charcoal text-charcoal hover:bg-charcoal hover:text-white font-bold py-3 px-6 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] shadow-sm"
+                            >
+                                <ShoppingBag className="w-4 h-4 relative z-10" />
+                                <span className="relative z-10">Adicionar ao Carrinho</span>
+                                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/add:animate-shine" />
+                            </button>
+                        </div>
+                    )}
 
                     {/* Trust Badges — below buttons */}
                     <div className="grid grid-cols-3 gap-2 mt-4">

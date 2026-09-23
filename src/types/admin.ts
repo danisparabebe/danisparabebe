@@ -22,4 +22,5 @@ export interface ManagedProduct {
     published?: boolean;
     publishedAt?: string | null;
     isHot?: boolean;
+    mvpEnabled?: boolean;
 }
