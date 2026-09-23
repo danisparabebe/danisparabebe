@@ -1,18 +1,26 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import { extractThemeAndColor } from '@/lib/product-helper';
 
 const CLOTHING_TYPES = ['BDC', 'BDL', 'MIJ', 'SHO'];
 
 interface ProductPersonalizationModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: (data: { name: string; color: string; observations: string; size?: string }) => void;
+    onConfirm: (data: {
+        name: string;
+        theme?: string;
+        color?: string;
+        observations: string;
+        size?: string;
+    }) => void;
     productName: string;
     productImage: string;
     features?: string[];
+    productId?: string;
 }
 
 export function ProductPersonalizationModal({
@@ -21,12 +29,17 @@ export function ProductPersonalizationModal({
     onConfirm,
     productName,
     productImage,
-    features = []
+    features = [],
+    productId = '',
 }: ProductPersonalizationModalProps) {
     const [name, setName] = useState('');
-    const [color, setColor] = useState('Dourado');
     const [observations, setObservations] = useState('');
     const [size, setSize] = useState('');
+
+    // Extrai automaticamente o Tema e a Cor pré-configurados do produto
+    const { theme, color } = useMemo(() => {
+        return extractThemeAndColor(productId, productName);
+    }, [productId, productName]);
 
     const needsSize = useMemo(() => {
         return features.some(f => {
@@ -39,8 +52,14 @@ export function ProductPersonalizationModal({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (needsSize && !size) return; // block submit without size
-        onConfirm({ name, color, observations, ...(needsSize ? { size } : {}) });
+        if (needsSize && !size) return;
+        onConfirm({
+            name,
+            theme,
+            color,
+            observations,
+            ...(needsSize ? { size } : {})
+        });
     };
 
     return (
@@ -53,42 +72,61 @@ export function ProductPersonalizationModal({
             <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden animate-fadeIn scale-100">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-line bg-warm-stone/50">
-                    <h3 className="font-bold text-lg text-charcoal">Personalize seu Produto</h3>
-                    <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full">
+                    <h3 className="font-bold text-lg text-charcoal flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-dusty-rose" />
+                        Personalize seu Produto
+                    </h3>
+                    <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
                         <X className="h-5 w-5 text-slate" />
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                    {/* Product Summary */}
-                    <div className="flex items-center gap-4 bg-warm-stone/30 p-3 rounded-lg border border-line/50">
-                        <div className="relative h-12 w-12 rounded overflow-hidden">
+                <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                    {/* Resumo do Produto */}
+                    <div className="flex items-center gap-4 bg-warm-stone/30 p-3 rounded-xl border border-line/60">
+                        <div className="relative h-14 w-14 rounded-lg overflow-hidden shrink-0 border border-line">
                             <Image src={productImage} alt={productName} fill className="object-cover" />
                         </div>
-                        <span className="font-medium text-sm text-charcoal">{productName}</span>
+                        <div className="flex flex-col">
+                            <span className="font-bold text-sm text-charcoal leading-snug">{productName}</span>
+                            <span className="text-[11px] text-slate mt-0.5">Produção sob encomenda com bordado personalizado</span>
+                        </div>
                     </div>
 
-                    {/* Inputs */}
+                    {/* Informações Pré-configuradas de Tema e Cor */}
+                    <div className="bg-[#FAF9F8] p-3.5 rounded-xl border border-line flex items-center justify-between">
+                        <div>
+                            <span className="text-[10px] font-bold text-slate uppercase tracking-wider block">Tema do Bordado</span>
+                            <span className="font-bold text-charcoal text-sm">{theme}</span>
+                        </div>
+                        <div className="h-7 w-px bg-line" />
+                        <div>
+                            <span className="text-[10px] font-bold text-slate uppercase tracking-wider block">Cor Principal do Kit</span>
+                            <span className="font-bold text-charcoal text-sm">{color}</span>
+                        </div>
+                    </div>
+
+                    {/* Inputs de Personalização */}
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-charcoal mb-1">
-                                Nome para Bordar <span className="text-sage-green-dark">*</span>
+                            <label className="block text-sm font-bold text-charcoal mb-1">
+                                Nome para Bordar <span className="text-dusty-rose">*</span>
                             </label>
                             <input
                                 type="text"
                                 required
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder="Ex: Maria Alice"
-                                className="w-full px-4 py-2 rounded-lg border border-line focus:ring-2 focus:ring-sage-green focus:border-sage-green outline-none transition-all"
+                                placeholder="Ex: Maria Alice ou João Pedro"
+                                className="w-full px-4 py-2.5 rounded-xl border border-line focus:ring-2 focus:ring-sage-green focus:border-sage-green outline-none transition-all text-sm font-medium"
                             />
                         </div>
 
-                        {/* Size Selector — only for kits with clothing */}
+                        {/* Seletor de Tamanho para Roupinhas */}
                         {needsSize && (
                             <div>
-                                <label className="block text-sm font-medium text-charcoal mb-1.5">
-                                    Tamanho da Roupinha <span className="text-sage-green-dark">*</span>
+                                <label className="block text-sm font-bold text-charcoal mb-1.5">
+                                    Tamanho da Roupinha <span className="text-dusty-rose">*</span>
                                 </label>
                                 <div className="flex gap-2">
                                     {[
@@ -112,31 +150,21 @@ export function ProductPersonalizationModal({
                                     ))}
                                 </div>
                                 {!size && (
-                                    <p className="text-[11px] text-sage-green-dark mt-1 font-medium">Selecione o tamanho para continuar</p>
+                                    <p className="text-[11px] text-dusty-rose mt-1 font-medium">Selecione o tamanho para continuar</p>
                                 )}
                             </div>
                         )}
 
-                        {/* Hardcoded Information about Colors */}
-                        <div className="bg-warm-stone/50 p-3 rounded-lg border border-line">
-                            <span className="block text-sm font-bold text-charcoal mb-1">
-                                Cores do Bordado e Tecido:
-                            </span>
-                            <span className="text-xs text-slate">
-                                Por ser uma peça avulsa/kit pronto, manteremos o padrão de cores <b>idêntico ao da foto selecionada</b> para combinar perfeitamente.
-                            </span>
-                        </div>
-
                         <div>
-                            <label className="block text-sm font-medium text-charcoal mb-1">
-                                Observações (Opcional)
+                            <label className="block text-sm font-bold text-charcoal mb-1">
+                                Observações do Pedido (Opcional)
                             </label>
                             <textarea
                                 value={observations}
                                 onChange={(e) => setObservations(e.target.value)}
-                                placeholder="Ex: Quero o kit sem os laços..."
-                                rows={3}
-                                className="w-full px-4 py-2 rounded-lg border border-line focus:ring-2 focus:ring-sage-green outline-none transition-all resize-none"
+                                placeholder="Ex: Sem laços na fralda pequena..."
+                                rows={2}
+                                className="w-full px-4 py-2 rounded-xl border border-line focus:ring-2 focus:ring-sage-green outline-none transition-all resize-none text-xs"
                             />
                         </div>
                     </div>
@@ -146,13 +174,13 @@ export function ProductPersonalizationModal({
                         <button
                             type="submit"
                             disabled={needsSize && !size}
-                            className={`w-full py-3 rounded-full font-extrabold shadow-soft flex items-center justify-center gap-2 transition-transform active:scale-95 ${
+                            className={`w-full py-3.5 rounded-xl font-extrabold shadow-sm flex items-center justify-center gap-2 transition-transform active:scale-95 ${
                                 needsSize && !size
                                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                     : 'bg-sage-green hover:bg-[#9cbd9f] text-charcoal'
                             }`}
                         >
-                            CONFIRMAR E FINALIZAR
+                            CONFIRMAR PERSONALIZAÇÃO
                         </button>
                     </div>
                 </form>

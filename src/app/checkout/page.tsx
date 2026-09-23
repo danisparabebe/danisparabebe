@@ -187,7 +187,13 @@ export default function CheckoutPage() {
                                     <div className="flex-1 min-w-0">
                                         <h3 className="text-xs font-bold text-charcoal truncate">{item.name}</h3>
                                         {item.personalization?.name && (
-                                            <p className="text-[10px] text-dusty-rose font-medium truncate">{item.personalization.name}</p>
+                                            <p className="text-[10px] text-dusty-rose font-medium truncate">✨ {item.personalization.name}</p>
+                                        )}
+                                        {item.personalization?.theme && item.personalization.theme !== 'Nenhum' && (
+                                            <p className="text-[9px] text-slate font-medium">Tema: <span className="text-charcoal font-semibold">{item.personalization.theme}</span></p>
+                                        )}
+                                        {item.personalization?.color && item.personalization.color.toLowerCase() !== 'dourado' && (
+                                            <p className="text-[9px] text-slate font-medium">Cor: <span className="text-charcoal font-semibold">{item.personalization.color}</span></p>
                                         )}
                                         {item.personalization?.observations && (
                                             <p className="text-[10px] text-slate font-medium mt-0.5 line-clamp-2 leading-tight" title={item.personalization.observations}>

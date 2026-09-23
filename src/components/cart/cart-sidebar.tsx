@@ -202,12 +202,12 @@ export function CartSidebar() {
                                                     )}
                                                     {item.personalization.theme && item.personalization.theme !== 'Nenhum' && (
                                                         <p className="text-[10px] text-slate uppercase leading-tight">
-                                                            Tema: <span className="font-medium text-charcoal">{item.personalization.theme}</span>
+                                                            Tema: <span className="font-bold text-charcoal">{item.personalization.theme}</span>
                                                         </p>
                                                     )}
-                                                    {item.personalization.color && (
+                                                    {item.personalization.color && item.personalization.color.toLowerCase() !== 'dourado' && (
                                                         <p className="text-[10px] text-slate uppercase leading-tight">
-                                                            Linha: <span className="font-medium text-charcoal">{item.personalization.color}</span>
+                                                            Cor: <span className="font-bold text-charcoal">{item.personalization.color}</span>
                                                         </p>
                                                     )}
                                                     {item.personalization.finishDetail && item.personalization.finishDetail !== 'Nenhum' && (

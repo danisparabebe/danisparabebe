@@ -334,6 +334,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                 productName={product.name}
                 productImage={product.images[0]}
                 features={product.features}
+                productId={product.id}
                 onConfirm={handleConfirmPersonalization}
             />
 
