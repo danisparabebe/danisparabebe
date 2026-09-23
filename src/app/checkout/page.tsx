@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 
 export default function CheckoutPage() {
-    const { items, total, shipping, removeItem } = useCartStore();
+    const { items, total, shipping, removeItem, setShipping } = useCartStore();
     const router = useRouter();
 
     const [hydrated, setHydrated] = useState(false);
@@ -61,9 +61,25 @@ export default function CheckoutPage() {
         if (raw.length === 8) {
             setIsLoadingAddress(true);
             try {
-                const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
-                const data = await res.json();
-                if (!data.erro) {
+                // Tenta via proxy interno primeiro (evita bloqueios de CSP/CORS) com fallback direto
+                let data: any = null;
+                try {
+                    const res = await fetch(`/api/viacep?cep=${raw}`);
+                    if (res.ok) {
+                        data = await res.json();
+                    }
+                } catch (err) {
+                    console.warn('ViaCEP proxy falhou, tentando chamada direta:', err);
+                }
+
+                if (!data || data.error) {
+                    const resDirect = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
+                    if (resDirect.ok) {
+                        data = await resDirect.json();
+                    }
+                }
+
+                if (data && !data.erro) {
                     const addressAdd = {
                         street: data.logradouro || '',
                         neighborhood: data.bairro || '',
@@ -75,13 +91,44 @@ export default function CheckoutPage() {
                         localStorage.setItem('checkout_form', JSON.stringify(next));
                         return next;
                     });
+                    setErrors(prev => ({
+                        ...prev,
+                        cep: false,
+                        street: false,
+                        neighborhood: false,
+                        city: false
+                    }));
                     setAddressLoaded(true);
+                    toast.success('Endereço localizado com sucesso!', { duration: 2500 });
+
+                    // Foco imediato no campo de Número para agilizar preenchimento
+                    setTimeout(() => {
+                        const numInput = document.getElementById('number-input');
+                        if (numInput) numInput.focus();
+                    }, 150);
+
+                    // Atualiza ou calcula frete caso ainda não esteja calculado
+                    try {
+                        const shipRes = await fetch('/api/shipping', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ cep: raw })
+                        });
+                        if (shipRes.ok) {
+                            const options = await shipRes.json();
+                            if (options && options.length > 0) {
+                                useCartStore.getState().setShipping(options[0].price);
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Erro ao calcular frete no checkout:', e);
+                    }
                 } else {
-                    toast.error('CEP não encontrado.');
+                    toast.error('CEP não encontrado. Por favor, confira os números digitados.');
                     setAddressLoaded(false);
                 }
             } catch {
-                toast.error('Erro ao buscar CEP.');
+                toast.error('Erro ao buscar CEP. Preencha o endereço manualmente.');
                 setAddressLoaded(false);
             } finally {
                 setIsLoadingAddress(false);
@@ -270,14 +317,17 @@ export default function CheckoutPage() {
                                 <input type="text" name="cpf" value={formData.cpf} onChange={handleInput} placeholder="000.000.000-00" className={`${inputClass} ${errors.cpf ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
                             </div>
                             <div className="space-y-1">
-                                <label className={`${labelClass} ${errors.cep ? 'text-red-500' : ''}`}>CEP</label>
+                                <div className="flex justify-between items-center">
+                                    <label className={`${labelClass} ${errors.cep ? 'text-red-500' : ''}`}>CEP</label>
+                                    {addressLoaded && <span className="text-[10px] text-emerald-600 font-bold">✓ Localizado</span>}
+                                </div>
                                 <div className="relative">
                                     <input 
                                         type="text" name="cep" 
                                         value={formData.cep} 
                                         onChange={handleCepChange} 
                                         maxLength={9} placeholder="00000-000" 
-                                        className={`${inputClass} ${errors.cep ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
+                                        className={`${inputClass} ${errors.cep ? 'border-red-500 ring-1 ring-red-500/30' : ''} ${addressLoaded ? 'border-emerald-500/40 bg-emerald-50/10' : ''}`} 
                                     />
                                     {isLoadingAddress && (
                                         <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[10px] text-dusty-rose font-medium">
@@ -288,88 +338,104 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
-                        {/* Bloco de Endereço Preenchido + Número e Complemento */}
-                        {addressLoaded || formData.street ? (
-                            <div className="space-y-3 pt-1 border-t border-black/5 animate-fadeIn">
-                                {/* Endereço Encontrado */}
-                                <div className="bg-[#faf9f7] border border-black/10 rounded-xl p-3 text-xs space-y-0.5">
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <p className="text-[10px] font-bold text-slate uppercase tracking-wider">Endereço Encontrado</p>
-                                            <p className="font-bold text-charcoal text-xs mt-0.5">{formData.street || 'Logradouro não mapeado'}</p>
-                                            <p className="text-[11px] text-slate font-medium">{formData.neighborhood} — {formData.city}/{formData.state}</p>
-                                        </div>
-                                        <button 
-                                            type="button" 
-                                            onClick={() => { setAddressLoaded(false); setFormData(p => ({ ...p, street: '', neighborhood: '', city: '', state: '' })); }} 
-                                            className="text-[10px] text-dusty-rose underline hover:text-charcoal font-medium"
-                                        >
-                                            Alterar
-                                        </button>
-                                    </div>
+                        {/* Bloco de Endereço Preenchido Automaticamente via CEP */}
+                        <div className="space-y-3 pt-1 border-t border-black/5">
+                            {/* Rua + Número */}
+                            <div className="grid grid-cols-4 gap-3">
+                                <div className="col-span-3 space-y-1">
+                                    <label className={`${labelClass} ${errors.street ? 'text-red-500' : ''}`}>
+                                        Rua {formData.street && addressLoaded && <span className="text-[10px] text-emerald-600 font-normal lowercase">(via CEP)</span>}
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="street" 
+                                        value={formData.street} 
+                                        onChange={handleInput} 
+                                        disabled={isLoadingAddress} 
+                                        placeholder="Nome da rua / avenida" 
+                                        className={`${inputClass} disabled:bg-gray-50 ${errors.street ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
+                                    />
                                 </div>
+                                <div className="space-y-1">
+                                    <label className={`${labelClass} ${errors.number ? 'text-red-500 font-bold' : ''}`}>
+                                        Nº *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="number" 
+                                        id="number-input"
+                                        value={formData.number} 
+                                        onChange={handleInput} 
+                                        placeholder="123" 
+                                        className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} 
+                                    />
+                                </div>
+                            </div>
 
-                                {/* Aba / Campos: Número e Complemento */}
-                                <div className="grid grid-cols-3 gap-3">
-                                    <div className="space-y-1 col-span-1">
-                                        <label className={`${labelClass} ${errors.number ? 'text-red-500' : ''}`}>Número *</label>
-                                        <input 
-                                            type="text" 
-                                            name="number" 
-                                            value={formData.number} 
-                                            onChange={handleInput} 
-                                            placeholder="Ex: 123" 
-                                            className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} 
-                                        />
-                                    </div>
-                                    <div className="space-y-1 col-span-2">
-                                        <label className={labelClass}>Complemento <span className="font-normal text-slate/60">(opcional)</span></label>
-                                        <input 
-                                            type="text" 
-                                            name="complement" 
-                                            value={formData.complement} 
-                                            onChange={handleInput} 
-                                            placeholder="Apto, Bloco, Casa..." 
-                                            className={inputClass} 
-                                        />
-                                    </div>
+                            {/* Complemento + Bairro */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="space-y-1">
+                                    <label className={labelClass}>
+                                        Compl. <span className="font-normal text-slate/60">(opcional)</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="complement" 
+                                        value={formData.complement} 
+                                        onChange={handleInput} 
+                                        placeholder="Apto, Bloco, Casa..." 
+                                        className={inputClass} 
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className={`${labelClass} ${errors.neighborhood ? 'text-red-500' : ''}`}>
+                                        Bairro
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="neighborhood" 
+                                        value={formData.neighborhood} 
+                                        onChange={handleInput} 
+                                        disabled={isLoadingAddress} 
+                                        placeholder="Bairro" 
+                                        className={`${inputClass} disabled:bg-gray-50 ${errors.neighborhood ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
+                                    />
                                 </div>
                             </div>
-                        ) : (
-                            /* Preenchimento Manual (caso CEP seja digitado ou alterado) */
-                            <div className="space-y-3">
-                                <div className="grid grid-cols-4 gap-3">
-                                    <div className="col-span-3 space-y-1">
-                                        <label className={`${labelClass} ${errors.street ? 'text-red-500' : ''}`}>Rua</label>
-                                        <input type="text" name="street" value={formData.street} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.street ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className={`${labelClass} ${errors.number ? 'text-red-500' : ''}`}>N.</label>
-                                        <input type="text" name="number" value={formData.number} onChange={handleInput} className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} />
-                                    </div>
+
+                            {/* Cidade + UF */}
+                            <div className="grid grid-cols-4 gap-3">
+                                <div className="col-span-3 space-y-1">
+                                    <label className={`${labelClass} ${errors.city ? 'text-red-500' : ''}`}>
+                                        Cidade
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="city" 
+                                        value={formData.city} 
+                                        onChange={handleInput} 
+                                        disabled={isLoadingAddress} 
+                                        placeholder="Cidade" 
+                                        className={`${inputClass} disabled:bg-gray-50 ${errors.city ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
+                                    />
                                 </div>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <div className="space-y-1">
-                                        <label className={labelClass}>Compl. <span className="font-normal text-slate/60">(opc.)</span></label>
-                                        <input type="text" name="complement" value={formData.complement} onChange={handleInput} placeholder="Apto, Bloco..." className={inputClass} />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className={labelClass}>Bairro</label>
-                                        <input type="text" name="neighborhood" value={formData.neighborhood} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50`} />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-4 gap-3">
-                                    <div className="col-span-3 space-y-1">
-                                        <label className={`${labelClass} ${errors.city ? 'text-red-500' : ''}`}>Cidade</label>
-                                        <input type="text" name="city" value={formData.city} onChange={handleInput} disabled={isLoadingAddress} className={`${inputClass} disabled:bg-gray-50 ${errors.city ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className={labelClass}>UF</label>
-                                        <input type="text" name="state" value={formData.state} onChange={handleInput} disabled={isLoadingAddress} maxLength={2} placeholder="SP" className={`${inputClass} uppercase disabled:bg-gray-50`} />
-                                    </div>
+                                <div className="space-y-1">
+                                    <label className={labelClass}>
+                                        UF
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="state" 
+                                        value={formData.state} 
+                                        onChange={handleInput} 
+                                        disabled={isLoadingAddress} 
+                                        maxLength={2} 
+                                        placeholder="SP" 
+                                        className={`${inputClass} uppercase disabled:bg-gray-50`} 
+                                    />
                                 </div>
                             </div>
-                        )}
+                        </div>
 
                         {/* Action Buttons - Unified */}
                         <div className="flex flex-col gap-3 mt-2">
