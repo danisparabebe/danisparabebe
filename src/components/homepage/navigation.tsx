@@ -1,55 +1,35 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Menu, X, ChevronDown, Wand2, ArrowRight } from 'lucide-react';
 
 const leftLinks = [
-    { name: 'Kits Prontos', href: '/categoria/kits' },
-    { name: 'Bestsellers', href: '/colecao/bestsellers' },
-    { name: 'Saída de Maternidade', href: '/colecao/saida-de-maternidade' },
+    { name: 'Kits Prontos' },
+    { name: 'Bestsellers' },
+    { name: 'Saída de Maternidade' },
 ];
 
 const rightLinks = [
-    { name: 'Para Presentear', href: '/colecao/para-presentear' },
-    { name: 'Linha Premium', href: '/colecao/linha-premium' },
+    { name: 'Para Presentear' },
+    { name: 'Linha Premium' },
 ];
 
-const allCategories = [
-    { name: 'Mantas Bordadas', href: '/categoria/manta' },
-    { name: 'Fraldas de Boca', href: '/categoria/fralda-boca' },
-    { name: 'Fraldas de Ombro', href: '/categoria/fralda-ombro' },
-    { name: 'Toalhas Fralda', href: '/categoria/toalha' },
-    { name: 'Bodys Personalizados', href: '/categoria/body' },
-    { name: 'Toucas', href: '/categoria/touca' },
-    { name: 'Faixas de Cabelo', href: '/categoria/faixa' },
-    { name: 'Ver Todos os Produtos', href: '/colecao/todos' },
-];
-
-const NavLink = ({ name, href }: { name: string; href: string }) => (
-    <a
-        href={href}
-        className="group relative whitespace-nowrap text-[11px] xl:text-[12px] font-semibold text-charcoal/80 hover:text-sage-green transition-colors"
+// Link com marcação de "Em Breve" e desabilitado para clique
+const NavLinkDisabled = ({ name }: { name: string }) => (
+    <div
+        className="group relative flex items-center gap-1.5 whitespace-nowrap text-[11px] xl:text-[12px] font-semibold text-charcoal/60 cursor-not-allowed select-none py-1"
+        title={`${name} estará disponível em breve!`}
     >
         <span>{name}</span>
-        <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-sage-green transition-all group-hover:w-full rounded-full" />
-    </a>
+        <span className="text-[8px] xl:text-[9px] font-extrabold uppercase tracking-tight bg-dusty-rose/20 text-dusty-rose px-1.5 py-0.5 rounded-md border border-dusty-rose/40">
+            Em Breve
+        </span>
+    </div>
 );
 
 export function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsDropdownOpen(false);
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
 
     return (
         <nav className="bg-[#F7FAF7] border-b border-black/5 shadow-sm sticky top-0 z-50">
@@ -66,7 +46,7 @@ export function Navigation() {
                         </button>
                     </div>
 
-                    {/* Mobile: centered CTA */}
+                    {/* Mobile: centered CTA - MONTE SEU KIT mantido 100% ativo */}
                     <div className="flex lg:hidden justify-center items-center h-full absolute inset-0 pointer-events-none z-10 w-full">
                         <Link
                             href="/monte-seu-kit"
@@ -78,13 +58,14 @@ export function Navigation() {
                         </Link>
                     </div>
 
-                    {/* Desktop: Single unified flex to entirely eliminate overlap bugs */}
-                    <div className="hidden lg:flex w-full h-full items-center justify-between gap-1 xl:gap-4">
+                    {/* Desktop: Links com tag "Em Breve" e Monte Seu Kit ativo no centro */}
+                    <div className="hidden lg:flex w-full h-full items-center justify-between gap-1 xl:gap-3">
                         
                         {leftLinks.map((link) => (
-                            <NavLink key={link.name} {...link} />
+                            <NavLinkDisabled key={link.name} name={link.name} />
                         ))}
 
+                        {/* Botão Central: MONTE SEU KIT (Ativo) */}
                         <div className="shrink-0 px-2 lg:scale-95 xl:scale-100">
                             <Link
                                 href="/monte-seu-kit"
@@ -98,32 +79,16 @@ export function Navigation() {
                         </div>
 
                         {rightLinks.map((link) => (
-                            <NavLink key={link.name} {...link} />
+                            <NavLinkDisabled key={link.name} name={link.name} />
                         ))}
 
-                        <div className="relative shrink-0" ref={dropdownRef}>
-                            <button
-                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                className={`group flex items-center gap-1 whitespace-nowrap text-[11px] xl:text-[12px] font-semibold transition-colors ${isDropdownOpen ? 'text-sage-green' : 'text-charcoal/80 hover:text-sage-green'}`}
-                            >
-                                Todas Categorias
-                                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-sage-green' : 'text-slate group-hover:text-sage-green'}`} />
-                            </button>
-
-                            {isDropdownOpen && (
-                                <div className="absolute top-full right-0 mt-4 w-56 bg-white rounded-xl shadow-xl border border-black/5 overflow-hidden animate-fadeIn pb-2 pt-2 z-50">
-                                    {allCategories.map((cat, idx) => (
-                                        <a
-                                            key={cat.name}
-                                            href={cat.href}
-                                            onClick={() => setIsDropdownOpen(false)}
-                                            className={`block px-5 py-2.5 text-sm text-charcoal/80 hover:text-charcoal hover:bg-sage-green/10 transition-colors ${idx === allCategories.length - 1 ? 'border-t border-black/5 font-bold mt-1 pt-3' : ''}`}
-                                        >
-                                            {cat.name}
-                                        </a>
-                                    ))}
-                                </div>
-                            )}
+                        {/* Todas Categorias com tag "Em Breve" */}
+                        <div className="relative shrink-0 flex items-center gap-1.5 text-[11px] xl:text-[12px] font-semibold text-charcoal/60 cursor-not-allowed select-none py-1">
+                            <span>Todas Categorias</span>
+                            <span className="text-[8px] xl:text-[9px] font-extrabold uppercase tracking-tight bg-dusty-rose/20 text-dusty-rose px-1.5 py-0.5 rounded-md border border-dusty-rose/40">
+                                Em Breve
+                            </span>
+                            <ChevronDown className="w-3.5 h-3.5 text-slate/40" />
                         </div>
                     </div>
 
@@ -135,28 +100,34 @@ export function Navigation() {
                 <div className="absolute top-full left-0 w-full bg-warm-stone border-b border-black/5 shadow-xl z-50 lg:hidden animate-fadeIn">
                     <div className="flex flex-col p-4 space-y-1">
                         {[...leftLinks, ...rightLinks].map((link) => (
-                            <a
+                            <div
                                 key={link.name}
-                                href={link.href}
-                                onClick={() => setIsMenuOpen(false)}
-                                className="text-sm font-bold text-charcoal py-3 px-2 border-b border-black/5"
+                                className="flex items-center justify-between text-sm font-bold text-charcoal/60 py-3 px-2 border-b border-black/5 cursor-not-allowed"
                             >
-                                {link.name}
-                            </a>
+                                <span>{link.name}</span>
+                                <span className="text-[9px] font-extrabold uppercase tracking-wider bg-dusty-rose/20 text-dusty-rose px-2 py-0.5 rounded-md border border-dusty-rose/40">
+                                    Em Breve
+                                </span>
+                            </div>
                         ))}
-                        <div className="py-2 px-2 text-xs font-bold text-slate uppercase tracking-wider mt-2">
-                            Todas as Categorias
+
+                        <div className="flex items-center justify-between text-sm font-bold text-charcoal/60 py-3 px-2 border-b border-black/5 cursor-not-allowed">
+                            <span>Todas as Categorias</span>
+                            <span className="text-[9px] font-extrabold uppercase tracking-wider bg-dusty-rose/20 text-dusty-rose px-2 py-0.5 rounded-md border border-dusty-rose/40">
+                                Em Breve
+                            </span>
                         </div>
-                        {allCategories.map((cat) => (
-                            <a
-                                key={cat.name}
-                                href={cat.href}
+
+                        <div className="pt-3">
+                            <Link
+                                href="/monte-seu-kit"
                                 onClick={() => setIsMenuOpen(false)}
-                                className="text-sm font-medium text-charcoal/80 py-2.5 px-4 hover:text-dusty-rose hover:bg-black/5 rounded-md"
+                                className="flex items-center justify-center gap-2 w-full py-3 bg-sage-green text-charcoal text-xs font-black tracking-wider uppercase rounded-xl shadow-sm"
                             >
-                                {cat.name}
-                            </a>
-                        ))}
+                                <Wand2 className="w-4 h-4" />
+                                <span>Monte Seu Kit Personalizado</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             )}
