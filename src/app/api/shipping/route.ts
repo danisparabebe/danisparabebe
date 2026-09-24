@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-    const { cep } = await req.json();
-    console.log('Calculating shipping for CEP:', cep);
+    let rawCep = '';
+    try {
+        const body = await req.json();
+        rawCep = (body?.cep || '').toString().replace(/\D/g, '');
+    } catch {
+        return NextResponse.json({ error: 'Payload inválido' }, { status: 400 });
+    }
+
+    console.log('Calculating shipping for CEP:', rawCep);
     console.log('SuperFrete Token exists:', !!process.env.SUPERFRETE_TOKEN);
 
-    if (!cep) {
-        return NextResponse.json({ error: 'CEP is required' }, { status: 400 });
+    if (!rawCep || rawCep.length !== 8) {
+        return NextResponse.json({ error: 'CEP inválido. Deve conter 8 dígitos.' }, { status: 400 });
     }
 
     if (!process.env.SUPERFRETE_TOKEN) {
@@ -38,10 +45,10 @@ export async function POST(req: Request) {
         // Using standard package dimensions for a kit
         const payload = {
             from: {
-                postal_code: process.env.NEXT_PUBLIC_ORIGIN_CEP || '01001000',
+                postal_code: (process.env.NEXT_PUBLIC_ORIGIN_CEP || '01001000').replace(/\D/g, ''),
             },
             to: {
-                postal_code: cep,
+                postal_code: rawCep,
             },
             services: '1,2,3,4,14,15,16,17', // IDs das transportadoras comuns: PAC, SEDEX, Jadlog, etc.
             options: {

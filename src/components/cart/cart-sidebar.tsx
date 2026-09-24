@@ -1,6 +1,6 @@
 'use client';
 
-import { X, Minus, Plus, Trash2, ShoppingBag, ExternalLink } from 'lucide-react';
+import { X, Minus, Plus, Trash2, ShoppingBag, ExternalLink, Check, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -75,29 +75,52 @@ const AnimatedEmptyCart = () => (
 );
 
 export function CartSidebar() {
-    const { items, isOpen, closeCart, removeItem, updateQuantity, total } = useCartStore();
+    const { items, isOpen, closeCart, removeItem, updateQuantity, total, shipping, setShipping } = useCartStore();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [shippingCep, setShippingCep] = useState('');
     const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
+    const [shippingOptions, setShippingOptions] = useState<any[]>([]);
+    const [shippingSuccess, setShippingSuccess] = useState(false);
+    const [shippingError, setShippingError] = useState<string | null>(null);
 
     const handleCheckout = () => {
         closeCart();
         router.push('/checkout');
     };
 
-    const calculateShipping = async () => {
-        const cep = shippingCep.replace(/\D/g, '');
-        if (cep.length !== 8) {
-            alert('Por favor, digite um CEP válido com 8 dígitos.');
+    // Auto-carrega CEP do cache se o usuário já tiver digitado no checkout ou anteriormente
+    useEffect(() => {
+        if (isOpen) {
+            try {
+                const cachedForm = localStorage.getItem('checkout_form');
+                if (cachedForm) {
+                    const parsed = JSON.parse(cachedForm);
+                    if (parsed.cep && !shippingCep) {
+                        setShippingCep(parsed.cep);
+                        const raw = parsed.cep.replace(/\D/g, '');
+                        if (raw.length === 8 && shipping === 0) {
+                            calculateShipping(raw);
+                        }
+                    }
+                }
+            } catch {}
+        }
+    }, [isOpen]);
+
+    const calculateShipping = async (customCep?: string) => {
+        const rawCep = (customCep || shippingCep).replace(/\D/g, '');
+        if (rawCep.length !== 8) {
             return;
         }
 
         setIsCalculatingShipping(true);
+        setShippingError(null);
         try {
             const res = await fetch('/api/shipping', {
                 method: 'POST',
-                body: JSON.stringify({ cep })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cep: rawCep })
             });
 
             if (!res.ok) {
@@ -108,16 +131,44 @@ export function CartSidebar() {
 
             if (options && options.length > 0) {
                 const cheapest = options[0];
-                useCartStore.getState().setShipping(cheapest.price);
-                // Optional: visual feedback of success
+                setShipping(cheapest.price);
+                setShippingOptions(options);
+                setShippingSuccess(true);
+
+                // Salva CEP no checkout_form para agilizar o checkout
+                try {
+                    const cached = localStorage.getItem('checkout_form');
+                    const prev = cached ? JSON.parse(cached) : {};
+                    const formattedCep = rawCep.length > 5 ? `${rawCep.slice(0, 5)}-${rawCep.slice(5, 8)}` : rawCep;
+                    localStorage.setItem('checkout_form', JSON.stringify({ ...prev, cep: formattedCep }));
+                } catch {}
             } else {
-                alert('Nenhuma opção de frete encontrada para este CEP.');
+                setShippingError('Nenhuma opção de frete encontrada para este CEP.');
+                setShipping(0);
+                setShippingOptions([]);
             }
         } catch (err) {
-            console.error(err);
-            alert('Erro ao calcular frete. Verifique o CEP ou tente novamente mais tarde.');
+            console.error('Erro ao calcular frete:', err);
+            setShippingError('Erro ao calcular frete. Verifique os números digitados.');
         } finally {
             setIsCalculatingShipping(false);
+        }
+    };
+
+    const handleShippingCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 5) v = `${v.slice(0, 5)}-${v.slice(5, 8)}`;
+        setShippingCep(v);
+        setShippingError(null);
+
+        const raw = v.replace(/\D/g, '');
+        if (raw.length === 8) {
+            // Calcula automaticamente sem precisar clicar
+            calculateShipping(raw);
+        } else if (raw.length === 0) {
+            setShipping(0);
+            setShippingOptions([]);
+            setShippingSuccess(false);
         }
     };
 
@@ -311,32 +362,53 @@ export function CartSidebar() {
                 {/* Shipping Calculator */}
                 {items.length > 0 && (
                     <div className="p-4 border-t border-line bg-warm-stone/20">
-                        <p className="text-sm font-medium text-charcoal mb-2">Calcular Frete</p>
-                        <div className="flex gap-2 mb-3">
-                            <input
-                                type="text"
-                                placeholder="Seu CEP"
-                                className="flex-1 px-3 py-2 border border-line rounded-lg text-sm focus:border-dusty-rose outline-none"
-                                maxLength={9}
-                                value={shippingCep}
-                                onChange={(e) => {
-                                    // Mask 00000-000
-                                    let v = e.target.value.replace(/\D/g, '');
-                                    if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5, 8);
-                                    setShippingCep(v);
-                                }}
-                                onBlur={() => {
-                                    if (shippingCep.length >= 8) calculateShipping();
-                                }}
-                            />
+                        <div className="flex justify-between items-center mb-2">
+                            <p className="text-xs font-bold text-charcoal uppercase tracking-wider">Calcular Frete</p>
+                            {shippingSuccess && shipping > 0 && (
+                                <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1 animate-fadeIn">
+                                    <Check className="w-3.5 h-3.5" /> Frete calculado
+                                </span>
+                            )}
+                        </div>
+                        <div className="flex gap-2">
+                            <div className="relative flex-1">
+                                <input
+                                    type="text"
+                                    placeholder="Digite seu CEP (00000-000)"
+                                    className="w-full px-3 py-2 border border-line rounded-lg text-sm focus:border-dusty-rose outline-none bg-white placeholder:text-black/30"
+                                    maxLength={9}
+                                    value={shippingCep}
+                                    onChange={handleShippingCepChange}
+                                />
+                                {isCalculatingShipping && (
+                                    <div className="absolute right-2.5 top-1/2 -translate-y-1/2">
+                                        <Loader2 className="w-4 h-4 animate-spin text-dusty-rose" />
+                                    </div>
+                                )}
+                            </div>
                             <button
-                                onClick={calculateShipping}
+                                onClick={() => calculateShipping()}
                                 disabled={isCalculatingShipping}
-                                className="text-xs font-bold text-sage-green-dark uppercase px-2 hover:bg-sage-green/20 rounded transition-colors"
+                                className="text-xs font-bold text-sage-green-dark uppercase px-3 py-2 hover:bg-sage-green/20 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
                             >
                                 {isCalculatingShipping ? '...' : 'Calcular'}
                             </button>
                         </div>
+
+                        {shippingError && (
+                            <p className="text-[11px] text-red-500 mt-1.5">{shippingError}</p>
+                        )}
+
+                        {shippingOptions.length > 0 && (
+                            <div className="mt-2.5 pt-2 border-t border-line/60 space-y-1 animate-fadeIn">
+                                {shippingOptions.slice(0, 2).map((opt, i) => (
+                                    <div key={i} className="flex justify-between items-center text-xs text-charcoal/80">
+                                        <span className="font-medium">{opt.name} ({opt.days} dias úteis)</span>
+                                        <span className="font-bold text-charcoal">R$ {opt.price.toFixed(2)}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -346,12 +418,12 @@ export function CartSidebar() {
                         <div className="space-y-2 mb-4">
                             <div className="flex justify-between items-center text-sm text-slate">
                                 <span>Subtotal</span>
-                                <span>R$ {(total() - useCartStore.getState().shipping).toFixed(2)}</span>
+                                <span>R$ {(total() - shipping).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm text-slate">
                                 <span>Frete</span>
-                                <span className={useCartStore.getState().shipping > 0 ? 'text-charcoal' : 'text-slate/60'}>
-                                    {useCartStore.getState().shipping > 0 ? `R$ ${useCartStore.getState().shipping.toFixed(2)}` : 'Calculando...'}
+                                <span className={shipping > 0 ? 'text-charcoal font-semibold' : 'text-slate/60'}>
+                                    {isCalculatingShipping ? 'Calculando...' : (shipping > 0 ? `R$ ${shipping.toFixed(2)}` : 'A calcular')}
                                 </span>
                             </div>
                             <div className="flex justify-between items-center pt-2 border-t border-line">
