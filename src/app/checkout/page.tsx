@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart-store';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ChevronLeft, Trash2, ShieldCheck, Loader2, Lock, Truck, Clock, CreditCard, QrCode } from 'lucide-react';
+import { ChevronLeft, Trash2, ShieldCheck, Loader2, Lock, Truck, Clock, CreditCard, QrCode, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
@@ -218,21 +218,54 @@ export default function CheckoutPage() {
                         </h2>
 
                         <div className="space-y-3">
-                            {items.map((item) => (
+                            {items.map((item) => {
+                                const productSlug = item.productId || (item.id ? item.id.split('-personalized-')[0] : '');
+                                const productUrl = productSlug ? `/produto/${productSlug}` : null;
+
+                                return (
                                 <div key={item.id} className="flex gap-3 items-center group">
                                     {/* Image */}
-                                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-black/5 bg-[#faf9f7]">
-                                        <Image
-                                            src={item.image || '/logomarca rose.png'}
-                                            alt={item.name}
-                                            fill
-                                            className="object-cover"
+                                    {productUrl ? (
+                                        <Link
+                                            href={productUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-black/5 bg-[#faf9f7] hover:opacity-90 transition-opacity cursor-pointer"
+                                            title="Ver produto em nova aba"
+                                        >
+                                            <Image
+                                                src={item.image || '/logomarca rose.png'}
+                                                alt={item.name}
+                                                fill
+                                                className="object-cover"
                                             />
-                                    </div>
+                                        </Link>
+                                    ) : (
+                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-black/5 bg-[#faf9f7]">
+                                            <Image
+                                                src={item.image || '/logomarca rose.png'}
+                                                alt={item.name}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    )}
 
                                     {/* Info */}
                                     <div className="flex-1 min-w-0">
-                                        <h3 className="text-xs font-bold text-charcoal truncate">{item.name}</h3>
+                                        {productUrl ? (
+                                            <Link
+                                                href={productUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-xs font-bold text-charcoal truncate block hover:text-dusty-rose transition-colors cursor-pointer"
+                                                title="Ver produto em nova aba"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        ) : (
+                                            <h3 className="text-xs font-bold text-charcoal truncate">{item.name}</h3>
+                                        )}
                                         {item.personalization?.name && (
                                             <p className="text-[10px] text-dusty-rose font-medium truncate">✨ {item.personalization.name}</p>
                                         )}
@@ -252,6 +285,20 @@ export default function CheckoutPage() {
                                             <Clock className="w-3 h-3 text-dusty-rose/80" />
                                             Feito sob medida: Até 12 dias úteis
                                         </p>
+
+                                        {/* Botão Ver mais detalhes */}
+                                        {productUrl && (
+                                            <Link
+                                                href={productUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1 text-[10px] font-semibold text-dusty-rose hover:text-charcoal bg-dusty-rose/10 hover:bg-dusty-rose/20 px-2 py-0.5 rounded-md mt-1.5 transition-all w-fit cursor-pointer border border-dusty-rose/20 group/btn"
+                                                title="Abrir página completa do produto em uma nova aba"
+                                            >
+                                                <span>Ver mais detalhes</span>
+                                                <ExternalLink className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                                            </Link>
+                                        )}
                                     </div>
 
                                     {/* Price */}
@@ -268,7 +315,8 @@ export default function CheckoutPage() {
                                         <Trash2 className="w-3.5 h-3.5" />
                                     </button>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
                         {/* Totals */}

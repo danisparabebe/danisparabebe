@@ -1,8 +1,9 @@
 'use client';
 
-import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { X, Minus, Plus, Trash2, ShoppingBag, ExternalLink } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
@@ -170,7 +171,11 @@ export function CartSidebar() {
                         <AnimatedEmptyCart />
                     ) : (
                         <AnimatePresence mode="popLayout">
-                            {items.map((item) => (
+                            {items.map((item) => {
+                                const productSlug = item.productId || (item.id ? item.id.split('-personalized-')[0] : '');
+                                const productUrl = productSlug ? `/produto/${productSlug}` : null;
+
+                                return (
                                 <motion.div
                                     layout
                                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -180,17 +185,43 @@ export function CartSidebar() {
                                     key={item.id}
                                     className="flex gap-4 p-4 bg-white border border-line rounded-xl shadow-sm hover:shadow-soft transition-shadow hover:border-dusty-rose/30"
                                 >
-                                    <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-line bg-warm-stone/20">
-                                        <Image
-                                            src={item.image || '/placeholder.png'}
-                                            alt={item.name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
+                                    {productUrl ? (
+                                        <Link
+                                            href={productUrl}
+                                            onClick={closeCart}
+                                            className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-line bg-warm-stone/20 group/img cursor-pointer"
+                                            title="Ver detalhes do produto"
+                                        >
+                                            <Image
+                                                src={item.image || '/placeholder.png'}
+                                                alt={item.name}
+                                                fill
+                                                className="object-cover group-hover/img:scale-105 transition-transform duration-300"
+                                            />
+                                        </Link>
+                                    ) : (
+                                        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-line bg-warm-stone/20">
+                                            <Image
+                                                src={item.image || '/placeholder.png'}
+                                                alt={item.name}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    )}
                                     <div className="flex-1 flex flex-col justify-between">
                                         <div>
-                                            <h3 className="font-medium text-charcoal text-sm leading-tight">{item.name}</h3>
+                                            {productUrl ? (
+                                                <Link
+                                                    href={productUrl}
+                                                    onClick={closeCart}
+                                                    className="font-medium text-charcoal text-sm leading-tight hover:text-dusty-rose transition-colors cursor-pointer block"
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            ) : (
+                                                <h3 className="font-medium text-charcoal text-sm leading-tight">{item.name}</h3>
+                                            )}
 
                                             {/* Render Personalization Meta Data */}
                                             {item.personalization && (
@@ -222,6 +253,19 @@ export function CartSidebar() {
                                                         </p>
                                                     )}
                                                 </div>
+                                            )}
+
+                                            {/* Botão Ver mais detalhes */}
+                                            {productUrl && (
+                                                <Link
+                                                    href={productUrl}
+                                                    onClick={closeCart}
+                                                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-dusty-rose hover:text-charcoal bg-dusty-rose/10 hover:bg-dusty-rose/20 px-2 py-0.5 rounded-md mt-2 transition-all w-fit cursor-pointer border border-dusty-rose/20 group/btn"
+                                                    title="Ver mais detalhes do produto"
+                                                >
+                                                    <span>Ver mais detalhes</span>
+                                                    <ExternalLink className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                                                </Link>
                                             )}
                                         </div>
                                         <div className="flex items-center justify-between mt-3">
@@ -258,7 +302,8 @@ export function CartSidebar() {
                                         </div>
                                     </div>
                                 </motion.div>
-                            ))}
+                                );
+                            })}
                         </AnimatePresence>
                     )}
                 </div>
