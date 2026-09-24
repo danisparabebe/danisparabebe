@@ -24,6 +24,7 @@ const checkoutSchema = z.object({
     name: z.string().min(2).max(100),
     email: z.string().email().optional().or(z.literal('')),
     phone: z.string().min(8).max(20),
+    cpf: z.string().max(25).optional(),
     street: z.string().max(150).optional(),
     number: z.string().max(20).optional(),
     complement: z.string().max(100).optional(),
@@ -186,12 +187,17 @@ export async function POST(request: Request) {
                 customerName: customer?.name || 'Cliente',
                 customerEmail: customer?.email || '',
                 customerPhone: customer?.phone || '',
+                customerCpf: customer?.cpf || '',
                 address: {
                     line1: [customer?.street, customer?.number].filter(Boolean).join(', '),
                     line2: [customer?.complement, customer?.neighborhood].filter(Boolean).join(' - '),
-                    city: customer?.city,
-                    state: customer?.state,
-                    postal_code: customer?.cep,
+                    street: customer?.street || '',
+                    number: customer?.number || '',
+                    complement: customer?.complement || '',
+                    neighborhood: customer?.neighborhood || '',
+                    city: customer?.city || '',
+                    state: customer?.state || '',
+                    postal_code: customer?.cep || '',
                 },
                 items: items,
                 totalAmount: totalAmount / 100,
@@ -217,12 +223,43 @@ export async function POST(request: Request) {
         const ipHandle = process.env.NEXT_PUBLIC_INFINITEPAY_HANDLE || 'danisparabebe';
         console.log('🏪 Handle:', ipHandle);
         if (!ipHandle) throw new Error("NEXT_PUBLIC_INFINITEPAY_HANDLE is missing in .env.local");
-        
-        const ipPayload = {
+
+        const cleanPhone = (customer.phone || '').replace(/\D/g, '');
+        const formattedPhone = cleanPhone.length >= 10
+            ? (cleanPhone.startsWith('55') ? `+${cleanPhone}` : `+55${cleanPhone}`)
+            : cleanPhone;
+
+        const cleanCep = (customer.cep || '').replace(/\D/g, '');
+        const cleanCpf = (customer.cpf || '').replace(/\D/g, '');
+
+        const customerPayload: Record<string, any> = {
+            name: customer.name,
+        };
+        if (formattedPhone) customerPayload.phone_number = formattedPhone;
+        if (customer.email && customer.email.trim() !== '') {
+            customerPayload.email = customer.email.trim();
+        }
+        if (cleanCpf) customerPayload.tax_id = cleanCpf;
+
+        const addressPayload: Record<string, any> = {
+            cep: cleanCep,
+            street: customer.street || '',
+            number: customer.number || '',
+            neighborhood: customer.neighborhood || '',
+            city: customer.city || '',
+            state: customer.state || '',
+        };
+        if (customer.complement && customer.complement.trim() !== '') {
+            addressPayload.complement = customer.complement.trim();
+        }
+
+        const ipPayload: any = {
             handle: ipHandle,
             amount: totalAmount,
             order_nsu: orderId,
             redirect_url: `${baseUrl}/sucesso?session_id=${orderId}`,
+            customer: customerPayload,
+            address: addressPayload,
             items: ipItems.map((item: any) => ({
                 description: item.description,
                 price: item.price,
