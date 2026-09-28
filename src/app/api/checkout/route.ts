@@ -17,6 +17,7 @@ const checkoutSchema = z.object({
     name: z.string().max(150),
     price: z.number().nonnegative(),
     quantity: z.number().int().positive().max(100),
+    image: z.string().optional(),
     personalization: z.any().optional() // Podem vir campos variados, deixamos passar mas validamos o topo
   })).min(1, "Carrinho vazio."),
   shipping: z.number().nonnegative().optional(),

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
+import { productControl } from '@/data/product-control';
 
 export const dynamic = 'force-dynamic';
 
@@ -64,6 +65,7 @@ export async function GET() {
                     name: data.productName || 'Produto Personalizado',
                     quantity: 1,
                     price: totalAmount,
+                    image: '',
                     personalization: {
                         name: data.babyName,
                         theme: data.embroideryName,
@@ -72,11 +74,22 @@ export async function GET() {
                 }];
             }
 
+            // Enriquecer items com foto do produto caso esteja vazia
+            items = items.map((it: any) => {
+                const prodId = it.productId || it.id;
+                const found = productControl.find((p: any) => p.id === prodId || p.technicalName === prodId);
+                return {
+                    ...it,
+                    image: it.image || found?.images?.[0] || '',
+                };
+            });
+
             orders.push({
                 id: doc.id,
                 customerName: data.customerName || data.babyName || data.name || 'Cliente',
                 customerEmail: data.customerEmail || data.email || '',
                 customerPhone: data.customerPhone || data.phone || '',
+                customerCpf: data.customerCpf || data.address?.cpf || '',
                 totalAmount,
                 createdAt,
                 deadlineDate,

@@ -2,81 +2,178 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { ProductTechnicalSheet } from '@/components/product/product-technical-sheet';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, ArrowLeft, Printer, AlertCircle, RefreshCw } from 'lucide-react';
 
 function FichaContent() {
     const searchParams = useSearchParams();
     const dataHash = searchParams.get('data');
+    const orderIdParam = searchParams.get('id') || searchParams.get('orderId');
+
     const [orderData, setOrderData] = useState<any>(null);
-    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        setLoading(true);
+        setError(null);
+
+        // 1. Tenta carregar via base64 dataHash
         if (dataHash) {
             try {
-                // Decode base64 URL safe
                 const jsonString = decodeURIComponent(escape(atob(dataHash)));
                 const parsed = JSON.parse(jsonString);
                 setOrderData(parsed);
+                setLoading(false);
+                return;
             } catch (err) {
-                console.error("Failed to parse technical sheet data:", err);
-                setError(true);
+                console.error("Failed to parse technical sheet data from hash:", err);
+                setError("Link de ficha técnica inválido ou corrompido.");
+                setLoading(false);
+                return;
             }
         }
-    }, [dataHash]);
 
-    if (!dataHash) {
-        return <div className="p-10 text-center text-slate">Nenhum dado fornecido.</div>;
+        // 2. Se não tiver hash mas tiver ID do pedido, busca diretamente na API
+        if (orderIdParam) {
+            fetch('/api/admin/pedidos')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok && Array.isArray(data.orders)) {
+                        const target = data.orders.find((o: any) => 
+                            o.id === orderIdParam || 
+                            o.id === `ORDER_${orderIdParam}` ||
+                            o.id.endsWith(orderIdParam)
+                        );
+                        if (target) {
+                            setOrderData({
+                                items: target.items || [],
+                                customer: {
+                                    name: target.customerName || 'Cliente',
+                                    phone: target.customerPhone || '',
+                                    email: target.customerEmail || '',
+                                    cpf: target.customerCpf || target.address?.cpf || '',
+                                    address: target.address || null,
+                                    deadline: target.deadlineDate,
+                                    createdAt: target.createdAt
+                                },
+                                orderTotal: target.totalAmount,
+                                orderId: target.id,
+                                createdAt: target.createdAt
+                            });
+                        } else {
+                            setError(`Pedido #${orderIdParam} não foi encontrado.`);
+                        }
+                    } else {
+                        setError('Falha ao comunicar com o banco de pedidos.');
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro ao buscar pedido por ID:', err);
+                    setError('Erro ao carregar dados do pedido no servidor.');
+                })
+                .finally(() => setLoading(false));
+            return;
+        }
+
+        setError('Nenhum dado ou código de pedido foi fornecido.');
+        setLoading(false);
+    }, [dataHash, orderIdParam]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center p-4">
+                <RefreshCw className="w-8 h-8 animate-spin text-purple-600 mb-3" />
+                <p className="text-sm font-bold uppercase tracking-widest text-slate-600">
+                    Carregando Ficha Técnica de Produção...
+                </p>
+            </div>
+        );
     }
 
-    if (error) {
-        return <div className="p-10 text-center text-red-500 font-bold">Erro ao carregar Ficha Técnica. O link pode ser inválido.</div>;
+    if (error || !orderData) {
+        return (
+            <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 max-w-md w-full text-center space-y-4">
+                    <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
+                    <h2 className="text-lg font-black text-slate-800 uppercase">Não foi possível abrir a ficha</h2>
+                    <p className="text-sm text-slate-500 font-medium">{error || 'Dados insuficientes.'}</p>
+                    <Link 
+                        href="/admin/pedidos" 
+                        className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase hover:bg-slate-800 transition-colors w-full"
+                    >
+                        <ArrowLeft className="w-4 h-4" /> Voltar aos Pedidos
+                    </Link>
+                </div>
+            </div>
+        );
     }
 
-    if (!orderData) {
-        return <div className="p-10 text-center text-slate animate-pulse">Carregando ficha detalhada...</div>;
-    }
-
-    const { items, customer, orderId } = orderData;
+    const { items, customer, orderId, orderTotal, createdAt } = orderData;
     const itemsToProduce = items || [];
 
     return (
-        <div className="min-h-screen bg-dots-texture py-10 px-4">
-            <div className="max-w-3xl mx-auto mb-8 bg-white p-6 rounded-2xl shadow-sm border border-line flex items-center justify-between">
-                <div>
-                    <h1 className="text-xl font-heading font-black text-charcoal flex items-center gap-2">
-                        <ShoppingBag className="w-5 h-5 text-dusty-rose" />
-                        Portal de Produção
-                    </h1>
-                    <p className="text-sm text-slate mt-1 font-medium">
-                        Cliente: <span className="text-charcoal font-bold">{customer?.name || 'Não informado'}</span>
-                    </p>
+        <div className="min-h-screen bg-slate-100 py-6 px-4 print:bg-white print:p-0">
+            {/* Barra Superior de Ações */}
+            <div className="max-w-5xl mx-auto mb-6 bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 print:hidden">
+                <div className="flex items-center gap-3">
+                    <Link 
+                        href="/admin/pedidos" 
+                        className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-1.5 text-xs font-bold uppercase"
+                        title="Voltar ao Painel"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span className="hidden sm:inline">Voltar</span>
+                    </Link>
+                    <div>
+                        <h1 className="text-lg font-black text-slate-900 flex items-center gap-2 uppercase tracking-tight">
+                            <ShoppingBag className="w-5 h-5 text-purple-600" />
+                            Portal de Produção & Ficha Técnica
+                        </h1>
+                        <p className="text-xs text-slate-500 font-medium">
+                            Cliente: <strong className="text-slate-800">{customer?.name || 'Não informado'}</strong>
+                            {customer?.phone && ` • WhatsApp: ${customer.phone}`}
+                        </p>
+                    </div>
                 </div>
-                <button 
-                    onClick={() => window.print()}
-                    className="bg-dusty-rose text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-soft hover:bg-deep-rose transition-colors print:hidden"
-                >
-                    Imprimir Fichas
-                </button>
+
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                    <button 
+                        onClick={() => window.print()}
+                        className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all active:scale-95"
+                    >
+                        <Printer className="w-4 h-4" />
+                        Imprimir Ficha (A4)
+                    </button>
+                </div>
             </div>
 
+            {/* Lista de Fichas dos Itens */}
             {itemsToProduce.length === 0 ? (
-                <div className="text-center p-10 bg-white rounded-2xl shadow-sm border border-line max-w-3xl mx-auto">
-                    Nenhum item encontrado neste pedido.
+                <div className="text-center p-12 bg-white rounded-2xl shadow-sm border border-slate-200 max-w-5xl mx-auto">
+                    <p className="text-sm font-bold uppercase tracking-wider text-slate-400">
+                        Nenhum item encontrado neste pedido.
+                    </p>
                 </div>
             ) : (
-                <div className="max-w-3xl mx-auto space-y-6">
+                <div className="max-w-5xl mx-auto space-y-8">
                     {itemsToProduce.map((item: any, idx: number) => (
-                        <div key={idx} className="print:break-inside-avoid shadow-sm rounded-xl overflow-hidden border border-black/10">
+                        <div key={idx} className="print:break-inside-avoid print:mb-8">
                             <ProductTechnicalSheet
                                 productName={item.name}
                                 productImage={item.image}
                                 productId={item.productId || item.id}
                                 personalization={item.personalization || {}}
                                 customerName={customer?.name}
-                                orderId={orderId}
+                                customerPhone={customer?.phone}
+                                customerCpf={customer?.cpf}
+                                customerEmail={customer?.email}
                                 shippingAddress={customer?.address}
                                 deadline={customer?.deadline}
+                                orderId={orderId}
+                                orderTotal={orderTotal}
+                                createdAt={createdAt || customer?.createdAt}
                             />
                         </div>
                     ))}
@@ -88,7 +185,11 @@ function FichaContent() {
 
 export default function FichaPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate font-medium">Carregando sistema...</div>}>
+        <Suspense fallback={
+            <div className="min-h-screen bg-slate-100 flex items-center justify-center text-slate-500 font-bold uppercase text-xs tracking-wider">
+                Carregando sistema de produção...
+            </div>
+        }>
             <FichaContent />
         </Suspense>
     );

@@ -28,10 +28,13 @@ interface OrderItem {
     name: string;
     quantity: number;
     price: number;
+    image?: string;
     personalization?: {
         name?: string;
         theme?: string;
         color?: string;
+        finishDetail?: string;
+        finishColor?: string;
         size?: string;
         observations?: string;
     };
@@ -42,6 +45,7 @@ interface Order {
     customerName: string;
     customerEmail: string;
     customerPhone: string;
+    customerCpf?: string;
     totalAmount: number;
     createdAt: string;
     deadlineDate: string;
@@ -328,15 +332,21 @@ export default function AdminPedidosPage() {
                             {filteredOrders.map(order => {
                                 const urgent = order.status !== 'enviado' && isUrgent(order.deadlineDate);
                                 
-                                // Ficha Técnica Link (LGPD safe)
-                                const firstName = order.customerName ? order.customerName.split(' ')[0] : 'Cliente';
+                                // Ficha Técnica Completa de Produção
                                 const fichaDataPayload = JSON.stringify({
                                     items: order.items || [],
                                     customer: { 
-                                        name: firstName,
-                                        deadline: order.deadlineDate 
+                                        name: order.customerName || 'Cliente',
+                                        phone: order.customerPhone || '',
+                                        email: order.customerEmail || '',
+                                        cpf: order.customerCpf || order.address?.cpf || '',
+                                        address: order.address || null,
+                                        deadline: order.deadlineDate,
+                                        createdAt: order.createdAt
                                     },
-                                    orderId: order.id
+                                    orderTotal: order.totalAmount,
+                                    orderId: order.id,
+                                    createdAt: order.createdAt
                                 });
                                 const base64Data = typeof window !== 'undefined' ? btoa(unescape(encodeURIComponent(fichaDataPayload))) : '';
                                 const fichaUrl = `/ficha?data=${base64Data}`;

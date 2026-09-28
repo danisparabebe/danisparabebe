@@ -1,12 +1,15 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import { productControl } from '@/data/product-control';
 import { PRODUCT_TAXONOMY } from '@/data/product-taxonomy';
 import { TYPES, COLORS, RIBBON_COLORS, BABADOS, PASSA_FITAS } from '@/data/admin-options';
+import { Calendar, Clock, MapPin, Phone, User, CheckSquare, AlertTriangle, FileText, Scissors, Sparkles } from 'lucide-react';
 
 interface TechnicalSheetProps {
     productName: string;
-    productImage: string;
+    productImage?: string;
     productId?: string;
     personalization: {
         name?: string;
@@ -21,6 +24,7 @@ interface TechnicalSheetProps {
     customerName?: string;
     customerPhone?: string;
     customerCpf?: string;
+    customerEmail?: string;
     orderTotal?: number;
     shippingAddress?: {
         line1?: string;
@@ -28,8 +32,14 @@ interface TechnicalSheetProps {
         city?: string;
         state?: string;
         postal_code?: string;
+        street?: string;
+        number?: string;
+        complement?: string;
+        neighborhood?: string;
+        cep?: string;
     } | null;
     deadline?: string;
+    createdAt?: string;
     kitItems?: { qty: number; code: string }[];
 }
 
@@ -45,39 +55,20 @@ function parseFeatures(features: string[]) {
     });
 }
 
-/** Extract finish info from the structured description */
-function extractFinishFromDescription(description: string): string | null {
-    const finishMatch = description.match(/§FINISH§\s*\n([\s\S]*?)(?=\n§|$)/);
-    if (finishMatch) {
-        return finishMatch[1].replace(/🎀\s*/g, '').replace(/Acabamentos especiais:\s*/i, '').trim();
-    }
-    return null;
-}
-
 function extractBabadoColorFromId(id: string): string {
-    // The babado color is the segment(s) right after BAB
     const parts = id.split('-');
     const babIdx = parts.indexOf('BAB');
     
     if (babIdx >= 0) {
         const babadoColors = [];
-        
-        // Read all parts after BAB until we hit a passa-fita ('R_') or the end
         for (let i = babIdx + 1; i < parts.length; i++) {
             const part = parts[i];
-            
-            // Break if we reach ribbon code or standalone 'R'
             if (part.startsWith('R_') || part === 'R') break;
-            
-            // Strip any trailing _01 sequence
             const colorCode = part.split('_')[0];
-            
-            // Validate: it must be a 3-letter code like LIL, VDM or COL (Colorido)
             if (colorCode.match(/^[A-Z]{3}$/)) {
                 babadoColors.push(getColorLabel(colorCode));
             }
         }
-        
         if (babadoColors.length > 0) {
             return babadoColors.join(' e ');
         }
@@ -85,37 +76,47 @@ function extractBabadoColorFromId(id: string): string {
     return '—';
 }
 
-/** Extract passa-fita color from product ID (based on catalog config) */
 function extractPassaFitaColor(id: string): string {
     const parts = id.split('-');
-    
-    // Look for R_BCO, R_RSA, R_ABB
     const ribbonPart = parts.find(p => p.startsWith('R_'));
     if (ribbonPart) {
-        // Fix for suffixes like R_RSA_01 -> match by start
         const color = RIBBON_COLORS.find(r => ribbonPart.startsWith(r.value));
-        // Clean up "Branco" safely from "Padrão (Branco)" or "Branco"
         return color ? color.label.replace('Padrão (', '').replace(')', '') : 'Branco';
     }
-    
-    // Legacy mapping: standalone 'R' meant Passa-fita existed
-    if (parts.some(p => p === 'R')) {
+    if (parts.some(p => p === 'R') || parts.includes('BAB')) {
         return 'Branco';
     }
-    
-    // If it has babado but didn't specify 'R_', it defaults to Padrão (Branco)
-    if (parts.includes('BAB')) {
-        return 'Branco';
-    }
-
     return '—';
 }
 
-/** Extract theme from product name (the part before the · separator) */
 function extractThemeFromName(name: string): string {
     const parts = name.split('·');
     if (parts.length > 1) return parts[0].trim();
     return name;
+}
+
+function findBabadoImage(colorName: string): string | undefined {
+    if (!colorName || colorName === '—') return undefined;
+    const clean = colorName.trim().toLowerCase();
+    const found = BABADOS.find(b => 
+        b.id.toLowerCase() === clean || 
+        b.label.toLowerCase() === clean ||
+        clean.includes(b.label.toLowerCase()) ||
+        b.label.toLowerCase().includes(clean)
+    );
+    return found?.img;
+}
+
+function findPassafitaImage(colorName: string): string | undefined {
+    if (!colorName || colorName === '—') return undefined;
+    const clean = colorName.trim().toLowerCase();
+    const found = PASSA_FITAS.find(p => 
+        p.id.toLowerCase() === clean || 
+        p.label.toLowerCase() === clean ||
+        clean.includes(p.label.toLowerCase()) ||
+        p.label.toLowerCase().includes(clean)
+    );
+    return found?.img;
 }
 
 export function ProductTechnicalSheet({
@@ -127,75 +128,43 @@ export function ProductTechnicalSheet({
     customerName,
     customerPhone,
     customerCpf,
+    customerEmail,
     orderTotal,
     shippingAddress,
     deadline,
+    createdAt,
     kitItems
 }: TechnicalSheetProps) {
-    // Lookup full product data
-    const product = productId ? productControl.find(p => p.id === productId) : null;
+    // Lookup product in database
+    const product = productId ? productControl.find(p => p.id === productId || p.technicalName === productId) : null;
     const features = product?.features || [];
     
-    // If we have a product with features, show its breakdown components.
-    // Otherwise (e.g. personalize configurator), use the passed kitItems.
+    // Items to produce
     const items = (product && features.length > 0)
         ? parseFeatures(features)
         : (kitItems && kitItems.length > 0 ? kitItems : parseFeatures(features));
     
-    // Extract a custom ref if no product was found but we have an image URL
-    let customRef = productId || '—';
-    if (!product && productImage) {
-        try {
-            const urlObj = new URL(productImage, 'http://localhost');
-            const fileParam = urlObj.searchParams.get('file') || productImage.split('/').pop() || '';
-            const cleanName = decodeURIComponent(fileParam).replace(/_01\.(jpeg|jpg|png|webp)$/i, '').replace(/\.(jpeg|jpg|png|webp|JPG|PNG)$/i, '').trim().toUpperCase();
-            
-            // If we have passafita info, try appending it to replicate Step 5 behavior
-            const pCode = RIBBON_COLORS.find(r => r.label === personalization?.finishDetail)?.value;
-            if (pCode && !cleanName.includes(`-${pCode}`)) {
-                 customRef = `${cleanName}-${pCode}`;
-            } else {
-                 customRef = cleanName;
-            }
-        } catch(e) { /* ignore and use fallback */ }
-    }
+    // Resolve final product image
+    const resolvedImage = productImage || product?.images?.[0] || '';
 
-    const technicalRefBase = product?.shortCode || product?.technicalName || customRef;
+    // Technical Code / Ref
+    const technicalRef = product?.shortCode || product?.technicalName || productId || 'PERSONALIZADO';
     const totalPieces = items.reduce((sum, i) => sum + i.qty, 0);
 
-    // Mapear combos de itens para nomes de Kits automáticos
-    let technicalRef = technicalRefBase;
-    if (items.length > 0) {
-        const sigMap: Record<string, number> = {};
-        items.forEach(i => { sigMap[i.code] = (sigMap[i.code] || 0) + i.qty; });
-        const sigKeys = Object.keys(sigMap).sort();
-        const sigObj: Record<string, number> = {};
-        sigKeys.forEach(k => sigObj[k] = sigMap[k]);
-        const sigString = JSON.stringify(sigObj);
+    // Theme & Name
+    const theme = personalization?.theme || extractThemeFromName(productName);
+    const babyName = personalization?.name ? personalization.name.trim() : '';
 
-        let kitPrefix = '';
-        if (sigString === JSON.stringify({"FRG": 1, "FRM": 1, "FRP": 1, "TOA": 1})) kitPrefix = "Kit Completo";
-        else if (sigString === JSON.stringify({"FRG": 1, "FRP": 1, "MNT": 1})) kitPrefix = "Kit Manta";
-        else if (sigString === JSON.stringify({"FRG": 1, "FRP": 1})) kitPrefix = "Kit Fraldas";
-        else if (sigString === JSON.stringify({"BDL": 1, "FAI": 1, "FRG": 1, "FRP": 2, "MIJ": 1, "MNT": 1})) kitPrefix = "Kit Luxinho";
-        else if (sigString === JSON.stringify({"FRG": 2, "MNT": 1})) kitPrefix = "Kit 3 Peças";
-        
-        if (kitPrefix && !technicalRef.includes('KIT')) {
-            technicalRef = `${kitPrefix} - ${technicalRef}`;
-        }
-    }
+    // Finishes (Acabamentos)
+    const babadoColor = product 
+        ? extractBabadoColorFromId(product.id) 
+        : (personalization?.color || 'Branco');
+    
+    let passaFitaLabel = product 
+        ? extractPassaFitaColor(product.id) 
+        : (personalization?.finishDetail || 'Branco');
 
-    // Theme — from personalization, or from the product name
-    const theme = personalization.theme || extractThemeFromName(productName);
-
-    // Babado — from product ID or personalization
-    const babadoColor = product ? extractBabadoColorFromId(product.id) : (personalization.color || '—');
-
-    // Passa-fita — from observations, product ID or personalization
-    let passaFitaLabel = product ? extractPassaFitaColor(product.id) : (personalization.finishDetail || '—');
-    let displayObs = personalization.observations || '';
-
-    // Clean up observation in case the passafita is embedded inside
+    let displayObs = personalization?.observations || '';
     if (displayObs.startsWith('[Passa-fita:')) {
         const match = displayObs.match(/\[Passa-fita: ([^\]]+)\]/);
         if (match) {
@@ -204,234 +173,383 @@ export function ProductTechnicalSheet({
         }
     }
 
-    const babadoImg = BABADOS.find(b => b.id === babadoColor || b.label === babadoColor)?.img;
-    const passafitaImg = PASSA_FITAS.find(p => p.id === passaFitaLabel || p.label === passaFitaLabel)?.img;
+    const babadoImg = findBabadoImage(babadoColor);
+    const passafitaImg = findPassafitaImage(passaFitaLabel);
+
+    // Format Phone for WhatsApp
+    const cleanPhone = customerPhone ? customerPhone.replace(/\D/g, '') : '';
+    const formattedPhone = cleanPhone.length >= 10 
+        ? (cleanPhone.startsWith('55') ? cleanPhone : `55${cleanPhone}`)
+        : '';
+    const waUrl = formattedPhone ? `https://wa.me/${formattedPhone}` : null;
+
+    // Address formatting
+    const street = shippingAddress?.street || shippingAddress?.line1 || '';
+    const number = shippingAddress?.number || '';
+    const complement = shippingAddress?.complement || '';
+    const neighborhood = shippingAddress?.neighborhood || shippingAddress?.line2 || '';
+    const city = shippingAddress?.city || '';
+    const state = shippingAddress?.state || '';
+    const cep = shippingAddress?.postal_code || shippingAddress?.cep || '';
+    const hasAddress = Boolean(street || city || cep);
+
+    // Total formatting
+    const formattedTotal = orderTotal !== undefined && orderTotal !== null
+        ? (orderTotal > 1000 ? orderTotal / 100 : orderTotal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        : null;
+
+    // Urgent deadline check
+    const isUrgent = () => {
+        if (!deadline) return false;
+        const today = new Date();
+        const maxDate = new Date(deadline);
+        const diffDays = Math.ceil((maxDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+        return diffDays <= 3;
+    };
 
     return (
-        <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 items-stretch">
-
-                {/* ═══ LEFT COLUMN: PRODUCTION FICHA ═══ */}
-                <div className="w-full md:w-[420px] shrink-0 bg-white border-2 border-[#1f2937] rounded-xl shadow-[4px_4px_0px_rgba(31,41,55,1)] p-4 flex flex-col justify-between">
-                    <div>
-                        <h2 className="text-[17px] font-heading font-black text-[#1f2937] tracking-tight py-1 bg-dusty-rose/20 text-center rounded mb-1 uppercase leading-none">
-                            Ficha de Produção<br/>
-                            <span className="text-sm text-dusty-rose">{product ? product.name : 'Kit Personalizado'}</span>
-                        </h2>
+        <div className="max-w-5xl mx-auto bg-white border-2 border-slate-800 rounded-2xl shadow-md overflow-hidden text-slate-900 font-sans print:border-none print:shadow-none print:max-w-none print:m-0">
+            
+            {/* ═══ CABEÇALHO DA FICHA ═══ */}
+            <div className="bg-slate-900 text-white p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b-4 border-purple-600 print:bg-slate-900 print:text-white">
+                <div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs font-black tracking-widest uppercase bg-purple-600 text-white px-2 py-0.5 rounded">
+                            DANIS PARA BEBÊ
+                        </span>
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                            Ficha de Produção & Controle Local
+                        </span>
                     </div>
-
-                    <div className="flex flex-col gap-3 relative mt-3">
-
-                        {product ? (
-                            /* ── PRE-CONFIGURED KIT: single large product photo ── */
-                            <div className="relative w-full aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center p-2">
-                                {productImage ? (
-                                    <Image src={productImage} alt={productName} fill className="object-contain p-2" />
-                                ) : (
-                                    <span className="text-slate/50 font-bold uppercase text-[10px]">Sem foto</span>
-                                )}
-                                <div className="absolute top-2 left-2 bg-white/95 px-2 py-0.5 rounded shadow-sm border border-black/5 text-[9px] font-black uppercase tracking-widest text-[#1f2937]">
-                                    Foto do Kit
-                                </div>
-                            </div>
-                        ) : (
-                            /* ── CUSTOM KIT: embroidery photo + babado/passa-fita sidebar ── */
-                            <>
-                                <div className="flex gap-2">
-                                    {/* Embroidery Photo (Large) */}
-                                    <div className="relative flex-1 aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center p-2">
-                                        {productImage ? (
-                                            <Image src={productImage} alt={productName} fill className="object-contain p-2" />
-                                        ) : (
-                                            <span className="text-slate/50 font-bold uppercase text-[10px]">Sem bordado</span>
-                                        )}
-                                        <div className="absolute top-2 left-2 bg-white/95 px-2 py-0.5 rounded shadow-sm border border-black/5 text-[9px] font-black uppercase tracking-widest text-[#1f2937]">
-                                            Foto do Bordado
-                                        </div>
-                                    </div>
-
-                                    {/* Babado & Passa-Fita sidebar */}
-                                    <div className="w-[95px] flex flex-col gap-2 shrink-0">
-                                        <div className="flex flex-col flex-1 gap-0.5">
-                                            <p className="text-[8px] font-black text-[#1f2937] uppercase tracking-wider text-center leading-none">Babado<br/><span className="text-dusty-rose">{babadoColor}</span></p>
-                                            <div className="relative w-full flex-1 rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center">
-                                                {babadoImg ? (
-                                                    <Image src={babadoImg} alt="Babado" fill className="object-cover" />
-                                                ) : (
-                                                    <span className="text-slate/40 text-[8px] font-bold uppercase">S/ Foto</span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col flex-1 gap-0.5">
-                                            <p className="text-[8px] font-black text-[#1f2937] uppercase tracking-wider text-center leading-none">Passa-Fita<br/><span className="text-dusty-rose">{passaFitaLabel}</span></p>
-                                            <div className="relative w-full flex-1 rounded-lg overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center">
-                                                {passafitaImg ? (
-                                                    <Image src={passafitaImg} alt="Passa-Fita" fill className="object-cover" />
-                                                ) : (
-                                                    <span className="text-slate/40 text-[8px] font-bold uppercase">S/ Foto</span>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-
-                        {/* Nome a bordar + Tema — shared by both types */}
-                        <div className="bg-white p-3 rounded-lg border-[3px] border-[#1f2937] relative overflow-hidden text-center">
-                            <p className="text-[8px] font-bold text-[#1f2937] uppercase tracking-[0.25em] leading-none mb-1.5">Nome a Bordar</p>
-                            <p className={`text-3xl font-black ${personalization.name ? 'text-[#1f2937]' : 'text-slate'} font-heading leading-none truncate tracking-tight`}>
-                                {personalization.name || 'SEM NOME'}
-                            </p>
-                            {personalization.name && (
-                                <div className="absolute top-0 right-0 bg-[#1f2937] text-white text-[7px] font-black uppercase px-1.5 py-0.5 rounded-bl-lg tracking-widest shadow-sm">
-                                    Confirmado
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-3 bg-rose-50 border border-rose-100 p-3 rounded-lg">
-                            <div>
-                                <p className="text-[9px] font-bold text-slate uppercase tracking-widest leading-none mb-1.5 opacity-80">Tema</p>
-                                <p className="text-base font-bold text-[#1f2937] leading-none mt-1">{theme || '—'}</p>
-                            </div>
-                            <div>
-                                <p className="text-[9px] font-bold text-slate uppercase tracking-widest leading-none mb-1.5 opacity-80">{product ? 'Cores' : 'Babado / Fita'}</p>
-                                <p className="text-[11px] font-bold text-[#1f2937] leading-tight mt-1">
-                                    {(() => {
-                                        const babadoName = BABADOS.find(b => b.id === babadoColor || b.label === babadoColor)?.label || babadoColor;
-                                        const fitaName = PASSA_FITAS.find(p => p.id === passaFitaLabel || p.label === passaFitaLabel)?.label || passaFitaLabel;
-                                        return `${babadoName} / ${fitaName}`;
-                                    })()}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-3 text-center bg-[#1f2937] py-2 rounded">
-                        <p className="text-[9px] font-bold text-white/70 uppercase tracking-widest mb-0.5">Ref. Produção Final</p>
-                        <p className="font-black text-white text-[15px] break-all px-2">{technicalRef}</p>
-                    </div>
+                    <h1 className="text-2xl font-black tracking-tight mt-1 text-white">
+                        {product ? product.name : productName}
+                    </h1>
+                    <p className="text-xs text-slate-300 font-mono mt-0.5">
+                        Ref. Técnica: <strong className="text-amber-400">{technicalRef}</strong>
+                    </p>
                 </div>
 
-                {/* ═══ RIGHT COLUMN: EXPEDIÇÃO & PEDIDO ═══ */}
-                <div className="flex-1 bg-white border-2 border-[#1f2937] rounded-xl shadow-[4px_4px_0px_rgba(31,41,55,1)] flex flex-col">
+                <div className="flex flex-col sm:items-end gap-1.5 shrink-0">
+                    {orderId && (
+                        <div className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20 text-right">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Número do Pedido</p>
+                            <p className="text-base font-black text-white font-mono">#{orderId.replace('ORDER_', '')}</p>
+                        </div>
+                    )}
+                    {deadline && (
+                        <div className={`px-3 py-1 rounded-md text-xs font-black uppercase flex items-center gap-1.5 ${
+                            isUrgent() ? 'bg-red-500 text-white animate-pulse' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        }`}>
+                            <Clock className="w-3.5 h-3.5" />
+                            Prazo Máx: {new Date(deadline).toLocaleDateString('pt-BR')}
+                        </div>
+                    )}
+                </div>
+            </div>
 
-                    {/* Header: Expedição */}
-                    <div className="p-4 border-b border-black/10 flex justify-between items-center bg-[#faf9f7] rounded-t-xl gap-4">
-                        <h2 className="text-xl font-heading font-black text-[#1f2937] tracking-tight uppercase leading-none">Expedição & Pedido</h2>
-                        {orderId && (
-                            <span className="bg-[#1f2937] text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-widest shrink-0">
-                                Pedido #{orderId.slice(-6).toUpperCase()}
+            {/* ═══ CORPO PRINCIPAL EM 2 COLUNAS ═══ */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-6">
+                
+                {/* ── COLUNA ESQUERDA: FOTO, BORDADO E ACABAMENTOS (7 colunas) ── */}
+                <div className="lg:col-span-7 space-y-6">
+
+                    {/* BLOCO 1: NOME A BORDAR (IMPOSSÍVEL NÃO VER) */}
+                    <div className="bg-amber-50 border-3 border-amber-500 rounded-2xl p-4 text-center relative overflow-hidden shadow-sm">
+                        <div className="absolute top-0 right-0 bg-amber-500 text-slate-900 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg tracking-widest">
+                            Bordado Oficial
+                        </div>
+                        <p className="text-[10px] font-black text-amber-800 uppercase tracking-[0.25em] mb-1">
+                            Nome da Criança a Bordar
+                        </p>
+                        <p className="text-4xl font-black text-slate-900 tracking-tight font-serif py-1">
+                            {babyName || 'SEM NOME'}
+                        </p>
+                        {babyName && (
+                            <p className="text-xs font-bold text-amber-900/80 uppercase tracking-wider mt-1">
+                                (Grafia em caixa mista: <span className="font-normal capitalize">{babyName}</span>)
+                            </p>
+                        )}
+                        <p className="text-[10px] font-bold text-amber-700 mt-2 bg-amber-100/70 py-1 rounded inline-block px-3">
+                            ⚠️ ATENÇÃO: Conferir grafia e acentuação antes de programar o bastidor da máquina.
+                        </p>
+                    </div>
+
+                    {/* BLOCO 2: FOTO DO PEDIDO & REFERÊNCIA VISUAL */}
+                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
+                        <div className="flex justify-between items-center">
+                            <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                                <Sparkles className="w-4 h-4 text-purple-600" />
+                                Referência Visual do Modelo
                             </span>
+                            <span className="text-[11px] font-bold text-slate-500">
+                                Tema: <strong className="text-slate-800">{theme || 'Padrão'}</strong>
+                            </span>
+                        </div>
+
+                        <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-slate-300 bg-white flex items-center justify-center shadow-inner">
+                            {resolvedImage ? (
+                                <Image 
+                                    src={resolvedImage} 
+                                    alt={productName} 
+                                    fill 
+                                    className="object-contain p-2"
+                                    unoptimized
+                                />
+                            ) : (
+                                <div className="text-center p-6 text-slate-400">
+                                    <FileText className="w-12 h-12 mx-auto mb-2 opacity-30" />
+                                    <p className="text-xs font-bold uppercase tracking-wider">Foto de referência não anexada</p>
+                                    <p className="text-[10px] mt-1">Conferir modelo pelo código de catálogo {technicalRef}</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* BLOCO 3: GUIA COMPLETO DE ACABAMENTOS (O QUE A COSTUREIRA PRECISA SABER) */}
+                    <div className="bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-4">
+                        <div className="border-b border-slate-200 pb-2 flex justify-between items-center">
+                            <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                                <Scissors className="w-4 h-4 text-purple-600" />
+                                Guia de Acabamentos & Aviamentos
+                            </h3>
+                            <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full uppercase">
+                                Costura & Montagem
+                            </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            
+                            {/* Babado */}
+                            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 items-center">
+                                <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-300 bg-white shrink-0">
+                                    {babadoImg ? (
+                                        <Image src={babadoImg} alt={babadoColor} fill className="object-cover" unoptimized />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-[9px] font-bold text-slate-400 uppercase text-center p-1">
+                                            Sem Amostra
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Babado (Bordado Inglês)</p>
+                                    <p className="text-sm font-black text-slate-800 truncate">{babadoColor}</p>
+                                    <p className="text-[10px] text-slate-500 mt-0.5">100% Algodão Premium</p>
+                                </div>
+                            </div>
+
+                            {/* Passa-fita */}
+                            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 items-center">
+                                <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-300 bg-white shrink-0">
+                                    {passafitaImg ? (
+                                        <Image src={passafitaImg} alt={passaFitaLabel} fill className="object-cover" unoptimized />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-[9px] font-bold text-slate-400 uppercase text-center p-1">
+                                            Sem Amostra
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Passa-Fita / Fita Cetim</p>
+                                    <p className="text-sm font-black text-slate-800 truncate">{passaFitaLabel}</p>
+                                    <p className="text-[10px] text-slate-500 mt-0.5">Fita de Cetim Embutida</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* Detalhes de Tecido Base e Linha */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-100/70 p-3 rounded-xl text-xs">
+                            <div>
+                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Tecido Base</p>
+                                <p className="font-bold text-slate-800">100% Algodão Branco</p>
+                            </div>
+                            <div>
+                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Tema do Bordado</p>
+                                <p className="font-bold text-slate-800">{theme || 'Padrão'}</p>
+                            </div>
+                            <div className="col-span-2 sm:col-span-1">
+                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Padrão da Vira</p>
+                                <p className="font-bold text-slate-800">Bordado + Babado</p>
+                            </div>
+                        </div>
+
+                        {/* Observações do Cliente */}
+                        {displayObs && (
+                            <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 flex gap-2.5 items-start">
+                                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                                <div>
+                                    <p className="text-[10px] font-black text-amber-900 uppercase tracking-wider">
+                                        Observação Especial do Cliente
+                                    </p>
+                                    <p className="text-xs font-bold text-amber-950 mt-0.5 whitespace-pre-wrap">
+                                        {displayObs}
+                                    </p>
+                                </div>
+                            </div>
                         )}
                     </div>
 
-                    <div className="p-4 space-y-4 flex-1 flex flex-col">
+                </div>
 
-                        {/* Cliente Destaque (Nome + Celular) */}
-                        <div className="bg-[#1f2937]/5 p-3 rounded-lg border border-black/10 flex flex-col gap-1">
-                            <p className="text-[10px] font-black text-slate uppercase tracking-widest">Cliente</p>
-                            <p className="text-xl font-black text-[#1f2937] leading-tight">{customerName || 'NÃO INFORMADO'}</p>
-                            {customerPhone && (
-                                <p className="text-sm font-bold text-[#1f2937] flex items-center gap-1.5 mt-0.5">
-                                    <svg className="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                                    {customerPhone}
-                                </p>
+                {/* ── COLUNA DIREITA: PEÇAS, MEDIDAS, CHECKLIST E EXPEDIÇÃO (5 colunas) ── */}
+                <div className="lg:col-span-5 space-y-6">
+
+                    {/* BLOCO 4: PEÇAS A CONFECCIONAR COM MEDIDAS DE CORTE EXATAS */}
+                    <div className="bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-3">
+                        <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                            <div>
+                                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                                    Peças do Enxoval & Corte
+                                </h3>
+                                <p className="text-[10px] text-slate-500 font-medium">Tabela oficial de medidas Danis</p>
+                            </div>
+                            <span className="text-xs font-black bg-slate-900 text-white px-2.5 py-1 rounded-lg uppercase">
+                                {totalPieces} {totalPieces === 1 ? 'Peça' : 'Peças'}
+                            </span>
+                        </div>
+
+                        <div className="space-y-2">
+                            {items.map((item, idx) => {
+                                const tax = PRODUCT_TAXONOMY[item.code];
+                                const label = tax?.type || getItemLabel(item.code);
+                                const dimensions = tax?.dimensions || 'Conforme padrão';
+                                const material = tax?.material || '100% Algodão';
+
+                                return (
+                                    <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
+                                        <span className="bg-slate-900 text-white text-xs font-black px-2 py-1 rounded-md shrink-0 mt-0.5">
+                                            {item.qty}x
+                                        </span>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-xs font-black text-slate-900 uppercase leading-snug">
+                                                {label}
+                                            </p>
+                                            <div className="flex flex-wrap gap-x-2 gap-y-0.5 mt-1 text-[11px]">
+                                                <span className="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.2 rounded border border-purple-200">
+                                                    📐 Medida: {dimensions}
+                                                </span>
+                                                <span className="text-slate-500">
+                                                    🧵 {material}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* BLOCO 5: ROTEIRO DE PRODUÇÃO / CHECKLIST DE OFICINA */}
+                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
+                        <div className="border-b border-slate-200 pb-1.5 flex justify-between items-center">
+                            <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <CheckSquare className="w-4 h-4 text-emerald-600" />
+                                Checklist de Oficina (Visto Físico)
+                            </h3>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase">Controle Local</span>
+                        </div>
+
+                        <div className="space-y-1.5 text-xs text-slate-700">
+                            {[
+                                { step: '1. Separação de tecidos e corte nas medidas exatas', icon: '✂️' },
+                                { step: `2. Programação do bordado (${babyName || 'Sem nome'}) e tema`, icon: '🧵' },
+                                { step: `3. Aplicação do babado (${babadoColor}) e passa-fita (${passaFitaLabel})`, icon: '🎀' },
+                                { step: '4. Costura, embainhamento e limpeza de pontas de linha', icon: '🪡' },
+                                { step: '5. Passadoria a vapor e conferência rigorosa de medidas', icon: '💨' },
+                                { step: '6. Dobra técnica, cheirinho de bebê e embalagem final', icon: '📦' },
+                            ].map((task, i) => (
+                                <div key={i} className="flex items-center gap-2.5 bg-white p-2 rounded-lg border border-slate-200/80">
+                                    <div className="w-4 h-4 border-2 border-slate-400 rounded shrink-0 print:border-slate-800" />
+                                    <span className="text-sm shrink-0">{task.icon}</span>
+                                    <span className="font-semibold text-slate-800 text-[11px] leading-tight flex-1">
+                                        {task.step}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* BLOCO 6: EXPEDIÇÃO & DESTINATÁRIO */}
+                    <div className="bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-3">
+                        <div className="border-b border-slate-200 pb-1.5 flex justify-between items-center">
+                            <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <MapPin className="w-4 h-4 text-slate-700" />
+                                Dados de Envio & Destinatário
+                            </h3>
+                            {formattedTotal && (
+                                <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                    {formattedTotal}
+                                </span>
                             )}
                         </div>
 
-                        {/* Dados de Frete / Endereço (Focus on completeness for label generation) */}
-                        {shippingAddress ? (
-                            <div className="border-l-4 border-[#1f2937] pl-3 py-1">
-                                <p className="text-[10px] font-bold text-slate uppercase tracking-widest mb-1.5">Ficha de Frete</p>
-                                {customerCpf ? (
-                                    <p className="text-xs font-semibold text-charcoal mb-0.5">
-                                        <span className="opacity-60 uppercase font-bold text-[10px] mr-1">CPF:</span> {customerCpf}
+                        <div className="space-y-2 text-xs">
+                            <div>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Cliente Destinatário</p>
+                                <p className="font-bold text-slate-900 text-sm">{customerName || 'Cliente não identificado'}</p>
+                            </div>
+
+                            {/* Telefone / WhatsApp */}
+                            {customerPhone && (
+                                <div className="flex items-center gap-2">
+                                    <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    {waUrl ? (
+                                        <a 
+                                            href={waUrl} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+                                        >
+                                            {customerPhone}
+                                            <span className="text-[10px] text-emerald-700 bg-emerald-100 px-1 rounded uppercase font-black">WhatsApp</span>
+                                        </a>
+                                    ) : (
+                                        <span className="font-bold text-slate-800">{customerPhone}</span>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* CPF */}
+                            {customerCpf && (
+                                <p className="text-[11px] font-semibold text-slate-600">
+                                    <span className="font-bold uppercase text-[10px] text-slate-400 mr-1">CPF (Envio):</span>
+                                    {customerCpf}
+                                </p>
+                            )}
+
+                            {/* Endereço */}
+                            {hasAddress ? (
+                                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-0.5 text-[11px]">
+                                    <p className="font-bold text-slate-800">
+                                        {street}{number ? `, nº ${number}` : ''} {complement ? `(${complement})` : ''}
                                     </p>
-                                ) : (
-                                    <div className="bg-amber-50 border border-amber-300 rounded-md px-2 py-1.5 mb-1.5 flex items-center gap-1.5">
-                                        <span className="text-amber-700 text-[10px] font-black uppercase tracking-wider">CPF Pendente</span>
-                                        <span className="text-amber-600 text-[9px]">— Solicitar ao cliente via WhatsApp</span>
-                                    </div>
-                                )}
-                                <p className="text-xs font-semibold text-charcoal mb-0.5">
-                                    <span className="opacity-60 uppercase font-bold text-[10px] mr-1">Rua:</span> {shippingAddress.line1}
-                                </p>
-                                {shippingAddress.line2 && (
-                                    <p className="text-xs font-semibold text-charcoal mb-0.5">
-                                        <span className="opacity-60 uppercase font-bold text-[10px] mr-1">Compl/Bairro:</span> {shippingAddress.line2}
+                                    {neighborhood && (
+                                        <p className="text-slate-600 font-medium">Bairro: {neighborhood}</p>
+                                    )}
+                                    <p className="font-bold text-slate-800 uppercase mt-1">
+                                        {city} - {state} <span className="font-mono text-slate-500 font-normal ml-1">CEP: {cep}</span>
                                     </p>
-                                )}
-                                <p className="text-xs font-bold text-[#1f2937] uppercase mt-1">
-                                    {shippingAddress.city} - {shippingAddress.state} <span className="text-slate font-medium ml-1">/ CEP: {shippingAddress.postal_code}</span>
-                                </p>
-                            </div>
-                        ) : (
-                            <div className="border-l-4 border-dusty-rose pl-3 py-1 bg-dusty-rose/5 rounded-r">
-                                <p className="text-[10px] font-bold text-dusty-rose uppercase tracking-widest mb-0.5">Privacidade LGPD</p>
-                                <p className="text-[10px] font-semibold text-slate">Endereço, CPF e contato ocultos na versão de produção.</p>
-                            </div>
-                        )}
-
-                        {/* Deadline Box (Highly Emphasized) */}
-                        {deadline && (
-                            <div className="bg-red-50 border-2 border-red-500 rounded-lg p-3 text-center shadow-sm">
-                                <p className="text-[10px] font-black text-red-700 uppercase tracking-widest leading-none mb-1">
-                                    MÁXIMO LIMITE PARA ENVIO
-                                </p>
-                                <p className="text-2xl font-black text-red-600 leading-none">
-                                    {new Date(deadline).toLocaleDateString('pt-BR')}
-                                </p>
-                            </div>
-                        )}
-
-                        {/* Items Table */}
-                        {items.length > 0 && (
-                            <div className="pt-3 border-t border-black/5 flex-1">
-                                <div className="flex justify-between items-end mb-2">
-                                    <p className="text-[10px] font-bold text-slate uppercase tracking-widest">Itens a Separar</p>
-                                    <span className="text-[10px] font-black text-[#1f2937] px-2 py-0.5 bg-black/5 rounded uppercase">{totalPieces} Peças</span>
                                 </div>
-                                
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
-                                    {items.map((item, idx) => (
-                                        <div key={idx} className="flex items-center py-1.5 border-b border-black/5">
-                                            <span className="bg-[#1f2937] text-white text-[10px] sm:text-[11px] font-black px-1.5 py-0.5 rounded mr-2 shrink-0">{item.qty}x</span>
-                                            <span className="font-bold text-[#1f2937] uppercase text-[10px] sm:text-[11px] leading-tight flex-1">
-                                                {getItemLabel(item.code)}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Total Paid */}
-                        {orderTotal !== undefined && (
-                            <div className="mt-auto pt-3 border-t-2 border-dashed border-black/20 flex justify-between items-center bg-emerald-50 p-3 rounded shadow-inner">
-                                <p className="text-[11px] font-black text-emerald-800 uppercase tracking-widest">Total Geral Pago</p>
-                                <p className="text-xl font-black text-emerald-600">
-                                    {(orderTotal / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                </p>
-                            </div>
-                        )}
-
-                        {/* Client Observations (Warning) */}
-                        {displayObs && (
-                            <div className="bg-amber-50 border border-amber-300 p-2.5 rounded flex gap-2.5 items-center mt-2">
-                                <p className="text-amber-800 text-lg leading-none">⚠</p>
-                                <div>
-                                    <p className="text-[9px] font-black text-amber-900 uppercase tracking-widest leading-none mb-0.5">Nota de Produção Adicional</p>
-                                    <p className="text-xs font-bold text-amber-950 uppercase leading-none">{displayObs}</p>
-                                </div>
-                            </div>
-                        )}
-                        
+                            ) : (
+                                <p className="text-[11px] text-slate-400 italic">Endereço de entrega não disponível no registro.</p>
+                            )}
+                        </div>
                     </div>
+
                 </div>
 
             </div>
+
+            {/* ═══ RODAPÉ DA FICHA ═══ */}
+            <div className="bg-slate-100 border-t border-slate-200 px-6 py-3 flex flex-col sm:flex-row justify-between items-center text-[10px] text-slate-500 font-medium gap-2">
+                <span>
+                    Documento de Controle Interno — Danis Para Bebê Confecções Artesanais
+                </span>
+                <span>
+                    {createdAt ? `Emissão: ${new Date(createdAt).toLocaleString('pt-BR')}` : `Data: ${new Date().toLocaleDateString('pt-BR')}`}
+                </span>
+            </div>
+
         </div>
     );
 }
