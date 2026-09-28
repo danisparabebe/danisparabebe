@@ -159,8 +159,15 @@ export async function POST(request: Request) {
         }
 
         // 2. Add Shipping as a Line Item (if greater than 0)
-        if (shipping && shipping > 0) {
-            const shippingCents = Math.round(shipping * 100);
+        const isTestOrder = items.some((it: any) => {
+            const rid = resolveProductId(it.productId || it.id);
+            return rid === 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO' || (it.price || 0) <= 5;
+        });
+
+        const effectiveShipping = isTestOrder ? 0 : (shipping || 0);
+
+        if (effectiveShipping > 0) {
+            const shippingCents = Math.round(effectiveShipping * 100);
             const shippingItem = {
                 description: `Frete`,
                 price: shippingCents,
@@ -168,7 +175,9 @@ export async function POST(request: Request) {
             };
             ipItems.push(shippingItem);
             calculatedTotalAmountCents += shippingCents;
-            console.log(`🚚 Shipping verificado: R$ ${(shipping).toFixed(2)}`);
+            console.log(`🚚 Shipping verificado: R$ ${(effectiveShipping).toFixed(2)}`);
+        } else {
+            console.log(`🚚 Frete GRÁTIS aplicado (Teste ou Isenção)`);
         }
 
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
