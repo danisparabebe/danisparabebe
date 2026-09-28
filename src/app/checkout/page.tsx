@@ -117,7 +117,8 @@ export default function CheckoutPage() {
                         if (shipRes.ok) {
                             const options = await shipRes.json();
                             if (options && options.length > 0) {
-                                useCartStore.getState().setShipping(options[0].price);
+                                const isTestItem = items.some(it => (it.price || 0) <= 5 || it.productId === 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO');
+                                useCartStore.getState().setShipping(isTestItem ? 0 : options[0].price);
                             }
                         }
                     } catch (e) {
@@ -163,10 +164,12 @@ export default function CheckoutPage() {
         setIsProcessing(true);
         const loadingToast = toast.loading('Preparando pagamento seguro...');
         try {
+            const isTestItem = items.some(it => (it.price || 0) <= 5 || it.productId === 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO');
+            const finalShipping = isTestItem ? 0 : shipping;
             const response = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items, shipping, customer: formData, cancelPath: '/checkout' }),
+                body: JSON.stringify({ items, shipping: finalShipping, customer: formData, cancelPath: '/checkout' }),
             });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Falha ao iniciar pagamento');

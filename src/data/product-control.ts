@@ -4,7 +4,7 @@ export const productControl: ManagedProduct[] = [
     {
         "id": "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO",
         "shortCode": "DPB-0001",
-        "name": "Monograma Rosé · Kit Manta",
+        "name": "Monograma Rosé · Kit Manta (TESTE R$ 5,00)",
         "technicalName": "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO",
         "description": "§INTRO§\nSonho de princesa! Este kit Monograma em Rosê é puro encanto — perfeito para receber sua bebê com muito amor e estilo.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§FINISH§\n🎀 Acabamentos especiais: Babado (Bordado Inglês)\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
         "features": [
@@ -12,11 +12,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 201,
+        "priceFull": 5,
         "originalPriceFull": 225,
-        "pixPrice": 195,
-        "pixDiscountPct": 3,
-        "discountPct": 11,
+        "pixPrice": 5,
+        "pixDiscountPct": 0,
+        "discountPct": 98,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO_01.jpeg"
         ],
