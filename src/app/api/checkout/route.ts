@@ -161,7 +161,7 @@ export async function POST(request: Request) {
         // 2. Add Shipping as a Line Item (if greater than 0)
         const isTestOrder = items.some((it: any) => {
             const rid = resolveProductId(it.productId || it.id);
-            return rid === 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO' || (it.price || 0) <= 5;
+            return rid === 'MAS-KIT-JDE-VDM-BAB-VDM_02' || (it.price || 0) <= 1;
         });
 
         const effectiveShipping = isTestOrder ? 0 : (shipping || 0);

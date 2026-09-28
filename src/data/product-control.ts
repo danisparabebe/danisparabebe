@@ -4,7 +4,7 @@ export const productControl: ManagedProduct[] = [
     {
         "id": "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO",
         "shortCode": "DPB-0001",
-        "name": "Monograma Rosé · Kit Manta (TESTE R$ 5,00)",
+        "name": "Monograma Rosé · Kit Manta",
         "technicalName": "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO",
         "description": "§INTRO§\nSonho de princesa! Este kit Monograma em Rosê é puro encanto — perfeito para receber sua bebê com muito amor e estilo.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§FINISH§\n🎀 Acabamentos especiais: Babado (Bordado Inglês)\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
         "features": [
@@ -12,11 +12,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 5,
+        "priceFull": 201,
         "originalPriceFull": 225,
-        "pixPrice": 5,
-        "pixDiscountPct": 0,
-        "discountPct": 98,
+        "pixPrice": 195,
+        "pixDiscountPct": 3,
+        "discountPct": 11,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO_01.jpeg"
         ],
@@ -1834,9 +1834,9 @@ export const productControl: ManagedProduct[] = [
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_01",
         "shortCode": "DPB-0063",
-        "name": "Jardim Encantado Militar · Kit Fraldas",
+        "name": "Safari Militar · Kit Fraldas",
         "technicalName": "MAS-KIT-JDE-VDM-BAB-VDM_01",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Jardim Encantado em Verde Militar combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 2x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Safari em Verde Militar combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 2x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
         "features": [
             "1x FRG",
             "2x FRP"
@@ -1865,15 +1865,15 @@ export const productControl: ManagedProduct[] = [
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_02",
         "shortCode": "DPB-0064",
-        "name": "Jardim Encantado Militar · Kit Fraldas",
+        "name": "Safari Militar · Kit Fraldas (TESTE R$ 1,00)",
         "technicalName": "MAS-KIT-JDE-VDM-BAB-VDM_02",
-        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Jardim Encantado em Verde Militar, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 2 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
+        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Safari em Verde Militar, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 2 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
         "features": [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 90,
-        "discountPct": 5,
+        "priceFull": 1,
+        "discountPct": 98,
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_02.jpeg"
         ],
@@ -1887,8 +1887,8 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício"
         ],
         "originalPriceFull": 95,
-        "pixPrice": 87,
-        "pixDiscountPct": 3,
+        "pixPrice": 1,
+        "pixDiscountPct": 0,
         "netValue": 87
     },
     {

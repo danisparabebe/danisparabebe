@@ -117,7 +117,7 @@ export default function CheckoutPage() {
                         if (shipRes.ok) {
                             const options = await shipRes.json();
                             if (options && options.length > 0) {
-                                const isTestItem = items.some(it => (it.price || 0) <= 5 || it.productId === 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO');
+                                const isTestItem = items.some(it => (it.price || 0) <= 1 || it.productId === 'MAS-KIT-JDE-VDM-BAB-VDM_02');
                                 useCartStore.getState().setShipping(isTestItem ? 0 : options[0].price);
                             }
                         }
@@ -164,7 +164,7 @@ export default function CheckoutPage() {
         setIsProcessing(true);
         const loadingToast = toast.loading('Preparando pagamento seguro...');
         try {
-            const isTestItem = items.some(it => (it.price || 0) <= 5 || it.productId === 'FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO');
+            const isTestItem = items.some(it => (it.price || 0) <= 1 || it.productId === 'MAS-KIT-JDE-VDM-BAB-VDM_02');
             const finalShipping = isTestItem ? 0 : shipping;
             const response = await fetch('/api/checkout', {
                 method: 'POST',

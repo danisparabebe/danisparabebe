@@ -41,7 +41,7 @@ export function Footer({ simple = false }: { simple?: boolean }) {
                         <div>
                             <h3 className="font-heading font-bold text-lg mb-6 text-charcoal">Central de Ajuda</h3>
                             <ul className="space-y-3">
-                                <li><Link href="/conta?aba=pedidos" className="text-sm text-slate hover:text-sage-green transition-colors">Rastreie seu Pedido</Link></li>
+                                <li><Link href="/acompanhar" className="text-sm text-slate hover:text-sage-green transition-colors">Rastreie seu Pedido</Link></li>
                                 <li><Link href="/politicas" className="text-sm text-slate hover:text-sage-green transition-colors">Trocas e Devoluções</Link></li>
                                 <li><Link href="/politicas" className="text-sm text-slate hover:text-sage-green transition-colors">Prazos de Envio</Link></li>
                                 <li><Link href="/perguntas-frequentes" className="text-sm text-slate hover:text-sage-green transition-colors">Perguntas Frequentes</Link></li>

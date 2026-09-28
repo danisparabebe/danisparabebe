@@ -148,6 +148,16 @@ function SuccessContent() {
         ? `${orderData.address.city}/${orderData.address.state || ''}`
         : null;
 
+    if (loading) {
+        return (
+            <div className="w-full max-w-4xl mx-auto space-y-6 flex flex-col items-center justify-center min-h-[50vh]">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-dusty-rose mb-4"></div>
+                <p className="text-dusty-rose font-medium text-lg animate-pulse">Carregando seu pedido...</p>
+                <p className="text-sm text-gray-500">Buscando as informações mais recentes</p>
+            </div>
+        );
+    }
+
     return (
         <div className="w-full max-w-4xl mx-auto space-y-6">
 
