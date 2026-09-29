@@ -1,24 +1,43 @@
 import * as admin from 'firebase-admin';
 
-if (!admin.apps.length) {
-    if (process.env.FIREBASE_PRIVATE_KEY) {
-        // A Vercel frequentemente injeta aspas duplas nas variáveis com múltiplas linhas
-        let rawKey = process.env.FIREBASE_PRIVATE_KEY;
-        rawKey = rawKey.replace(/^"|"$/g, '').replace(/^'|'$/g, ''); // Remove aspas em volta
-        rawKey = rawKey.replace(/\\n/g, '\n'); // Transforma o texto \n em quebra de linha real
+function formatPrivateKey(key: string): string {
+    if (!key) return '';
+    let k = key.trim();
+    if ((k.startsWith('"') && k.endsWith('"')) || (k.startsWith("'") && k.endsWith("'"))) {
+        k = k.slice(1, -1);
+    }
+    // Suporta tanto \n literais quanto quebras reais
+    return k.replace(/\\n/g, '\n');
+}
 
-        admin.initializeApp({
-            credential: admin.credential.cert({
-                projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-                clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-                privateKey: rawKey,
-            }),
-        });
-    } else {
-        console.warn('⚠️ FIREBASE_PRIVATE_KEY is missing. Inicializando app genérico para passar o build.');
-        admin.initializeApp({
-            projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'demo-project'
-        });
+if (!admin.apps.length) {
+    let initialized = false;
+
+    if (process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+        try {
+            const formattedKey = formatPrivateKey(process.env.FIREBASE_PRIVATE_KEY);
+            admin.initializeApp({
+                credential: admin.credential.cert({
+                    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'danisparabebeofc',
+                    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+                    privateKey: formattedKey,
+                }),
+            });
+            initialized = true;
+        } catch (certErr) {
+            console.error('⚠️ Falha ao inicializar credencial do Firebase Admin com FIREBASE_PRIVATE_KEY:', certErr);
+        }
+    }
+
+    if (!initialized) {
+        console.warn('⚠️ Inicializando Firebase Admin com fallback para evitar quebra no build.');
+        try {
+            admin.initializeApp({
+                projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'danisparabebeofc'
+            });
+        } catch (fallbackErr) {
+            console.error('⚠️ Falha no fallback do Firebase Admin:', fallbackErr);
+        }
     }
 }
 
