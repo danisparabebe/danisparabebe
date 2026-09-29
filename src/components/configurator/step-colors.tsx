@@ -3,8 +3,9 @@
 import { useConfiguratorStore } from '@/store/configurator-store';
 import { Check, ArrowLeft, ArrowRight, Info, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import { BABADOS, PASSA_FITAS } from '@/data/admin-options';
 
@@ -83,13 +84,30 @@ export function StepColors() {
     const {
         acabamentoColor, setAcabamentoColor,
         passafitaColor, setPassafitaColor,
-        observations, setObservations,
         nextStep, previousStep,
     } = useConfiguratorStore();
 
-    const [showObs, setShowObs] = useState(!!observations);
+    // Passa-fita Branco é o padrão oficial de enxoval da Danis. Pré-seleciona se vazio.
+    useEffect(() => {
+        if (!passafitaColor) {
+            setPassafitaColor('Branco');
+        }
+    }, [passafitaColor, setPassafitaColor]);
 
-    const canProceed = acabamentoColor !== '' && passafitaColor !== '';
+    const canProceed = Boolean(acabamentoColor && passafitaColor);
+
+    const handleNext = () => {
+        if (!acabamentoColor) {
+            toast.error('Por favor, selecione a cor do Babado para continuar.');
+            window.scrollTo({ top: 80, behavior: 'smooth' });
+            return;
+        }
+        if (!passafitaColor) {
+            toast.error('Por favor, selecione a cor do Passa-Fita para continuar.');
+            return;
+        }
+        nextStep();
+    };
 
     return (
         <div className="max-w-4xl mx-auto space-y-4 pb-32 md:pb-16 px-1">
@@ -131,37 +149,43 @@ export function StepColors() {
                 </p>
             </div>
 
-
-            {/* Always visible Floating Next Button */}
+            {/* Barra Inferior com Alto Contraste e Feedback Visual */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="fixed md:sticky bottom-0 left-0 right-0 md:bottom-auto z-40
                            bg-[#1f2937] text-white px-5 py-4 md:rounded-2xl
                            flex items-center justify-between
-                           shadow-[0_-8px_30px_rgba(0,0,0,0.12)] md:shadow-xl gap-4 border border-[#1f2937] mt-6"
+                           shadow-[0_-8px_30px_rgba(0,0,0,0.18)] md:shadow-xl gap-4 border border-slate-700/80 mt-6"
             >
                 <button
                     onClick={previousStep}
                     className="cursor-pointer flex items-center justify-center w-12 h-12 shrink-0 rounded-xl border-2 border-white/20 text-white hover:border-white hover:bg-white/10 transition-all active:scale-95"
+                    title="Voltar ao passo anterior"
                 >
                     <ArrowLeft className="w-5 h-5" />
                 </button>
-                <div className="flex-1 text-center md:text-left hidden md:block">
+
+                <div className="flex-1 text-center md:text-left hidden sm:block">
                     {canProceed ? (
-                        <p className="text-xs font-bold text-[#1a9e52] uppercase tracking-widest flex items-center gap-1.5 md:ml-4">
-                            <Check className="w-4 h-4" strokeWidth={3} /> Tudo selecionado
+                        <p className="text-xs font-bold text-[#ADCEB3] uppercase tracking-widest flex items-center gap-1.5 md:ml-4">
+                            <Check className="w-4 h-4 text-[#ADCEB3]" strokeWidth={3} /> Babado e Passa-Fita selecionados
                         </p>
                     ) : (
-                        <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest md:ml-4">
-                            Selecione Babado e Passa-Fita para avançar
+                        <p className="text-xs font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5 md:ml-4">
+                            <AlertTriangle className="w-4 h-4" />
+                            {!acabamentoColor ? 'Escolha a cor do Babado acima' : 'Escolha a cor do Passa-Fita'}
                         </p>
                     )}
                 </div>
+
                 <button
-                    onClick={nextStep}
-                    disabled={!canProceed}
-                    className="cursor-pointer flex-1 md:w-auto bg-sage-green hover:bg-[#9cbd9f] disabled:bg-black/10 disabled:text-black/30 text-charcoal px-8 py-3.5 h-12 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-md active:scale-[0.98] disabled:shadow-none flex items-center justify-center gap-2"
+                    onClick={handleNext}
+                    className={`cursor-pointer flex-1 sm:flex-initial md:w-auto px-8 py-3.5 h-12 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 ${
+                        canProceed
+                            ? 'bg-[#ADCEB3] hover:bg-[#9cbd9f] text-[#1f2937] shadow-[#ADCEB3]/25 ring-2 ring-[#ADCEB3]/50'
+                            : 'bg-white/20 hover:bg-white/30 text-white border-2 border-white/40'
+                    }`}
                 >
                     Próximo Passo <ArrowRight className="w-4 h-4" />
                 </button>
