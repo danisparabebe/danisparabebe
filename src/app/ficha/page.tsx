@@ -4,7 +4,109 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ProductTechnicalSheet } from '@/components/product/product-technical-sheet';
+import { productControl } from '@/data/product-control';
 import { ShoppingBag, ArrowLeft, Printer, AlertCircle, RefreshCw } from 'lucide-react';
+
+function resolveItemCode(productId?: string, productName?: string): string {
+    const id = (productId || '').toUpperCase();
+    const nm = (productName || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+    if (id.includes('FRG') || nm.includes('fralda grande')) return 'FRG';
+    if (id.includes('FRP') || nm.includes('fralda pequena')) return 'FRP';
+    if (id.includes('FRM') || nm.includes('fralda media')) return 'FRM';
+    if (id.includes('MNT') || nm.includes('manta')) return 'MNT';
+    if (id.includes('TOB') || nm.includes('toalha de banho')) return 'TOB';
+    if (id.includes('TOF') || nm.includes('toalha fralda')) return 'TOF';
+    if (id.includes('BDL') || nm.includes('body manga longa')) return 'BDL';
+    if (id.includes('BDC') || nm.includes('body')) return 'BDC';
+    if (id.includes('MIJ') || nm.includes('mijao')) return 'MIJ';
+    if (id.includes('SHO') || nm.includes('short')) return 'SHO';
+    if (id.includes('TOU') || nm.includes('touca')) return 'TOU';
+    if (id.includes('FAI') || nm.includes('faixa')) return 'FAI';
+
+    return 'FRP';
+}
+
+interface ConsolidatedSheetItem {
+    name: string;
+    image?: string;
+    productId?: string;
+    personalization?: any;
+    kitItems?: { qty: number; code: string }[];
+}
+
+function consolidateItemsForProduction(rawItems: any[]): ConsolidatedSheetItem[] {
+    if (!Array.isArray(rawItems) || rawItems.length === 0) return [];
+
+    const sheets: ConsolidatedSheetItem[] = [];
+    const customGroups: Record<string, {
+        items: any[];
+        personalization: any;
+        image?: string;
+        theme?: string;
+    }> = {};
+
+    for (const item of rawItems) {
+        const prodId = (item.productId || item.id || '').toString();
+        const foundCatalog = productControl.find(p => p.id === prodId || p.technicalName === prodId);
+
+        // Se for do Monte Seu Kit / configurador ou item customizado avulso
+        const isCustom = !foundCatalog || prodId.startsWith('custom-') || prodId.startsWith('kit-');
+
+        if (isCustom && item.personalization) {
+            const pers = item.personalization || {};
+            const key = `${pers.name || 'SEM_NOME'}_${pers.theme || 'SEM_TEMA'}_${pers.color || 'SEM_COR'}_${pers.finishDetail || 'PADRAO'}`;
+            
+            if (!customGroups[key]) {
+                customGroups[key] = {
+                    items: [],
+                    personalization: pers,
+                    image: item.image,
+                    theme: pers.theme
+                };
+            }
+            customGroups[key].items.push(item);
+        } else {
+            sheets.push({
+                name: item.name,
+                image: item.image,
+                productId: prodId,
+                personalization: item.personalization || {},
+            });
+        }
+    }
+
+    // Consolida kits customizados agrupando peças com a mesma personalização
+    for (const key of Object.keys(customGroups)) {
+        const group = customGroups[key];
+        const groupItems = group.items;
+
+        const piecesMap: Record<string, number> = {};
+        for (const git of groupItems) {
+            const code = resolveItemCode(git.productId, git.name);
+            const qty = git.quantity || 1;
+            piecesMap[code] = (piecesMap[code] || 0) + qty;
+        }
+
+        const kitItems = Object.entries(piecesMap).map(([code, qty]) => ({ qty, code }));
+        const totalPieces = kitItems.reduce((acc, p) => acc + p.qty, 0);
+
+        let groupName = `Kit Personalizado · ${group.theme || 'Monte Seu Kit'}`;
+        if (groupItems.length === 1 && totalPieces === 1) {
+            groupName = groupItems[0].name || 'Peça Personalizada';
+        }
+
+        sheets.push({
+            name: groupName,
+            image: group.image || groupItems[0]?.image,
+            productId: 'CUSTOM-KIT',
+            personalization: group.personalization,
+            kitItems: kitItems
+        });
+    }
+
+    return sheets;
+}
 
 function FichaContent() {
     const searchParams = useSearchParams();
@@ -112,6 +214,7 @@ function FichaContent() {
 
     const { items, customer, orderId, orderTotal, createdAt } = orderData;
     const itemsToProduce = items || [];
+    const sheetsToProduce = consolidateItemsForProduction(itemsToProduce);
 
     return (
         <div className="min-h-screen bg-slate-100 py-6 px-4 print:bg-white print:p-0">
@@ -150,7 +253,7 @@ function FichaContent() {
             </div>
 
             {/* Lista de Fichas dos Itens */}
-            {itemsToProduce.length === 0 ? (
+            {sheetsToProduce.length === 0 ? (
                 <div className="text-center p-12 bg-white rounded-2xl shadow-sm border border-slate-200 max-w-5xl mx-auto">
                     <p className="text-sm font-bold uppercase tracking-wider text-slate-400">
                         Nenhum item encontrado neste pedido.
@@ -158,13 +261,14 @@ function FichaContent() {
                 </div>
             ) : (
                 <div className="max-w-5xl mx-auto space-y-8">
-                    {itemsToProduce.map((item: any, idx: number) => (
+                    {sheetsToProduce.map((sheetItem: any, idx: number) => (
                         <div key={idx} className="print:break-inside-avoid print:mb-8">
                             <ProductTechnicalSheet
-                                productName={item.name}
-                                productImage={item.image}
-                                productId={item.productId || item.id}
-                                personalization={item.personalization || {}}
+                                productName={sheetItem.name}
+                                productImage={sheetItem.image}
+                                productId={sheetItem.productId}
+                                kitItems={sheetItem.kitItems}
+                                personalization={sheetItem.personalization || {}}
                                 customerName={customer?.name}
                                 customerPhone={customer?.phone}
                                 customerCpf={customer?.cpf}

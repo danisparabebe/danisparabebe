@@ -95,28 +95,73 @@ function extractThemeFromName(name: string): string {
     return name;
 }
 
+function normalizeText(s: string): string {
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
 function findBabadoImage(colorName: string): string | undefined {
     if (!colorName || colorName === '—') return undefined;
-    const clean = colorName.trim().toLowerCase();
-    const found = BABADOS.find(b => 
-        b.id.toLowerCase() === clean || 
-        b.label.toLowerCase() === clean ||
-        clean.includes(b.label.toLowerCase()) ||
-        b.label.toLowerCase().includes(clean)
+    const clean = colorName.trim();
+    const cleanNorm = normalizeText(clean);
+
+    // 1. Caso especial Rosé / Rosê: deve sempre pegar o Rosê exato, NUNCA o Rosê Claro
+    if (cleanNorm === 'rose') {
+        const roseExact = BABADOS.find(b => normalizeText(b.id) === 'rose' || normalizeText(b.label) === 'rose');
+        if (roseExact) return roseExact.img;
+    }
+
+    // 2. Caso especial Rosê Claro: deve pegar Rosê Claro
+    if (cleanNorm.includes('rose') && cleanNorm.includes('claro')) {
+        const roseClaro = BABADOS.find(b => normalizeText(b.id).includes('claro') || normalizeText(b.label).includes('claro'));
+        if (roseClaro) return roseClaro.img;
+    }
+
+    // 3. Match EXATO (com ou sem acentos)
+    const exact = BABADOS.find(b => 
+        normalizeText(b.id) === cleanNorm || 
+        normalizeText(b.label) === cleanNorm
     );
-    return found?.img;
+    if (exact) return exact.img;
+
+    // 4. Match parcial ordenado (priorizando menor diferença de tamanho de string)
+    const sorted = [...BABADOS].sort((a, b) => a.label.length - b.label.length);
+    const partial = sorted.find(b => {
+        const bNorm = normalizeText(b.label);
+        return bNorm.includes(cleanNorm) || cleanNorm.includes(bNorm);
+    });
+    return partial?.img;
 }
 
 function findPassafitaImage(colorName: string): string | undefined {
     if (!colorName || colorName === '—') return undefined;
-    const clean = colorName.trim().toLowerCase();
+    const cleanNorm = normalizeText(colorName.trim());
     const found = PASSA_FITAS.find(p => 
-        p.id.toLowerCase() === clean || 
-        p.label.toLowerCase() === clean ||
-        clean.includes(p.label.toLowerCase()) ||
-        p.label.toLowerCase().includes(clean)
+        normalizeText(p.id) === cleanNorm || 
+        normalizeText(p.label) === cleanNorm ||
+        cleanNorm.includes(normalizeText(p.label)) ||
+        normalizeText(p.label).includes(cleanNorm)
     );
     return found?.img;
+}
+
+function resolveItemCode(productId?: string, productName?: string): string {
+    const id = (productId || '').toUpperCase();
+    const nm = normalizeText(productName || '');
+
+    if (id.includes('FRG') || nm.includes('fralda grande')) return 'FRG';
+    if (id.includes('FRP') || nm.includes('fralda pequena')) return 'FRP';
+    if (id.includes('FRM') || nm.includes('fralda media')) return 'FRM';
+    if (id.includes('MNT') || nm.includes('manta')) return 'MNT';
+    if (id.includes('TOB') || nm.includes('toalha de banho')) return 'TOB';
+    if (id.includes('TOF') || nm.includes('toalha fralda')) return 'TOF';
+    if (id.includes('BDL') || nm.includes('body manga longa')) return 'BDL';
+    if (id.includes('BDC') || nm.includes('body')) return 'BDC';
+    if (id.includes('MIJ') || nm.includes('mijao')) return 'MIJ';
+    if (id.includes('SHO') || nm.includes('short')) return 'SHO';
+    if (id.includes('TOU') || nm.includes('touca')) return 'TOU';
+    if (id.includes('FAI') || nm.includes('faixa')) return 'FAI';
+
+    return 'FRP';
 }
 
 export function ProductTechnicalSheet({
@@ -140,9 +185,16 @@ export function ProductTechnicalSheet({
     const features = product?.features || [];
     
     // Items to produce
-    const items = (product && features.length > 0)
-        ? parseFeatures(features)
-        : (kitItems && kitItems.length > 0 ? kitItems : parseFeatures(features));
+    let items: { qty: number; code: string }[] = [];
+    if (kitItems && kitItems.length > 0) {
+        items = kitItems;
+    } else if (product && features.length > 0) {
+        items = parseFeatures(features);
+    } else {
+        // Para itens customizados ou avulsos (ex: Monte seu kit com 1 peça)
+        const deducedCode = resolveItemCode(productId, productName);
+        items = [{ qty: 1, code: deducedCode }];
+    }
     
     // Resolve final product image
     const resolvedImage = productImage || product?.images?.[0] || '';

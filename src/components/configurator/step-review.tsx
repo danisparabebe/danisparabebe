@@ -313,24 +313,6 @@ export function StepReview() {
                             )}
                         </div>
 
-                        {/* Obs Placeholder */}
-                        <div className="shrink-0 bg-white">
-                            <p className="text-[9px] font-bold text-slate uppercase tracking-widest leading-none mb-1">Observações do Cliente</p>
-                            {detailObs && (
-                                <div className="bg-amber-50 border border-amber-300 p-2 rounded mb-1 flex items-start gap-1.5">
-                                    <span className="text-amber-800 text-xs">⚠</span>
-                                    <p className="text-[10px] font-bold text-amber-950 uppercase leading-snug">{detailObs}</p>
-                                </div>
-                            )}
-                            <input
-                                type="text"
-                                placeholder="Clique para adicionar ou alterar observações..."
-                                value={observations}
-                                onChange={(e) => store.setObservations(e.target.value)}
-                                className="w-full border border-black/10 rounded-lg px-2 py-1.5 text-[10px] text-[#1f2937] focus:border-sage-green focus:ring-1 focus:ring-sage-green/30 outline-none placeholder:text-black/30"
-                            />
-                        </div>
-
                         {/* Items Table */}
                         <div className="flex-1 min-h-[100px] border-t border-black/5 pt-2">
                             <div className="flex justify-between items-center mb-1">

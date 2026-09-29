@@ -131,34 +131,6 @@ export function StepColors() {
                 </p>
             </div>
 
-            {/* Observations */}
-            <div className="space-y-3 pt-2">
-                <button
-                    onClick={() => setShowObs(!showObs)}
-                    className="cursor-pointer flex items-center gap-2 text-sm font-semibold text-sage-green-dark hover:text-sage-green transition-colors"
-                >
-                    <Info className="w-4 h-4" />
-                    {showObs ? 'Ocultar observações' : 'Algum detalhe especial de cor? Clique aqui'}
-                </button>
-
-                {showObs && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        className="overflow-hidden"
-                    >
-                        <textarea
-                            rows={2}
-                            placeholder="Ex: Quero o bordado da mesma cor que o babado..."
-                            value={observations}
-                            onChange={(e) => setObservations(e.target.value)}
-                            className="w-full border-2 border-black/10 rounded-xl px-4 py-3 text-sm text-charcoal
-                                       focus:border-sage-green focus:ring-4 focus:ring-sage-green/20 outline-none
-                                       resize-none placeholder:text-black/25 cursor-text"
-                        />
-                    </motion.div>
-                )}
-            </div>
 
             {/* Always visible Floating Next Button */}
             <motion.div

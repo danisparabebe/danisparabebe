@@ -154,19 +154,6 @@ export function ProductPersonalizationModal({
                                 )}
                             </div>
                         )}
-
-                        <div>
-                            <label className="block text-sm font-bold text-charcoal mb-1">
-                                Observações do Pedido (Opcional)
-                            </label>
-                            <textarea
-                                value={observations}
-                                onChange={(e) => setObservations(e.target.value)}
-                                placeholder="Ex: Sem laços na fralda pequena..."
-                                rows={2}
-                                className="w-full px-4 py-2 rounded-xl border border-line focus:ring-2 focus:ring-sage-green outline-none transition-all resize-none text-xs"
-                            />
-                        </div>
                     </div>
 
                     {/* Footer */}
