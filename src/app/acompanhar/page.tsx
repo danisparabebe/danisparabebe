@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '@/components/homepage/header';
-import Footer from '@/components/homepage/footer';
-import TopBar from '@/components/homepage/top-bar';
+import { Header } from '@/components/homepage/header';
+import { Footer } from '@/components/homepage/footer';
+import { TopBar } from '@/components/homepage/top-bar';
 import { Package, ArrowRight, Search, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
