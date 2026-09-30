@@ -148,7 +148,7 @@ export function StepReview() {
     };
 
     const passafitaLabel = PASSA_FITAS.find(p => p.id === passafitaColor)?.label || passafitaColor;
-    const CLOTHING_IDS = ['BDC', 'BDL', 'MIJ', 'SHO'];
+    const CLOTHING_IDS = ['BDC', 'BDL'];
 
     const buildCartItems = () => {
         // Build all items first, then set them all at once (atomic update)
