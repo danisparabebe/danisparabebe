@@ -1865,15 +1865,15 @@ export const productControl: ManagedProduct[] = [
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_02",
         "shortCode": "DPB-0064",
-        "name": "Safari Militar · Kit Fraldas (TESTE R$ 1,00)",
+        "name": "Safari Militar · Kit Fraldas",
         "technicalName": "MAS-KIT-JDE-VDM-BAB-VDM_02",
         "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Safari em Verde Militar, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 2 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
         "features": [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 1,
-        "discountPct": 98,
+        "priceFull": 90,
+        "discountPct": 5,
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_02.jpeg"
         ],
@@ -1887,8 +1887,8 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício"
         ],
         "originalPriceFull": 95,
-        "pixPrice": 1,
-        "pixDiscountPct": 0,
+        "pixPrice": 87,
+        "pixDiscountPct": 3,
         "netValue": 87
     },
     {

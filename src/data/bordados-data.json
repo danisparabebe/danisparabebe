@@ -189,14 +189,7 @@
             "url": "/bordados/Floral3.png"
         }
     ],
-    "FEM-KIT-FLO-PNK-BAB-PNK_01": [
-        {
-            "id": "MonogramaA Feminino.png",
-            "name": "MonogramaA Feminino",
-            "filename": "MonogramaA Feminino.png",
-            "url": "/bordados/MonogramaA%20Feminino.png"
-        }
-    ],
+    "FEM-KIT-FLO-PNK-BAB-PNK_01": [],
     "FEM-KIT-FLO-RSE-BAB-RSE-R_01": [
         {
             "id": "Borboleta2.PNG",
@@ -535,21 +528,9 @@
             "name": "Borboleta3",
             "filename": "Borboleta3.png",
             "url": "/bordados/Borboleta3.png"
-        },
-        {
-            "id": "MonogramaA Feminino.png",
-            "name": "MonogramaA Feminino",
-            "filename": "MonogramaA Feminino.png",
-            "url": "/bordados/MonogramaA%20Feminino.png"
         }
     ],
     "FEM-KIT-FLO-LIL-BAB-LIL_05": [
-        {
-            "id": "MonogramaA Feminino.png",
-            "name": "MonogramaA Feminino",
-            "filename": "MonogramaA Feminino.png",
-            "url": "/bordados/MonogramaA%20Feminino.png"
-        },
         {
             "id": "Floral6.png",
             "name": "Floral6",

@@ -32,7 +32,7 @@ interface ConsolidatedSheetItem {
     image?: string;
     productId?: string;
     personalization?: any;
-    kitItems?: { qty: number; code: string }[];
+    kitItems?: { qty: number; code: string; size?: string }[];
 }
 
 function consolidateItemsForProduction(rawItems: any[]): ConsolidatedSheetItem[] {
@@ -81,14 +81,24 @@ function consolidateItemsForProduction(rawItems: any[]): ConsolidatedSheetItem[]
         const group = customGroups[key];
         const groupItems = group.items;
 
-        const piecesMap: Record<string, number> = {};
+        const piecesMap: Record<string, { qty: number; size?: string }> = {};
         for (const git of groupItems) {
             const code = resolveItemCode(git.productId, git.name);
             const qty = git.quantity || 1;
-            piecesMap[code] = (piecesMap[code] || 0) + qty;
+            const size = git.personalization?.size;
+            if (!piecesMap[code]) {
+                piecesMap[code] = { qty, size };
+            } else {
+                piecesMap[code].qty += qty;
+                if (size && !piecesMap[code].size) piecesMap[code].size = size;
+            }
         }
 
-        const kitItems = Object.entries(piecesMap).map(([code, qty]) => ({ qty, code }));
+        const kitItems = Object.entries(piecesMap).map(([code, d]) => ({ 
+            qty: d.qty, 
+            code, 
+            size: d.size 
+        }));
         const totalPieces = kitItems.reduce((acc, p) => acc + p.qty, 0);
 
         let groupName = `Kit Personalizado · ${group.theme || 'Monte Seu Kit'}`;
@@ -96,11 +106,18 @@ function consolidateItemsForProduction(rawItems: any[]): ConsolidatedSheetItem[]
             groupName = groupItems[0].name || 'Peça Personalizada';
         }
 
+        // Se tiver peça com tamanho (ex: Body), propaga para personalização do grupo
+        const pieceWithSize = kitItems.find(p => p.size);
+        const consolidatedPers = {
+            ...group.personalization,
+            ...(pieceWithSize?.size ? { size: pieceWithSize.size } : {})
+        };
+
         sheets.push({
             name: groupName,
             image: group.image || groupItems[0]?.image,
             productId: 'CUSTOM-KIT',
-            personalization: group.personalization,
+            personalization: consolidatedPers,
             kitItems: kitItems
         });
     }

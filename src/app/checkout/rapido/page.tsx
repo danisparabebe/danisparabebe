@@ -235,12 +235,11 @@ export default function CheckoutRapidoPage() {
 
     if (!hydrated || !item) return null;
 
-    const isTestItem = (item?.price || 0) <= 1 || item?.productId === 'MAS-KIT-JDE-VDM-BAB-VDM_02';
     const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-    const freeShipping = isTestItem || (subtotal >= FREE_SHIPPING_THRESHOLD && isStateEligible);
+    const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD && isStateEligible;
     const cheapestOptionId = [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
     const isCheapestSelected = shippingOption?.id === cheapestOptionId;
-    const actualShippingPrice = isTestItem ? 0 : ((freeShipping && isCheapestSelected) ? 0 : (shippingOption?.price || 0));
+    const actualShippingPrice = (freeShipping && isCheapestSelected) ? 0 : (shippingOption?.price || 0);
     const finalTotal = subtotal + actualShippingPrice;
 
     return (

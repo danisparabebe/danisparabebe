@@ -25,6 +25,7 @@ export interface ConfiguratorState {
 
     // Step 4: Items
     itemQuantities: Record<string, number>;
+    itemSizes: Record<string, string>;
 
     // Actions
     setStep: (step: StepId) => void;
@@ -39,6 +40,7 @@ export interface ConfiguratorState {
     setObservations: (text: string) => void;
 
     setItemQuantity: (itemId: string, qty: number) => void;
+    setItemSize: (itemId: string, size: string) => void;
 
     getTotalPrice: () => number;
     getDiscountPercentage: () => number;
@@ -58,6 +60,7 @@ const initialState = {
     passafitaColor: '',
     observations: '',
     itemQuantities: {},
+    itemSizes: {},
 };
 
 export const useConfiguratorStore = create<ConfiguratorState>()(
@@ -98,10 +101,23 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
     setItemQuantity: (itemId, qty) =>
         set((state) => {
             const next = { ...state.itemQuantities };
-            if (qty <= 0) delete next[itemId];
-            else next[itemId] = qty;
-            return { itemQuantities: next };
+            const nextSizes = { ...state.itemSizes };
+            if (qty <= 0) {
+                delete next[itemId];
+                delete nextSizes[itemId];
+            } else {
+                next[itemId] = qty;
+            }
+            return { itemQuantities: next, itemSizes: nextSizes };
         }),
+
+    setItemSize: (itemId, size) =>
+        set((state) => ({
+            itemSizes: {
+                ...state.itemSizes,
+                [itemId]: size,
+            },
+        })),
 
     getDiscountPercentage: () => {
         const count = Object.values(get().itemQuantities).reduce((sum, q) => sum + q, 0);
@@ -145,6 +161,7 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
                 passafitaColor: state.passafitaColor,
                 observations: state.observations,
                 itemQuantities: state.itemQuantities,
+                itemSizes: state.itemSizes,
             }),
             onRehydrateStorage: () => (state) => {
                 // Convert visitedSteps array back to Set after rehydration

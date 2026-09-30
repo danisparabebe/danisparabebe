@@ -8,6 +8,8 @@ import { Minus, Plus, ArrowLeft, Truck, Baby, Shirt, Gem, Gift } from 'lucide-re
 import { motion, AnimatePresence } from 'framer-motion';
 import type { ReactNode } from 'react';
 
+import { toast } from 'sonner';
+
 // Only items with defined pricing
 const AVAILABLE_ITEMS = TYPES.filter((t) => BASE_PRICES[t.value] !== undefined);
 
@@ -18,8 +20,21 @@ const CATEGORIES: { label: string; icon: ReactNode; ids: string[] }[] = [
     { label: 'Acessórios', icon: <Gem className="w-5 h-5 text-charcoal/70" />, ids: ['FAI', 'TOF', 'TOU'] },
 ];
 
+const CLOTHING_IDS = ['BDC', 'BDL', 'MIJ', 'SHO'];
+
 export function StepItems() {
-    const { itemQuantities, setItemQuantity, nextStep, previousStep, getTotalPrice, getDiscountPercentage, getItemCount, babyName } = useConfiguratorStore();
+    const { 
+        itemQuantities, 
+        itemSizes, 
+        setItemQuantity, 
+        setItemSize, 
+        nextStep, 
+        previousStep, 
+        getTotalPrice, 
+        getDiscountPercentage, 
+        getItemCount, 
+        babyName 
+    } = useConfiguratorStore();
 
     const count = getItemCount();
     const discount = getDiscountPercentage();
@@ -33,12 +48,31 @@ export function StepItems() {
     const MAX_PIECES = 6;
     const progressPercentage = Math.min((count / MAX_PIECES) * 100, 100);
 
+    const handleNext = () => {
+        // Validate that all active clothing items have a size chosen or typed
+        const missingClothing = Object.entries(itemQuantities).find(([id, qty]) => {
+            return qty > 0 && CLOTHING_IDS.includes(id) && (!itemSizes[id] || !itemSizes[id].trim());
+        });
+
+        if (missingClothing) {
+            const label = AVAILABLE_ITEMS.find(i => i.value === missingClothing[0])?.label || missingClothing[0];
+            toast.error(`Por favor, selecione ou digite o tamanho para: ${label}`, {
+                duration: 4000,
+            });
+            return;
+        }
+
+        nextStep();
+    };
+
     const ProductCard = ({ id }: { id: string }) => {
         const qty = itemQuantities[id] || 0;
         const originalPrice = BASE_PRICES[id];
         const currentPrice = originalPrice * (1 - discount / 100);
         const active = qty > 0;
         const label = AVAILABLE_ITEMS.find(i => i.value === id)?.label || id;
+        const isClothing = CLOTHING_IDS.includes(id);
+        const currentSize = itemSizes[id] || '';
 
         return (
             <motion.div
@@ -52,7 +86,7 @@ export function StepItems() {
                 `}
             >
                 {/* Header: Title and Price */}
-                <div className="mb-6">
+                <div className="mb-4">
                     <h3 className={`font-fraunces font-bold text-lg leading-tight mb-1 ${active ? 'text-charcoal' : 'text-charcoal/80'}`}>
                         {label}
                     </h3>
@@ -68,8 +102,61 @@ export function StepItems() {
                     </div>
                 </div>
 
+                {/* Seletor de Tamanho Obrigatório para Roupas / Body */}
+                {active && isClothing && (
+                    <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="mb-4 pt-3 pb-2 border-t border-black/5"
+                    >
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-[11px] font-bold text-charcoal uppercase tracking-wider flex items-center gap-1">
+                                Tamanho da Peça <span className="text-dusty-rose font-black">*</span>
+                            </span>
+                            {!currentSize && (
+                                <span className="text-[10px] font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                                    Obrigatório
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Botões Rápidos de Tamanho */}
+                        <div className="flex gap-1.5 mb-2">
+                            {[
+                                { val: 'RN', sub: 'Recém-nascido' },
+                                { val: 'P', sub: '0-3m' },
+                                { val: 'M', sub: '3-6m' },
+                                { val: 'G', sub: '6-9m' },
+                            ].map(opt => (
+                                <button
+                                    type="button"
+                                    key={opt.val}
+                                    onClick={() => setItemSize(id, opt.val)}
+                                    className={`flex-1 py-1.5 rounded-xl border-2 text-center transition-all cursor-pointer font-bold ${
+                                        currentSize === opt.val
+                                            ? 'border-sage-green-dark bg-white text-charcoal shadow-xs scale-102 ring-2 ring-sage-green/20'
+                                            : 'border-black/5 bg-white/70 text-slate hover:bg-white hover:border-black/15'
+                                    }`}
+                                >
+                                    <span className="text-xs block leading-none">{opt.val}</span>
+                                    <span className="text-[8px] font-normal block opacity-60 mt-0.5 leading-none">{opt.sub}</span>
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Campo de Texto para Digitar Tamanho */}
+                        <input
+                            type="text"
+                            placeholder="Ou digite o tamanho desejado (ex: RN, P, M, G...)"
+                            value={currentSize}
+                            onChange={(e) => setItemSize(id, e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl border border-line text-xs font-semibold text-charcoal placeholder:text-slate/40 focus:ring-2 focus:ring-sage-green focus:border-sage-green outline-none bg-white transition-all"
+                        />
+                    </motion.div>
+                )}
+
                 {/* Stepper Footer */}
-                <div className="flex items-center justify-between mt-auto">
+                <div className="flex items-center justify-between mt-auto pt-2">
                     {/* Total for this item (if active) */}
                     <div className="flex-1">
                         {active ? (
@@ -102,7 +189,12 @@ export function StepItems() {
                         </span>
 
                         <button
-                            onClick={() => setItemQuantity(id, qty + 1)}
+                            onClick={() => {
+                                setItemQuantity(id, qty + 1);
+                                if (isClothing && !currentSize) {
+                                    setItemSize(id, 'P'); // Sugere tamanho P como padrão amigável
+                                }
+                            }}
                             className="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full bg-charcoal text-white hover:bg-sage-green transition-all shadow-sm active:scale-90"
                         >
                             <Plus className="w-4 h-4" strokeWidth={2.5} />
@@ -239,7 +331,7 @@ export function StepItems() {
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
                                 <button
-                                    onClick={nextStep}
+                                    onClick={handleNext}
                                     className="cursor-pointer flex-1 md:w-[220px] bg-charcoal hover:bg-black text-white h-14 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all shadow-md active:scale-95 flex items-center justify-center"
                                 >
                                     Revisar Pedido

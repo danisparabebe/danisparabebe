@@ -22,7 +22,7 @@ export function StepReview() {
     const {
         babyName, selectedThemeName, selectedEmbroideryPhoto,
         acabamentoColor, passafitaColor, observations,
-        itemQuantities, getTotalPrice, previousStep, reset, getDiscountPercentage,
+        itemQuantities, itemSizes, getTotalPrice, previousStep, reset, getDiscountPercentage,
     } = store;
 
     const total = getTotalPrice();
@@ -148,17 +148,19 @@ export function StepReview() {
     };
 
     const passafitaLabel = PASSA_FITAS.find(p => p.id === passafitaColor)?.label || passafitaColor;
+    const CLOTHING_IDS = ['BDC', 'BDL', 'MIJ', 'SHO'];
 
     const buildCartItems = () => {
         // Build all items first, then set them all at once (atomic update)
         const newCartItems = items.map(([id, qty]) => {
             const basePrice = BASE_PRICES[id];
             const discountedPrice = basePrice * (1 - discountPct / 100);
+            const size = itemSizes?.[id]?.trim() || undefined;
 
             return {
                 id: `kit-${id}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
                 productId: `custom-${id}`,
-                name: `${getItemLabel(id)} — Personalizado`,
+                name: `${getItemLabel(id)}${size ? ` (Tam. ${size})` : ''} — Personalizado`,
                 price: discountedPrice,
                 image: selectedEmbroideryPhoto || '/Logos/Logomarca%20Rose.png',
                 quantity: qty,
@@ -168,6 +170,7 @@ export function StepReview() {
                     color: colorLabel,
                     finishDetail: passafitaLabel || undefined,
                     observations: observations || undefined,
+                    size: size,
                 },
             };
         });
@@ -175,7 +178,17 @@ export function StepReview() {
         useCartStore.setState({ items: newCartItems });
     };
 
+    const validateClothingSizes = (): boolean => {
+        const missing = items.find(([id, qty]) => qty > 0 && CLOTHING_IDS.includes(id) && (!itemSizes?.[id] || !itemSizes[id].trim()));
+        if (missing) {
+            toast.error(`Por favor, selecione ou digite o tamanho para: ${getItemLabel(missing[0])}`);
+            return false;
+        }
+        return true;
+    };
+
     const handleCart = () => {
+        if (!validateClothingSizes()) return;
         buildCartItems();
         toast.success('Kit adicionado ao carrinho!');
         reset(); openCart(); router.push('/');
@@ -193,6 +206,7 @@ export function StepReview() {
     };
 
     const handleBuyNow = async () => {
+        if (!validateClothingSizes()) return;
         if (!formData.name || !formData.phone || !formData.cep || !formData.number) {
             toast.error('Preencha os dados de entrega antes de prosseguir.');
             return;
@@ -327,7 +341,14 @@ export function StepReview() {
                                             return (
                                                 <tr key={id} className="border-b border-black/5 last:border-0">
                                                     <td className="py-1 w-6"><span className="bg-slate-100 text-slate font-bold px-1 py-0.5 rounded">{qty}x</span></td>
-                                                    <td className="py-1 font-semibold text-[#1f2937]">{getItemLabel(id)}</td>
+                                                    <td className="py-1 font-semibold text-[#1f2937]">
+                                                        {getItemLabel(id)}
+                                                        {itemSizes?.[id] && (
+                                                            <span className="ml-1.5 inline-block bg-rose-50 text-rose-700 font-bold px-1.5 py-0.5 rounded border border-rose-200 text-[9px] uppercase">
+                                                                Tam: {itemSizes[id]}
+                                                            </span>
+                                                        )}
+                                                    </td>
                                                     <td className="py-1 text-right font-bold text-[#1f2937] w-16">{formatPrice(unPrice * qty)}</td>
                                                 </tr>
                                             );

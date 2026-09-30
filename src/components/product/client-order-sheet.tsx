@@ -234,6 +234,11 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
                                                 Tema: {pers.theme}
                                             </span>
                                         )}
+                                        {pers.size && (
+                                            <span className="text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-800 px-2.5 py-0.5 rounded-full border border-rose-300">
+                                                Tamanho: {pers.size}
+                                            </span>
+                                        )}
                                     </div>
                                     <h2 className="text-xl sm:text-2xl font-black text-charcoal font-serif tracking-tight">
                                         {item.name}

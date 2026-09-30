@@ -252,11 +252,22 @@ export function StepTheme() {
                             if (!String(productId).startsWith('THEME_')) {
                                 const parts = String(productId).split('-');
                                 if (parts.length >= 3) {
-                                    const themeId = parts[2];
+                                    let defaultThemeId = parts[2];
                                     (embroideries as any[]).forEach(emb => {
-                                        const uniqueKey = `${emb.url || emb.id}-${themeId}`;
+                                        const embName = (emb.name || emb.id || '').toLowerCase();
+                                        let finalThemeId = defaultThemeId;
+                                        if (embName.includes('monograma')) finalThemeId = 'MON';
+                                        else if (embName.includes('safari')) finalThemeId = 'SAF';
+                                        else if (embName.includes('ursinho') || embName.includes('urso')) finalThemeId = 'URS';
+                                        else if (embName.includes('borboleta')) finalThemeId = 'BOR';
+                                        else if (embName.includes('floral') || embName.includes('flor')) finalThemeId = 'FLO';
+                                        else if (embName.includes('bailarina')) finalThemeId = 'BAI';
+                                        else if (embName.includes('coroa')) finalThemeId = 'COR';
+                                        else if (embName.includes('nuvem')) finalThemeId = 'NUV';
+
+                                        const uniqueKey = `${emb.url || emb.id}-${finalThemeId}`;
                                         if (!uniqueMap.has(uniqueKey)) {
-                                            uniqueMap.set(uniqueKey, { ...emb, themeId, source: 'product' });
+                                            uniqueMap.set(uniqueKey, { ...emb, themeId: finalThemeId, source: 'product' });
                                         }
                                     });
                                 }

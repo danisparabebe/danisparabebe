@@ -40,7 +40,7 @@ interface TechnicalSheetProps {
     } | null;
     deadline?: string;
     createdAt?: string;
-    kitItems?: { qty: number; code: string }[];
+    kitItems?: { qty: number; code: string; size?: string }[];
 }
 
 const getItemLabel = (id: string) => TYPES.find(t => t.value === id)?.label || PRODUCT_TAXONOMY[id]?.type || id;
@@ -185,7 +185,7 @@ export function ProductTechnicalSheet({
     const features = product?.features || [];
     
     // Items to produce
-    let items: { qty: number; code: string }[] = [];
+    let items: { qty: number; code: string; size?: string }[] = [];
     if (kitItems && kitItems.length > 0) {
         items = kitItems;
     } else if (product && features.length > 0) {
@@ -193,7 +193,7 @@ export function ProductTechnicalSheet({
     } else {
         // Para itens customizados ou avulsos (ex: Monte seu kit com 1 peça)
         const deducedCode = resolveItemCode(productId, productName);
-        items = [{ qty: 1, code: deducedCode }];
+        items = [{ qty: 1, code: deducedCode, size: personalization?.size }];
     }
     
     // Resolve final product image
@@ -423,6 +423,14 @@ export function ProductTechnicalSheet({
                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Padrão da Vira</p>
                                 <p className="font-bold text-slate-800">Bordado + Babado</p>
                             </div>
+                            {personalization?.size && (
+                                <div className="col-span-2 sm:col-span-3 bg-rose-50 border border-rose-200 p-2 rounded-lg flex items-center justify-between">
+                                    <span className="text-[10px] font-black text-rose-700 uppercase tracking-wider">Tamanho da Roupinha / Body</span>
+                                    <span className="text-xs font-black text-rose-900 bg-white px-2 py-0.5 rounded border border-rose-300">
+                                        TAMANHO {personalization.size}
+                                    </span>
+                                </div>
+                            )}
                         </div>
 
                         {/* Observações do Cliente */}
@@ -466,6 +474,7 @@ export function ProductTechnicalSheet({
                                 const label = tax?.type || getItemLabel(item.code);
                                 const dimensions = tax?.dimensions || 'Conforme padrão';
                                 const material = tax?.material || '100% Algodão';
+                                const pieceSize = item.size || (['BDC', 'BDL', 'MIJ', 'SHO'].includes(item.code) ? personalization?.size : undefined);
 
                                 return (
                                     <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
@@ -473,9 +482,16 @@ export function ProductTechnicalSheet({
                                             {item.qty}x
                                         </span>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-xs font-black text-slate-900 uppercase leading-snug">
-                                                {label}
-                                            </p>
+                                            <div className="flex items-center gap-2 flex-wrap">
+                                                <p className="text-xs font-black text-slate-900 uppercase leading-snug">
+                                                    {label}
+                                                </p>
+                                                {pieceSize && (
+                                                    <span className="font-black text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-300 text-[10px] uppercase tracking-wide">
+                                                        👕 Tam: {pieceSize}
+                                                    </span>
+                                                )}
+                                            </div>
                                             <div className="flex flex-wrap gap-x-2 gap-y-0.5 mt-1 text-[11px]">
                                                 <span className="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.2 rounded border border-purple-200">
                                                     📐 Medida: {dimensions}

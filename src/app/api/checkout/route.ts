@@ -159,12 +159,7 @@ export async function POST(request: Request) {
         }
 
         // 2. Add Shipping as a Line Item (if greater than 0)
-        const isTestOrder = items.some((it: any) => {
-            const rid = resolveProductId(it.productId || it.id);
-            return rid === 'MAS-KIT-JDE-VDM-BAB-VDM_02' || (it.price || 0) <= 1;
-        });
-
-        const effectiveShipping = isTestOrder ? 0 : (shipping || 0);
+        const effectiveShipping = shipping || 0;
 
         if (effectiveShipping > 0) {
             const shippingCents = Math.round(effectiveShipping * 100);
@@ -177,7 +172,7 @@ export async function POST(request: Request) {
             calculatedTotalAmountCents += shippingCents;
             console.log(`🚚 Shipping verificado: R$ ${(effectiveShipping).toFixed(2)}`);
         } else {
-            console.log(`🚚 Frete GRÁTIS aplicado (Teste ou Isenção)`);
+            console.log(`🚚 Frete GRÁTIS aplicado`);
         }
 
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
