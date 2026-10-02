@@ -7,21 +7,34 @@
   "color": "CNZ",
   "composition": [
     {
-      "type": "MNT",
+      "type": "FRG",
       "qty": 1
     },
     {
-      "type": "FRG",
-      "qty": 2
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
     }
   ],
-  "customName": "Kit Toalha de Banho Monograma Cinza",
-  "updatedAt": "2026-03-11T19:29:39.693Z",
+  "customName": "Monograma Névoa · Kit 3 Peças",
+  "updatedAt": "2026-10-02T00:49:06.882Z",
   "published": true,
   "publishedAt": "2026-02-24T21:48:26.650Z",
   "detail": "BAB",
   "detailColor": "BCO",
   "detailColor2": "PAD",
   "ribbonColor": "PAD",
-  "hasFrufru": false
+  "hasFrufru": false,
+  "description": "§INTRO§\nAventura e charme! Este conjunto no tema Monograma, em tons de Cinza, traz estilo e conforto para o enxoval do seu pequeno explorador.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n\n• 2x Fralda Média\n• 1x Toalha de Banho\n\n§SIZES§\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n📐 Fralda Média: 65x33 cm — Tecido Duplo 100% Algodão\n\n§FINISH§\n🎀 Acabamentos especiais: Babado (Bordado Inglês)\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
+  "observations": "§INTRO§\nAventura e charme! Este conjunto no tema Monograma, em tons de Cinza, traz estilo e conforto para o enxoval do seu pequeno explorador.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n\n• 2x Fralda Média\n• 1x Toalha de Banho\n\n§SIZES§\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n📐 Fralda Média: 65x33 cm — Tecido Duplo 100% Algodão\n\n§FINISH§\n🎀 Acabamentos especiais: Babado (Bordado Inglês)\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
+  "images": [
+    "/produtos/conferidos/MAS-KIT-MON-CNZ-BAB-BCO_01.jpeg"
+  ],
+  "colorVariations": [],
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD"
 }

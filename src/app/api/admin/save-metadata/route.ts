@@ -11,13 +11,33 @@ export async function POST(req: Request) {
         }
 
         const targetDir = path.join(process.cwd(), 'public', folder);
-        const filePath = path.join(targetDir, filename);
+        let actualFilePath = path.join(targetDir, filename);
 
-        if (!fs.existsSync(filePath)) {
+        if (!fs.existsSync(actualFilePath)) {
+            try {
+                const decoded = decodeURIComponent(filename);
+                const decodedPath = path.join(targetDir, decoded);
+                if (fs.existsSync(decodedPath)) {
+                    actualFilePath = decodedPath;
+                } else if (fs.existsSync(targetDir)) {
+                    const files = fs.readdirSync(targetDir);
+                    const found = files.find(f => 
+                        f === filename || 
+                        f.normalize('NFC') === filename.normalize('NFC') ||
+                        f.normalize('NFD') === filename.normalize('NFD')
+                    );
+                    if (found) {
+                        actualFilePath = path.join(targetDir, found);
+                    }
+                }
+            } catch {}
+        }
+
+        if (!fs.existsSync(actualFilePath)) {
             return NextResponse.json({ error: 'File not found' }, { status: 404 });
         }
 
-        const jsonPath = filePath.replace(path.extname(filePath), '.json');
+        const jsonPath = actualFilePath.replace(path.extname(actualFilePath), '.json');
 
         let metadata: any = {};
         if (fs.existsSync(jsonPath)) {
@@ -65,14 +85,14 @@ export async function POST(req: Request) {
                 let finalFilename = `${newSKU}_${attempt.toString().padStart(2, '0')}${ext}`;
                 let finalPath = path.join(targetDir, finalFilename);
 
-                while (fs.existsSync(finalPath) && finalPath !== filePath) {
+                while (fs.existsSync(finalPath) && finalPath !== actualFilePath) {
                     attempt++;
                     finalFilename = `${newSKU}_${attempt.toString().padStart(2, '0')}${ext}`;
                     finalPath = path.join(targetDir, finalFilename);
                 }
 
                 // Rename image file
-                fs.renameSync(filePath, finalPath);
+                fs.renameSync(actualFilePath, finalPath);
 
                 // Rename JSON sidecar
                 const newJsonPath = finalPath.replace(ext, '.json');

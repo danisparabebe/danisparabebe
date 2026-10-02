@@ -17,7 +17,9 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Save, Tag, Grid, Layout, Image as ImageIcon, Trash2, Plus, Upload, Link as LinkIcon, FileText, Hash, Package, Microscope, Search, Filter, ArrowUp, ArrowDown, RefreshCw, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Save, Tag, Grid, Layout, Image as ImageIcon, Trash2, Plus, Upload, Link as LinkIcon, FileText, Hash, Package, Microscope, Search, Filter, ArrowUp, ArrowDown, RefreshCw, ShieldCheck, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { MvpLaunchPanel } from '@/components/admin/mvp-launch-panel';
+import { MVP_PRODUCT_SELECTION } from '@/data/mvp-config';
 
 const ALL_THEMES = [...THEMES_FEM, ...THEMES_MAS].filter((v, i, a) => a.findIndex(t => t.value === v.value) === i);
 
@@ -33,6 +35,8 @@ type PhotoData = {
     type?: string;
     theme?: string;
     color?: string;
+    updatedAt?: string;
+    mtime?: string;
     // other metadata from sidecar might exist
 };
 
@@ -64,7 +68,7 @@ const parseFilename = (filename: string) => {
 };
 
 export default function GestaoFotosPage() {
-    const [activeTab, setActiveTab] = useState<'adicionar' | 'conferir' | 'publicados' | 'lista' | 'mvp' | 'precificacao'>('adicionar');
+    const [activeTab, setActiveTab] = useState<'adicionar' | 'conferir' | 'publicados' | 'lista' | 'mvp' | 'mvp_lancamento' | 'precificacao'>('mvp_lancamento');
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     // ==========================================
@@ -89,6 +93,7 @@ export default function GestaoFotosPage() {
     const [ribbonColor, setRibbonColor] = useState('PAD');
     const [hasFrufru, setHasFrufru] = useState(false);
     const [customName, setCustomName] = useState('');
+    const [isCustomNameManuallyEdited, setIsCustomNameManuallyEdited] = useState(false);
     const [composition, setComposition] = useState<{ type: string, qty: number }[]>([]);
     const [compType, setCompType] = useState('FRP');
     const [compQty, setCompQty] = useState(1);
@@ -101,15 +106,61 @@ export default function GestaoFotosPage() {
     const [pubFilterType, setPubFilterType] = useState('ALL');
 
     // ==========================================
-    // ESTADOS: MVP (CENTRAL DE PRODUTOS)
+    // ESTADOS: MVP (CENTRAL DE PRODUTOS & LANÇAMENTO)
     // ==========================================
-    const [products, setProducts] = useState<ManagedProduct[]>(productControl);
+    const [products, setProducts] = useState<ManagedProduct[]>(() => {
+        const mvpSet = new Set(MVP_PRODUCT_SELECTION.filter(id => id && id.trim()));
+        return productControl.map(p => {
+            const isInMvp = p.mvpEnabled === true || mvpSet.has(p.id) || (p.shortCode && mvpSet.has(p.shortCode));
+            return {
+                ...p,
+                mvpEnabled: isInMvp ? true : false,
+                colorVariations: p.colorVariations || []
+            };
+        });
+    });
     const [library, setLibrary] = useState<any[]>([]);
     const [isLoadingLibrary, setIsLoadingLibrary] = useState(false);
     const [isUploading, setIsUploading] = useState<string | null>(null);
+    const [isSavingMvpLaunch, setIsSavingMvpLaunch] = useState(false);
 
     // Product Filters State (Bottom List)
     const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSaveMvpLaunch = async (customProducts?: ManagedProduct[]) => {
+        const targetProducts = customProducts || products;
+        setIsSavingMvpLaunch(true);
+        toast.loading("Publicando vitrine do Lançamento MVP...", { id: 'save-mvp-launch' });
+
+        try {
+            // 1. Salva todos os produtos atualizados com as variações de cores e flags
+            const res = await fetch('/api/admin/save-mvp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ products: targetProducts })
+            });
+
+            if (!res.ok) throw new Error("Erro ao salvar produtos");
+
+            // 2. Extrai IDs com mvpEnabled: true para salvar em mvp-config.ts
+            const selectedIds = targetProducts
+                .filter(p => p.mvpEnabled === true)
+                .map(p => p.shortCode || p.id);
+
+            await fetch('/api/mvp/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ selectedIds })
+            });
+
+            toast.success("Lançamento MVP atualizado e publicado com sucesso! 🎉", { id: 'save-mvp-launch' });
+        } catch (error: any) {
+            console.error("Erro ao salvar lançamento", error);
+            toast.error("Falha ao salvar Lançamento MVP.", { id: 'save-mvp-launch' });
+        } finally {
+            setIsSavingMvpLaunch(false);
+        }
+    };
 
     // ==========================================
     // ESTADOS: PRECIFICACAO UNITÁRIA
@@ -173,7 +224,7 @@ export default function GestaoFotosPage() {
     }, []);
 
     useEffect(() => {
-        if (activeTab === 'mvp') {
+        if (activeTab === 'mvp' || activeTab === 'mvp_lancamento') {
             buildLibraryFromAllPhotos();
         }
     }, [activeTab, allPhotos]);
@@ -206,6 +257,7 @@ export default function GestaoFotosPage() {
                     type: typeCode,
                     theme: themeCode,
                     color: colorCode,
+                    updatedAt: f.updatedAt || f.mtime || null,
                     raw: f
                 });
             }
@@ -235,40 +287,65 @@ export default function GestaoFotosPage() {
             });
     };
 
-    // Auto-name based on composition
+    // Auto-name based on composition: APENAS se o total de peças bater 100% EXATO com um kit pré-programado
+    // Se o usuário digitou ou se houver qualquer peça diferente (ex: touca junto), deixa o usuário nomear como quiser!
     useEffect(() => {
         if (!editingPhoto) return;
         if (composition.length === 0) return;
+
+        // Se o usuário já escreveu ou renomeou da maneira dele, RESPEITAR e NUNCA sobrescrever!
+        if (isCustomNameManuallyEdited) return;
 
         const currentItems: Record<string, number> = {};
         composition.forEach(item => {
             currentItems[item.type] = (currentItems[item.type] || 0) + item.qty;
         });
 
+        const currentKeys = Object.keys(currentItems);
+
+        // Busca correspondência 100% exata (mesmas peças, mesmas quantidades, NENHUMA peça a mais nem a menos)
         const match = KIT_RECIPES.find(recipe => {
             const recipeEntries = Object.entries(recipe.items);
-            if (Object.keys(currentItems).length !== recipeEntries.length && Object.keys(currentItems).length !== recipeEntries.length + 1) return false;
+            const recipeKeys = Object.keys(recipe.items);
 
-            // Loose matching to allow custom features but we'll stick to exact count for now
-            let matches = true;
+            // A quantidade de tipos de peças tem que ser EXATAMENTE a mesma
+            // Se tiver uma touca a mais, já NÃO é Kit Manta e NÃO deve forçar Kit Manta!
+            if (currentKeys.length !== recipeKeys.length) return false;
+
+            // Cada item da receita precisa bater perfeitamente
             for (const [key, qty] of recipeEntries) {
                 if (key === 'BOD') {
                     const bodies = (currentItems['BDC'] || 0) + (currentItems['BDL'] || 0);
-                    if (bodies !== qty) matches = false;
+                    if (bodies !== qty) return false;
                 } else if (currentItems[key] !== qty) {
-                    matches = false;
+                    return false;
                 }
             }
-            return matches;
+
+            // Cada item adicionado precisa pertencer à receita
+            const recipeItemsMap = recipe.items as Record<string, number>;
+            for (const key of currentKeys) {
+                if (key === 'BDC' || key === 'BDL') {
+                    if (!recipeItemsMap['BOD']) return false;
+                } else if (recipeItemsMap[key] === undefined) {
+                    return false;
+                }
+            }
+
+            return true;
         });
 
         if (match) {
             setCustomName(match.name);
         } else {
+            // Se as peças deixaram de ser um kit programado (ex: adicionou touca),
+            // remove o nome pré-programado para deixar o campo livre para o usuário renomear da maneira que quiser!
             const wasRecipe = KIT_RECIPES.some(r => r.name === customName);
-            if (wasRecipe) setCustomName('');
+            if (wasRecipe) {
+                setCustomName('');
+            }
         }
-    }, [composition, editingPhoto]);
+    }, [composition, editingPhoto, isCustomNameManuallyEdited]);
 
     const loadPhotoToEditor = (photo: PhotoData, index: number) => {
         setEditingPhoto(photo);
@@ -303,6 +380,7 @@ export default function GestaoFotosPage() {
         }
 
         setCustomName(photo.customName || '');
+        setIsCustomNameManuallyEdited(Boolean(photo.customName));
         setComposition(photo.composition || []);
         setHasFrufru(!!photo.hasFrufru);
 
@@ -319,12 +397,20 @@ export default function GestaoFotosPage() {
     const handleCustomNameChange = (val: string) => {
         setCustomName(val);
 
-        // Auto-fill composition if the typed name matches a known predefined kit recipe perfectly
+        // Se o usuário digitou ou apagou algo manualmente:
+        if (val.trim().length > 0) {
+            // O usuário renomeou da maneira dele -> trava para NUNCA mais ser sobrescrito pelo sistema!
+            setIsCustomNameManuallyEdited(true);
+        } else {
+            // Se o usuário limpou o campo, permite que o sistema volte a sugerir automaticamente caso bata com um kit
+            setIsCustomNameManuallyEdited(false);
+        }
+
+        // Auto-fill composition APENAS se o nome digitado corresponder exatamente a uma receita conhecida
         const kitMatch = KIT_RECIPES.find(r => r.name.toLowerCase() === val.trim().toLowerCase());
         if (kitMatch) {
             const newComp = Object.entries(kitMatch.items).map(([k, v]) => ({ type: k, qty: v as number }));
 
-            // Basic check to prevent repetitive loops/feedback if already set
             const isDifferent = newComp.length !== composition.length || newComp.some(item => !composition.find(c => c.type === item.type && c.qty === item.qty));
 
             if (isDifferent) {
@@ -797,13 +883,28 @@ export default function GestaoFotosPage() {
                         <div className="h-px w-full bg-slate-800 my-4" />
                     )}
 
+                    {/* NOVO: Lançamento MVP */}
+                    <button
+                        onClick={() => setActiveTab('mvp_lancamento')}
+                        className={`w-full text-left py-2.5 rounded-lg text-xs font-bold transition-all flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} group ${activeTab === 'mvp_lancamento' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-900/50 ring-1 ring-white/20' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+                        title={!isSidebarOpen ? "Lançamento MVP (Oficial)" : undefined}
+                    >
+                        <Sparkles className={`w-4 h-4 shrink-0 ${activeTab === 'mvp_lancamento' ? 'text-amber-300 animate-pulse' : 'text-amber-400 group-hover:text-amber-300'}`} />
+                        {isSidebarOpen && (
+                            <span className="flex items-center justify-between flex-1">
+                                <span>Lançamento MVP</span>
+                                <span className="bg-amber-400/20 text-amber-300 text-[9px] font-black px-1.5 py-0.5 rounded border border-amber-400/30">NOVO</span>
+                            </span>
+                        )}
+                    </button>
+
                     <button
                         onClick={() => setActiveTab('mvp')}
                         className={`w-full text-left py-2.5 rounded-lg text-xs font-bold transition-all flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} group ${activeTab === 'mvp' ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/50' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
-                        title={!isSidebarOpen ? "Painel MVP (Vendas)" : undefined}
+                        title={!isSidebarOpen ? "Todos os Produtos" : undefined}
                     >
                         <Layout className={`w-4 h-4 shrink-0 ${activeTab === 'mvp' ? 'text-purple-200' : 'text-slate-500 group-hover:text-slate-400'}`} />
-                        {isSidebarOpen && "Painel MVP (Vendas)"}
+                        {isSidebarOpen && "Todos os Produtos"}
                     </button>
                     
                     <button
@@ -864,7 +965,8 @@ export default function GestaoFotosPage() {
                         {activeTab === 'conferir' && <><Microscope className="w-4 h-4 text-orange-500" /> Conferência de Dados</>}
                         {activeTab === 'publicados' && <><Package className="w-4 h-4 text-emerald-500" /> Acervo Publicado</>}
                         {activeTab === 'lista' && <><FileText className="w-4 h-4 text-slate-500" /> Visão de Tabela</>}
-                        {activeTab === 'mvp' && <><Layout className="w-4 h-4 text-purple-500" /> Distribuição Site (MVP)</>}
+                        {activeTab === 'mvp_lancamento' && <><Sparkles className="w-4 h-4 text-amber-500" /> Vitrine Oficial (Lançamento MVP)</>}
+                        {activeTab === 'mvp' && <><Layout className="w-4 h-4 text-purple-500" /> Todos os Produtos (Catálogo Geral)</>}
                         {activeTab === 'precificacao' && <><Tag className="w-4 h-4 text-pink-500" /> Precificação Unitária (Custos)</>}
                     </h2>
 
@@ -1127,7 +1229,18 @@ export default function GestaoFotosPage() {
                             </div>
                         )}
 
-                        {/* ABA 5: MVP (CENTRAL DE PRODUTOS) */}
+                        {/* ABA NOVO: LANÇAMENTO MVP (PAINEL OFICIAL COM JOGOS DE CORES) */}
+                        {activeTab === 'mvp_lancamento' && (
+                            <MvpLaunchPanel
+                                products={products}
+                                setProducts={setProducts}
+                                library={library}
+                                onSaveMvp={handleSaveMvpLaunch}
+                                isSaving={isSavingMvpLaunch}
+                            />
+                        )}
+
+                        {/* ABA 5: MVP (TODOS OS PRODUTOS / CATÁLOGO GERAL) */}
                         {activeTab === 'mvp' && (
                             <div className="font-sans">
                                 {/* Library Importer */}

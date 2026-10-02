@@ -1,0 +1,32 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "JDE",
+  "color": "VDM",
+  "detail": "BAB",
+  "detailColor": "VDM",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "kit manta",
+  "updatedAt": "2026-10-01T23:20:54.798Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:44.005Z"
+}

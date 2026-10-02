@@ -1,0 +1,44 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "RSA",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "FAI",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Ursinha · Rosa Bebê",
+  "updatedAt": "2026-10-02T00:37:25.515Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:39.475Z"
+}

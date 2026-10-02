@@ -96,6 +96,7 @@ export const THEMES_FEM = [
     { label: 'Ursinha', value: 'URS' },
     { label: 'Bailarina', value: 'BAI' },
     { label: 'Monograma', value: 'MON' },
+    { label: 'Cavalinho / Cavalo', value: 'CAV' },
     { label: 'Bebezinha', value: 'BBZ' },
     { label: 'Personagens', value: 'PER' },
     { label: 'Coroa', value: 'COR' },
@@ -106,6 +107,7 @@ export const THEMES_FEM = [
 export const THEMES_MAS = [
     { label: 'Safari', value: 'SAF' },
     { label: 'Ursinho', value: 'URS' },
+    { label: 'Cavalinho / Cavalo', value: 'CAV' },
     { label: 'Coroa', value: 'COR' },
     { label: 'Monograma', value: 'MON' },
     { label: 'Personagens', value: 'PER' },

@@ -7,6 +7,7 @@ export async function POST(req: Request) {
         const { oldFilename, newSKU, sourceDir, composition, customName, filters } = await req.json();
 
         // Validate directories
+        const uploadsProductsDir = path.join(process.cwd(), 'public', 'uploads', 'products');
         const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
         const productsDir = path.join(process.cwd(), 'public', 'produtos');
         const verifiedDir = path.join(productsDir, 'conferidos');
@@ -14,52 +15,100 @@ export async function POST(req: Request) {
         if (!fs.existsSync(productsDir)) {
             fs.mkdirSync(productsDir, { recursive: true });
         }
+        if (!fs.existsSync(verifiedDir)) {
+            fs.mkdirSync(verifiedDir, { recursive: true });
+        }
+
+        // All renames and organizations should move files to 'conferidos' pending publication
+        let targetDir = verifiedDir;
+
+        const candidateFolders = [
+            sourceDir ? path.join(process.cwd(), 'public', sourceDir) : null,
+            uploadsProductsDir,
+            uploadsDir,
+            productsDir,
+            verifiedDir
+        ].filter(Boolean) as string[];
 
         let oldPath = '';
-        let targetDir = verifiedDir; // All renames and organizations should move files to 'conferidos' pending publication
+        for (const dir of candidateFolders) {
+            if (!fs.existsSync(dir)) continue;
 
-        if (sourceDir === 'uploads') {
-            oldPath = path.join(uploadsDir, oldFilename);
-        } else {
-            // Check root and subfolders
-            const rootPath = path.join(productsDir, oldFilename);
-            const subPath = path.join(verifiedDir, oldFilename);
-
-            if (fs.existsSync(rootPath)) {
-                oldPath = rootPath;
-            } else if (fs.existsSync(subPath)) {
-                oldPath = subPath;
-            } else {
-                oldPath = rootPath; // fallback for failure check
+            const exact = path.join(dir, oldFilename);
+            if (fs.existsSync(exact)) {
+                oldPath = exact;
+                break;
             }
+
+            // Fallback: check normalized or decoded filename
+            try {
+                const decoded = decodeURIComponent(oldFilename);
+                const decodedPath = path.join(dir, decoded);
+                if (fs.existsSync(decodedPath)) {
+                    oldPath = decodedPath;
+                    break;
+                }
+            } catch {}
+
+            // Fallback: search directory files by exact match, decoded or normalized match
+            try {
+                const files = fs.readdirSync(dir);
+                const found = files.find(f => 
+                    f === oldFilename || 
+                    f.normalize('NFC') === oldFilename.normalize('NFC') ||
+                    f.normalize('NFD') === oldFilename.normalize('NFD') ||
+                    (f.includes(oldFilename.slice(0, 13))) // match timestamp prefix if any
+                );
+                if (found) {
+                    oldPath = path.join(dir, found);
+                    break;
+                }
+            } catch (err) {
+                console.error(`Error reading directory ${dir}`, err);
+            }
+        }
+
+        if (!oldPath || !fs.existsSync(oldPath)) {
+            console.error(`[Rename] File not found: ${oldFilename} in candidate folders:`, candidateFolders);
+            return NextResponse.json({ error: `Source file not found: ${oldFilename}` }, { status: 404 });
         }
 
         // Handle sequence numbering
         let attempt = 1;
-        let finalFilename = `${newSKU}_01${path.extname(oldFilename)}`;
+        let finalFilename = `${newSKU}_01${path.extname(oldPath)}`;
         let finalPath = path.join(targetDir, finalFilename);
 
         while (fs.existsSync(finalPath) && finalPath !== oldPath) {
             attempt++;
             const suffix = attempt.toString().padStart(2, '0');
-            finalFilename = `${newSKU}_${suffix}${path.extname(oldFilename)}`;
+            finalFilename = `${newSKU}_${suffix}${path.extname(oldPath)}`;
             finalPath = path.join(targetDir, finalFilename);
         }
 
-        // Move file
-        if (fs.existsSync(oldPath)) {
-            fs.renameSync(oldPath, finalPath);
-
-            // Handle Metadata (JSON sidecar)
-            // const { composition, customName, filters } = await req.json(); // REMOVED
-
-            // 1. Rename existing JSON if exists (for renames)
-            const oldJsonPath = oldPath.replace(path.extname(oldPath), '.json');
-            const newJsonPath = finalPath.replace(path.extname(finalPath), '.json');
-
-            if (fs.existsSync(oldJsonPath)) {
-                fs.renameSync(oldJsonPath, newJsonPath);
+        // Move file (copy + unlink is safe across partitions/permissions on Windows)
+        fs.copyFileSync(oldPath, finalPath);
+        if (finalPath !== oldPath) {
+            try {
+                fs.unlinkSync(oldPath);
+            } catch (e) {
+                console.warn('Could not remove original file after copy:', e);
             }
+        }
+
+        // Handle Metadata (JSON sidecar)
+        const oldJsonPath = oldPath.replace(path.extname(oldPath), '.json');
+        const newJsonPath = finalPath.replace(path.extname(finalPath), '.json');
+
+        if (fs.existsSync(oldJsonPath)) {
+            try {
+                fs.copyFileSync(oldJsonPath, newJsonPath);
+                if (newJsonPath !== oldJsonPath) {
+                    fs.unlinkSync(oldJsonPath);
+                }
+            } catch (e) {
+                console.warn('Could not move old JSON:', e);
+            }
+        }
 
             // 2. Update/Create JSON with new data
             // If composition or customName is provided, write/update the file
@@ -86,9 +135,6 @@ export async function POST(req: Request) {
             }
 
             return NextResponse.json({ success: true, newFilename: finalFilename });
-        } else {
-            return NextResponse.json({ error: 'Source file not found' }, { status: 404 });
-        }
 
     } catch (error: any) {
         console.error('Rename error:', error);

@@ -1,0 +1,32 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "VDC",
+  "detail": "BAB",
+  "detailColor": "VDC",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "kit manta",
+  "updatedAt": "2026-10-01T23:21:43.282Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:50.544Z"
+}

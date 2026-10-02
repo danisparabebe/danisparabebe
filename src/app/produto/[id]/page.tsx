@@ -20,10 +20,11 @@ async function getProduct(rawId: string) {
     const id = resolveProductId(rawId);
     
     // 1. Try to find in Product Control Center (MVP Priority)
-    const managedProduct = productControl.find(p => p.id === id);
+    const managedProduct = productControl.find(p => p.id === id || p.colorVariations?.some(v => v.id === id));
     if (managedProduct) {
         const pixPrice = managedProduct.pixPrice || getFinalPrice(managedProduct);
         const available = isProductAvailable(managedProduct.id) || isProductAvailable(managedProduct.shortCode || '');
+        const initialVariationId = managedProduct.colorVariations?.some(v => v.id === id) ? id : undefined;
         return {
             id: managedProduct.id,
             name: managedProduct.name,
@@ -38,6 +39,8 @@ async function getProduct(rawId: string) {
             features: managedProduct.features || [],
             metadata: { type: (managedProduct.category || 'Geral').toUpperCase() },
             comingSoon: !available,
+            colorVariations: managedProduct.colorVariations || [],
+            initialVariationId,
         };
     }
 

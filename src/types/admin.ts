@@ -1,3 +1,15 @@
+export interface ProductColorVariation {
+    id: string;
+    colorName: string;
+    colorHex?: string;
+    title: string;
+    description: string;
+    image: string;
+    images?: string[];
+    priceFull?: number;
+    pixPrice?: number;
+}
+
 export interface ManagedProduct {
     id: string;
     shortCode?: string;
@@ -23,4 +35,7 @@ export interface ManagedProduct {
     publishedAt?: string | null;
     isHot?: boolean;
     mvpEnabled?: boolean;
+    colorVariations?: ProductColorVariation[];
+    updatedAt?: string | null;
 }
+

@@ -1,0 +1,36 @@
+{
+  "category": "FEM",
+  "type": "KIT",
+  "theme": "FLO",
+  "color": "RSA",
+  "detail": "BAB",
+  "detailColor": "RSA",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 2
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    }
+  ],
+  "customName": "Floral Rosa Bebê · Kit",
+  "updatedAt": "2026-10-01T23:25:21.371Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:32.077Z"
+}

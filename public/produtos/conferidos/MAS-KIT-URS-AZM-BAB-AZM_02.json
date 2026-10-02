@@ -1,0 +1,32 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "AZM",
+  "detail": "BAB",
+  "detailColor": "AZM",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRP",
+      "qty": 3
+    },
+    {
+      "type": "FRM",
+      "qty": 2
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    }
+  ],
+  "customName": "Kit Essencial",
+  "updatedAt": "2026-10-01T23:23:14.555Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:47.099Z"
+}

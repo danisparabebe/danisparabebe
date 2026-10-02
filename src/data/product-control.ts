@@ -18,7 +18,7 @@ export const productControl: ManagedProduct[] = [
         "pixDiscountPct": 3,
         "discountPct": 11,
         "images": [
-            "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO_01.jpeg"
+            "/uploads/products/1790892423162-Kit_manta_Monograma_Rosé.jpg"
         ],
         "gridPosition": "HERO_LEFT",
         "category": "Kits",
@@ -29,7 +29,60 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê"
         ],
         "netValue": 194.6685,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": true,
+        "colorVariations": [
+            {
+                "id": "FEM-FRP-MON-RSA-BAB-RSA-R_01",
+                "colorName": "Rosa",
+                "colorHex": "#F49AC2",
+                "title": "Monograma Rosa · Kit Manta",
+                "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Monograma, em tons de Rosa, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-FRP-MON-RSA-BAB-RSA-R_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            },
+            {
+                "id": "FEM-KIT-FLO-PNK-BAB-PNK_01",
+                "colorName": "Pink",
+                "colorHex": "#E0218A",
+                "title": "Monograma Pink · Kit Manta",
+                "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Floral, em tons de Pink, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Pequena\n• 1x Fralda Grande\n• 1x Manta\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-KIT-FLO-PNK-BAB-PNK_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            },
+            {
+                "id": "FEM-KIT-MON-LIL-BAB-LIL_01",
+                "colorName": "Lilás",
+                "colorHex": "#C084FC",
+                "title": "Monograma Lavanda · Kit Manta",
+                "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Monograma, em tons de Lilás, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-KIT-MON-LIL-BAB-LIL_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            },
+            {
+                "id": "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_01",
+                "colorName": "Rosa",
+                "colorHex": "#F49AC2",
+                "title": "Monograma Rosa · Kit Manta",
+                "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Monograma, em tons de Rosa, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA-R_RSA_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            },
+            {
+                "id": "FEM-KIT-MON-VRM-BAB-VRM_01",
+                "colorName": "Vermelho",
+                "colorHex": "#DC2626",
+                "title": "Monograma Rubi · Kit Manta",
+                "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Monograma, em tons de Vermelho, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-KIT-MON-VRM-BAB-VRM_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            }
+        ]
     },
     {
         "id": "MAS-KIT-SAF-VDM-BAB-VDM_01",
@@ -59,7 +112,9 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear"
         ],
         "netValue": 193,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": true,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-ABB-BAB-ABB-R",
@@ -88,7 +143,9 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-CRE-BAB-CRE_02",
@@ -116,7 +173,9 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-BCO-BAB-BCO_01",
@@ -143,7 +202,9 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Custo-Benefício"
         ],
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BAI-LIL-BAB-LIL-R_01",
@@ -174,7 +235,9 @@ export const productControl: ManagedProduct[] = [
             "Saída de Maternidade"
         ],
         "netValue": 365,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-LIL-BAB-LIL_04",
@@ -201,7 +264,9 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Essenciais"
         ],
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-PER-RSE-BAB-RSE_01",
@@ -231,7 +296,9 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Saída de Maternidade"
         ],
-        "netValue": 337
+        "netValue": 337,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-CNZ-BAB-BCO_01",
@@ -257,7 +324,9 @@ export const productControl: ManagedProduct[] = [
             "Dia a Dia",
             "Essenciais"
         ],
-        "netValue": 231
+        "netValue": 231,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-BDC-BOR-RSA-RSA_01",
@@ -283,7 +352,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 54,
         "pixPrice": 52,
         "pixDiscountPct": 4,
-        "netValue": 52
+        "netValue": 52,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-BDL-BOR-LIL-BAB-LIL_01",
@@ -309,7 +380,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 57,
         "pixPrice": 55,
         "pixDiscountPct": 4,
-        "netValue": 55
+        "netValue": 55,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-FAI-MON-RSA_02",
@@ -337,7 +410,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 24,
         "pixPrice": 23,
         "pixDiscountPct": 4,
-        "netValue": 23
+        "netValue": 23,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-FRG-BOR-RSA-BAB-RSA_01",
@@ -364,7 +439,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 55,
         "pixPrice": 53,
         "pixDiscountPct": 4,
-        "netValue": 53
+        "netValue": 53,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-FRM-BOR-RSA-BAB-RSA_01",
@@ -391,7 +468,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 46,
         "pixPrice": 44,
         "pixDiscountPct": 4,
-        "netValue": 44
+        "netValue": 44,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-FRP-BOR-RSA-BAB-RSA-R_01",
@@ -421,7 +500,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": true,
+        "colorVariations": []
     },
     {
         "id": "FEM-FRP-BOR-RSA-BAB-RSA_01",
@@ -448,7 +529,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 40,
         "pixPrice": 38,
         "pixDiscountPct": 5,
-        "netValue": 38
+        "netValue": 38,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-FRP-BOR-RSA-BAB-RSA_02",
@@ -478,7 +561,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-FRP-BOR-RSE-BAB-RSE_01",
@@ -510,7 +595,20 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": true,
+        "colorVariations": [
+            {
+                "id": "FEM-FRP-BOR-RSA-BAB-RSA_02",
+                "colorName": "Rosa",
+                "colorHex": "#F49AC2",
+                "title": "Borboletas Rosa · Kit Manta",
+                "description": "§INTRO§\nApaixonante do primeiro ao último detalhe! O tema Borboletas em Rosa dá vida a este conjunto feito com todo o carinho do mundo.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-FRP-BOR-RSA-BAB-RSA_02.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            }
+        ]
     },
     {
         "id": "FEM-FRP-MON-RSA-BAB-RSA-R_01",
@@ -540,7 +638,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BAI-MAR-BAB-MAR_01",
@@ -570,7 +670,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RSA-BAB-RSA_03",
@@ -602,7 +704,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-COR-RSE-BAB-RSE_03",
@@ -632,7 +736,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RSE-BAB-RSE_01",
@@ -662,7 +768,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-LIL-BAB-LIL_01",
@@ -692,7 +800,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-PNK-BAB-PNK_01",
@@ -722,7 +832,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-RSE-BAB-RSE-R_01",
@@ -752,7 +864,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-JDE-LIL-BAB-LIL-R_01",
@@ -784,7 +898,20 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": true,
+        "colorVariations": [
+            {
+                "id": "FEM-KIT-JDE-MAR-BAB-MAR_01",
+                "colorName": "Marsala",
+                "colorHex": "#651C32",
+                "title": "Jardim Encantado Marsala · Kit Manta",
+                "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Jardim Encantado, em tons de Marsala, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/FEM-KIT-JDE-MAR-BAB-MAR_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            }
+        ]
     },
     {
         "id": "FEM-KIT-JDE-MAR-BAB-MAR_01",
@@ -814,7 +941,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-JDE-RSA-BAB-RSA-AMA_01",
@@ -844,7 +973,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-LIL-BAB-LIL_01",
@@ -874,7 +1005,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_01",
@@ -904,7 +1037,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-VRM-BAB-VRM_01",
@@ -934,7 +1069,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-PER-VRM-BAB-VRM_01",
@@ -964,7 +1101,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-LIL-BAB-LIL-R_01",
@@ -994,7 +1133,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-VDC-BAB-VDC_01",
@@ -1024,7 +1165,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-VDM-BAB-VDM-R_01",
@@ -1054,7 +1197,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-ABB-BAB-ABB-R_01",
@@ -1084,7 +1229,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-AZM-BAB-AZM-R_01",
@@ -1114,7 +1261,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-VDC-BAB-VDC-R_01",
@@ -1130,7 +1279,7 @@ export const productControl: ManagedProduct[] = [
         "priceFull": 200,
         "discountPct": 11,
         "images": [
-            "/produtos/conferidos/MAS-KIT-URS-VDC-BAB-VDC-R_01.jpeg"
+            "/uploads/products/1790901985739-Kit_manta_ursinho_Verde.jpg"
         ],
         "gridPosition": "FEATURED",
         "category": "Kits",
@@ -1144,7 +1293,20 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": true,
+        "colorVariations": [
+            {
+                "id": "MAS-KIT-URS-ABB-BAB-ABB-R_01",
+                "colorName": "Azul Bebê",
+                "colorHex": "#B0E0E6",
+                "title": "Ursinho Celeste · Kit Manta",
+                "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinha em Azul Bebê, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+                "image": "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB-R_01.jpeg",
+                "pixPrice": 193,
+                "priceFull": 200
+            }
+        ]
     },
     {
         "id": "MAS-KIT-VAR-ABB-BAB-ABB_01",
@@ -1174,7 +1336,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-AZM-BAB-AZM-R_01",
@@ -1204,7 +1368,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-AZM-BAB-BCO_01",
@@ -1234,7 +1400,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-VDC-BAB-VDC_01",
@@ -1264,7 +1432,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 225,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "netValue": 193
+        "netValue": 193,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-RSA-BAB-RSA-R_RSA_02",
@@ -1295,7 +1465,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-PER-RSA-BAB-RSA_01",
@@ -1324,7 +1496,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-RSA-BAB-RSA_02",
@@ -1355,7 +1529,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-BGE-BAB-BCO_02",
@@ -1384,7 +1560,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-ABB-BAB-ABB_02",
@@ -1413,7 +1591,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-URS-RSE-BAB-RSE_01",
@@ -1444,7 +1624,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-LRJ-BAB-LRJ_01",
@@ -1473,7 +1655,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-LIL-BAB-LIL_06",
@@ -1504,7 +1688,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BAI-VRM-BAB-VRM_02",
@@ -1535,7 +1721,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RSE-BAB-RSE_02",
@@ -1564,7 +1752,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RLC-BAB-RLC_02",
@@ -1595,7 +1785,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-JDE-LIL-BAB-LIL_02",
@@ -1626,7 +1818,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 129,
         "pixDiscountPct": 4,
         "netValue": 129,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-RSA-BAB-RSA_04",
@@ -1655,7 +1849,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 135,
         "pixPrice": 129,
         "pixDiscountPct": 4,
-        "netValue": 129
+        "netValue": 129,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-JDE-RSE-BAB-RSE_01",
@@ -1684,7 +1880,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 135,
         "pixPrice": 129,
         "pixDiscountPct": 4,
-        "netValue": 129
+        "netValue": 129,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-RSA-BAB-RSA_02",
@@ -1713,7 +1911,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 135,
         "pixPrice": 129,
         "pixDiscountPct": 4,
-        "netValue": 129
+        "netValue": 129,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-COR-VDC-BAB-VDC_01",
@@ -1742,7 +1942,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-RSA-BAB-RSA_03",
@@ -1771,7 +1973,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-VRM-BAB-ABB-LIL_01",
@@ -1798,7 +2002,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 285,
         "pixPrice": 273,
         "pixDiscountPct": 3,
-        "netValue": 273
+        "netValue": 273,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-JDE-ABB-BAB-ABB-R_ABB_01",
@@ -1829,7 +2035,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_01",
@@ -1860,7 +2068,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 129,
         "pixDiscountPct": 4,
         "netValue": 129,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_02",
@@ -1889,7 +2099,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": true,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-TIM-BCO-BAB-BCO_01",
@@ -1918,7 +2130,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 95,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "netValue": 87
+        "netValue": 87,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RLC-BAB-RLC_01",
@@ -1947,7 +2161,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 267,
         "pixPrice": 255,
         "pixDiscountPct": 3,
-        "netValue": 255
+        "netValue": 255,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RLC-BAB-BCO-RLC_01",
@@ -1978,7 +2194,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 255,
         "pixDiscountPct": 3,
         "netValue": 255,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RLC-BAB-RSA_01",
@@ -2006,7 +2224,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 267,
         "pixPrice": 255,
         "pixDiscountPct": 3,
-        "netValue": 255
+        "netValue": 255,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RSA-BAB-RSA-R_RSA_01",
@@ -2041,7 +2261,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 291,
         "pixDiscountPct": 3,
         "netValue": 291,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-BOR-RSE-BAB-RSE-RSA_01",
@@ -2075,7 +2297,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 504,
         "pixDiscountPct": 3,
         "netValue": 504,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-LIL-BAB-LIL_05",
@@ -2106,7 +2330,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 512,
         "pixPrice": 492,
         "pixDiscountPct": 3,
-        "netValue": 492
+        "netValue": 492,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-LIL-BAB-RSA-LIL_01",
@@ -2134,7 +2360,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 190,
         "pixPrice": 182,
         "pixDiscountPct": 3,
-        "netValue": 182
+        "netValue": 182,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-RLC-BAB-RSA_01",
@@ -2164,7 +2392,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 221,
         "pixPrice": 211,
         "pixDiscountPct": 3,
-        "netValue": 211
+        "netValue": 211,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-RSA-BAB-RSA_03",
@@ -2200,7 +2430,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 375,
         "pixDiscountPct": 3,
         "netValue": 375,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-RSE-BAB-RSE_01",
@@ -2230,7 +2462,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 300,
         "pixPrice": 287,
         "pixDiscountPct": 3,
-        "netValue": 287
+        "netValue": 287,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-JDE-AMA-BAB-LIL-VDC_01",
@@ -2260,7 +2494,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 190,
         "pixDiscountPct": 4,
         "netValue": 190,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-FLO-VRM-BAB-VRM_01",
@@ -2292,7 +2528,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 300,
         "pixPrice": 287,
         "pixDiscountPct": 3,
-        "netValue": 287
+        "netValue": 287,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-CRE-BAB-CRE_01",
@@ -2321,7 +2559,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 175,
         "pixPrice": 167,
         "pixDiscountPct": 3,
-        "netValue": 167
+        "netValue": 167,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-MON-RSA-BAB-RSA_01",
@@ -2351,7 +2591,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 221,
         "pixPrice": 211,
         "pixDiscountPct": 3,
-        "netValue": 211
+        "netValue": 211,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-URS-CRE-BAB-CRE_01",
@@ -2383,7 +2625,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 317,
         "pixPrice": 304,
         "pixDiscountPct": 3,
-        "netValue": 304
+        "netValue": 304,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-PNK-BAB-PNK-R_01",
@@ -2412,7 +2656,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 175,
         "pixPrice": 167,
         "pixDiscountPct": 3,
-        "netValue": 167
+        "netValue": 167,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-RSE-BAB-RSE_01",
@@ -2446,7 +2692,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 657,
         "pixDiscountPct": 3,
         "netValue": 657,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-RSE-BAB-RSE-RSA_01",
@@ -2474,7 +2722,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 220,
         "pixPrice": 212,
         "pixDiscountPct": 3,
-        "netValue": 212
+        "netValue": 212,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-KIT-VAR-SLM-BAB-BCO-RSA_01",
@@ -2503,7 +2753,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 374,
         "pixPrice": 359,
         "pixDiscountPct": 3,
-        "netValue": 359
+        "netValue": 359,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-MNT-BOR-RSA-BAB-RSA_01",
@@ -2531,7 +2783,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 130,
         "pixPrice": 125,
         "pixDiscountPct": 4,
-        "netValue": 125
+        "netValue": 125,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-FRP-SAF-AZM-BAB-AZM-BCO_01",
@@ -2562,7 +2816,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 397,
         "pixPrice": 380,
         "pixDiscountPct": 3,
-        "netValue": 380
+        "netValue": 380,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-TOB-BOR-RSA-RSA_01",
@@ -2590,7 +2846,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 138,
         "pixPrice": 133,
         "pixDiscountPct": 4,
-        "netValue": 133
+        "netValue": 133,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "FEM-TOU-BOR-RSA-RSA_01",
@@ -2618,7 +2876,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 35,
         "pixPrice": 33,
         "pixDiscountPct": 6,
-        "netValue": 33
+        "netValue": 33,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-BGE-BAB-BGE_01",
@@ -2647,7 +2907,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 305,
         "pixPrice": 292,
         "pixDiscountPct": 3,
-        "netValue": 292
+        "netValue": 292,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-BGE-BAB-BCO_01",
@@ -2678,7 +2940,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 397,
         "pixPrice": 380,
         "pixDiscountPct": 3,
-        "netValue": 380
+        "netValue": 380,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-AZM-BAB-AZM_01",
@@ -2713,7 +2977,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 716,
         "pixPrice": 686,
         "pixDiscountPct": 3,
-        "netValue": 686
+        "netValue": 686,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-BGE-BCO_01",
@@ -2742,7 +3008,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 320,
         "pixPrice": 307,
         "pixDiscountPct": 3,
-        "netValue": 307
+        "netValue": 307,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-MON-VDM-BAB-VDM_02",
@@ -2770,7 +3038,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 170,
         "pixPrice": 163,
         "pixDiscountPct": 4,
-        "netValue": 163
+        "netValue": 163,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-ABB-BAB-AZM-ABB_01",
@@ -2802,7 +3072,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 243,
         "pixDiscountPct": 3,
         "netValue": 243,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-NUV-ABB-BAB-ABB_01",
@@ -2834,7 +3106,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 317,
         "pixPrice": 304,
         "pixDiscountPct": 3,
-        "netValue": 304
+        "netValue": 304,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-PER-AZM-BAB-AZM_01",
@@ -2864,7 +3138,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 305,
         "pixPrice": 292,
         "pixDiscountPct": 3,
-        "netValue": 292
+        "netValue": 292,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-AZM-BAB-ABB-R_01",
@@ -2893,7 +3169,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 175,
         "pixPrice": 167,
         "pixDiscountPct": 3,
-        "netValue": 167
+        "netValue": 167,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-AZM-BAB-AZM_01",
@@ -2931,7 +3209,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 337,
         "pixDiscountPct": 3,
         "netValue": 337,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-AZM-BAB-BCO_01",
@@ -2961,7 +3241,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 233,
         "pixPrice": 224,
         "pixDiscountPct": 3,
-        "netValue": 224
+        "netValue": 224,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-AZM-BAB_01",
@@ -2993,7 +3275,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 300,
         "pixPrice": 288,
         "pixDiscountPct": 3,
-        "netValue": 288
+        "netValue": 288,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-VDM-BAB-BCO-BGE_01",
@@ -3025,7 +3309,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 506,
         "pixPrice": 486,
         "pixDiscountPct": 3,
-        "netValue": 486
+        "netValue": 486,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-CRE-BAB-CRE-BGE_01",
@@ -3056,7 +3342,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 360,
         "pixPrice": 345,
         "pixDiscountPct": 3,
-        "netValue": 345
+        "netValue": 345,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-SAF-VDM-BAB-VDM-BCO_01",
@@ -3088,7 +3376,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 380,
         "pixDiscountPct": 3,
         "netValue": 380,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-ABB-BAB-ABB_01",
@@ -3119,7 +3409,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 260,
         "pixPrice": 249,
         "pixDiscountPct": 3,
-        "netValue": 249
+        "netValue": 249,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-ABB-BAB-ABB_03",
@@ -3153,7 +3445,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 337,
         "pixDiscountPct": 3,
         "netValue": 337,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-ABB-BAB-ABB_04",
@@ -3184,7 +3478,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 254,
         "pixDiscountPct": 3,
         "netValue": 254,
-        "isHot": true
+        "isHot": true,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-AZM-BAB-AZM-VDM_01",
@@ -3213,7 +3509,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 440,
         "pixPrice": 421,
         "pixDiscountPct": 3,
-        "netValue": 421
+        "netValue": 421,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-URS-BGE-BAB-BCO_01",
@@ -3243,7 +3541,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 403,
         "pixPrice": 387,
         "pixDiscountPct": 3,
-        "netValue": 387
+        "netValue": 387,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-AZM-BAB-AZM_01",
@@ -3274,7 +3574,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 260,
         "pixPrice": 249,
         "pixDiscountPct": 3,
-        "netValue": 249
+        "netValue": 249,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-AZM-ATC-AZM_01",
@@ -3301,7 +3603,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 217,
         "pixPrice": 207,
         "pixDiscountPct": 3,
-        "netValue": 207
+        "netValue": 207,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-BGE-BAB-AZM-ABB_01",
@@ -3328,7 +3632,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 120,
         "pixPrice": 114,
         "pixDiscountPct": 3,
-        "netValue": 114
+        "netValue": 114,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-BGE-BAB-BCO_01",
@@ -3359,7 +3665,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 301,
         "pixPrice": 287,
         "pixDiscountPct": 3,
-        "netValue": 287
+        "netValue": 287,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-CNZ-BAB-BCO_01",
@@ -3390,7 +3698,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 363,
         "pixPrice": 349,
         "pixDiscountPct": 3,
-        "netValue": 349
+        "netValue": 349,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-BGE-BAB-CRE_01",
@@ -3424,7 +3734,9 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 586,
         "pixPrice": 561,
         "pixDiscountPct": 3,
-        "netValue": 561
+        "netValue": 561,
+        "mvpEnabled": false,
+        "colorVariations": []
     },
     {
         "id": "MAS-KIT-VAR-VDM-BAB-VDM_01",
@@ -3456,6 +3768,8 @@ export const productControl: ManagedProduct[] = [
         "originalPriceFull": 585,
         "pixPrice": 561,
         "pixDiscountPct": 3,
-        "netValue": 561
+        "netValue": 561,
+        "mvpEnabled": false,
+        "colorVariations": []
     }
 ];

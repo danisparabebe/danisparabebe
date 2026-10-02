@@ -1,0 +1,32 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "URS",
+  "color": "ABB",
+  "detail": "BAB",
+  "detailColor": "ABB",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "kit manta",
+  "updatedAt": "2026-10-02T00:28:41.113Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:45.830Z"
+}

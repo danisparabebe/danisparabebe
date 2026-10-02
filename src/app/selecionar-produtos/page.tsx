@@ -48,12 +48,8 @@ export default function SelecionarProdutosPage() {
             setSelectedIds(prev => prev.filter(item => item !== identifier && item !== id));
             toast.info(`"${name || identifier}" removido da seleção.`);
         } else {
-            if (selectedIds.length >= 10) {
-                toast.error('Você já selecionou 10 produtos! Remova um antes de adicionar outro.');
-                return;
-            }
             setSelectedIds(prev => [...prev, identifier]);
-            toast.success(`"${name || identifier}" adicionado ao MVP! (${selectedIds.length + 1} de 10)`);
+            toast.success(`"${name || identifier}" adicionado ao MVP! (${selectedIds.length + 1} selecionados)`);
         }
     };
 

@@ -15,11 +15,32 @@
     },
     {
       "type": "FRP",
-      "qty": 2
+      "qty": 1
+    },
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
     }
   ],
-  "customName": "Kit Fraldas Trio Safari",
-  "updatedAt": "2026-03-12T00:23:32.637Z",
+  "customName": "Safari Militar · Kit Fraldas",
+  "updatedAt": "2026-10-02T00:49:06.946Z",
   "published": true,
-  "publishedAt": "2026-03-12T00:26:38.900Z"
+  "publishedAt": "2026-03-12T00:26:38.900Z",
+  "description": "§INTRO§\nPara um pequeno príncipe! Este kit Safari em Verde Militar combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 2x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
+  "observations": "§INTRO§\nPara um pequeno príncipe! Este kit Safari em Verde Militar combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 2x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
+  "images": [
+    "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_01.jpeg"
+  ],
+  "colorVariations": [],
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD"
 }

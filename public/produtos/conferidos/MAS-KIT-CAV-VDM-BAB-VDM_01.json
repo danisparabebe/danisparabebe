@@ -1,0 +1,44 @@
+{
+  "category": "MAS",
+  "type": "KIT",
+  "theme": "CAV",
+  "color": "VDM",
+  "detail": "BAB",
+  "detailColor": "VDM",
+  "detailColor2": "PAD",
+  "detailColor3": "PAD",
+  "detailColor4": "PAD",
+  "detailColor5": "PAD",
+  "ribbonColor": "PAD",
+  "hasFrufru": false,
+  "composition": [
+    {
+      "type": "TOU",
+      "qty": 1
+    },
+    {
+      "type": "BDL",
+      "qty": 1
+    },
+    {
+      "type": "TOB",
+      "qty": 1
+    },
+    {
+      "type": "FRP",
+      "qty": 1
+    },
+    {
+      "type": "FRG",
+      "qty": 1
+    },
+    {
+      "type": "MNT",
+      "qty": 1
+    }
+  ],
+  "customName": "",
+  "updatedAt": "2026-10-01T23:17:51.854Z",
+  "published": true,
+  "publishedAt": "2026-10-02T00:38:40.995Z"
+}

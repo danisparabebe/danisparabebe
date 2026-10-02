@@ -10,6 +10,9 @@ import { useFavoritesStore } from '@/store/favorites-store';
 import { ProductPersonalizationModal } from '@/components/product/personalization-modal';
 import { formatCategoryName, getCategoryDetails } from '@/lib/utils';
 
+import { ProductColorVariation } from '@/types/admin';
+import { getColorHex } from '@/lib/color-variations';
+
 interface ProductData {
     id: string;
     name: string;
@@ -24,11 +27,16 @@ interface ProductData {
     features?: string[];
     metadata: any;
     comingSoon?: boolean;
+    colorVariations?: ProductColorVariation[];
+    initialVariationId?: string;
 }
 
 export function ProductClientView({ product }: { product: ProductData }) {
     const router = useRouter();
     const [selectedImageIdx, setSelectedImageIdx] = useState(0);
+    const [selectedVariationId, setSelectedVariationId] = useState<string | null>(
+        product.initialVariationId || null
+    );
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [zoomLevel, setZoomLevel] = useState(1);
     const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
@@ -39,6 +47,17 @@ export function ProductClientView({ product }: { product: ProductData }) {
     const { addItem, openCart } = useCartStore();
     const { toggle, isFavorite } = useFavoritesStore();
     const { setSelectedProduct } = useConfiguratorStore();
+
+    // Variação atualmente ativa (ou nula se produto base original)
+    const activeVariation = product.colorVariations?.find(v => v.id === selectedVariationId) || null;
+
+    // Dados dinâmicos de acordo com a variação selecionada
+    const currentName = activeVariation?.title || product.name;
+    const currentDescription = activeVariation?.description || product.description;
+    const currentPixPrice = activeVariation?.pixPrice || product.pixPrice;
+    const currentPriceFull = activeVariation?.priceFull || product.priceFull;
+    const currentOriginalPrice = product.originalPrice;
+    const currentMainImage = activeVariation ? activeVariation.image : (product.images[selectedImageIdx] || product.images[0]);
     
     const fav = isFavorite(product?.id);
 
@@ -55,13 +74,16 @@ export function ProductClientView({ product }: { product: ProductData }) {
     const handleConfirmPersonalization = (data: any) => {
         setIsPersonalizationOpen(false);
         addItem({
-            id: `${product.id}-personalized-${Date.now()}`,
-            productId: product.id,
-            name: product.name,
-            price: product.pixPrice,
-            image: product.images[0],
+            id: `${activeVariation ? activeVariation.id : product.id}-personalized-${Date.now()}`,
+            productId: activeVariation ? activeVariation.id : product.id,
+            name: currentName,
+            price: currentPixPrice,
+            image: currentMainImage,
             quantity: 1,
-            personalization: data
+            personalization: {
+                ...data,
+                colorVariation: activeVariation ? activeVariation.colorName : undefined
+            }
         });
 
         if (buyMode === 'checkout') {
@@ -86,15 +108,82 @@ export function ProductClientView({ product }: { product: ProductData }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 {/* Left Column: Image Gallery — sticky on desktop */}
                 <div className="flex flex-col-reverse gap-3 md:flex-row items-start lg:sticky lg:top-6 lg:self-start">
-                    {/* Thumbnails */}
-                    <div className="flex gap-3 md:flex-col overflow-x-auto md:w-20 pb-2 md:pb-0 scrollbar-hide flex-shrink-0 custom-scrollbar">
-                        {product.images.filter(img => img && img.trim() !== '').map((img, idx) => (
+                    {/* Thumbnails Verticais à Esquerda: Foto Original + Todas as Cores (Sem barra de rolagem) */}
+                    <div className="flex gap-2.5 md:flex-col shrink-0 overflow-x-auto md:overflow-visible [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                        {/* 1. Miniatura da Foto Original */}
+                        {product.images[0] && (
                             <button
-                                key={idx}
-                                onClick={() => setSelectedImageIdx(idx)}
-                                className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all ${selectedImageIdx === idx ? 'border-sage-green-dark shadow-md' : 'border-transparent hover:border-line'}`}
+                                onClick={() => {
+                                    setSelectedVariationId(null);
+                                    setSelectedImageIdx(0);
+                                }}
+                                className={`relative h-18 w-18 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all group ${
+                                    !selectedVariationId && selectedImageIdx === 0
+                                        ? 'border-charcoal shadow-md scale-102 ring-2 ring-charcoal/20'
+                                        : 'border-line hover:border-slate/60 hover:scale-102 opacity-80 hover:opacity-100'
+                                }`}
+                                title="Cor Original"
                             >
-                                <Image src={img} alt={`Thumbnail ${idx}`} fill className="object-cover" />
+                                <Image
+                                    src={product.images[0]}
+                                    alt="Original"
+                                    fill
+                                    className="object-cover"
+                                />
+                                <span className="absolute bottom-1 right-1 text-[8px] font-black bg-black/60 text-white px-1 rounded backdrop-blur-xs">
+                                    Base
+                                </span>
+                            </button>
+                        )}
+
+                        {/* 2. Miniaturas das Variações de Cores */}
+                        {product.colorVariations?.map((variation) => {
+                            const isSelected = selectedVariationId === variation.id;
+                            const colorHex = variation.colorHex || getColorHex(variation.colorName);
+
+                            return (
+                                <button
+                                    key={variation.id}
+                                    onClick={() => {
+                                        setSelectedVariationId(variation.id);
+                                        setSelectedImageIdx(0);
+                                    }}
+                                    className={`relative h-18 w-18 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all group ${
+                                        isSelected
+                                            ? 'border-charcoal shadow-md scale-102 ring-2 ring-charcoal/20'
+                                            : 'border-line hover:border-slate/60 hover:scale-102 opacity-80 hover:opacity-100'
+                                    }`}
+                                    title={`${variation.colorName} - ${variation.title}`}
+                                >
+                                    <Image
+                                        src={variation.image || product.images[0]}
+                                        alt={variation.colorName}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                    {/* Indicador de Cor */}
+                                    <span
+                                        className="absolute bottom-1 right-1 w-3 h-3 rounded-full border border-white shadow-xs"
+                                        style={{ backgroundColor: colorHex }}
+                                        title={variation.colorName}
+                                    />
+                                </button>
+                            );
+                        })}
+
+                        {/* 3. Fotos adicionais do produto base (se houver mais de 1 foto) */}
+                        {!selectedVariationId && product.images.slice(1).map((img, idx) => (
+                            <button
+                                key={`extra-${idx}`}
+                                onClick={() => setSelectedImageIdx(idx + 1)}
+                                className={`relative h-18 w-18 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all ${
+                                    selectedImageIdx === idx + 1
+                                        ? 'border-charcoal shadow-md scale-102'
+                                        : 'border-line hover:border-slate/60 opacity-80 hover:opacity-100'
+                                }`}
+                                title={`Foto ${idx + 2}`}
+                            >
+                                <Image src={img} alt={`Foto ${idx + 2}`} fill className="object-cover" />
                             </button>
                         ))}
                     </div>
@@ -105,8 +194,8 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         onClick={() => setIsLightboxOpen(true)}
                     >
                         <Image
-                            src={product.images[selectedImageIdx]}
-                            alt={product.name}
+                            src={currentMainImage}
+                            alt={currentName}
                             width={800}
                             height={800}
                             className="w-full h-auto p-1 transition-transform duration-500 group-hover:scale-[1.02]"
@@ -127,21 +216,37 @@ export function ProductClientView({ product }: { product: ProductData }) {
                     <div>
                         <span className="inline-block text-xs font-bold tracking-wider uppercase text-sage-green-dark mb-1">{product.category}</span>
                         <h1 className="text-2xl md:text-3xl font-bold text-charcoal leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
-                            {product.name}
+                            {currentName}
                         </h1>
                     </div>
 
+                    {/* Indicador da Cor Selecionada (as miniaturas das cores estão empilhadas à esquerda) */}
+                    {product.colorVariations && product.colorVariations.length > 0 && (
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate">
+                                Cor selecionada:
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-warm-stone/50 text-charcoal border border-line">
+                                <span
+                                    className="w-2.5 h-2.5 rounded-full border border-black/10 shrink-0"
+                                    style={{ backgroundColor: getColorHex(activeVariation?.colorName || product.name) }}
+                                />
+                                {activeVariation?.colorName || 'Original'}
+                            </span>
+                        </div>
+                    )}
+
                     {/* Pricing */}
                     <div className="flex flex-col gap-0.5 mb-2">
-                        {product.originalPrice && (
+                        {currentOriginalPrice && (
                             <div className="text-sm text-slate line-through decoration-charcoal/30">
-                                R$ {product.originalPrice.toFixed(2).replace('.', ',')}
+                                R$ {currentOriginalPrice.toFixed(2).replace('.', ',')}
                             </div>
                         )}
                         
                         <div className="flex items-baseline gap-2">
                             <span className="text-3xl font-extrabold text-charcoal tracking-tight">
-                                R$ {product.pixPrice.toFixed(2).replace('.', ',')}
+                                R$ {currentPixPrice.toFixed(2).replace('.', ',')}
                             </span>
                             <span className="text-sm font-bold text-sage-green-dark">no PIX</span>
                         </div>
@@ -149,7 +254,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         <div className="flex items-center gap-2 mt-1">
                             <ShieldCheck className="w-3.5 h-3.5 text-sage-green-dark" />
                             <span className="text-[11px] font-medium text-slate uppercase tracking-wider">
-                                ou 3x de R$ {((product.pixPrice * 1.0754) / 3).toFixed(2).replace('.', ',')} no cartão via InfinitePay
+                                ou 3x de R$ {((currentPixPrice * 1.0754) / 3).toFixed(2).replace('.', ',')} no cartão via InfinitePay
                             </span>
                         </div>
                     </div>
@@ -166,7 +271,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         {descExpanded && (
                             <div className="px-4 py-4 space-y-3">
                                 {(() => {
-                                    const desc = product.description || '';
+                                    const desc = currentDescription || '';
                                     const hasRichSections = desc.includes('§');
 
                                     if (!hasRichSections) {
@@ -415,8 +520,8 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             }}
                         >
                             <Image
-                                src={product.images[selectedImageIdx]}
-                                alt={product.name}
+                                src={currentMainImage}
+                                alt={currentName}
                                 fill
                                 className="object-contain pointer-events-none"
                                 quality={100}

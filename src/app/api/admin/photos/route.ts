@@ -13,7 +13,8 @@ export async function GET() {
                 if (!/\.(jpg|jpeg|png|webp|gif|svg)$/i.test(item)) continue;
 
                 const filePath = path.join(dir, item);
-                if (!fs.statSync(filePath).isFile()) continue;
+                const fileStat = fs.statSync(filePath);
+                if (!fileStat.isFile()) continue;
 
                 const jsonPath = path.join(dir, item.replace(/\.[^/.]+$/, '.json'));
                 let metadata: any = {};
@@ -36,6 +37,8 @@ export async function GET() {
                     folder: folderName,
                     status,
                     ...metadata,
+                    mtime: fileStat.mtime.toISOString(),
+                    updatedAt: metadata.updatedAt || fileStat.mtime.toISOString(),
                     published: !!metadata.published
                 });
             }

@@ -16,11 +16,11 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Formato inválido. Esperado array de IDs.' }, { status: 400 });
         }
 
-        // Garante exatamente 10 slots
-        const slots: string[] = [];
-        for (let i = 0; i < 10; i++) {
-            slots.push(selectedIds[i] || '');
-        }
+        // Salva os IDs selecionados dinamicamente (qualquer quantidade)
+        const validIds = selectedIds
+            .filter((id: any) => typeof id === 'string' && id.trim().length > 0)
+            .map((id: string) => id.trim());
+
 
         const targetFile = path.join(process.cwd(), 'src', 'data', 'mvp-config.ts');
 
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
  * =====================================================================
  */
 
-export const MVP_PRODUCT_SELECTION: string[] = ${JSON.stringify(slots, null, 4)};
+export const MVP_PRODUCT_SELECTION: string[] = ${JSON.stringify(validIds, null, 4)};
 `;
 
         let savedToDisk = false;
@@ -49,7 +49,7 @@ export const MVP_PRODUCT_SELECTION: string[] = ${JSON.stringify(slots, null, 4)}
             message: savedToDisk 
                 ? 'Seleção do MVP atualizada no arquivo do projeto!' 
                 : 'Seleção confirmada com sucesso!',
-            selected: slots
+            selected: validIds
         });
     } catch (error: any) {
         console.error('Erro ao processar MVP:', error);
