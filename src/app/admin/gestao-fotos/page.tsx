@@ -232,7 +232,7 @@ export default function GestaoFotosPage() {
     const buildLibraryFromAllPhotos = () => {
         setIsLoadingLibrary(true);
         try {
-            const parsedLibrary = [];
+            const libraryMap = new Map<string, any>();
 
             for (const f of allPhotos) {
                 const skuBase = f.filename.replace(/\.[^/.]+$/, '').replace(/_\d+$/, '');
@@ -241,14 +241,21 @@ export default function GestaoFotosPage() {
                 const themeCode = f.theme || (parts[2] === 'KIT' && parts[3] ? parts[3] : parts[2] || 'Geral');
                 const colorCode = f.color || (parts[2] === 'KIT' && parts[4] ? parts[4] : parts[3]);
 
-                // folder comes from api/admin/photos as 'uploads/products', 'produtos', 'produtos/conferidos'
                 const folderPath = f.folder.includes('uploads') ? '/uploads/products' : (f.folder.includes('conferidos') ? '/produtos/conferidos' : '/produtos');
-
-                // Extract category robustly from parsed metadata or fallback
                 const resolvedCategory = f.category || parts[0] || 'Geral';
+                const id = f.filename.replace(/\.[^/.]+$/, '');
+                const fileDate = f.updatedAt || f.mtime || null;
+                const fileTime = fileDate ? new Date(fileDate).getTime() : 0;
 
-                parsedLibrary.push({
-                    id: f.filename.replace(/\.[^/.]+$/, ''), // Use the exact filename without extension as the ID to avoid grouping
+                // Se já existe no map com o mesmo ID, mantém o mais recente
+                if (libraryMap.has(id)) {
+                    const existing = libraryMap.get(id);
+                    const existingTime = existing.updatedAt ? new Date(existing.updatedAt).getTime() : 0;
+                    if (existingTime >= fileTime) continue;
+                }
+
+                libraryMap.set(id, {
+                    id,
                     filename: f.filename,
                     name: f.customName || `${typeCode} ${themeCode} ${parts[3] || ''}`.trim() || skuBase,
                     image: `${folderPath}/${f.filename}`,
@@ -257,11 +264,11 @@ export default function GestaoFotosPage() {
                     type: typeCode,
                     theme: themeCode,
                     color: colorCode,
-                    updatedAt: f.updatedAt || f.mtime || null,
+                    updatedAt: fileDate,
                     raw: f
                 });
             }
-            setLibrary(parsedLibrary.reverse());
+            setLibrary(Array.from(libraryMap.values()).reverse());
         } catch (error) {
             toast.error("Erro ao sincronizar acervo");
         } finally {

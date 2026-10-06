@@ -34,7 +34,7 @@
     }
   ],
   "customName": "Bailarina Lavanda · Kit Luxinho",
-  "updatedAt": "2026-10-02T00:49:06.878Z",
+  "updatedAt": "2026-10-06T00:01:39.387Z",
   "hasFrufru": false,
   "published": true,
   "publishedAt": "2026-03-06T01:47:48.366Z",
@@ -43,5 +43,9 @@
   "images": [
     "/produtos/conferidos/FEM-KIT-BAI-LIL-BAB-LIL-R_01.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 377,
+  "pixPrice": 365,
+  "originalPriceFull": 381,
+  "discountPct": 1
 }

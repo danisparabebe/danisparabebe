@@ -24,7 +24,7 @@
     }
   ],
   "customName": "Borboletas Rosa · Kit Manta",
-  "updatedAt": "2026-10-02T00:49:06.893Z",
+  "updatedAt": "2026-10-06T00:01:39.428Z",
   "type": "FRP",
   "published": true,
   "publishedAt": "2026-03-03T01:20:26.910Z",
@@ -35,5 +35,9 @@
   "images": [
     "/produtos/conferidos/FEM-FRP-BOR-RSA-BAB-RSA_02.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 200,
+  "pixPrice": 193,
+  "originalPriceFull": 225,
+  "discountPct": 11
 }

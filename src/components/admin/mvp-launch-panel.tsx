@@ -23,6 +23,36 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 
+// Lista dos 25 modelos recém-conferidos e nomeados manualmente pelo usuário
+export const RECENT_BATCH_25_IDS = [
+    'FEM-KIT-BOR-LIL-BAB-LIL_01',
+    'FEM-KIT-BOR-RSA-BAB-RSA_01',
+    'FEM-KIT-BOR-RSA-BAB-RSA_02',
+    'FEM-KIT-BOR-RSA-BAB-RSA_03',
+    'FEM-KIT-FLO-RSA-BAB-RSA_01',
+    'FEM-KIT-FLO-RSE-BAB-RSE_01',
+    'FEM-KIT-MON-RSA-BAB-RSA_03',
+    'FEM-KIT-MON-RSE-BAB-RSE_01',
+    'FEM-KIT-MON-RSE-BAB-RSE_02',
+    'FEM-KIT-PER-RSA-BAB-RSE-RSA_01',
+    'FEM-KIT-URS-RSA-BAB-RSA_01',
+    'FEM-KIT-URS-RSE-BAB-RSE_01',
+    'MAS-KIT-CAV-AZM-BAB-AZM_01',
+    'MAS-KIT-CAV-VDM-BAB-VDM_01',
+    'MAS-KIT-JDE-VDM-BAB-VDM_01',
+    'MAS-KIT-JDE-VDM-BAB-VDM_03',
+    'MAS-KIT-JDE-VDM-BAB-VDM_04',
+    'MAS-KIT-MON-AZM-BAB-AZM_02',
+    'MAS-KIT-MON-CNZ-BAB-BCO_01',
+    'MAS-KIT-URS-ABB-BAB-ABB_05',
+    'MAS-KIT-URS-AZM-BAB-AZM_01',
+    'MAS-KIT-URS-AZM-BAB-AZM_02',
+    'MAS-KIT-URS-AZM-BAB-AZM_03',
+    'MAS-KIT-URS-VDC-BAB-VDC_01',
+    'MAS-KIT-URS-VDC-BAB-VDC_02'
+];
+const RECENT_SET = new Set(RECENT_BATCH_25_IDS);
+
 interface MvpLaunchPanelProps {
     products: ManagedProduct[];
     setProducts: React.Dispatch<React.SetStateAction<ManagedProduct[]>>;
@@ -41,10 +71,10 @@ export function MvpLaunchPanel({
     // Lista dos produtos ativos no lançamento
     const mvpProducts = products.filter(p => p.mvpEnabled === true);
 
-    // Modal: Adicionar Produto ao Lançamento
+    // Modal: Adicionar Produto ao Lançamento (inicia já nos 25 para facilitar a vida do usuário)
     const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
     const [productSearchTerm, setProductSearchTerm] = useState('');
-    const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<'ALL' | 'Kits' | 'Geral' | 'RECENT'>('ALL');
+    const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<'ALL' | 'Kits' | 'Geral' | 'RECENT' | 'RECEM_CADASTRADOS'>('RECEM_CADASTRADOS');
 
     // Modal: Importar Kit Existente como Variação de Cor
     const [importModalOpen, setImportModalOpen] = useState(false);
@@ -142,10 +172,16 @@ export function MvpLaunchPanel({
     };
 
     // Unifica produtos do catálogo com novos produtos salvos no acervo (library)
-    const existingIds = new Set(products.map(p => p.id));
-    const convertedLibraryProducts: ManagedProduct[] = library
-        .filter(libItem => !existingIds.has(libItem.id))
-        .map(convertLibItemToProduct);
+    const existingProductIds = new Set(products.map(p => p.id));
+    const seenLibraryIds = new Set<string>();
+
+    const convertedLibraryProducts: ManagedProduct[] = [];
+    for (const libItem of library) {
+        if (existingProductIds.has(libItem.id)) continue;
+        if (seenLibraryIds.has(libItem.id)) continue;
+        seenLibraryIds.add(libItem.id);
+        convertedLibraryProducts.push(convertLibItemToProduct(libItem));
+    }
 
     const allCatalogProducts = [...products, ...convertedLibraryProducts];
 
@@ -465,47 +501,54 @@ export function MvpLaunchPanel({
     });
 
     const getProductTimestamp = (p: ManagedProduct): number => {
-        // 1. Data direta de atualização ou publicação
+        // 1. updatedAt direto no produto
         if (p.updatedAt) {
             const t = new Date(p.updatedAt).getTime();
             if (!isNaN(t)) return t;
         }
-        if ((p as any).updatedAt) {
-            const t = new Date((p as any).updatedAt).getTime();
-            if (!isNaN(t)) return t;
-        }
+
+        // 2. publishedAt
         if (p.publishedAt) {
             const t = new Date(p.publishedAt).getTime();
             if (!isNaN(t)) return t;
         }
 
-        // 2. Checa metadados na library do acervo sincronizado
-        const libItem = library.find(item => item.id === p.id || item.raw?.sku === p.id || item.filename?.startsWith(p.id));
-        if (libItem?.updatedAt || libItem?.raw?.updatedAt || libItem?.raw?.mtime) {
-            const dateStr = libItem.updatedAt || libItem.raw?.updatedAt || libItem.raw?.mtime;
-            const t = new Date(dateStr).getTime();
-            if (!isNaN(t)) return t;
-        }
-        if (libItem?.raw?.publishedAt) {
-            const t = new Date(libItem.raw.publishedAt).getTime();
+        // 3. mtime do acervo (library)
+        const libItem = library.find(item => item.id === p.id);
+        const libDate = libItem?.updatedAt || libItem?.raw?.updatedAt || libItem?.raw?.mtime;
+        if (libDate) {
+            const t = new Date(libDate).getTime();
             if (!isNaN(t)) return t;
         }
 
-        // 3. Timestamp de upload gravado no nome do arquivo da imagem (ex: 1790892423162-...)
+        // 4. Timestamp no nome da imagem (ex: 1790892423162-...)
         const firstImg = p.images?.[0] || '';
-        const timestampMatch = firstImg.match(/(\d{13})/);
-        if (timestampMatch) {
-            const t = parseInt(timestampMatch[1], 10);
+        const tsMatch = firstImg.match(/(\d{13})/);
+        if (tsMatch) {
+            const t = parseInt(tsMatch[1], 10);
             if (!isNaN(t) && t > 1600000000000) return t;
         }
 
-        // 4. Numeração do shortCode (DPB-0115 > DPB-0001)
-        if (p.shortCode) {
-            const num = parseInt(p.shortCode.replace(/\D/g, ''), 10);
-            if (!isNaN(num)) return num * 1000;
+        return 0;
+    };
+
+    const availableRecent25Count = allCatalogProducts.filter(p => RECENT_SET.has(p.id) && !p.mvpEnabled).length;
+
+    const handleAddAll25Recent = () => {
+        const toAdd = allCatalogProducts.filter(p => RECENT_SET.has(p.id) && !p.mvpEnabled);
+        if (toAdd.length === 0) {
+            toast.info("Todos os 25 modelos já foram adicionados ao Lançamento MVP!");
+            return;
         }
 
-        return 0;
+        setProducts(prev => {
+            const existingIds = new Set(prev.map(p => p.id));
+            const updated = prev.map(p => RECENT_SET.has(p.id) ? { ...p, mvpEnabled: true } : p);
+            const brandNew = toAdd.filter(p => !existingIds.has(p.id)).map(p => ({ ...p, mvpEnabled: true }));
+            return [...brandNew, ...updated];
+        });
+
+        toast.success(`🎉 Sucesso! ${toAdd.length} modelos foram adicionados ao Lançamento MVP de uma vez!`);
     };
 
     const availableToAdd = allCatalogProducts.filter(p => {
@@ -513,14 +556,19 @@ export function MvpLaunchPanel({
         const matchesSearch = p.name.toLowerCase().includes(productSearchTerm.toLowerCase()) ||
             p.id.toLowerCase().includes(productSearchTerm.toLowerCase()) ||
             (p.shortCode && p.shortCode.toLowerCase().includes(productSearchTerm.toLowerCase()));
+
+        if (selectedCategoryFilter === 'RECEM_CADASTRADOS') {
+            return matchesSearch && RECENT_SET.has(p.id);
+        }
+
         const matchesCategory = selectedCategoryFilter === 'ALL' ||
             selectedCategoryFilter === 'RECENT' ||
             (p.category || 'Geral').toLowerCase() === selectedCategoryFilter.toLowerCase();
         return matchesSearch && matchesCategory;
     });
 
-    // Se estiver no filtro "Recém Adicionados", ordena do mais recente para o mais antigo
-    if (selectedCategoryFilter === 'RECENT') {
+    // Se estiver no filtro "Recém Adicionados" ou "Recém Cadastrados", ordena do mais recente para o mais antigo
+    if (selectedCategoryFilter === 'RECENT' || selectedCategoryFilter === 'RECEM_CADASTRADOS') {
         availableToAdd.sort((a, b) => {
             const timeA = getProductTimestamp(a);
             const timeB = getProductTimestamp(b);
@@ -679,10 +727,14 @@ export function MvpLaunchPanel({
                                                     </span>
                                                 </div>
 
-                                                {/* NOME COMERCIAL */}
-                                                <h3 className="text-base sm:text-lg font-black text-slate-800 tracking-tight leading-snug">
-                                                    {product.name}
-                                                </h3>
+                                                {/* NOME COMERCIAL — Editável inline */}
+                                                <input
+                                                    type="text"
+                                                    value={product.name}
+                                                    onChange={(e) => updateProductField(product.id, 'name', e.target.value)}
+                                                    className="text-base sm:text-lg font-black text-slate-800 tracking-tight leading-snug bg-transparent border-b-2 border-transparent hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:px-2 focus:rounded-lg outline-none transition-all w-full"
+                                                    title="Clique para renomear este produto"
+                                                />
 
                                                 {/* REQUISITO: VER O NOME ORIGINAL */}
                                                 <div className="flex items-center gap-1.5 mt-1.5 bg-amber-50/70 border border-amber-200/80 px-2.5 py-1 rounded-lg text-amber-900">
@@ -732,19 +784,73 @@ export function MvpLaunchPanel({
                                             </div>
                                         </div>
 
-                                        {/* Barra de Preços & Posição */}
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                        {/* Barra de Preços & Posição — Editável inline */}
+                                        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                                             <div>
-                                                <span className="text-[9px] font-bold text-slate-400 uppercase block">PIX (Cliente)</span>
-                                                <span className="text-sm font-black text-emerald-700">
-                                                    R$ {pixPrice.toFixed(2)}
-                                                </span>
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase block">PIX (Cliente)</label>
+                                                <div className="flex items-center gap-0.5">
+                                                    <span className="text-xs font-bold text-emerald-700">R$</span>
+                                                    <input
+                                                        type="number"
+                                                        step="0.01"
+                                                        min="0"
+                                                        value={product.pixPrice ?? pixPrice}
+                                                        onChange={(e) => {
+                                                            const val = parseFloat(e.target.value);
+                                                            if (!isNaN(val)) {
+                                                                updateProductField(product.id, 'pixPrice', val);
+                                                            }
+                                                        }}
+                                                        className="text-sm font-black text-emerald-700 bg-transparent border-b-2 border-transparent hover:border-emerald-300 focus:border-emerald-500 focus:bg-white outline-none transition-all w-20"
+                                                        title="Preço PIX — valor que o cliente paga à vista"
+                                                    />
+                                                </div>
                                             </div>
                                             <div>
-                                                <span className="text-[9px] font-bold text-slate-400 uppercase block">Cartão (Até 3x)</span>
-                                                <span className="text-xs font-bold text-slate-700">
-                                                    R$ {(product.priceFull || 0).toFixed(2)}
-                                                </span>
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase block">Cartão (Até 3x)</label>
+                                                <div className="flex items-center gap-0.5">
+                                                    <span className="text-xs font-bold text-slate-500">R$</span>
+                                                    <input
+                                                        type="number"
+                                                        step="0.01"
+                                                        min="0"
+                                                        value={product.priceFull || 0}
+                                                        onChange={(e) => {
+                                                            const val = parseFloat(e.target.value);
+                                                            if (!isNaN(val)) {
+                                                                updateProductField(product.id, 'priceFull', val);
+                                                            }
+                                                        }}
+                                                        className="text-xs font-bold text-slate-700 bg-transparent border-b-2 border-transparent hover:border-slate-300 focus:border-indigo-500 focus:bg-white outline-none transition-all w-20"
+                                                        title="Preço no Cartão — valor cheio parcelável"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="text-[9px] font-bold text-slate-400 uppercase block">De (Riscado)</label>
+                                                <div className="flex items-center gap-0.5">
+                                                    <span className="text-xs font-bold text-red-400">R$</span>
+                                                    <input
+                                                        type="number"
+                                                        step="0.01"
+                                                        min="0"
+                                                        value={product.originalPriceFull || product.priceFull || 0}
+                                                        onChange={(e) => {
+                                                            const val = parseFloat(e.target.value);
+                                                            if (!isNaN(val)) {
+                                                                updateProductField(product.id, 'originalPriceFull', val);
+                                                                // Auto-calcula desconto
+                                                                const currentPix = product.pixPrice || pixPrice;
+                                                                if (val > 0) {
+                                                                    const disc = Math.round(((val - currentPix) / val) * 100);
+                                                                    updateProductField(product.id, 'discountPct', Math.max(0, disc));
+                                                                }
+                                                            }
+                                                        }}
+                                                        className="text-xs font-bold text-red-500 line-through bg-transparent border-b-2 border-transparent hover:border-red-300 focus:border-red-500 focus:bg-white outline-none transition-all w-20"
+                                                        title="Preço original 'De' — aparece riscado no site"
+                                                    />
+                                                </div>
                                             </div>
                                             <div>
                                                 <span className="text-[9px] font-bold text-slate-400 uppercase block">Posição no Site</span>
@@ -1526,6 +1632,46 @@ export function MvpLaunchPanel({
                             </Button>
                         </div>
 
+                        {/* Banner Destaque: 25 Novos Modelos Recém-Cadastrados */}
+                        {availableRecent25Count > 0 && (
+                            <div className="bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-amber-500/10 border-2 border-amber-400/60 rounded-xl p-3.5 mb-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
+                                        <Sparkles className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xs font-black text-slate-800 flex items-center gap-1.5">
+                                            {availableRecent25Count} Novos Modelos Encontrados!
+                                            <Badge className="bg-amber-100 text-amber-800 text-[9px] font-bold border-none px-1.5 py-0">
+                                                Prontos
+                                            </Badge>
+                                        </h4>
+                                        <p className="text-[11px] text-slate-500">
+                                            Os 25 kits conferidos e salvos recentemente estão prontos para entrar no MVP.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => setSelectedCategoryFilter('RECEM_CADASTRADOS')}
+                                        className={`h-8 text-xs font-bold border-amber-300 text-amber-800 hover:bg-amber-100/60 ${selectedCategoryFilter === 'RECEM_CADASTRADOS' ? 'bg-amber-200/60 font-black' : ''}`}
+                                    >
+                                        Ver os {availableRecent25Count}
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        onClick={handleAddAll25Recent}
+                                        className="h-8 text-xs font-black bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm flex items-center gap-1.5"
+                                    >
+                                        <Plus className="w-3.5 h-3.5" />
+                                        Adicionar Todos ({availableRecent25Count}) ao MVP
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
+
                         {/* Barra de Filtros */}
                         <div className="flex flex-col sm:flex-row gap-2 mb-4">
                             <div className="relative flex-1">
@@ -1538,6 +1684,19 @@ export function MvpLaunchPanel({
                                 />
                             </div>
                             <div className="flex gap-1.5 flex-wrap">
+                                <Button
+                                    size="sm"
+                                    variant={selectedCategoryFilter === 'RECEM_CADASTRADOS' ? 'primary' : 'outline'}
+                                    onClick={() => setSelectedCategoryFilter('RECEM_CADASTRADOS')}
+                                    className={`h-9 text-xs font-bold flex items-center gap-1.5 transition-all ${
+                                        selectedCategoryFilter === 'RECEM_CADASTRADOS'
+                                            ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-sm ring-1 ring-amber-400 font-black'
+                                            : 'border-amber-300 text-amber-800 hover:bg-amber-50'
+                                    }`}
+                                >
+                                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                                    ⭐ 25 Recém Cadastrados {availableRecent25Count > 0 ? `(${availableRecent25Count})` : ''}
+                                </Button>
                                 <Button
                                     size="sm"
                                     variant={selectedCategoryFilter === 'ALL' ? 'primary' : 'outline'}
@@ -1573,7 +1732,7 @@ export function MvpLaunchPanel({
                                     }`}
                                 >
                                     <Clock className="w-3.5 h-3.5" />
-                                    Recém Adicionados
+                                    Mais Recentes
                                 </Button>
                             </div>
                         </div>
@@ -1587,7 +1746,7 @@ export function MvpLaunchPanel({
                             ) : (
                                 availableToAdd.map((p, idx) => (
                                     <div
-                                        key={p.id}
+                                        key={`${p.id}-${idx}`}
                                         className="flex items-center justify-between p-2.5 bg-slate-50 hover:bg-indigo-50/50 rounded-xl border border-slate-200/80 transition-colors"
                                     >
                                         <div className="flex items-center gap-3">
@@ -1604,7 +1763,12 @@ export function MvpLaunchPanel({
                                                     <span className="text-[9px] font-bold text-indigo-600 uppercase">
                                                         {p.category || 'Kits'} · {p.shortCode || p.id}
                                                     </span>
-                                                    {selectedCategoryFilter === 'RECENT' && idx < 5 && (
+                                                    {RECENT_SET.has(p.id) && (
+                                                        <Badge className="bg-amber-100 text-amber-800 text-[8px] font-black px-1.5 py-0 border border-amber-300">
+                                                            ⭐ Novo do Acervo
+                                                        </Badge>
+                                                    )}
+                                                    {selectedCategoryFilter === 'RECENT' && idx < 5 && !RECENT_SET.has(p.id) && (
                                                         <Badge className="bg-purple-100 text-purple-700 text-[8px] font-black px-1.5 py-0 border-none">
                                                             Recente
                                                         </Badge>

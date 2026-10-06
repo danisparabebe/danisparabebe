@@ -28,7 +28,7 @@
     }
   ],
   "customName": "Clássico Rosé · Kit Imperial",
-  "updatedAt": "2026-10-02T00:49:06.966Z",
+  "updatedAt": "2026-10-06T00:01:39.854Z",
   "published": true,
   "publishedAt": "2026-02-24T21:48:46.637Z",
   "description": "§INTRO§\nSonho de princesa! Este kit Variados em Rosê é puro encanto — perfeito para receber sua bebê com muito amor e estilo.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 11 peças:\n\n• 4x Fralda Pequena\n• 2x Fralda Média\n• 3x Fralda Grande\n• 1x Manta\n• 1x Toalha de Banho\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Média: 65x33 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
@@ -36,5 +36,9 @@
   "images": [
     "/produtos/conferidos/FEM-KIT-VAR-RSE-BAB-RSE_01.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 679,
+  "pixPrice": 657,
+  "originalPriceFull": 685,
+  "discountPct": 1
 }

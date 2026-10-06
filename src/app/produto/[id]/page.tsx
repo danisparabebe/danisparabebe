@@ -20,7 +20,12 @@ async function getProduct(rawId: string) {
     const id = resolveProductId(rawId);
     
     // 1. Try to find in Product Control Center (MVP Priority)
-    const managedProduct = productControl.find(p => p.id === id || p.colorVariations?.some(v => v.id === id));
+    // Busca primeiro por ID principal exato ou shortCode exato
+    let managedProduct = productControl.find(p => p.id === id || p.shortCode?.toUpperCase() === rawId.toUpperCase());
+    if (!managedProduct) {
+        // Fallback: se não for produto principal, verifica se é variação de cor de outro produto
+        managedProduct = productControl.find(p => p.colorVariations?.some(v => v.id === id));
+    }
     if (managedProduct) {
         const pixPrice = managedProduct.pixPrice || getFinalPrice(managedProduct);
         const available = isProductAvailable(managedProduct.id) || isProductAvailable(managedProduct.shortCode || '');

@@ -12,7 +12,7 @@
     }
   ],
   "customName": "Monograma Rosa · Faixa de Cabelo",
-  "updatedAt": "2026-10-02T00:49:06.886Z",
+  "updatedAt": "2026-10-06T00:01:39.407Z",
   "published": true,
   "publishedAt": "2026-02-24T21:48:20.216Z",
   "detail": "",
@@ -25,5 +25,9 @@
   "images": [
     "/produtos/conferidos/FEM-FAI-MON-RSA_02.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 24,
+  "pixPrice": 23,
+  "originalPriceFull": 24,
+  "discountPct": 0
 }

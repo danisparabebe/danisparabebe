@@ -12,7 +12,7 @@
     }
   ],
   "customName": "Borboletas Rosa · Fralda de Boca",
-  "updatedAt": "2026-10-02T00:49:06.892Z",
+  "updatedAt": "2026-10-06T00:01:39.425Z",
   "published": true,
   "publishedAt": "2026-02-24T21:48:00.769Z",
   "detail": "BAB",
@@ -25,5 +25,9 @@
   "images": [
     "/produtos/conferidos/FEM-FRP-BOR-RSA-BAB-RSA_01.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 40,
+  "pixPrice": 38,
+  "originalPriceFull": 40,
+  "discountPct": 0
 }

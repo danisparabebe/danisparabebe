@@ -24,7 +24,7 @@
     }
   ],
   "customName": "Clássico Celeste · Kit Manta",
-  "updatedAt": "2026-10-02T00:49:06.919Z",
+  "updatedAt": "2026-10-06T00:01:39.478Z",
   "type": "KIT",
   "published": true,
   "publishedAt": "2026-03-03T01:26:45.068Z",
@@ -33,5 +33,9 @@
   "images": [
     "/produtos/conferidos/MAS-KIT-VAR-ABB-BAB-ABB_01.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 200,
+  "pixPrice": 193,
+  "originalPriceFull": 225,
+  "discountPct": 11
 }

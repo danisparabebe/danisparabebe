@@ -24,18 +24,28 @@ function buildMaps() {
     _shortToId = new Map();
     _idToShort = new Map();
     
-    productControl.forEach((product, index) => {
-        // If product already has a shortCode assigned, use it
+    // First pass: register all products that already have explicit shortCodes
+    productControl.forEach((product) => {
         if (product.shortCode) {
-            _shortToId!.set(product.shortCode.toUpperCase(), product.id);
+            const upperCode = product.shortCode.toUpperCase();
+            _shortToId!.set(upperCode, product.id);
             _idToShort!.set(product.id, product.shortCode);
-            return;
+        }
+    });
+
+    // Second pass: for products WITHOUT a shortCode, allocate the next unused DPB-XXXX
+    let nextNum = 1;
+    productControl.forEach((product) => {
+        if (_idToShort!.has(product.id)) return;
+        
+        while (_shortToId!.has(`${SHORT_CODE_PREFIX}-${String(nextNum).padStart(4, '0')}`)) {
+            nextNum++;
         }
         
-        // Otherwise generate sequentially: DPB-0001, DPB-0002, etc.
-        const code = `${SHORT_CODE_PREFIX}-${String(index + 1).padStart(4, '0')}`;
+        const code = `${SHORT_CODE_PREFIX}-${String(nextNum).padStart(4, '0')}`;
         _shortToId!.set(code.toUpperCase(), product.id);
         _idToShort!.set(product.id, code);
+        nextNum++;
     });
 }
 
@@ -79,6 +89,13 @@ export function resolveProductId(identifier: string): string {
  */
 export function getNextShortCode(): string {
     buildMaps();
-    const nextNum = _idToShort!.size + 1;
-    return `${SHORT_CODE_PREFIX}-${String(nextNum).padStart(4, '0')}`;
+    let maxNum = 0;
+    for (const code of _shortToId!.keys()) {
+        const match = code.match(/DPB-(\d+)/i);
+        if (match) {
+            const num = parseInt(match[1], 10);
+            if (num > maxNum) maxNum = num;
+        }
+    }
+    return `${SHORT_CODE_PREFIX}-${String(maxNum + 1).padStart(4, '0')}`;
 }

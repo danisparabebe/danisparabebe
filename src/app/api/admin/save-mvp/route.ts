@@ -11,6 +11,35 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Products array is required' }, { status: 400 });
         }
 
+        // Garante que todo produto tenha um shortCode permanente (DPB-XXXX) único e sequencial
+        const usedCodes = new Set<string>();
+        let maxNum = 0;
+        
+        products.forEach((p: ManagedProduct) => {
+            if (p.shortCode) {
+                usedCodes.add(p.shortCode.toUpperCase());
+                const m = p.shortCode.match(/DPB-(\d+)/i);
+                if (m) {
+                    const n = parseInt(m[1], 10);
+                    if (n > maxNum) maxNum = n;
+                }
+            }
+        });
+
+        const normalizedProducts = products.map((p: ManagedProduct) => {
+            if (p.shortCode) return p;
+            maxNum++;
+            while (usedCodes.has(`DPB-${String(maxNum).padStart(4, '0')}`)) {
+                maxNum++;
+            }
+            const newCode = `DPB-${String(maxNum).padStart(4, '0')}`;
+            usedCodes.add(newCode);
+            return {
+                ...p,
+                shortCode: newCode
+            };
+        });
+
         // 1. Grava no banco de dados principal (src/data/product-control.ts)
         const filePath = path.join(process.cwd(), 'src', 'data', 'product-control.ts');
         const dirPath = path.dirname(filePath);
@@ -18,7 +47,7 @@ export async function POST(req: Request) {
             fs.mkdirSync(dirPath, { recursive: true });
         }
 
-        const code = `import { ManagedProduct } from '@/types/admin';\n\nexport const productControl: ManagedProduct[] = ${JSON.stringify(products, null, 4)};\n`;
+        const code = `import { ManagedProduct } from '@/types/admin';\n\nexport const productControl: ManagedProduct[] = ${JSON.stringify(normalizedProducts, null, 4)};\n`;
         fs.writeFileSync(filePath, code, 'utf8');
 
         // 2. Sincroniza os arquivos de metadados originais (public/produtos/conferidos/[id].json)
@@ -26,7 +55,7 @@ export async function POST(req: Request) {
         let syncedJsonCount = 0;
 
         if (fs.existsSync(conferidosDir)) {
-            for (const p of products) {
+            for (const p of normalizedProducts) {
                 if (!p.id) continue;
                 
                 // Tenta achar o arquivo json correspondente
@@ -47,6 +76,10 @@ export async function POST(req: Request) {
                                 description: p.description,
                                 observations: p.description,
                                 images: p.images,
+                                priceFull: p.priceFull,
+                                pixPrice: p.pixPrice,
+                                originalPriceFull: p.originalPriceFull,
+                                discountPct: p.discountPct,
                                 colorVariations: p.colorVariations || [],
                                 published: true,
                                 updatedAt: new Date().toISOString()
@@ -64,7 +97,7 @@ export async function POST(req: Request) {
         }
 
         // 3. Sincroniza a lista de produtos ativos do MVP (src/data/mvp-config.ts)
-        const activeMvpIds = products
+        const activeMvpIds = normalizedProducts
             .filter((p: ManagedProduct) => p.mvpEnabled === true)
             .map((p: ManagedProduct) => p.shortCode || p.id);
 

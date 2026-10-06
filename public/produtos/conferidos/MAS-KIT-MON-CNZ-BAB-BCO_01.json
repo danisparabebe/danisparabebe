@@ -20,7 +20,7 @@
     }
   ],
   "customName": "Monograma Névoa · Kit 3 Peças",
-  "updatedAt": "2026-10-02T00:49:06.882Z",
+  "updatedAt": "2026-10-06T00:01:39.397Z",
   "published": true,
   "publishedAt": "2026-02-24T21:48:26.650Z",
   "detail": "BAB",
@@ -36,5 +36,9 @@
   "colorVariations": [],
   "detailColor3": "PAD",
   "detailColor4": "PAD",
-  "detailColor5": "PAD"
+  "detailColor5": "PAD",
+  "priceFull": 239,
+  "pixPrice": 231,
+  "originalPriceFull": 240,
+  "discountPct": 0
 }

@@ -24,7 +24,7 @@
     }
   ],
   "customName": "Astronauta Marinho · Kit Manta",
-  "updatedAt": "2026-10-02T00:49:06.920Z",
+  "updatedAt": "2026-10-06T00:01:39.479Z",
   "type": "KIT",
   "published": true,
   "publishedAt": "2026-03-03T01:22:36.423Z",
@@ -33,5 +33,9 @@
   "images": [
     "/produtos/conferidos/MAS-KIT-VAR-AZM-BAB-AZM-R_01.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 200,
+  "pixPrice": 193,
+  "originalPriceFull": 225,
+  "discountPct": 11
 }

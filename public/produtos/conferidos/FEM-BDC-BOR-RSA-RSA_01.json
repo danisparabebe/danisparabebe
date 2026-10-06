@@ -16,7 +16,7 @@
     }
   ],
   "customName": "Borboletas Rosa · Body Manga Curta",
-  "updatedAt": "2026-10-02T00:49:06.883Z",
+  "updatedAt": "2026-10-06T00:01:39.399Z",
   "type": "BDC",
   "published": true,
   "publishedAt": "2026-03-03T01:20:18.508Z",
@@ -27,5 +27,9 @@
   "images": [
     "/produtos/conferidos/FEM-BDC-BOR-RSA-RSA_01.jpeg"
   ],
-  "colorVariations": []
+  "colorVariations": [],
+  "priceFull": 54,
+  "pixPrice": 52,
+  "originalPriceFull": 54,
+  "discountPct": 0
 }
