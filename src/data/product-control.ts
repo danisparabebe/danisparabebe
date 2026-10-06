@@ -11,10 +11,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 200,
-        "originalPriceFull": 229,
-        "pixPrice": 193,
-        "discountPct": 13,
+        "priceFull": 211.86,
+        "originalPriceFull": 225,
+        "pixPrice": 197,
+        "discountPct": 12,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-VDC-BAB-VDC_02.jpg"
         ],
@@ -36,8 +36,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Ursinho Marinho · Kit Manta",
                 "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
                 "image": "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_03.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             },
             {
                 "id": "MAS-KIT-URS-ABB-BAB-ABB_05",
@@ -46,8 +46,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "kit manta",
                 "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Bebê combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
                 "image": "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_05.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             }
         ],
         "shortCode": "DPB-0116",
@@ -128,10 +128,10 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "1x FRG"
         ],
-        "priceFull": 278,
-        "originalPriceFull": 281,
-        "pixPrice": 269,
-        "discountPct": 1,
+        "priceFull": 261.33,
+        "originalPriceFull": 285,
+        "pixPrice": 243,
+        "discountPct": 15,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_02.jpeg"
         ],
@@ -162,10 +162,10 @@ export const productControl: ManagedProduct[] = [
             "1x TOB",
             "1x TOU"
         ],
-        "priceFull": 443,
-        "originalPriceFull": 447,
-        "pixPrice": 429,
-        "discountPct": 1,
+        "priceFull": 428.01,
+        "originalPriceFull": 438,
+        "pixPrice": 398,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_01.jpeg"
         ],
@@ -228,10 +228,10 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x BDL"
         ],
-        "priceFull": 320,
-        "originalPriceFull": 322,
-        "pixPrice": 309,
-        "discountPct": 1,
+        "priceFull": 303.27,
+        "originalPriceFull": 317,
+        "pixPrice": 282,
+        "discountPct": 11,
         "images": [
             "/uploads/products/1791243367149-MAS-KIT-MON-AZM-BAB-AZM_02.png"
         ],
@@ -260,10 +260,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 200,
-        "originalPriceFull": 229,
-        "pixPrice": 193,
-        "discountPct": 13,
+        "priceFull": 211.86,
+        "originalPriceFull": 225,
+        "pixPrice": 197,
+        "discountPct": 12,
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_04.jpeg"
         ],
@@ -327,10 +327,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 461,
-        "originalPriceFull": 464,
-        "pixPrice": 446,
-        "discountPct": 1,
+        "priceFull": 448.44,
+        "originalPriceFull": 455,
+        "pixPrice": 417,
+        "discountPct": 8,
         "images": [
             "/produtos/conferidos/MAS-KIT-CAV-VDM-BAB-VDM_01.jpeg"
         ],
@@ -360,10 +360,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 262,
-        "originalPriceFull": 264,
-        "pixPrice": 253,
-        "discountPct": 1,
+        "priceFull": 244.11,
+        "originalPriceFull": 260,
+        "pixPrice": 227,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-CAV-AZM-BAB-AZM_01.jpg"
         ],
@@ -395,10 +395,10 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x FAI"
         ],
-        "priceFull": 345,
-        "originalPriceFull": 348,
-        "pixPrice": 334,
-        "discountPct": 1,
+        "priceFull": 327.99,
+        "originalPriceFull": 341,
+        "pixPrice": 305,
+        "discountPct": 11,
         "images": [
             "/produtos/conferidos/FEM-KIT-URS-RSA-BAB-RSA_01.jpg"
         ],
@@ -427,10 +427,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 268,
-        "originalPriceFull": 270,
-        "pixPrice": 259,
-        "discountPct": 1,
+        "priceFull": 250.56,
+        "originalPriceFull": 265,
+        "pixPrice": 233,
+        "discountPct": 12,
         "images": [
             "/produtos/conferidos/FEM-KIT-PER-RSA-BAB-RSE-RSA_01.jpeg"
         ],
@@ -459,10 +459,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 200,
-        "originalPriceFull": 229,
-        "pixPrice": 193,
-        "discountPct": 13,
+        "priceFull": 211.86,
+        "originalPriceFull": 225,
+        "pixPrice": 197,
+        "discountPct": 12,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE_02.jpg"
         ],
@@ -485,8 +485,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Monograma Rosa Bebê · Kit Manta",
                 "description": "§INTRO§\nDelicadeza pura! Com o tema Monograma em Rosa Bebê, este kit traz o aconchego perfeito para os primeiros momentos da sua bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
                 "image": "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA_03.jpeg",
-                "pixPrice": 193,
-                "priceFull": 210
+                "pixPrice": 197,
+                "priceFull": 211.86
             },
             {
                 "id": "FEM-KIT-FLO-PNK-BAB-PNK_01",
@@ -495,8 +495,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Monograma Pink · Kit Manta",
                 "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Floral com monograma, em tons de Pink, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Pequena\n• 1x Fralda Grande\n• 1x Manta\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
                 "image": "/produtos/conferidos/FEM-KIT-FLO-PNK-BAB-PNK_01.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             },
             {
                 "id": "FEM-KIT-MON-LIL-BAB-LIL_01",
@@ -505,8 +505,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Monograma Lavanda · Kit Manta",
                 "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Monograma, em tons de Lilás, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
                 "image": "/produtos/conferidos/FEM-KIT-MON-LIL-BAB-LIL_01.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             },
             {
                 "id": "FEM-KIT-MON-VRM-BAB-VRM_01",
@@ -515,8 +515,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Monograma Rubi · Kit Manta",
                 "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Monograma, em tons de Vermelho, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
                 "image": "/produtos/conferidos/FEM-KIT-MON-VRM-BAB-VRM_01.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             }
         ],
         "pixDiscountPct": 4,
@@ -532,10 +532,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 200,
-        "originalPriceFull": 229,
-        "pixPrice": 193,
-        "discountPct": 13,
+        "priceFull": 292.5,
+        "originalPriceFull": 303,
+        "pixPrice": 272,
+        "discountPct": 10,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE_01.jpeg"
         ],
@@ -597,10 +597,10 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x TOU"
         ],
-        "priceFull": 302,
-        "originalPriceFull": 305,
-        "pixPrice": 292,
-        "discountPct": 1,
+        "priceFull": 282.84,
+        "originalPriceFull": 300,
+        "pixPrice": 263,
+        "discountPct": 12,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RSA-BAB-RSA_01.jpg"
         ],
@@ -631,10 +631,10 @@ export const productControl: ManagedProduct[] = [
             "1x TOB",
             "2x FRP"
         ],
-        "priceFull": 443,
-        "originalPriceFull": 447,
-        "pixPrice": 429,
-        "discountPct": 1,
+        "priceFull": 428.01,
+        "originalPriceFull": 438,
+        "pixPrice": 398,
+        "discountPct": 9,
         "images": [
             "/uploads/products/1791243114446-FEM-KIT-BOR-RSA-BAB-RSA_02.png"
         ],
@@ -665,10 +665,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x FRG"
         ],
-        "priceFull": 309,
-        "originalPriceFull": 311,
-        "pixPrice": 299,
-        "discountPct": 1,
+        "priceFull": 292.5,
+        "originalPriceFull": 303,
+        "pixPrice": 272,
+        "discountPct": 10,
         "images": [
             "/uploads/products/1791241094809-Kit_09_ótima.jpg"
         ],
@@ -697,10 +697,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 268,
-        "originalPriceFull": 270,
-        "pixPrice": 259,
-        "discountPct": 1,
+        "priceFull": 250.56,
+        "originalPriceFull": 265,
+        "pixPrice": 233,
+        "discountPct": 12,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-LIL-BAB-LIL_01.jpg"
         ],
@@ -1200,8 +1200,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 90,
-        "discountPct": 9,
+        "priceFull": 95.7,
+        "discountPct": 10,
         "images": [
             "/uploads/products/1791240119239-FEM-FRP-BOR-RSA-BAB-RSA-R_01.png"
         ],
@@ -1215,7 +1215,7 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers"
         ],
         "originalPriceFull": 99,
-        "pixPrice": 87,
+        "pixPrice": 89,
         "pixDiscountPct": 3,
         "netValue": 87,
         "isHot": true,
@@ -1294,8 +1294,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 200,
-        "discountPct": 13,
+        "priceFull": 211.86,
+        "discountPct": 12,
         "images": [
             "/uploads/products/1791241822508-FEM-FRP-BOR-RSE-BAB-RSE_01.png"
         ],
@@ -1309,8 +1309,8 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 229,
-        "pixPrice": 193,
+        "originalPriceFull": 225,
+        "pixPrice": 197,
         "pixDiscountPct": 4,
         "netValue": 193,
         "isHot": true,
@@ -1323,8 +1323,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Borboletas Rosa · Kit Manta",
                 "description": "§INTRO§\nApaixonante do primeiro ao último detalhe! O tema Borboletas em Rosa dá vida a este conjunto feito com todo o carinho do mundo.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
                 "image": "/produtos/conferidos/FEM-FRP-BOR-RSA-BAB-RSA_02.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             }
         ]
     },
@@ -1597,8 +1597,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 200,
-        "discountPct": 13,
+        "priceFull": 211.86,
+        "discountPct": 12,
         "images": [
             "/uploads/products/1791242389842-FEM-KIT-JDE-LIL-BAB-LIL-R_01.png"
         ],
@@ -1612,8 +1612,8 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 229,
-        "pixPrice": 193,
+        "originalPriceFull": 225,
+        "pixPrice": 197,
         "pixDiscountPct": 4,
         "netValue": 193,
         "isHot": true,
@@ -1626,8 +1626,8 @@ export const productControl: ManagedProduct[] = [
                 "title": "Jardim Encantado Marsala · Kit Manta",
                 "description": "§INTRO§\nUm encanto em cada detalhe! Este conjunto no tema Jardim Encantado, em tons de Marsala, foi pensado para deixar o enxoval da sua princesinha ainda mais especial.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
                 "image": "/produtos/conferidos/FEM-KIT-JDE-MAR-BAB-MAR_01.jpeg",
-                "pixPrice": 193,
-                "priceFull": 200
+                "pixPrice": 197,
+                "priceFull": 211.86
             }
         ]
     },
@@ -2756,8 +2756,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 139,
-        "discountPct": 1,
+        "priceFull": 134.43,
+        "discountPct": 10,
         "images": [
             "/uploads/products/1791240361561-MAS-KIT-JDE-VDM-BAB-VDM_01.png"
         ],
@@ -2771,8 +2771,8 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 140,
-        "pixPrice": 134,
+        "originalPriceFull": 139,
+        "pixPrice": 125,
         "pixDiscountPct": 4,
         "netValue": 134,
         "isHot": true,
@@ -2789,8 +2789,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 90,
-        "discountPct": 9,
+        "priceFull": 95.7,
+        "discountPct": 10,
         "images": [
             "/uploads/products/1791240996545-MAS-KIT-JDE-VDM-BAB-VDM_02.png"
         ],
@@ -2804,7 +2804,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício"
         ],
         "originalPriceFull": 99,
-        "pixPrice": 87,
+        "pixPrice": 89,
         "pixDiscountPct": 3,
         "netValue": 87,
         "mvpEnabled": true,
@@ -3153,8 +3153,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 302,
-        "discountPct": 1,
+        "priceFull": 282.84,
+        "discountPct": 12,
         "images": [
             "/uploads/products/1791242184131-FEM-KIT-FLO-RSE-BAB-RSE_01.png"
         ],
@@ -3166,8 +3166,8 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 305,
-        "pixPrice": 292,
+        "originalPriceFull": 300,
+        "pixPrice": 263,
         "pixDiscountPct": 3,
         "netValue": 292,
         "mvpEnabled": true,
