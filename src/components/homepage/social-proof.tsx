@@ -44,7 +44,7 @@ export function SocialProof() {
                             Família Danis Oficial
                         </div>
                         <h2 className="text-3xl md:text-5xl font-heading font-black text-charcoal leading-tight">
-                            Junte-se a <span className="text-sage-green-dark">quase 50.000</span> mamães apaixonadas.
+                            Junte-se a <span className="text-sage-green-dark">mais de 50.000</span> mamães apaixonadas.
                         </h2>
                         <p className="text-charcoal/80 md:text-lg max-w-xl font-medium">
                             Acompanhe nosso dia a dia, veja pedidos saindo para entrega e faça parte de uma comunidade que escolhe o melhor para seus bebês.
@@ -56,7 +56,7 @@ export function SocialProof() {
                         {/* Card da Imagem de Perfil (Inteira e Centralizada) */}
                         <div className="relative w-full max-w-[420px] shadow-[4px_4px_0px_rgba(43,76,63,1)] border-2 border-sage-green-dark rounded-3xl bg-white overflow-hidden transition-all hover:-translate-y-1">
                             <img 
-                                src="/Logos/social-profile.jpg" 
+                                src="/Logos/social-profile.png" 
                                 alt="Danis para Bebê Instagram" 
                                 className="w-full h-auto block" 
                             />
