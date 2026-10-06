@@ -1,523 +1,1004 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCartStore } from '@/store/cart-store';
+import { useAuthStore } from '@/store/auth-store';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ChevronLeft, Trash2, ShieldCheck, Loader2, Lock, Truck, Clock, CreditCard, QrCode, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import { 
+    ArrowLeft, 
+    ShoppingCart, 
+    ShieldCheck, 
+    Loader2, 
+    ChevronDown, 
+    ChevronUp, 
+    Trash2, 
+    Check, 
+    AlertCircle,
+    Truck,
+    Package,
+    Lock
+} from 'lucide-react';
 import { toast } from 'sonner';
+import { formatPrice } from '@/lib/pricing';
+import { 
+    FREE_SHIPPING_THRESHOLD, 
+    FREE_SHIPPING_REGIONS_LABEL, 
+    isEligibleForFreeShipping 
+} from '@/lib/shipping-rules';
+import { productControl } from '@/data/product-control';
+import { TYPES } from '@/data/admin-options';
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
-export default function CheckoutPage() {
-    const { items, total, shipping, removeItem, setShipping } = useCartStore();
+const getItemLabel = (codeOrId: string) => TYPES.find(t => t.value === codeOrId)?.label || codeOrId;
+
+const parseFeatures = (features: string[]) => features.map(f => {
+    const match = f.match(/^(\d+)x\s+(.+)$/);
+    if (!match) return { qty: 1, code: f };
+    return { qty: parseInt(match[1]), code: match[2].trim() };
+});
+
+export default function UnifiedCheckoutPage() {
+    const { items, removeItem, total, setShipping } = useCartStore();
+    const { user } = useAuthStore();
     const router = useRouter();
 
     const [hydrated, setHydrated] = useState(false);
+    const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+    const [showSavedAddresses, setShowSavedAddresses] = useState(false);
+    
+    // Form State
     const [formData, setFormData] = useState({
-        name: '', phone: '', cpf: '', cep: '',
-        street: '', number: '', complement: '',
-        neighborhood: '', city: '', state: ''
+        name: '', 
+        email: '', 
+        phone: '', 
+        cpf: '', 
+        cep: '',
+        street: '', 
+        number: '', 
+        complement: '',
+        neighborhood: '', 
+        city: '', 
+        state: ''
     });
+    const [errors, setErrors] = useState<Record<string, boolean>>({});
+    const [showManualAddress, setShowManualAddress] = useState(false);
     const [addressLoaded, setAddressLoaded] = useState(false);
     const [isLoadingAddress, setIsLoadingAddress] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
-    const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
 
-    useEffect(() => { setHydrated(true); }, []);
+    // Shipping State
+    const [shippingOption, setShippingOption] = useState<any | null>(null);
+    const [shippingOptions, setShippingOptions] = useState<any[]>([]);
+    const [showAllShipping, setShowAllShipping] = useState(false);
 
-    // --- CACHE ON MOUNT ---
+    // Refs for scrolling to errors
+    const nameRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    const cpfRef = useRef<HTMLInputElement>(null);
+    const cepRef = useRef<HTMLInputElement>(null);
+    const numberRef = useRef<HTMLInputElement>(null);
+    const streetRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => { 
+        setHydrated(true); 
+    }, []);
+
+    // Redirect to home if cart is empty after hydration
+    useEffect(() => {
+        if (hydrated && items.length === 0) {
+            router.push('/');
+        }
+    }, [hydrated, items, router]);
+
+    // Sync with Auth user
+    useEffect(() => {
+        if (user) {
+            setFormData(prev => ({
+                ...prev,
+                name: prev.name || user.displayName || '',
+                email: user.email || prev.email || '',
+            }));
+
+            const fetchAddresses = async () => {
+                try {
+                    const snap = await getDoc(doc(db, 'users', user.uid));
+                    if (snap.exists()) {
+                        setSavedAddresses(snap.data().addresses || []);
+                    }
+                } catch (e) {
+                    // silent
+                }
+            };
+            fetchAddresses();
+        }
+    }, [user]);
+
+    // Cache on Mount
     useEffect(() => {
         const cached = localStorage.getItem('checkout_form');
         if (cached) {
             try {
                 const data = JSON.parse(cached);
-                setFormData(data);
+                setFormData(prev => ({ ...prev, ...data }));
                 if (data.street) setAddressLoaded(true);
+                if (data.cep && data.cep.replace(/\D/g, '').length === 8) {
+                    fetchShippingRates(data.cep);
+                }
             } catch (e) {}
         }
     }, []);
 
-    useEffect(() => {
-        if (hydrated && items.length === 0) router.push('/');
-    }, [hydrated, items, router]);
+    // Calculate weight & fetch shipping
+    const totalItemsCount = items.reduce((sum, it) => sum + (it.quantity || 1), 0);
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newData = { ...formData, [e.target.name]: e.target.value };
-        setFormData(newData);
-        setErrors(prev => ({ ...prev, [e.target.name]: false }));
-        localStorage.setItem('checkout_form', JSON.stringify(newData));
+    const fetchShippingRates = async (cepStr: string) => {
+        const raw = cepStr.replace(/\D/g, '');
+        if (raw.length === 8) {
+            try {
+                const sRes = await fetch('/api/shipping', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        cep: raw, 
+                        totalWeight: Math.max(0.3, totalItemsCount * 0.35) 
+                    })
+                });
+                if (sRes.ok) {
+                    const sData = await sRes.json();
+                    if (Array.isArray(sData) && sData.length > 0) {
+                        setShippingOptions(sData);
+                        const cheapest = [...sData].sort((a: any, b: any) => a.price - b.price)[0];
+                        setShippingOption(cheapest);
+                        setShipping(cheapest.price);
+                    }
+                }
+            } catch { 
+                /* silent */ 
+            }
+        }
     };
 
+    // CEP Change & Lookup
     const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         let v = e.target.value.replace(/\D/g, '');
-        if (v.length > 5) v = `${v.slice(0, 5)}-${v.slice(5, 8)}`;
-        
-        const newData = { ...formData, cep: v };
+        if (v.length > 8) v = v.slice(0, 8);
+        const formatted = v.length > 5 ? `${v.slice(0, 5)}-${v.slice(5)}` : v;
+
+        const newData = { ...formData, cep: formatted };
         setFormData(newData);
         setErrors(prev => ({ ...prev, cep: false }));
         localStorage.setItem('checkout_form', JSON.stringify(newData));
 
-        const raw = v.replace(/\D/g, '');
-        if (raw.length === 8) {
+        if (v.length === 8) {
             setIsLoadingAddress(true);
             try {
-                // Tenta via proxy interno primeiro (evita bloqueios de CSP/CORS) com fallback direto
                 let data: any = null;
                 try {
-                    const res = await fetch(`/api/viacep?cep=${raw}`);
-                    if (res.ok) {
-                        data = await res.json();
-                    }
-                } catch (err) {
-                    console.warn('ViaCEP proxy falhou, tentando chamada direta:', err);
-                }
-
-                if (!data || data.error) {
-                    const resDirect = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
-                    if (resDirect.ok) {
-                        data = await resDirect.json();
-                    }
+                    const res = await fetch(`/api/viacep?cep=${v}`);
+                    if (res.ok) data = await res.json();
+                } catch {
+                    const res = await fetch(`https://viacep.com.br/ws/${v}/json/`);
+                    if (res.ok) data = await res.json();
                 }
 
                 if (data && !data.erro) {
-                    const addressAdd = {
+                    const updated = {
+                        ...formData,
+                        cep: formatted,
                         street: data.logradouro || '',
                         neighborhood: data.bairro || '',
                         city: data.localidade || '',
                         state: data.uf || ''
                     };
-                    setFormData(prev => {
-                        const next = { ...prev, ...addressAdd };
-                        localStorage.setItem('checkout_form', JSON.stringify(next));
-                        return next;
-                    });
-                    setErrors(prev => ({
-                        ...prev,
-                        cep: false,
-                        street: false,
-                        neighborhood: false,
-                        city: false
-                    }));
+                    setFormData(updated);
                     setAddressLoaded(true);
-                    toast.success('Endereço localizado com sucesso!', { duration: 2500 });
+                    setErrors(prev => ({ ...prev, street: false, city: false }));
+                    localStorage.setItem('checkout_form', JSON.stringify(updated));
+                    
+                    fetchShippingRates(v);
 
-                    // Foco imediato no campo de Número para agilizar preenchimento
                     setTimeout(() => {
-                        const numInput = document.getElementById('number-input');
-                        if (numInput) numInput.focus();
-                    }, 150);
-
-                    // Atualiza ou calcula frete caso ainda não esteja calculado
-                    try {
-                        const shipRes = await fetch('/api/shipping', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ cep: raw })
-                        });
-                        if (shipRes.ok) {
-                            const options = await shipRes.json();
-                            if (options && options.length > 0) {
-                                useCartStore.getState().setShipping(options[0].price);
-                            }
-                        }
-                    } catch (e) {
-                        console.error('Erro ao calcular frete no checkout:', e);
-                    }
+                        numberRef.current?.focus();
+                    }, 100);
                 } else {
-                    toast.error('CEP não encontrado. Por favor, confira os números digitados.');
-                    setAddressLoaded(false);
+                    toast.error('CEP não encontrado. Por favor, confira os números ou preencha o endereço abaixo.');
+                    setShowManualAddress(true);
+                    setAddressLoaded(true);
                 }
             } catch {
-                toast.error('Erro ao buscar CEP. Preencha o endereço manualmente.');
-                setAddressLoaded(false);
+                toast.error('Erro ao consultar CEP. Você pode preencher o endereço manualmente abaixo.');
+                setShowManualAddress(true);
+                setAddressLoaded(true);
             } finally {
                 setIsLoadingAddress(false);
             }
         } else {
-            setAddressLoaded(false);
+            setShippingOption(null);
+            setShippingOptions([]);
         }
     };
 
-    const handleCheckout = async () => {
-        const requiredFields = ['name', 'phone', 'cpf', 'cep', 'street', 'number', 'city'];
-        const newErrors: { [key: string]: boolean } = {};
-        let hasError = false;
+    // Input Handlers with Auto-Masks
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 11) v = v.slice(0, 11);
+        let formatted = v;
+        if (v.length > 6) {
+            formatted = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+        } else if (v.length > 2) {
+            formatted = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+        }
+        setFormData(prev => ({ ...prev, phone: formatted }));
+        setErrors(prev => ({ ...prev, phone: false }));
+        localStorage.setItem('checkout_form', JSON.stringify({ ...formData, phone: formatted }));
+    };
 
-        requiredFields.forEach(field => {
-            const val = formData[field as keyof typeof formData];
-            if (!val || val.trim() === '') {
-                newErrors[field] = true;
-                hasError = true;
-            }
-        });
+    const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 11) v = v.slice(0, 11);
+        let formatted = v;
+        if (v.length > 9) {
+            formatted = `${v.slice(0, 3)}.${v.slice(3, 6)}.${v.slice(6, 9)}-${v.slice(9)}`;
+        } else if (v.length > 6) {
+            formatted = `${v.slice(0, 3)}.${v.slice(3, 6)}.${v.slice(6)}`;
+        } else if (v.length > 3) {
+            formatted = `${v.slice(0, 3)}.${v.slice(3)}`;
+        }
+        setFormData(prev => ({ ...prev, cpf: formatted }));
+        setErrors(prev => ({ ...prev, cpf: false }));
+        localStorage.setItem('checkout_form', JSON.stringify({ ...formData, cpf: formatted }));
+    };
 
-        if (hasError) {
+    const handleGenericInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        const updated = { ...formData, [name]: value };
+        setFormData(updated);
+        setErrors(prev => ({ ...prev, [name]: false }));
+        localStorage.setItem('checkout_form', JSON.stringify(updated));
+    };
+
+    const selectSavedAddress = (addr: any) => {
+        const newData = {
+            ...formData,
+            cep: addr.cep,
+            street: addr.street,
+            number: addr.number,
+            complement: addr.complement || '',
+            neighborhood: addr.neighborhood,
+            city: addr.city,
+            state: addr.state
+        };
+        setFormData(newData);
+        setAddressLoaded(true);
+        setShowSavedAddresses(false);
+        fetchShippingRates(addr.cep);
+        localStorage.setItem('checkout_form', JSON.stringify(newData));
+    };
+
+    // Calculation & Free Shipping
+    const subtotal = items.reduce((sum, it) => sum + (it.price * (it.quantity || 1)), 0);
+    const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+    const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD && isStateEligible;
+    const cheapestOptionId = [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
+    const isCheapestSelected = shippingOption?.id === cheapestOptionId;
+    const actualShippingPrice = (freeShipping && isCheapestSelected) ? 0 : (shippingOption?.price || 0);
+    const finalTotal = subtotal + actualShippingPrice;
+
+    // Validation & Submit Handler
+    const handleBuyNow = async () => {
+        const newErrors: Record<string, boolean> = {};
+
+        if (!formData.name || formData.name.trim().length < 3) {
+            newErrors.name = true;
+        }
+
+        const phoneDigits = formData.phone.replace(/\D/g, '');
+        if (!formData.phone || phoneDigits.length < 10) {
+            newErrors.phone = true;
+        }
+
+        const cpfDigits = formData.cpf.replace(/\D/g, '');
+        if (!formData.cpf || cpfDigits.length !== 11) {
+            newErrors.cpf = true;
+        }
+
+        const cepDigits = formData.cep.replace(/\D/g, '');
+        if (!formData.cep || cepDigits.length !== 8) {
+            newErrors.cep = true;
+        }
+
+        if (!formData.street || formData.street.trim() === '') {
+            newErrors.street = true;
+        }
+
+        if (!formData.number || formData.number.trim() === '') {
+            newErrors.number = true;
+        }
+
+        if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-            if (newErrors.number && !newErrors.street && !newErrors.cep) {
-                toast.error('Ops! Faltou preencher o Número da casa.', { icon: '🏠' });
-            } else {
-                toast.error('Preencha os campos obrigatórios destacados em vermelho.');
+
+            // Specific user-friendly toast feedback
+            if (newErrors.name) {
+                toast.error('Por favor, informe seu nome completo.');
+                nameRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                nameRef.current?.focus();
+            } else if (newErrors.phone) {
+                toast.error('Por favor, informe seu WhatsApp com DDD.');
+                phoneRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                phoneRef.current?.focus();
+            } else if (newErrors.cpf) {
+                toast.error('Por favor, informe um CPF válido (11 dígitos).');
+                cpfRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                cpfRef.current?.focus();
+            } else if (newErrors.cep) {
+                toast.error('Por favor, digite seu CEP completo.');
+                cepRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                cepRef.current?.focus();
+            } else if (newErrors.street) {
+                toast.error('Por favor, informe o nome da sua rua.');
+                setShowManualAddress(true);
+                streetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                streetRef.current?.focus();
+            } else if (newErrors.number) {
+                toast.error('Ops! Faltou preencher o Número da casa/apartamento.', { icon: '🏠' });
+                numberRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                numberRef.current?.focus();
             }
             return;
         }
+
         setIsProcessing(true);
         const loadingToast = toast.loading('Preparando pagamento seguro...');
+        
         try {
             const response = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items, shipping, customer: formData, cancelPath: '/checkout' }),
+                body: JSON.stringify({
+                    items: items, 
+                    shipping: actualShippingPrice,
+                    customer: formData, 
+                    userId: user?.uid,
+                    cancelPath: '/checkout'
+                }),
             });
+
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Falha ao iniciar pagamento');
+
             if (data.url) {
-                toast.success('Redirecionando...', { id: loadingToast });
+                toast.success('Redirecionando para pagamento seguro...', { id: loadingToast });
                 localStorage.setItem('lastOrder', JSON.stringify({ items, customer: formData }));
                 window.location.href = data.url;
             } else {
-                throw new Error('URL de pagamento nao gerada.');
+                throw new Error('Link de pagamento não gerado.');
             }
         } catch (error: any) {
-            toast.error(error.message || 'Erro ao processar. Tente novamente.', { id: loadingToast });
+            toast.error(error.message || 'Erro ao conectar ao checkout. Tente novamente.', { id: loadingToast });
             setIsProcessing(false);
         }
     };
 
-    if (items.length === 0) return null;
-
-    const subtotal = total() - shipping;
-    // O total() do carrinho já é a soma dos preços secos (pixPrice).
-    // A parcela real na InfinitePay (repasse de taxas) para 3x adiciona ~7.54% de juros no valor transacionado.
-    const realInstallment3x = (total() * 1.0754) / 3;
-
-    const inputClass = "w-full px-3 py-2 text-xs rounded-lg border border-black/10 focus:border-dusty-rose focus:ring-1 focus:ring-dusty-rose/30 outline-none transition-all bg-white placeholder:text-black/25";
-    const labelClass = "text-[11px] font-semibold text-charcoal/70 uppercase tracking-wider";
+    if (!hydrated || items.length === 0) {
+        return (
+            <div className="min-h-screen bg-[#faf9f7] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-dusty-rose" />
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-[#faf9f7] flex flex-col">
-            {/* Compact Header */}
-            <header className="bg-white border-b border-black/5 px-4 py-3">
+        <div className="min-h-screen bg-[#faf9f7] flex flex-col font-sans">
+            {/* Header */}
+            <header className="bg-white border-b border-black/5 px-4 py-3 sticky top-0 z-30 shadow-xs">
                 <div className="max-w-5xl mx-auto flex items-center justify-between">
-                    <button onClick={() => router.back()} className="flex items-center gap-1 text-xs font-medium text-slate hover:text-dusty-rose transition-colors cursor-pointer">
-                        <ChevronLeft className="w-3.5 h-3.5" />
-                        Voltar
+                    <button 
+                        onClick={() => router.back()} 
+                        className="flex items-center text-xs sm:text-sm font-semibold text-slate hover:text-charcoal transition-colors cursor-pointer"
+                    >
+                        <ArrowLeft className="mr-1.5 h-4 w-4" /> Voltar
                     </button>
-                    <h1 className="text-sm font-bold text-charcoal tracking-wide uppercase" style={{ fontFamily: 'var(--font-heading)' }}>Finalizar Pedido</h1>
-                    <div className="w-14" /> {/* spacer */}
+                    <div className="flex items-center gap-1.5">
+                        <Lock className="w-3.5 h-3.5 text-green-700" />
+                        <h1 className="text-xs sm:text-sm font-black text-charcoal uppercase tracking-wider">
+                            Finalizar Compra
+                        </h1>
+                    </div>
+                    <div className="flex items-center gap-1 text-[11px] font-bold text-green-700 bg-green-50 border border-green-200 px-2.5 py-1 rounded-full">
+                        <ShieldCheck className="w-4 h-4" />
+                        <span className="hidden sm:inline">Ambiente Seguro</span>
+                    </div>
                 </div>
             </header>
 
-            {/* Main Content */}
-            <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+            <main className="flex-1 max-w-5xl mx-auto w-full px-3 sm:px-4 py-4 md:py-6">
+                <div className="flex flex-col md:flex-row gap-4 items-start">
 
-                    {/* ─── LEFT: Order Summary ─── */}
-                    <div className="bg-white rounded-2xl border border-black/5 p-4 shadow-sm">
-                        <h2 className="text-[11px] font-black text-charcoal uppercase tracking-[0.2em] mb-3 pb-2 border-b border-black/5">
-                            Resumo do Pedido
-                        </h2>
+                    {/* ─── LEFT COLUMN: PRODUTO(S), FOTOS E DESCRIÇÃO ─── */}
+                    <div className="w-full md:w-1/2 flex flex-col bg-white border-2 border-[#1f2937] rounded-2xl shadow-[4px_4px_0px_rgba(31,41,55,1)] overflow-hidden">
+                        
+                        {/* Header da Coluna */}
+                        <div className="p-3.5 border-b border-black/10 bg-[#faf9f7] flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Package className="w-4 h-4 text-charcoal" />
+                                <h2 className="text-sm font-black text-[#1f2937] tracking-tight uppercase">
+                                    Resumo do Pedido ({items.length} {items.length === 1 ? 'item' : 'itens'})
+                                </h2>
+                            </div>
+                            <span className="text-[10px] font-bold text-slate bg-white px-2 py-0.5 rounded-full border border-black/10">
+                                Total: {formatPrice(subtotal)}
+                            </span>
+                        </div>
 
-                        <div className="space-y-3">
-                            {items.map((item) => {
-                                const productSlug = item.productId || (item.id ? item.id.split('-personalized-')[0] : '');
-                                const productUrl = productSlug ? `/produto/${productSlug}` : null;
+                        {/* Lista de Itens com Visualização Rica */}
+                        <div className="p-3.5 divide-y divide-black/10 space-y-4 overflow-y-auto max-h-[75vh]">
+                            {items.map((item, idx) => {
+                                const product = item.productId 
+                                    ? (productControl.find(p => p.id === item.productId) || 
+                                       productControl.find(p => p.colorVariations?.some(v => v.id === item.productId)))
+                                    : null;
+                                
+                                const variation = product?.colorVariations?.find(v => v.id === item.productId);
+                                const itemFeatures = product?.features ? parseFeatures(product.features) : [];
+                                const totalPieces = itemFeatures.reduce((sum, i) => sum + i.qty, 0);
+                                const personalization = item.personalization || {};
+                                const babyName = personalization.name || '';
+                                const photoSrc = item.image || product?.images[0];
 
                                 return (
-                                <div key={item.id} className="flex gap-3 items-center group">
-                                    {/* Image */}
-                                    {productUrl ? (
-                                        <Link
-                                            href={productUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-black/5 bg-[#faf9f7] hover:opacity-90 transition-opacity cursor-pointer"
-                                            title="Ver produto em nova aba"
-                                        >
-                                            <Image
-                                                src={item.image || '/logomarca rose.png'}
-                                                alt={item.name}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </Link>
-                                    ) : (
-                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-black/5 bg-[#faf9f7]">
-                                            <Image
-                                                src={item.image || '/logomarca rose.png'}
-                                                alt={item.name}
-                                                fill
-                                                className="object-cover"
-                                            />
+                                    <div key={item.id || idx} className={`${idx > 0 ? 'pt-4' : ''} space-y-3`}>
+                                        
+                                        {/* Título & Referência */}
+                                        <div>
+                                            <div className="flex items-start justify-between gap-2">
+                                                <h3 className="text-base sm:text-lg font-black text-[#1f2937] leading-snug">
+                                                    {item.name}
+                                                </h3>
+                                                {items.length > 1 && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => removeItem(item.id)}
+                                                        className="text-red-400 hover:text-red-600 p-1 transition-colors"
+                                                        title="Remover item"
+                                                    >
+                                                        <Trash2 className="w-3.5 h-3.5" />
+                                                    </button>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-2 mt-0.5 text-[10px] flex-wrap">
+                                                {(product?.shortCode || product?.technicalName) && (
+                                                    <span className="font-mono text-slate font-bold bg-slate-100 px-1.5 py-0.5 rounded">
+                                                        REF: {product?.shortCode || product?.technicalName}
+                                                    </span>
+                                                )}
+                                                {variation?.colorName && (
+                                                    <span className="font-bold text-dusty-rose bg-dusty-rose/10 px-1.5 py-0.5 rounded">
+                                                        Cor: {variation.colorName}
+                                                    </span>
+                                                )}
+                                                <span className="font-bold text-slate ml-auto">
+                                                    Qtd: {item.quantity || 1}x
+                                                </span>
+                                            </div>
                                         </div>
-                                    )}
 
-                                    {/* Info */}
-                                    <div className="flex-1 min-w-0">
-                                        {productUrl ? (
-                                            <Link
-                                                href={productUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-xs font-bold text-charcoal truncate block hover:text-dusty-rose transition-colors cursor-pointer"
-                                                title="Ver produto em nova aba"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ) : (
-                                            <h3 className="text-xs font-bold text-charcoal truncate">{item.name}</h3>
-                                        )}
-                                        {item.personalization?.name && (
-                                            <p className="text-[10px] text-dusty-rose font-medium truncate">✨ {item.personalization.name}</p>
-                                        )}
-                                        {item.personalization?.theme && item.personalization.theme !== 'Nenhum' && (
-                                            <p className="text-[9px] text-slate font-medium">Tema: <span className="text-charcoal font-semibold">{item.personalization.theme}</span></p>
-                                        )}
-                                        {item.personalization?.color && item.personalization.color.toLowerCase() !== 'dourado' && (
-                                            <p className="text-[9px] text-slate font-medium">Cor: <span className="text-charcoal font-semibold">{item.personalization.color}</span></p>
-                                        )}
-                                        {item.personalization?.observations && (
-                                            <p className="text-[10px] text-slate font-medium mt-0.5 line-clamp-2 leading-tight" title={item.personalization.observations}>
-                                                <span className="font-semibold text-charcoal">Obs:</span> {item.personalization.observations}
+                                        {/* Foto do Produto */}
+                                        <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-black/10 bg-[#faf9f7] flex items-center justify-center p-2 shadow-xs group">
+                                            {photoSrc ? (
+                                                <Image 
+                                                    src={photoSrc} 
+                                                    alt={item.name} 
+                                                    fill 
+                                                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" 
+                                                />
+                                            ) : (
+                                                <span className="text-slate/50 font-bold uppercase text-xs">Sem foto</span>
+                                            )}
+                                            <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-sm border border-black/5 text-[9px] font-black uppercase tracking-widest text-[#1f2937]">
+                                                Foto Real do Kit
+                                            </div>
+                                        </div>
+
+                                        {/* Faixa em Destaque: NOME A BORDAR */}
+                                        <div className="bg-white p-3 sm:p-4 rounded-xl border-[3px] border-[#1f2937] relative overflow-hidden text-center shadow-xs">
+                                            <p className="text-[9px] font-bold text-[#1f2937] uppercase tracking-[0.25em] leading-none mb-1.5">
+                                                Nome a Bordar
                                             </p>
-                                        )}
-                                        <p className="text-[10px] text-slate mt-0.5">Qtd: {item.quantity}</p>
-                                        <p className="text-[9px] text-slate/80 mt-1.5 flex items-center gap-1 font-medium">
-                                            <Clock className="w-3 h-3 text-dusty-rose/80" />
-                                            Feito sob medida: Até 12 dias úteis
-                                        </p>
+                                            <p className="text-2xl sm:text-3xl font-black text-[#1f2937] font-heading leading-tight truncate tracking-tight">
+                                                {babyName || 'SEM NOME ESPECIFICADO'}
+                                            </p>
+                                            {babyName && (
+                                                <div className="absolute top-0 right-0 bg-[#1f2937] text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-bl-lg tracking-widest shadow-xs">
+                                                    ✓ Confirmado
+                                                </div>
+                                            )}
+                                        </div>
 
-                                        {/* Botão Ver mais detalhes */}
-                                        {productUrl && (
-                                            <Link
-                                                href={productUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1 text-[10px] font-semibold text-dusty-rose hover:text-charcoal bg-dusty-rose/10 hover:bg-dusty-rose/20 px-2 py-0.5 rounded-md mt-1.5 transition-all w-fit cursor-pointer border border-dusty-rose/20 group/btn"
-                                                title="Abrir página completa do produto em uma nova aba"
-                                            >
-                                                <span>Ver mais detalhes</span>
-                                                <ExternalLink className="w-2.5 h-2.5 group-hover/btn:translate-x-0.5 transition-transform" />
-                                            </Link>
+                                        {/* Peças Inclusas do Kit */}
+                                        {itemFeatures.length > 0 && (
+                                            <div className="bg-[#f8fafc] border border-slate-200 rounded-xl p-3">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <p className="text-[10px] font-black text-slate-700 uppercase tracking-widest">
+                                                        Peças Inclusas no Kit
+                                                    </p>
+                                                    <span className="bg-[#1f2937] text-white text-[9px] font-black px-2 py-0.5 rounded-md">
+                                                        {totalPieces} {totalPieces === 1 ? 'peça' : 'peças'}
+                                                    </span>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-1.5">
+                                                    {itemFeatures.map((ki, kIdx) => (
+                                                        <div key={kIdx} className="flex items-center gap-1.5 text-[11px] bg-white px-2 py-1 rounded-lg border border-slate-200">
+                                                            <span className="bg-indigo-50 text-indigo-700 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                                                                {ki.qty}x
+                                                            </span>
+                                                            <span className="font-bold text-[#1f2937] truncate">
+                                                                {getItemLabel(ki.code)}
+                                                            </span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         )}
+
+                                        {/* Preço do Item */}
+                                        <div className="flex justify-between items-center text-xs font-bold pt-1">
+                                            <span className="text-slate-500 uppercase">Preço deste item:</span>
+                                            <span className="text-sm font-black text-emerald-700">
+                                                {formatPrice(item.price * (item.quantity || 1))}
+                                            </span>
+                                        </div>
+
                                     </div>
-
-                                    {/* Price */}
-                                    <span className="text-xs font-bold text-charcoal whitespace-nowrap">
-                                        R$ {(item.price * item.quantity).toFixed(2)}
-                                    </span>
-
-                                    {/* Trash */}
-                                    <button
-                                        onClick={() => removeItem(item.id)}
-                                        className="p-1.5 rounded-lg text-slate/40 hover:text-red-500 hover:bg-red-50 transition-all cursor-pointer"
-                                        title="Remover item"
-                                    >
-                                        <Trash2 className="w-3.5 h-3.5" />
-                                    </button>
-                                </div>
                                 );
                             })}
                         </div>
-
-                        {/* Totals */}
-                        <div className="border-t border-black/5 mt-4 pt-3 space-y-1.5">
-                            <div className="flex justify-between text-[11px] text-slate">
-                                <span>Subtotal</span>
-                                <span>R$ {subtotal.toFixed(2)}</span>
-                            </div>
-                            <div className="flex justify-between text-[11px] text-slate">
-                                <span>Frete</span>
-                                <span>{shipping > 0 ? `R$ ${shipping.toFixed(2)}` : 'A calcular'}</span>
-                            </div>
-                            <div className="flex justify-between items-center pt-2 border-t border-black/5">
-                                <span className="text-xs font-bold text-charcoal">Total</span>
-                                <span className="text-base font-black text-dusty-rose">R$ {total().toFixed(2)}</span>
-                            </div>
-                            <div className="text-[10px] text-slate text-right space-y-0.5 pt-1">
-                                <p>ou 3x de <strong className="text-charcoal">R$ {realInstallment3x.toFixed(2)}</strong> no cartão</p>
-                                <p><strong className="text-green-700">R$ {total().toFixed(2)}</strong> no PIX</p>
-                            </div>
-                        </div>
                     </div>
 
-                    {/* ─── RIGHT: Customer Data ─── */}
-                    <div className="bg-white rounded-2xl border border-black/5 p-4 shadow-sm space-y-4">
-                        <h2 className="text-[11px] font-black text-charcoal uppercase tracking-[0.2em] pb-2 border-b border-black/5">
-                            Dados para Entrega
-                        </h2>
-
-                        {/* Name + WhatsApp */}
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="space-y-1">
-                                <label className={`${labelClass} ${errors.name ? 'text-red-500' : ''}`}>Nome Completo</label>
-                                <input type="text" name="name" value={formData.name} onChange={handleInput} placeholder="Nome e sobrenome" className={`${inputClass} ${errors.name ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                            </div>
-                            <div className="space-y-1">
-                                <label className={`${labelClass} ${errors.phone ? 'text-red-500' : ''}`}>WhatsApp</label>
-                                <input type="tel" name="phone" value={formData.phone} onChange={handleInput} placeholder="(00) 00000-0000" className={`${inputClass} ${errors.phone ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                            </div>
+                    {/* ─── RIGHT COLUMN: ENTREGA & PAGAMENTO ─── */}
+                    <div className="w-full md:w-1/2 flex flex-col bg-white border-2 border-[#1f2937] rounded-2xl shadow-[4px_4px_0px_rgba(31,41,55,1)] overflow-hidden">
+                        
+                        {/* Header da Coluna */}
+                        <div className="p-3.5 border-b border-black/10 bg-[#faf9f7] flex items-center justify-between">
+                            <h2 className="text-sm font-black text-[#1f2937] tracking-tight uppercase leading-none">
+                                Entrega & Pagamento
+                            </h2>
+                            <span className="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-md border border-green-200">
+                                Checkout Seguro
+                            </span>
                         </div>
 
-                        {/* CPF + CEP */}
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="space-y-1">
-                                <label className={`${labelClass} ${errors.cpf ? 'text-red-500' : ''}`}>CPF <span className={`font-normal ${errors.cpf ? 'text-red-400' : 'text-slate/60'}`}>(Para Envio)</span></label>
-                                <input type="text" name="cpf" value={formData.cpf} onChange={handleInput} placeholder="000.000.000-00" className={`${inputClass} ${errors.cpf ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} />
-                            </div>
-                            <div className="space-y-1">
-                                <div className="flex justify-between items-center">
-                                    <label className={`${labelClass} ${errors.cep ? 'text-red-500' : ''}`}>CEP</label>
-                                    {addressLoaded && <span className="text-[10px] text-emerald-600 font-bold">✓ Localizado</span>}
-                                </div>
-                                <div className="relative">
-                                    <input 
-                                        type="text" name="cep" 
-                                        value={formData.cep} 
-                                        onChange={handleCepChange} 
-                                        maxLength={9} placeholder="00000-000" 
-                                        className={`${inputClass} ${errors.cep ? 'border-red-500 ring-1 ring-red-500/30' : ''} ${addressLoaded ? 'border-emerald-500/40 bg-emerald-50/10' : ''}`} 
-                                    />
-                                    {isLoadingAddress && (
-                                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[10px] text-dusty-rose font-medium">
-                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <div className="p-3.5 sm:p-5 flex flex-col gap-4">
+
+                            {/* 1. DADOS DO COMPRADOR */}
+                            <div className="space-y-3">
+                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-1">
+                                    1. Dados do Comprador
+                                </p>
+
+                                <div className="space-y-2.5">
+                                    {/* Nome */}
+                                    <div>
+                                        <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                            Nome Completo *
+                                        </label>
+                                        <input 
+                                            ref={nameRef}
+                                            type="text" 
+                                            name="name" 
+                                            value={formData.name} 
+                                            onChange={handleGenericInput} 
+                                            placeholder="Ex: Daniele Silva" 
+                                            className={`w-full border rounded-xl px-3 py-2 text-xs outline-none transition-all ${
+                                                errors.name 
+                                                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/30' 
+                                                    : 'border-slate-300 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600'
+                                            }`} 
+                                        />
+                                        {errors.name && (
+                                            <p className="text-[10px] text-red-600 font-bold mt-1 flex items-center gap-1">
+                                                <AlertCircle className="w-3 h-3" /> Informe seu nome completo
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* WhatsApp & CPF */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                                WhatsApp (com DDD) *
+                                            </label>
+                                            <input 
+                                                ref={phoneRef}
+                                                type="tel" 
+                                                name="phone" 
+                                                inputMode="tel"
+                                                value={formData.phone} 
+                                                onChange={handlePhoneChange} 
+                                                placeholder="(00) 00000-0000" 
+                                                className={`w-full border rounded-xl px-3 py-2 text-xs outline-none transition-all ${
+                                                    errors.phone 
+                                                        ? 'border-red-500 ring-2 ring-red-100 bg-red-50/30' 
+                                                        : 'border-slate-300 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600'
+                                                }`} 
+                                            />
+                                            {errors.phone && (
+                                                <p className="text-[10px] text-red-600 font-bold mt-1 flex items-center gap-1">
+                                                    <AlertCircle className="w-3 h-3" /> WhatsApp obrigatório
+                                                </p>
+                                            )}
                                         </div>
+
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                                CPF (para emissão e envio) *
+                                            </label>
+                                            <input 
+                                                ref={cpfRef}
+                                                type="text" 
+                                                name="cpf" 
+                                                inputMode="numeric"
+                                                value={formData.cpf} 
+                                                onChange={handleCpfChange} 
+                                                placeholder="000.000.000-00" 
+                                                maxLength={14} 
+                                                className={`w-full border rounded-xl px-3 py-2 text-xs outline-none transition-all ${
+                                                    errors.cpf 
+                                                        ? 'border-red-500 ring-2 ring-red-100 bg-red-50/30' 
+                                                        : 'border-slate-300 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600'
+                                                }`} 
+                                            />
+                                            {errors.cpf && (
+                                                <p className="text-[10px] text-red-600 font-bold mt-1 flex items-center gap-1">
+                                                    <AlertCircle className="w-3 h-3" /> CPF obrigatório (11 dígitos)
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 2. ENDEREÇO DE ENTREGA */}
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                        2. Endereço de Entrega
+                                    </p>
+                                    {user && savedAddresses.length > 0 && (
+                                        <button 
+                                            type="button"
+                                            onClick={() => setShowSavedAddresses(!showSavedAddresses)}
+                                            className="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 uppercase tracking-wider cursor-pointer"
+                                        >
+                                            {showSavedAddresses ? 'Fechar' : 'Endereço salvo'}
+                                        </button>
                                     )}
                                 </div>
-                            </div>
-                        </div>
 
-                        {/* Bloco de Endereço Preenchido Automaticamente via CEP */}
-                        <div className="space-y-3 pt-1 border-t border-black/5">
-                            {/* Rua + Número */}
-                            <div className="grid grid-cols-4 gap-3">
-                                <div className="col-span-3 space-y-1">
-                                    <label className={`${labelClass} ${errors.street ? 'text-red-500' : ''}`}>
-                                        Rua {formData.street && addressLoaded && <span className="text-[10px] text-emerald-600 font-normal lowercase">(via CEP)</span>}
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="street" 
-                                        value={formData.street} 
-                                        onChange={handleInput} 
-                                        disabled={isLoadingAddress} 
-                                        placeholder="Nome da rua / avenida" 
-                                        className={`${inputClass} disabled:bg-gray-50 ${errors.street ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className={`${labelClass} ${errors.number ? 'text-red-500 font-bold' : ''}`}>
-                                        Nº *
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="number" 
-                                        id="number-input"
-                                        value={formData.number} 
-                                        onChange={handleInput} 
-                                        placeholder="123" 
-                                        className={`${inputClass} ${errors.number ? 'border-red-500 ring-1 ring-red-500/30 animate-pulse' : ''}`} 
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Complemento + Bairro */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="space-y-1">
-                                    <label className={labelClass}>
-                                        Compl. <span className="font-normal text-slate/60">(opcional)</span>
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="complement" 
-                                        value={formData.complement} 
-                                        onChange={handleInput} 
-                                        placeholder="Apto, Bloco, Casa..." 
-                                        className={inputClass} 
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className={`${labelClass} ${errors.neighborhood ? 'text-red-500' : ''}`}>
-                                        Bairro
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="neighborhood" 
-                                        value={formData.neighborhood} 
-                                        onChange={handleInput} 
-                                        disabled={isLoadingAddress} 
-                                        placeholder="Bairro" 
-                                        className={`${inputClass} disabled:bg-gray-50 ${errors.neighborhood ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Cidade + UF */}
-                            <div className="grid grid-cols-4 gap-3">
-                                <div className="col-span-3 space-y-1">
-                                    <label className={`${labelClass} ${errors.city ? 'text-red-500' : ''}`}>
-                                        Cidade
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="city" 
-                                        value={formData.city} 
-                                        onChange={handleInput} 
-                                        disabled={isLoadingAddress} 
-                                        placeholder="Cidade" 
-                                        className={`${inputClass} disabled:bg-gray-50 ${errors.city ? 'border-red-500 ring-1 ring-red-500/30' : ''}`} 
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className={labelClass}>
-                                        UF
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="state" 
-                                        value={formData.state} 
-                                        onChange={handleInput} 
-                                        disabled={isLoadingAddress} 
-                                        maxLength={2} 
-                                        placeholder="SP" 
-                                        className={`${inputClass} uppercase disabled:bg-gray-50`} 
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Action Buttons - Unified */}
-                        <div className="flex flex-col gap-3 mt-2">
-                            <button
-                                onClick={handleCheckout}
-                                disabled={isProcessing}
-                                className={`
-                                    w-full relative overflow-hidden group/buy bg-[#1a9e52] hover:bg-[#158043] text-white
-                                    py-3.5 px-6 rounded-xl
-                                    shadow-[0_6px_20px_rgba(26,158,82,0.3)] hover:shadow-[0_6px_25px_rgba(21,128,67,0.4)]
-                                    transition-all duration-300 active:scale-[0.98] cursor-pointer
-                                    flex flex-col items-center justify-center
-                                    border border-[#059669]/20
-                                    ${isProcessing ? 'opacity-70 cursor-wait' : ''}
-                                `}
-                            >
-                                {isProcessing ? (
-                                    <span className="flex items-center gap-2 font-bold text-sm">
-                                        <Loader2 className="w-4 h-4 animate-spin" />
-                                        Processando...
-                                    </span>
-                                ) : (
-                                    <>
-                                        <div className="flex items-center gap-2 mb-0.5 relative z-10 w-full justify-center">
-                                            <ShieldCheck className="w-3.5 h-3.5 text-white/90" />
-                                            <span className="font-extrabold text-[9px] tracking-widest text-white/90 uppercase">Ambiente Seguro InfinitePay</span>
-                                        </div>
-                                        <span className="font-extrabold text-lg tracking-tight relative z-10">CONFIRMAR E PAGAR</span>
-                                        <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine" />
-                                    </>
+                                {/* Seletor de Endereço Salvo */}
+                                {showSavedAddresses && savedAddresses.length > 0 && (
+                                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-2 space-y-1">
+                                        {savedAddresses.map((addr) => (
+                                            <button
+                                                key={addr.id}
+                                                type="button"
+                                                onClick={() => selectSavedAddress(addr)}
+                                                className="w-full text-left p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-xs transition-colors"
+                                            >
+                                                <p className="font-bold text-[#1f2937]">{addr.street}, {addr.number}</p>
+                                                <p className="text-[10px] text-slate-500">{addr.neighborhood} — {addr.city}/{addr.state} (CEP: {addr.cep})</p>
+                                            </button>
+                                        ))}
+                                    </div>
                                 )}
-                            </button>
+
+                                {/* Campo de CEP com Busca Automática */}
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                        CEP *
+                                    </label>
+                                    <div className="relative">
+                                        <input 
+                                            ref={cepRef}
+                                            type="text" 
+                                            name="cep" 
+                                            inputMode="numeric"
+                                            value={formData.cep} 
+                                            onChange={handleCepChange} 
+                                            maxLength={9} 
+                                            placeholder="00000-000" 
+                                            className={`w-full border rounded-xl px-3 py-2 text-xs outline-none transition-all ${
+                                                errors.cep 
+                                                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/30' 
+                                                    : 'border-slate-300 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600'
+                                            }`} 
+                                        />
+                                        {isLoadingAddress && (
+                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 text-[10px] font-bold text-indigo-600">
+                                                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Buscando...
+                                            </div>
+                                        )}
+                                    </div>
+                                    {errors.cep && (
+                                        <p className="text-[10px] text-red-600 font-bold mt-1 flex items-center gap-1">
+                                            <AlertCircle className="w-3 h-3" /> Informe o CEP com 8 dígitos
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Preview do Endereço Localizado */}
+                                {addressLoaded && !showManualAddress && (
+                                    <div className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-2.5 flex items-start justify-between gap-2">
+                                        <div className="text-xs">
+                                            <p className="font-bold text-emerald-950">
+                                                {formData.street}, {formData.neighborhood}
+                                            </p>
+                                            <p className="text-[11px] text-emerald-800">
+                                                {formData.city} - {formData.state}
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowManualAddress(true)}
+                                            className="text-[10px] font-bold text-emerald-700 hover:text-emerald-900 underline shrink-0 cursor-pointer"
+                                        >
+                                            Editar rua
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Campos de Rua / Bairro Manuais caso precise */}
+                                {showManualAddress && (
+                                    <div className="space-y-2.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                                Rua / Avenida *
+                                            </label>
+                                            <input 
+                                                ref={streetRef}
+                                                type="text" 
+                                                name="street" 
+                                                value={formData.street} 
+                                                onChange={handleGenericInput} 
+                                                placeholder="Nome da sua rua" 
+                                                className={`w-full border rounded-xl px-3 py-2 text-xs outline-none bg-white ${
+                                                    errors.street ? 'border-red-500' : 'border-slate-300'
+                                                }`} 
+                                            />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Bairro</label>
+                                                <input type="text" name="neighborhood" value={formData.neighborhood} onChange={handleGenericInput} placeholder="Bairro" className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none bg-white" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Cidade / UF</label>
+                                                <input type="text" name="city" value={`${formData.city} - ${formData.state}`} onChange={handleGenericInput} placeholder="Cidade - UF" className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none bg-white" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Número e Complemento — SEMPRE VISÍVEIS E ACESSÍVEIS */}
+                                <div className="grid grid-cols-[100px_1fr] gap-2.5">
+                                    <div>
+                                        <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                            Número *
+                                        </label>
+                                        <input 
+                                            ref={numberRef}
+                                            id="number-input"
+                                            type="text" 
+                                            name="number" 
+                                            value={formData.number} 
+                                            onChange={handleGenericInput} 
+                                            placeholder="Ex: 123" 
+                                            className={`w-full border rounded-xl px-3 py-2 text-xs outline-none transition-all ${
+                                                errors.number 
+                                                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/30' 
+                                                    : 'border-slate-300 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600'
+                                            }`} 
+                                        />
+                                        {errors.number && (
+                                            <p className="text-[10px] text-red-600 font-bold mt-1 flex items-center gap-0.5">
+                                                <AlertCircle className="w-3 h-3" /> Obrigatório
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                            Complemento (opcional)
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            name="complement" 
+                                            value={formData.complement} 
+                                            onChange={handleGenericInput} 
+                                            placeholder="Apto, Bloco, Casa 2..." 
+                                            className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600" 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 3. OPÇÃO DE FRETE */}
+                            {shippingOptions.length > 0 && (
+                                <div className="space-y-2 border-t border-slate-100 pt-3">
+                                    <div className="flex items-center justify-between">
+                                        <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                                            Forma de Envio
+                                        </label>
+                                        {shippingOptions.length > 1 && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowAllShipping(!showAllShipping)}
+                                                className="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer"
+                                            >
+                                                {showAllShipping ? 'Recolher' : 'Outras opções'}
+                                                {showAllShipping ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {/* Opção Selecionada */}
+                                    {(() => {
+                                        const cheapestOption = [...shippingOptions].sort((a, b) => a.price - b.price)[0];
+                                        const primaryOption = shippingOption || cheapestOption;
+                                        const displayPrice = (freeShipping && primaryOption.id === cheapestOption.id) ? 0 : primaryOption.price;
+
+                                        return (
+                                            <div className="p-3 rounded-xl border-2 border-slate-900 bg-slate-50 flex items-center justify-between shadow-xs">
+                                                <div className="flex items-center gap-2.5">
+                                                    <div className="w-4 h-4 rounded-full border-2 border-slate-900 flex items-center justify-center">
+                                                        <div className="w-2 h-2 rounded-full bg-slate-900" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-xs font-bold text-slate-900 uppercase">
+                                                            {primaryOption.name}
+                                                        </p>
+                                                        <p className="text-[10px] text-slate-500 font-medium">
+                                                            Prazo de entrega: {primaryOption.days} dias úteis
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <span className={`text-xs font-black ${displayPrice === 0 ? 'text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md' : 'text-slate-900'}`}>
+                                                    {displayPrice === 0 ? 'GRÁTIS' : formatPrice(displayPrice)}
+                                                </span>
+                                            </div>
+                                        );
+                                    })()}
+
+                                    {/* Opções Alternativas */}
+                                    {showAllShipping && shippingOptions
+                                        .filter(opt => opt.id !== shippingOption?.id)
+                                        .map((opt) => (
+                                            <button
+                                                key={opt.id}
+                                                type="button"
+                                                onClick={() => {
+                                                    setShippingOption(opt);
+                                                    setShipping(opt.price);
+                                                    setShowAllShipping(false);
+                                                }}
+                                                className="w-full p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-between text-left text-xs transition-colors"
+                                            >
+                                                <div>
+                                                    <p className="font-bold text-slate-800 uppercase">{opt.name}</p>
+                                                    <p className="text-[10px] text-slate-500">{opt.days} dias úteis</p>
+                                                </div>
+                                                <span className="font-black text-slate-700">
+                                                    {formatPrice(opt.price)}
+                                                </span>
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                            )}
+
+                            {/* 4. TOTAIS & PRAZO ARTESANAL */}
+                            <div className="bg-[#faf9f7] rounded-xl p-3 border border-slate-200 space-y-2.5">
+                                
+                                {/* Aviso do Prazo Artesanal */}
+                                <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 flex items-start gap-2">
+                                    <span className="text-amber-700 text-xs mt-0.5">⏱️</span>
+                                    <p className="text-[10px] text-amber-900 leading-relaxed font-semibold">
+                                        <strong className="uppercase">Atenção:</strong> Peças sob encomenda com bordado artesanal exclusivo. O envio é realizado após o prazo de confecção de <strong>até 12 dias úteis</strong>.
+                                    </p>
+                                </div>
+
+                                <div className="space-y-1 text-xs">
+                                    <div className="flex justify-between items-center text-slate-600 font-bold">
+                                        <span>Subtotal:</span>
+                                        <span className="text-slate-900">{formatPrice(subtotal)}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center text-slate-600 font-bold">
+                                        <span>Frete:</span>
+                                        <span className={shippingOption ? 'text-slate-900' : 'text-slate-400'}>
+                                            {shippingOption 
+                                                ? (actualShippingPrice === 0 ? 'GRÁTIS' : formatPrice(actualShippingPrice)) 
+                                                : (formData.cep.length >= 8 ? 'Calculando...' : 'Digite o CEP')}
+                                        </span>
+                                    </div>
+
+                                    {/* Dica de Frete Grátis */}
+                                    {(() => {
+                                        if (formData.state && !isStateEligible) {
+                                            return (
+                                                <p className="text-[10px] text-slate-500 font-semibold pt-1">
+                                                    * Frete grátis acima de R$ 400 disponível para {FREE_SHIPPING_REGIONS_LABEL}.
+                                                </p>
+                                            );
+                                        }
+                                        if (isStateEligible && subtotal < FREE_SHIPPING_THRESHOLD) {
+                                            const missing = FREE_SHIPPING_THRESHOLD - subtotal;
+                                            return (
+                                                <p className="text-[10px] text-amber-700 font-bold pt-1">
+                                                    Faltam {formatPrice(missing)} para você ganhar Frete Grátis!
+                                                </p>
+                                            );
+                                        }
+                                        if (freeShipping) {
+                                            return (
+                                                <p className="text-[10px] text-emerald-700 font-bold pt-1 flex items-center gap-1">
+                                                    <Check className="w-3.5 h-3.5" /> Você ganhou Frete Grátis para {formData.state}!
+                                                </p>
+                                            );
+                                        }
+                                        return null;
+                                    })()}
+
+                                    <div className="border-t border-slate-200 pt-2.5 mt-2 flex justify-between items-baseline">
+                                        <div>
+                                            <span className="text-xs font-black text-slate-500 uppercase tracking-wider block">
+                                                Valor Total
+                                            </span>
+                                            <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded uppercase">
+                                                Ambiente Seguro
+                                            </span>
+                                        </div>
+                                        <span className="text-2xl font-black text-emerald-700 tracking-tight">
+                                            {formatPrice(finalTotal)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 5. BOTÃO PRINCIPAL DE PAGAMENTO — SEMPRE CLICÁVEL & RESPONSIVO NO CELULAR */}
+                            <div className="space-y-2 pt-1">
+                                <button
+                                    type="button"
+                                    onClick={handleBuyNow}
+                                    disabled={isProcessing}
+                                    className="w-full bg-[#1a9e52] hover:bg-[#158043] active:scale-[0.98] text-white py-4 px-6 rounded-xl font-black text-base uppercase tracking-wider shadow-[0_4px_16px_rgba(26,158,82,0.35)] transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 border border-[#158043]"
+                                >
+                                    {isProcessing ? (
+                                        <div className="flex items-center gap-2">
+                                            <Loader2 className="w-5 h-5 animate-spin" />
+                                            <span>PROCESSANDO PEDIDO...</span>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <span className="leading-none">PAGAR AGORA</span>
+                                            <span className="text-[10px] text-white/90 font-medium normal-case tracking-normal">
+                                                Pagamento Direto e Seguro via InfinitePay
+                                            </span>
+                                        </>
+                                    )}
+                                </button>
+
+                                <div className="flex items-center justify-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-wider pt-1">
+                                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                                    <span>Seus dados estão protegidos com criptografia</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+
                 </div>
             </main>
         </div>

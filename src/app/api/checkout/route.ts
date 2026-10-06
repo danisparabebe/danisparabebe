@@ -109,10 +109,20 @@ export async function POST(request: Request) {
             let authenticPrice = 0;
             const resolvedId = resolveProductId(item.productId || item.id);
 
-            // 1. Tentar encontrar no Catalog (productControl)
-            const managedProduct = productControl.find((p: any) => p.id === resolvedId);
+            // 1. Tentar encontrar no Catalog (productControl) por ID direto ou por variação de cor
+            let managedProduct = productControl.find((p: any) => p.id === resolvedId);
             if (managedProduct) {
                 authenticPrice = managedProduct.pixPrice;
+            } else {
+                const parentWithVariation = productControl.find((p: any) => p.colorVariations?.some((v: any) => v.id === resolvedId));
+                if (parentWithVariation) {
+                    const variation = parentWithVariation.colorVariations?.find((v: any) => v.id === resolvedId);
+                    authenticPrice = variation?.pixPrice || parentWithVariation.pixPrice;
+                    managedProduct = parentWithVariation;
+                }
+            }
+            if (managedProduct) {
+                // authenticPrice já definido
             } else if (resolvedId.startsWith('custom-')) {
                 // 2. Produto montado no "Monte seu Kit"
                 const typeId = resolvedId.replace('custom-', '');

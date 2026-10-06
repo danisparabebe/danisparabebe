@@ -87,7 +87,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
         });
 
         if (buyMode === 'checkout') {
-            router.push('/checkout/rapido');
+            router.push('/checkout');
         } else {
             openCart();
         }
