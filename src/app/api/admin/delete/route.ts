@@ -9,14 +9,14 @@ export async function POST(req: Request) {
         if (!filename) {
             return NextResponse.json({ error: 'Filename is required' }, { status: 400 });
         }
-        const productsDir = path.join(process.cwd(), 'public', 'produtos');
-        const conferidosDir = path.join(productsDir, 'conferidos');
-        const uploadsProductsDir = path.join(process.cwd(), 'public', 'uploads', 'products');
+        const productsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'produtos');
+        const conferidosDir = path.join(/*turbopackIgnore: true*/ productsDir, 'conferidos');
+        const uploadsProductsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'uploads', 'products');
         
         const possiblePaths = [
-            path.join(productsDir, filename),
-            path.join(conferidosDir, filename),
-            path.join(uploadsProductsDir, filename)
+            path.join(/*turbopackIgnore: true*/ productsDir, filename),
+            path.join(/*turbopackIgnore: true*/ conferidosDir, filename),
+            path.join(/*turbopackIgnore: true*/ uploadsProductsDir, filename)
         ];
 
         let deleted = false;

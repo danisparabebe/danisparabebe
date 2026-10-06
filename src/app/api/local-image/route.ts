@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         return new NextResponse("Invalid path", { status: 403 });
     }
 
-    const fullPath = path.join(process.cwd(), normalizedPath);
+    const fullPath = path.join(/*turbopackIgnore: true*/ process.cwd(), normalizedPath);
 
     try {
         const fileBuffer = await fs.promises.readFile(fullPath);

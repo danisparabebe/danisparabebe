@@ -39,10 +39,21 @@ const securityHeaders = [
     value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://*.firebaseapp.com https://www.gstatic.com https://*.infinitepay.io https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://*.googleapis.com https://firebasestorage.googleapis.com https://*.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.infinitepay.io https://accounts.google.com https://viacep.com.br; frame-src 'self' https://*.firebaseapp.com https://apis.google.com https://*.infinitepay.io https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self';"
   }
 ];
-
 const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
-    '*': ['./Catálogo/**', './Bordados/**', './public/Catálogo/**'],
+    '*': [
+      './public/**',
+      './Catálogo/**',
+      './Bordados/**',
+      './Produtos/**',
+      './Logos/**',
+      './Prova social/**',
+      './backup_home/**',
+      './site_modelo/**',
+      './Capas dos temas/**',
+      './**/*.zip',
+      './**/*.pdf',
+    ],
   },
   images: {
     remotePatterns: [

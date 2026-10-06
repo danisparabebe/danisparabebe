@@ -41,7 +41,7 @@ export async function POST(req: Request) {
         });
 
         // 1. Grava no banco de dados principal (src/data/product-control.ts)
-        const filePath = path.join(process.cwd(), 'src', 'data', 'product-control.ts');
+        const filePath = path.join(/*turbopackIgnore: true*/ process.cwd(), 'src', 'data', 'product-control.ts');
         const dirPath = path.dirname(filePath);
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath, { recursive: true });
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         fs.writeFileSync(filePath, code, 'utf8');
 
         // 2. Sincroniza os arquivos de metadados originais (public/produtos/conferidos/[id].json)
-        const conferidosDir = path.join(process.cwd(), 'public', 'produtos', 'conferidos');
+        const conferidosDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'produtos', 'conferidos');
         let syncedJsonCount = 0;
 
         if (fs.existsSync(conferidosDir)) {
@@ -102,7 +102,7 @@ export async function POST(req: Request) {
             .map((p: ManagedProduct) => p.shortCode || p.id);
 
         if (activeMvpIds.length > 0) {
-            const mvpConfigFile = path.join(process.cwd(), 'src', 'data', 'mvp-config.ts');
+            const mvpConfigFile = path.join(/*turbopackIgnore: true*/ process.cwd(), 'src', 'data', 'mvp-config.ts');
             const mvpContent = `/**
  * =====================================================================
  * CONFIGURAÇÃO DOS PRODUTOS DO PROTÓTIPO MVP (www.danisparabebe.com.br)
