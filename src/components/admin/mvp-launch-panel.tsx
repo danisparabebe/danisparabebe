@@ -902,19 +902,32 @@ export function MvpLaunchPanel({
                                             </div>
                                         </div>
 
-                                        {/* Descrição Base Recolhível */}
+                                        {/* Descrição Base Recolhível & Editável */}
                                         <div>
-                                            <button
-                                                type="button"
-                                                onClick={() => setExpandedDescMap(prev => ({ ...prev, [product.id]: !prev[product.id] }))}
-                                                className="text-[11px] font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors"
-                                            >
-                                                {isDescExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                                                {isDescExpanded ? "Ocultar Descrição Base" : "Ver Descrição Base do Produto"}
-                                            </button>
+                                            <div className="flex items-center justify-between">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setExpandedDescMap(prev => ({ ...prev, [product.id]: !prev[product.id] }))}
+                                                    className="text-[11px] font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors cursor-pointer"
+                                                >
+                                                    {isDescExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                                                    {isDescExpanded ? "Ocultar Descrição Base" : "Ver / Editar Descrição Base"}
+                                                </button>
+                                                {isDescExpanded && (
+                                                    <span className="text-[10px] text-indigo-600 font-semibold">
+                                                        ✏️ Editável diretamente abaixo
+                                                    </span>
+                                                )}
+                                            </div>
                                             {isDescExpanded && (
-                                                <div className="mt-2 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed font-mono whitespace-pre-wrap max-h-48 overflow-y-auto">
-                                                    {product.description || "Nenhuma descrição base configurada."}
+                                                <div className="mt-2">
+                                                    <textarea
+                                                        value={product.description || ''}
+                                                        onChange={(e) => updateProductField(product.id, 'description', e.target.value)}
+                                                        rows={8}
+                                                        className="w-full p-3 bg-slate-50 hover:bg-white focus:bg-white rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-400 text-xs text-slate-700 leading-relaxed font-mono whitespace-pre-wrap outline-none transition-all resize-y"
+                                                        placeholder="Digite a descrição base do produto..."
+                                                    />
                                                 </div>
                                             )}
                                         </div>
