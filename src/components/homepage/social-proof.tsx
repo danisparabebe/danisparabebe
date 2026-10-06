@@ -85,7 +85,7 @@ export function SocialProof() {
                                     <span className="font-heading font-black text-[#1f2937] leading-none text-sm">@danisparabebe</span>
                                     <Instagram className="w-3 h-3 text-charcoal/40" />
                                 </div>
-                                <span className="text-[9px] uppercase tracking-widest font-bold text-slate mt-0.5">47.4k Seguidores</span>
+                                <span className="text-[9px] uppercase tracking-widest font-bold text-slate mt-0.5">53.8k Seguidores</span>
                             </div>
 
                             <div className="bg-sage-green-dark text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full group-hover:bg-[#1f2937] transition-colors">

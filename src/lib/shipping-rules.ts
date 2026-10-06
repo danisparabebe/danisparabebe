@@ -4,17 +4,15 @@
 // ═══════════════════════════════════════════════════════
 
 /** Valor mínimo do carrinho para elegibilidade ao frete grátis */
-export const FREE_SHIPPING_THRESHOLD = 350;
+export const FREE_SHIPPING_THRESHOLD = 400;
 
-/** Estados elegíveis ao frete grátis (Sul, Sudeste e partes do Centro-Oeste) */
+/** Estados elegíveis ao frete grátis */
 export const FREE_SHIPPING_STATES = [
     'SP', // São Paulo
-    'MG', // Minas Gerais
     'RJ', // Rio de Janeiro
+    'MG', // Minas Gerais
     'PR', // Paraná
-    'RS', // Rio Grande do Sul
-    'GO', // Goiás
-    'DF', // Distrito Federal
+    'SC', // Santa Catarina
 ];
 
 /** Verifica se o estado informado tem direito a frete grátis */
@@ -23,4 +21,4 @@ export function isEligibleForFreeShipping(state: string): boolean {
 }
 
 /** Label amigável das regiões para exibição ao cliente */
-export const FREE_SHIPPING_REGIONS_LABEL = 'SP, MG, RJ, PR, RS, GO e DF';
+export const FREE_SHIPPING_REGIONS_LABEL = 'SP, RJ, MG, PR e SC';

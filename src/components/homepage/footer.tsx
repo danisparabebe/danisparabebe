@@ -9,11 +9,11 @@ export function Footer({ simple = false }: { simple?: boolean }) {
                 <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 sm:flex-row sm:justify-center sm:gap-12 md:gap-24">
                     <div className="flex items-center gap-2 text-sm">
                         <ShieldCheck className="h-5 w-5 text-sage-green-dark" />
-                        <span>Frete grátis acima de R$ 350 (SP, MG, RJ, PR, RS, GO e DF)</span>
+                        <span>Frete grátis acima de R$ 400 (SP, RJ, MG, PR e SC)</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <ShieldCheck className="h-5 w-5 text-sage-green-dark" />
-                        <span>5% de desconto no PIX</span>
+                        <span>Desconto no PIX</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <ShieldCheck className="h-5 w-5 text-sage-green-dark" />

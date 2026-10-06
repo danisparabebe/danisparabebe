@@ -11,10 +11,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 211.86,
-        "originalPriceFull": 225,
-        "pixPrice": 197,
-        "discountPct": 12,
+        "priceFull": 200,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-VDC-BAB-VDC_02.jpg"
         ],
@@ -50,7 +50,9 @@ export const productControl: ManagedProduct[] = [
                 "priceFull": 200
             }
         ],
-        "shortCode": "DPB-0116"
+        "shortCode": "DPB-0116",
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "MAS-KIT-URS-VDC-BAB-VDC_01",
@@ -62,10 +64,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-VDC-BAB-VDC_01.jpeg"
         ],
@@ -80,7 +82,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:13:15.080Z",
         "mvpEnabled": false,
         "shortCode": "DPB-0117",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "MAS-KIT-URS-AZM-BAB-AZM_03",
@@ -92,10 +96,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_03.jpeg"
         ],
@@ -110,7 +114,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:33:05.530Z",
         "mvpEnabled": false,
         "shortCode": "DPB-0118",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "MAS-KIT-URS-AZM-BAB-AZM_02",
@@ -122,10 +128,10 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "1x FRG"
         ],
-        "priceFull": 261.33,
-        "originalPriceFull": 285,
-        "pixPrice": 243,
-        "discountPct": 15,
+        "priceFull": 278,
+        "originalPriceFull": 281,
+        "pixPrice": 269,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_02.jpeg"
         ],
@@ -140,7 +146,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:23:14.555Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0119",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 269
     },
     {
         "id": "MAS-KIT-URS-AZM-BAB-AZM_01",
@@ -154,10 +162,10 @@ export const productControl: ManagedProduct[] = [
             "1x TOB",
             "1x TOU"
         ],
-        "priceFull": 428.01,
-        "originalPriceFull": 438,
-        "pixPrice": 398,
-        "discountPct": 9,
+        "priceFull": 443,
+        "originalPriceFull": 447,
+        "pixPrice": 429,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_01.jpeg"
         ],
@@ -172,7 +180,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:16:35.527Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0120",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 429
     },
     {
         "id": "MAS-KIT-URS-ABB-BAB-ABB_05",
@@ -184,10 +194,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_05.jpeg"
         ],
@@ -202,7 +212,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:28:41.113Z",
         "mvpEnabled": false,
         "shortCode": "DPB-0121",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "MAS-KIT-MON-AZM-BAB-AZM_02",
@@ -216,10 +228,10 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x BDL"
         ],
-        "priceFull": 303.27,
-        "originalPriceFull": 317,
-        "pixPrice": 282,
-        "discountPct": 11,
+        "priceFull": 320,
+        "originalPriceFull": 322,
+        "pixPrice": 309,
+        "discountPct": 1,
         "images": [
             "/uploads/products/1791243367149-MAS-KIT-MON-AZM-BAB-AZM_02.png"
         ],
@@ -234,7 +246,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:29:22.060Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0122",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 309
     },
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_04",
@@ -246,10 +260,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 211.86,
-        "originalPriceFull": 225,
-        "pixPrice": 197,
-        "discountPct": 12,
+        "priceFull": 200,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_04.jpeg"
         ],
@@ -264,7 +278,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:20:54.798Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0123",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_03",
@@ -276,10 +292,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_03.jpeg"
         ],
@@ -294,7 +310,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T22:41:52.810Z",
         "mvpEnabled": false,
         "shortCode": "DPB-0124",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "MAS-KIT-CAV-VDM-BAB-VDM_01",
@@ -309,10 +327,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 448.44,
-        "originalPriceFull": 455,
-        "pixPrice": 417,
-        "discountPct": 8,
+        "priceFull": 461,
+        "originalPriceFull": 464,
+        "pixPrice": 446,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-CAV-VDM-BAB-VDM_01.jpeg"
         ],
@@ -327,7 +345,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:17:51.854Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0125",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 446
     },
     {
         "id": "MAS-KIT-CAV-AZM-BAB-AZM_01",
@@ -340,10 +360,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 244.11,
-        "originalPriceFull": 260,
-        "pixPrice": 227,
-        "discountPct": 13,
+        "priceFull": 262,
+        "originalPriceFull": 264,
+        "pixPrice": 253,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-CAV-AZM-BAB-AZM_01.jpg"
         ],
@@ -358,7 +378,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:15:04.245Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0126",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 253
     },
     {
         "id": "FEM-KIT-URS-RSA-BAB-RSA_01",
@@ -373,10 +395,10 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x FAI"
         ],
-        "priceFull": 327.99,
-        "originalPriceFull": 341,
-        "pixPrice": 305,
-        "discountPct": 11,
+        "priceFull": 345,
+        "originalPriceFull": 348,
+        "pixPrice": 334,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-URS-RSA-BAB-RSA_01.jpg"
         ],
@@ -391,7 +413,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:37:25.515Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0127",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 334
     },
     {
         "id": "FEM-KIT-PER-RSA-BAB-RSE-RSA_01",
@@ -403,10 +427,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 250.56,
-        "originalPriceFull": 265,
-        "pixPrice": 233,
-        "discountPct": 12,
+        "priceFull": 268,
+        "originalPriceFull": 270,
+        "pixPrice": 259,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-PER-RSA-BAB-RSE-RSA_01.jpeg"
         ],
@@ -421,7 +445,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:34:11.966Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0128",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 259
     },
     {
         "id": "FEM-KIT-MON-RSE-BAB-RSE_02",
@@ -433,10 +459,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 211.86,
-        "originalPriceFull": 225,
-        "pixPrice": 197,
-        "discountPct": 12,
+        "priceFull": 200,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE_02.jpg"
         ],
@@ -492,7 +518,9 @@ export const productControl: ManagedProduct[] = [
                 "pixPrice": 193,
                 "priceFull": 200
             }
-        ]
+        ],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "FEM-KIT-MON-RSE-BAB-RSE_01",
@@ -504,10 +532,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 292.5,
-        "originalPriceFull": 303,
-        "pixPrice": 272,
-        "discountPct": 10,
+        "priceFull": 200,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE_01.jpeg"
         ],
@@ -522,7 +550,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T01:04:08.978Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0130",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "FEM-KIT-MON-RSA-BAB-RSA_03",
@@ -534,10 +564,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA_03.jpeg"
         ],
@@ -552,7 +582,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:34:29.965Z",
         "mvpEnabled": false,
         "shortCode": "DPB-0131",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 4,
+        "netValue": 193
     },
     {
         "id": "FEM-KIT-FLO-RSA-BAB-RSA_01",
@@ -565,10 +597,10 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x TOU"
         ],
-        "priceFull": 282.84,
-        "originalPriceFull": 300,
-        "pixPrice": 263,
-        "discountPct": 12,
+        "priceFull": 302,
+        "originalPriceFull": 305,
+        "pixPrice": 292,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RSA-BAB-RSA_01.jpg"
         ],
@@ -583,7 +615,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:25:21.371Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0132",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 292
     },
     {
         "id": "FEM-KIT-BOR-RSA-BAB-RSA_02",
@@ -597,10 +631,10 @@ export const productControl: ManagedProduct[] = [
             "1x TOB",
             "2x FRP"
         ],
-        "priceFull": 428.01,
-        "originalPriceFull": 438,
-        "pixPrice": 398,
-        "discountPct": 9,
+        "priceFull": 443,
+        "originalPriceFull": 447,
+        "pixPrice": 429,
+        "discountPct": 1,
         "images": [
             "/uploads/products/1791243114446-FEM-KIT-BOR-RSA-BAB-RSA_02.png"
         ],
@@ -615,7 +649,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:35:45.816Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0133",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 429
     },
     {
         "id": "FEM-KIT-BOR-RSA-BAB-RSA_01",
@@ -629,10 +665,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x FRG"
         ],
-        "priceFull": 292.5,
-        "originalPriceFull": 303,
-        "pixPrice": 272,
-        "discountPct": 10,
+        "priceFull": 309,
+        "originalPriceFull": 311,
+        "pixPrice": 299,
+        "discountPct": 1,
         "images": [
             "/uploads/products/1791241094809-Kit_09_ótima.jpg"
         ],
@@ -647,7 +683,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:28:12.571Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0134",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 299
     },
     {
         "id": "FEM-KIT-BOR-LIL-BAB-LIL_01",
@@ -659,10 +697,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 250.56,
-        "originalPriceFull": 265,
-        "pixPrice": 233,
-        "discountPct": 12,
+        "priceFull": 268,
+        "originalPriceFull": 270,
+        "pixPrice": 259,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-LIL-BAB-LIL_01.jpg"
         ],
@@ -677,7 +715,9 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-01T23:26:33.906Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0135",
-        "colorVariations": []
+        "colorVariations": [],
+        "pixDiscountPct": 3,
+        "netValue": 259
     },
     {
         "id": "FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO",
@@ -690,10 +730,10 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 209.7,
-        "originalPriceFull": 225,
-        "pixPrice": 195,
-        "pixDiscountPct": 3,
+        "priceFull": 200,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
+        "pixDiscountPct": 4,
         "discountPct": 13,
         "images": [
             "/uploads/products/1790892423162-Kit_manta_Monograma_Rosé.jpg"
@@ -706,7 +746,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "netValue": 194.6685,
+        "netValue": 193,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": [
@@ -773,11 +813,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-VDM-BAB-VDM_01.jpeg"
         ],
@@ -805,11 +845,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB-R_01.jpeg"
         ],
@@ -835,11 +875,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "originalPriceFull": 95,
+        "priceFull": 90,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "discountPct": 8,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-CRE-BAB-CRE_02.jpeg"
         ],
@@ -865,11 +905,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "originalPriceFull": 95,
+        "priceFull": 90,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
-        "discountPct": 8,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-BCO-BAB-BCO_01.jpeg"
         ],
@@ -898,11 +938,11 @@ export const productControl: ManagedProduct[] = [
             "1x BDL",
             "1x FAI"
         ],
-        "priceFull": 392.52,
-        "originalPriceFull": 451,
-        "pixPrice": 365,
+        "priceFull": 386,
+        "originalPriceFull": 389,
+        "pixPrice": 373,
         "pixDiscountPct": 3,
-        "discountPct": 19,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BAI-LIL-BAB-LIL-R_01.jpeg"
         ],
@@ -912,7 +952,7 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Saída de Maternidade"
         ],
-        "netValue": 365,
+        "netValue": 373,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -928,11 +968,11 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "originalPriceFull": 225,
+        "priceFull": 200,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
-        "discountPct": 14,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-LIL-BAB-LIL_04.jpeg"
         ],
@@ -960,11 +1000,11 @@ export const productControl: ManagedProduct[] = [
             "1x MIJ",
             "1x TOU"
         ],
-        "priceFull": 362.4,
-        "originalPriceFull": 417,
-        "pixPrice": 337,
+        "priceFull": 354,
+        "originalPriceFull": 357,
+        "pixPrice": 342,
         "pixDiscountPct": 3,
-        "discountPct": 19,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-PER-RSE-BAB-RSE_01.jpeg"
         ],
@@ -974,7 +1014,7 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Saída de Maternidade"
         ],
-        "netValue": 337,
+        "netValue": 342,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -988,11 +1028,11 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "2x FRG"
         ],
-        "priceFull": 248.43,
-        "originalPriceFull": 286,
-        "pixPrice": 231,
+        "priceFull": 245,
+        "originalPriceFull": 246,
+        "pixPrice": 237,
         "pixDiscountPct": 3,
-        "discountPct": 19,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-CNZ-BAB-BCO_01.jpeg"
         ],
@@ -1002,7 +1042,7 @@ export const productControl: ManagedProduct[] = [
             "Dia a Dia",
             "Essenciais"
         ],
-        "netValue": 231,
+        "netValue": 237,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1015,8 +1055,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x BDC"
         ],
-        "priceFull": 55.92,
-        "discountPct": 19,
+        "priceFull": 56,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-BDC-BOR-RSA-RSA_01.jpeg"
         ],
@@ -1027,10 +1067,10 @@ export const productControl: ManagedProduct[] = [
             "bor",
             "Para Presentear"
         ],
-        "originalPriceFull": 64,
-        "pixPrice": 52,
+        "originalPriceFull": 56,
+        "pixPrice": 54,
         "pixDiscountPct": 4,
-        "netValue": 52,
+        "netValue": 54,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1043,8 +1083,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x BDL"
         ],
-        "priceFull": 59.16,
-        "discountPct": 19,
+        "priceFull": 58,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-BDL-BOR-LIL-BAB-LIL_01.jpeg"
         ],
@@ -1055,10 +1095,10 @@ export const productControl: ManagedProduct[] = [
             "bor",
             "Para Presentear"
         ],
-        "originalPriceFull": 68,
-        "pixPrice": 55,
-        "pixDiscountPct": 4,
-        "netValue": 55,
+        "originalPriceFull": 58,
+        "pixPrice": 56,
+        "pixDiscountPct": 3,
+        "netValue": 56,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1071,8 +1111,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x FAI"
         ],
-        "priceFull": 24.72,
-        "discountPct": 18,
+        "priceFull": 26,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-FAI-MON-RSA_02.jpeg"
         ],
@@ -1085,10 +1125,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 28,
-        "pixPrice": 23,
+        "originalPriceFull": 26,
+        "pixPrice": 25,
         "pixDiscountPct": 4,
-        "netValue": 23,
+        "netValue": 25,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1101,8 +1141,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x FRG"
         ],
-        "priceFull": 57,
-        "discountPct": 20,
+        "priceFull": 58,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-FRG-BOR-RSA-BAB-RSA_01.jpeg"
         ],
@@ -1114,10 +1154,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 66,
-        "pixPrice": 53,
-        "pixDiscountPct": 4,
-        "netValue": 53,
+        "originalPriceFull": 58,
+        "pixPrice": 56,
+        "pixDiscountPct": 3,
+        "netValue": 56,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1130,8 +1170,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x FRM"
         ],
-        "priceFull": 47.31,
-        "discountPct": 19,
+        "priceFull": 50,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-FRM-BOR-RSA-BAB-RSA_01.jpeg"
         ],
@@ -1143,10 +1183,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 54,
-        "pixPrice": 44,
+        "originalPriceFull": 50,
+        "pixPrice": 48,
         "pixDiscountPct": 4,
-        "netValue": 44,
+        "netValue": 48,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1160,8 +1200,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 95.7,
-        "discountPct": 10,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/uploads/products/1791240119239-FEM-FRP-BOR-RSA-BAB-RSA-R_01.png"
         ],
@@ -1175,7 +1215,7 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers"
         ],
         "originalPriceFull": 99,
-        "pixPrice": 89,
+        "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
         "isHot": true,
@@ -1191,8 +1231,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x FRP"
         ],
-        "priceFull": 40.86,
-        "discountPct": 19,
+        "priceFull": 41,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-FRP-BOR-RSA-BAB-RSA_01.jpeg"
         ],
@@ -1204,10 +1244,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 47,
-        "pixPrice": 38,
+        "originalPriceFull": 41,
+        "pixPrice": 39,
         "pixDiscountPct": 5,
-        "netValue": 38,
+        "netValue": 39,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -1222,8 +1262,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-FRP-BOR-RSA-BAB-RSA_02.jpeg"
         ],
@@ -1236,7 +1276,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1254,8 +1294,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 211.86,
-        "discountPct": 12,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/uploads/products/1791241822508-FEM-FRP-BOR-RSE-BAB-RSE_01.png"
         ],
@@ -1269,8 +1309,8 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 225,
-        "pixPrice": 197,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
         "isHot": true,
@@ -1299,8 +1339,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-FRP-MON-RSA-BAB-RSA-R_01.jpeg"
         ],
@@ -1313,7 +1353,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1331,8 +1371,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-BAI-MAR-BAB-MAR_01.jpeg"
         ],
@@ -1345,7 +1385,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1363,8 +1403,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RSA-BAB-RSA_03.jpeg"
         ],
@@ -1378,7 +1418,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1397,8 +1437,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-COR-RSE-BAB-RSE_03.jpeg"
         ],
@@ -1411,7 +1451,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1429,8 +1469,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RSE-BAB-RSE_01.jpeg"
         ],
@@ -1443,7 +1483,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1461,8 +1501,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-LIL-BAB-LIL_01.jpeg"
         ],
@@ -1475,7 +1515,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1493,8 +1533,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-PNK-BAB-PNK_01.jpeg"
         ],
@@ -1507,7 +1547,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1525,8 +1565,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RSE-BAB-RSE-R_01.jpeg"
         ],
@@ -1539,7 +1579,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1557,8 +1597,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 211.86,
-        "discountPct": 12,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/uploads/products/1791242389842-FEM-KIT-JDE-LIL-BAB-LIL-R_01.png"
         ],
@@ -1572,8 +1612,8 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 225,
-        "pixPrice": 197,
+        "originalPriceFull": 229,
+        "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
         "isHot": true,
@@ -1602,8 +1642,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-MAR-BAB-MAR_01.jpeg"
         ],
@@ -1616,7 +1656,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1634,8 +1674,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-RSA-BAB-RSA-AMA_01.jpeg"
         ],
@@ -1648,7 +1688,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Para Presentear"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1666,8 +1706,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-LIL-BAB-LIL_01.jpeg"
         ],
@@ -1680,7 +1720,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1698,8 +1738,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA-R_RSA_01.jpeg"
         ],
@@ -1712,7 +1752,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1730,8 +1770,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-VRM-BAB-VRM_01.jpeg"
         ],
@@ -1744,7 +1784,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1762,8 +1802,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-PER-VRM-BAB-VRM_01.jpeg"
         ],
@@ -1776,7 +1816,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1794,8 +1834,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-LIL-BAB-LIL-R_01.jpeg"
         ],
@@ -1808,7 +1848,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1826,8 +1866,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-VDC-BAB-VDC_01.jpeg"
         ],
@@ -1840,7 +1880,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1858,8 +1898,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-VDM-BAB-VDM-R_01.jpeg"
         ],
@@ -1872,7 +1912,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1890,8 +1930,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB-R_01.jpeg"
         ],
@@ -1904,7 +1944,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1922,8 +1962,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM-R_01.jpeg"
         ],
@@ -1936,7 +1976,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1954,8 +1994,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/uploads/products/1790901985739-Kit_manta_ursinho_Verde.jpg"
         ],
@@ -1968,7 +2008,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -1986,8 +2026,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-ABB-BAB-ABB_01.jpeg"
         ],
@@ -2000,7 +2040,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -2018,8 +2058,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-AZM-BAB-AZM-R_01.jpeg"
         ],
@@ -2032,7 +2072,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -2050,8 +2090,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-AZM-BAB-BCO_01.jpeg"
         ],
@@ -2064,7 +2104,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -2082,8 +2122,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 207.54,
-        "discountPct": 14,
+        "priceFull": 200,
+        "discountPct": 13,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-VDC-BAB-VDC_01.jpeg"
         ],
@@ -2096,7 +2136,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 225,
+        "originalPriceFull": 229,
         "pixPrice": 193,
         "pixDiscountPct": 4,
         "netValue": 193,
@@ -2113,8 +2153,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA-R_RSA_02.jpeg"
         ],
@@ -2128,7 +2168,7 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2146,8 +2186,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-PER-RSA-BAB-RSA_01.jpeg"
         ],
@@ -2160,7 +2200,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2177,8 +2217,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RSA-BAB-RSA_02.jpeg"
         ],
@@ -2192,7 +2232,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2210,8 +2250,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-BGE-BAB-BCO_02.jpeg"
         ],
@@ -2224,7 +2264,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2241,8 +2281,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-ABB-BAB-ABB_02.jpeg"
         ],
@@ -2255,7 +2295,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2272,8 +2312,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x FRG"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-URS-RSE-BAB-RSE_01.jpeg"
         ],
@@ -2287,7 +2327,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2305,8 +2345,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-LRJ-BAB-LRJ_01.jpeg"
         ],
@@ -2319,7 +2359,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Para Presentear"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2336,8 +2376,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-LIL-BAB-LIL_06.jpeg"
         ],
@@ -2351,7 +2391,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2369,8 +2409,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-BAI-VRM-BAB-VRM_02.jpeg"
         ],
@@ -2384,7 +2424,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2402,8 +2442,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RSE-BAB-RSE_02.jpeg"
         ],
@@ -2416,7 +2456,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2433,8 +2473,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RLC-BAB-RLC_02.jpeg"
         ],
@@ -2448,7 +2488,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Bestsellers"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2466,8 +2506,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 138.72,
-        "discountPct": 19,
+        "priceFull": 139,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-LIL-BAB-LIL_02.jpeg"
         ],
@@ -2481,10 +2521,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 160,
-        "pixPrice": 129,
+        "originalPriceFull": 140,
+        "pixPrice": 134,
         "pixDiscountPct": 4,
-        "netValue": 129,
+        "netValue": 134,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -2499,8 +2539,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 138.72,
-        "discountPct": 19,
+        "priceFull": 139,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA_04.jpeg"
         ],
@@ -2513,10 +2553,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 160,
-        "pixPrice": 129,
+        "originalPriceFull": 140,
+        "pixPrice": 134,
         "pixDiscountPct": 4,
-        "netValue": 129,
+        "netValue": 134,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -2530,8 +2570,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 138.72,
-        "discountPct": 19,
+        "priceFull": 139,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-RSE-BAB-RSE_01.jpeg"
         ],
@@ -2544,10 +2584,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 160,
-        "pixPrice": 129,
+        "originalPriceFull": 140,
+        "pixPrice": 134,
         "pixDiscountPct": 4,
-        "netValue": 129,
+        "netValue": 134,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -2561,8 +2601,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 138.72,
-        "discountPct": 19,
+        "priceFull": 139,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-RSA-BAB-RSA_02.jpeg"
         ],
@@ -2575,10 +2615,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 160,
-        "pixPrice": 129,
+        "originalPriceFull": 140,
+        "pixPrice": 134,
         "pixDiscountPct": 4,
-        "netValue": 129,
+        "netValue": 134,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -2592,8 +2632,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-COR-VDC-BAB-VDC_01.jpeg"
         ],
@@ -2606,7 +2646,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2623,8 +2663,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-RSA-BAB-RSA_03.jpeg"
         ],
@@ -2637,7 +2677,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2654,8 +2694,8 @@ export const productControl: ManagedProduct[] = [
             "3x FRP",
             "3x FRG"
         ],
-        "priceFull": 293.58,
-        "discountPct": 19,
+        "priceFull": 295,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-VRM-BAB-ABB-LIL_01.jpeg"
         ],
@@ -2666,10 +2706,10 @@ export const productControl: ManagedProduct[] = [
             "var",
             "Essenciais"
         ],
-        "originalPriceFull": 338,
-        "pixPrice": 273,
+        "originalPriceFull": 297,
+        "pixPrice": 285,
         "pixDiscountPct": 3,
-        "netValue": 273,
+        "netValue": 285,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -2683,8 +2723,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-ABB-BAB-ABB-R_ABB_01.jpeg"
         ],
@@ -2698,7 +2738,7 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2716,8 +2756,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 134.43,
-        "discountPct": 10,
+        "priceFull": 139,
+        "discountPct": 1,
         "images": [
             "/uploads/products/1791240361561-MAS-KIT-JDE-VDM-BAB-VDM_01.png"
         ],
@@ -2731,10 +2771,10 @@ export const productControl: ManagedProduct[] = [
             "Bestsellers",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 139,
-        "pixPrice": 125,
+        "originalPriceFull": 140,
+        "pixPrice": 134,
         "pixDiscountPct": 4,
-        "netValue": 129,
+        "netValue": 134,
         "isHot": true,
         "mvpEnabled": true,
         "colorVariations": []
@@ -2749,8 +2789,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 95.7,
-        "discountPct": 10,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/uploads/products/1791240996545-MAS-KIT-JDE-VDM-BAB-VDM_02.png"
         ],
@@ -2764,7 +2804,7 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício"
         ],
         "originalPriceFull": 99,
-        "pixPrice": 89,
+        "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
         "mvpEnabled": true,
@@ -2780,8 +2820,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x FRP"
         ],
-        "priceFull": 93.57,
-        "discountPct": 8,
+        "priceFull": 90,
+        "discountPct": 9,
         "images": [
             "/produtos/conferidos/MAS-KIT-TIM-BCO-BAB-BCO_01.jpeg"
         ],
@@ -2794,7 +2834,7 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 95,
+        "originalPriceFull": 99,
         "pixPrice": 87,
         "pixDiscountPct": 3,
         "netValue": 87,
@@ -2812,8 +2852,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "1x FRG"
         ],
-        "priceFull": 274.23,
-        "discountPct": 19,
+        "priceFull": 278,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RLC-BAB-RLC_01.jpeg"
         ],
@@ -2825,10 +2865,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 315,
-        "pixPrice": 255,
+        "originalPriceFull": 281,
+        "pixPrice": 269,
         "pixDiscountPct": 3,
-        "netValue": 255,
+        "netValue": 269,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -2843,8 +2883,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "1x FRG"
         ],
-        "priceFull": 274.23,
-        "discountPct": 19,
+        "priceFull": 278,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RLC-BAB-BCO-RLC_01.jpeg"
         ],
@@ -2857,10 +2897,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Bestsellers"
         ],
-        "originalPriceFull": 315,
-        "pixPrice": 255,
+        "originalPriceFull": 281,
+        "pixPrice": 269,
         "pixDiscountPct": 3,
-        "netValue": 255,
+        "netValue": 269,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -2876,8 +2916,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "3x FRP"
         ],
-        "priceFull": 274.23,
-        "discountPct": 19,
+        "priceFull": 278,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RLC-BAB-RSA_01.jpeg"
         ],
@@ -2888,10 +2928,10 @@ export const productControl: ManagedProduct[] = [
             "bor",
             "Essenciais"
         ],
-        "originalPriceFull": 315,
-        "pixPrice": 255,
+        "originalPriceFull": 281,
+        "pixPrice": 269,
         "pixDiscountPct": 3,
-        "netValue": 255,
+        "netValue": 269,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -2908,8 +2948,8 @@ export const productControl: ManagedProduct[] = [
             "1x BDC",
             "1x MNT"
         ],
-        "priceFull": 312.93,
-        "discountPct": 19,
+        "priceFull": 309,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RSA-BAB-RSA-R_RSA_01.jpeg"
         ],
@@ -2924,10 +2964,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Bestsellers"
         ],
-        "originalPriceFull": 360,
-        "pixPrice": 291,
+        "originalPriceFull": 311,
+        "pixPrice": 299,
         "pixDiscountPct": 3,
-        "netValue": 291,
+        "netValue": 299,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -2945,8 +2985,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x MNT"
         ],
-        "priceFull": 542.01,
-        "discountPct": 19,
+        "priceFull": 539,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-BOR-RSE-BAB-RSE-RSA_01.jpeg"
         ],
@@ -2960,10 +3000,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Bestsellers"
         ],
-        "originalPriceFull": 623,
-        "pixPrice": 504,
+        "originalPriceFull": 545,
+        "pixPrice": 522,
         "pixDiscountPct": 3,
-        "netValue": 504,
+        "netValue": 522,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -2981,8 +3021,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOB",
             "1x BDC"
         ],
-        "priceFull": 529.11,
-        "discountPct": 19,
+        "priceFull": 523,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-LIL-BAB-LIL_05.jpeg"
         ],
@@ -2994,10 +3034,10 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Essenciais"
         ],
-        "originalPriceFull": 608,
-        "pixPrice": 492,
+        "originalPriceFull": 526,
+        "pixPrice": 506,
         "pixDiscountPct": 3,
-        "netValue": 492,
+        "netValue": 506,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3011,8 +3051,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRG",
             "2x FRP"
         ],
-        "priceFull": 195.72,
-        "discountPct": 19,
+        "priceFull": 197,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-LIL-BAB-RSA-LIL_01.jpeg"
         ],
@@ -3024,10 +3064,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 225,
-        "pixPrice": 182,
-        "pixDiscountPct": 3,
-        "netValue": 182,
+        "originalPriceFull": 198,
+        "pixPrice": 190,
+        "pixDiscountPct": 4,
+        "netValue": 190,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3042,8 +3082,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRM",
             "3x FRP"
         ],
-        "priceFull": 226.92,
-        "discountPct": 19,
+        "priceFull": 229,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RLC-BAB-RSA_01.jpeg"
         ],
@@ -3056,10 +3096,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 261,
-        "pixPrice": 211,
+        "originalPriceFull": 231,
+        "pixPrice": 221,
         "pixDiscountPct": 3,
-        "netValue": 211,
+        "netValue": 221,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3077,8 +3117,8 @@ export const productControl: ManagedProduct[] = [
             "1x MIJ",
             "1x MNT"
         ],
-        "priceFull": 403.26,
-        "discountPct": 19,
+        "priceFull": 394,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RSA-BAB-RSA_03.jpeg"
         ],
@@ -3093,10 +3133,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 464,
-        "pixPrice": 375,
+        "originalPriceFull": 398,
+        "pixPrice": 381,
         "pixDiscountPct": 3,
-        "netValue": 375,
+        "netValue": 381,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -3113,8 +3153,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "2x FRP"
         ],
-        "priceFull": 282.84,
-        "discountPct": 12,
+        "priceFull": 302,
+        "discountPct": 1,
         "images": [
             "/uploads/products/1791242184131-FEM-KIT-FLO-RSE-BAB-RSE_01.png"
         ],
@@ -3126,10 +3166,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 300,
-        "pixPrice": 263,
+        "originalPriceFull": 305,
+        "pixPrice": 292,
         "pixDiscountPct": 3,
-        "netValue": 287,
+        "netValue": 292,
         "mvpEnabled": true,
         "colorVariations": []
     },
@@ -3142,8 +3182,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "5x FRP"
         ],
-        "priceFull": 204.33,
-        "discountPct": 19,
+        "priceFull": 202,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-AMA-BAB-LIL-VDC_01.jpeg"
         ],
@@ -3157,10 +3197,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Essenciais"
         ],
-        "originalPriceFull": 235,
-        "pixPrice": 190,
-        "pixDiscountPct": 4,
-        "netValue": 190,
+        "originalPriceFull": 205,
+        "pixPrice": 195,
+        "pixDiscountPct": 3,
+        "netValue": 195,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -3177,8 +3217,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x MNT"
         ],
-        "priceFull": 308.64,
-        "discountPct": 19,
+        "priceFull": 302,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-VRM-BAB-VRM_01.jpeg"
         ],
@@ -3192,10 +3232,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Para Presentear"
         ],
-        "originalPriceFull": 355,
-        "pixPrice": 287,
+        "originalPriceFull": 305,
+        "pixPrice": 292,
         "pixDiscountPct": 3,
-        "netValue": 287,
+        "netValue": 292,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3209,8 +3249,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "3x FRP"
         ],
-        "priceFull": 179.58,
-        "discountPct": 19,
+        "priceFull": 179,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-CRE-BAB-CRE_01.jpeg"
         ],
@@ -3223,10 +3263,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Essenciais"
         ],
-        "originalPriceFull": 207,
-        "pixPrice": 167,
+        "originalPriceFull": 181,
+        "pixPrice": 173,
         "pixDiscountPct": 3,
-        "netValue": 167,
+        "netValue": 173,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3241,8 +3281,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRM",
             "1x FRG"
         ],
-        "priceFull": 226.92,
-        "discountPct": 19,
+        "priceFull": 229,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA_01.jpeg"
         ],
@@ -3255,10 +3295,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 261,
-        "pixPrice": 211,
+        "originalPriceFull": 231,
+        "pixPrice": 221,
         "pixDiscountPct": 3,
-        "netValue": 211,
+        "netValue": 221,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3275,8 +3315,8 @@ export const productControl: ManagedProduct[] = [
             "1x BDL",
             "1x MNT"
         ],
-        "priceFull": 326.91,
-        "discountPct": 19,
+        "priceFull": 320,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-URS-CRE-BAB-CRE_01.jpeg"
         ],
@@ -3289,10 +3329,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Linha Premium"
         ],
-        "originalPriceFull": 376,
-        "pixPrice": 304,
+        "originalPriceFull": 322,
+        "pixPrice": 309,
         "pixDiscountPct": 3,
-        "netValue": 304,
+        "netValue": 309,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3306,8 +3346,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "3x FRP"
         ],
-        "priceFull": 179.58,
-        "discountPct": 19,
+        "priceFull": 179,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-PNK-BAB-PNK-R_01.jpeg"
         ],
@@ -3320,10 +3360,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Para Presentear"
         ],
-        "originalPriceFull": 207,
-        "pixPrice": 167,
+        "originalPriceFull": 181,
+        "pixPrice": 173,
         "pixDiscountPct": 3,
-        "netValue": 167,
+        "netValue": 173,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3340,8 +3380,8 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x TOB"
         ],
-        "priceFull": 706.53,
-        "discountPct": 19,
+        "priceFull": 705,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-RSE-BAB-RSE_01.jpeg"
         ],
@@ -3355,10 +3395,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Bestsellers"
         ],
-        "originalPriceFull": 813,
-        "pixPrice": 657,
+        "originalPriceFull": 710,
+        "pixPrice": 682,
         "pixDiscountPct": 3,
-        "netValue": 657,
+        "netValue": 682,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -3372,8 +3412,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "4x FRG"
         ],
-        "priceFull": 227.97,
-        "discountPct": 19,
+        "priceFull": 232,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-RSE-BAB-RSE-RSA_01.jpeg"
         ],
@@ -3386,10 +3426,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 262,
-        "pixPrice": 212,
+        "originalPriceFull": 232,
+        "pixPrice": 224,
         "pixDiscountPct": 3,
-        "netValue": 212,
+        "netValue": 224,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3405,8 +3445,8 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x BDC"
         ],
-        "priceFull": 386.07,
-        "discountPct": 19,
+        "priceFull": 382,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/FEM-KIT-VAR-SLM-BAB-BCO-RSA_01.jpeg"
         ],
@@ -3417,10 +3457,10 @@ export const productControl: ManagedProduct[] = [
             "var",
             "Essenciais"
         ],
-        "originalPriceFull": 444,
-        "pixPrice": 359,
+        "originalPriceFull": 384,
+        "pixPrice": 369,
         "pixDiscountPct": 3,
-        "netValue": 359,
+        "netValue": 369,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3433,8 +3473,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x MNT"
         ],
-        "priceFull": 134.43,
-        "discountPct": 19,
+        "priceFull": 130,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-MNT-BOR-RSA-BAB-RSA_01.jpeg"
         ],
@@ -3447,7 +3487,7 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 155,
+        "originalPriceFull": 130,
         "pixPrice": 125,
         "pixDiscountPct": 4,
         "netValue": 125,
@@ -3466,8 +3506,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 408.66,
-        "discountPct": 19,
+        "priceFull": 407,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-FRP-SAF-AZM-BAB-AZM-BCO_01.jpeg"
         ],
@@ -3480,10 +3520,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 470,
-        "pixPrice": 380,
+        "originalPriceFull": 411,
+        "pixPrice": 394,
         "pixDiscountPct": 3,
-        "netValue": 380,
+        "netValue": 394,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3496,8 +3536,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x TOB"
         ],
-        "priceFull": 143.04,
-        "discountPct": 19,
+        "priceFull": 142,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-TOB-BOR-RSA-RSA_01.jpeg"
         ],
@@ -3510,10 +3550,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 164,
-        "pixPrice": 133,
+        "originalPriceFull": 142,
+        "pixPrice": 137,
         "pixDiscountPct": 4,
-        "netValue": 133,
+        "netValue": 137,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3526,8 +3566,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "1x TOU"
         ],
-        "priceFull": 35.49,
-        "discountPct": 20,
+        "priceFull": 35,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/FEM-TOU-BOR-RSA-RSA_01.jpeg"
         ],
@@ -3540,7 +3580,7 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 41,
+        "originalPriceFull": 35,
         "pixPrice": 33,
         "pixDiscountPct": 6,
         "netValue": 33,
@@ -3558,8 +3598,8 @@ export const productControl: ManagedProduct[] = [
             "3x FRP",
             "1x FRG"
         ],
-        "priceFull": 314.01,
-        "discountPct": 19,
+        "priceFull": 308,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-BGE-BAB-BGE_01.jpeg"
         ],
@@ -3571,10 +3611,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 361,
-        "pixPrice": 292,
+        "originalPriceFull": 311,
+        "pixPrice": 298,
         "pixDiscountPct": 3,
-        "netValue": 292,
+        "netValue": 298,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3590,8 +3630,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "1x MNT"
         ],
-        "priceFull": 408.66,
-        "discountPct": 19,
+        "priceFull": 407,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-BGE-BAB-BCO_01.jpeg"
         ],
@@ -3604,10 +3644,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Linha Premium"
         ],
-        "originalPriceFull": 470,
-        "pixPrice": 380,
+        "originalPriceFull": 411,
+        "pixPrice": 394,
         "pixDiscountPct": 3,
-        "netValue": 380,
+        "netValue": 394,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3628,8 +3668,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 737.73,
-        "discountPct": 19,
+        "priceFull": 730,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-AZM-BAB-AZM_01.jpeg"
         ],
@@ -3641,10 +3681,10 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Essenciais"
         ],
-        "originalPriceFull": 848,
-        "pixPrice": 686,
+        "originalPriceFull": 737,
+        "pixPrice": 707,
         "pixDiscountPct": 3,
-        "netValue": 686,
+        "netValue": 707,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3659,8 +3699,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRP",
             "1x MNT"
         ],
-        "priceFull": 330.15,
-        "discountPct": 19,
+        "priceFull": 326,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-BGE-BCO_01.jpeg"
         ],
@@ -3672,10 +3712,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Essenciais"
         ],
-        "originalPriceFull": 380,
-        "pixPrice": 307,
+        "originalPriceFull": 328,
+        "pixPrice": 315,
         "pixDiscountPct": 3,
-        "netValue": 307,
+        "netValue": 315,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3689,8 +3729,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x MNT"
         ],
-        "priceFull": 175.29,
-        "discountPct": 19,
+        "priceFull": 170,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-MON-VDM-BAB-VDM_02.jpeg"
         ],
@@ -3702,10 +3742,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 202,
-        "pixPrice": 163,
+        "originalPriceFull": 171,
+        "pixPrice": 164,
         "pixDiscountPct": 4,
-        "netValue": 163,
+        "netValue": 164,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3719,8 +3759,8 @@ export const productControl: ManagedProduct[] = [
             "5x FRP",
             "1x FRG"
         ],
-        "priceFull": 261.33,
-        "discountPct": 19,
+        "priceFull": 260,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-ABB-BAB-AZM-ABB_01.jpeg"
         ],
@@ -3735,10 +3775,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Essenciais"
         ],
-        "originalPriceFull": 301,
-        "pixPrice": 243,
+        "originalPriceFull": 263,
+        "pixPrice": 251,
         "pixDiscountPct": 3,
-        "netValue": 243,
+        "netValue": 251,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -3756,8 +3796,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x BDL"
         ],
-        "priceFull": 326.91,
-        "discountPct": 19,
+        "priceFull": 320,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-NUV-ABB-BAB-ABB_01.jpeg"
         ],
@@ -3770,10 +3810,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 376,
-        "pixPrice": 304,
+        "originalPriceFull": 322,
+        "pixPrice": 309,
         "pixDiscountPct": 3,
-        "netValue": 304,
+        "netValue": 309,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3788,8 +3828,8 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x FRG"
         ],
-        "priceFull": 314.01,
-        "discountPct": 19,
+        "priceFull": 308,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-PER-AZM-BAB-AZM_01.jpeg"
         ],
@@ -3802,10 +3842,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 361,
-        "pixPrice": 292,
+        "originalPriceFull": 311,
+        "pixPrice": 298,
         "pixDiscountPct": 3,
-        "netValue": 292,
+        "netValue": 298,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3819,8 +3859,8 @@ export const productControl: ManagedProduct[] = [
             "3x FRP",
             "1x FRG"
         ],
-        "priceFull": 179.58,
-        "discountPct": 19,
+        "priceFull": 179,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-AZM-BAB-ABB-R_01.jpeg"
         ],
@@ -3833,10 +3873,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 207,
-        "pixPrice": 167,
+        "originalPriceFull": 181,
+        "pixPrice": 173,
         "pixDiscountPct": 3,
-        "netValue": 167,
+        "netValue": 173,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3854,8 +3894,8 @@ export const productControl: ManagedProduct[] = [
             "1x MIJ",
             "1x BDL"
         ],
-        "priceFull": 362.4,
-        "discountPct": 19,
+        "priceFull": 354,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-AZM-BAB-AZM_01.jpeg"
         ],
@@ -3872,10 +3912,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Bestsellers"
         ],
-        "originalPriceFull": 417,
-        "pixPrice": 337,
+        "originalPriceFull": 357,
+        "pixPrice": 342,
         "pixDiscountPct": 3,
-        "netValue": 337,
+        "netValue": 342,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -3891,8 +3931,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRP",
             "1x TOB"
         ],
-        "priceFull": 240.9,
-        "discountPct": 19,
+        "priceFull": 240,
+        "discountPct": 0,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-AZM-BAB-BCO_01.jpeg"
         ],
@@ -3905,10 +3945,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Essenciais"
         ],
-        "originalPriceFull": 277,
-        "pixPrice": 224,
+        "originalPriceFull": 241,
+        "pixPrice": 232,
         "pixDiscountPct": 3,
-        "netValue": 224,
+        "netValue": 232,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3925,8 +3965,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 309.72,
-        "discountPct": 19,
+        "priceFull": 304,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-AZM-BAB_01.jpeg"
         ],
@@ -3939,10 +3979,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 356,
-        "pixPrice": 288,
+        "originalPriceFull": 306,
+        "pixPrice": 294,
         "pixDiscountPct": 3,
-        "netValue": 288,
+        "netValue": 294,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3960,8 +4000,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOB",
             "1x MNT"
         ],
-        "priceFull": 522.63,
-        "discountPct": 19,
+        "priceFull": 517,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-VDM-BAB-BCO-BGE_01.jpeg"
         ],
@@ -3973,10 +4013,10 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Saída de Maternidade"
         ],
-        "originalPriceFull": 601,
-        "pixPrice": 486,
+        "originalPriceFull": 520,
+        "pixPrice": 500,
         "pixDiscountPct": 3,
-        "netValue": 486,
+        "netValue": 500,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -3991,8 +4031,8 @@ export const productControl: ManagedProduct[] = [
             "3x FRP",
             "2x FRG"
         ],
-        "priceFull": 371.01,
-        "discountPct": 19,
+        "priceFull": 366,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-CRE-BAB-CRE-BGE_01.jpeg"
         ],
@@ -4006,10 +4046,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 427,
-        "pixPrice": 345,
+        "originalPriceFull": 369,
+        "pixPrice": 354,
         "pixDiscountPct": 3,
-        "netValue": 345,
+        "netValue": 354,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4025,8 +4065,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x MNT"
         ],
-        "priceFull": 408.66,
-        "discountPct": 19,
+        "priceFull": 407,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-SAF-VDM-BAB-VDM-BCO_01.jpeg"
         ],
@@ -4039,10 +4079,10 @@ export const productControl: ManagedProduct[] = [
             "Custo-Benefício",
             "Essenciais"
         ],
-        "originalPriceFull": 470,
-        "pixPrice": 380,
+        "originalPriceFull": 411,
+        "pixPrice": 394,
         "pixDiscountPct": 3,
-        "netValue": 380,
+        "netValue": 394,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -4059,8 +4099,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRG",
             "1x TOU"
         ],
-        "priceFull": 267.78,
-        "discountPct": 19,
+        "priceFull": 262,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_01.jpeg"
         ],
@@ -4073,10 +4113,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 308,
-        "pixPrice": 249,
+        "originalPriceFull": 264,
+        "pixPrice": 253,
         "pixDiscountPct": 3,
-        "netValue": 249,
+        "netValue": 253,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4094,8 +4134,8 @@ export const productControl: ManagedProduct[] = [
             "1x MIJ",
             "1x BDL"
         ],
-        "priceFull": 362.4,
-        "discountPct": 19,
+        "priceFull": 354,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_03.jpeg"
         ],
@@ -4108,10 +4148,10 @@ export const productControl: ManagedProduct[] = [
             "Saída de Maternidade",
             "Bestsellers"
         ],
-        "originalPriceFull": 417,
-        "pixPrice": 337,
+        "originalPriceFull": 357,
+        "pixPrice": 342,
         "pixDiscountPct": 3,
-        "netValue": 337,
+        "netValue": 342,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -4127,8 +4167,8 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "2x FRP"
         ],
-        "priceFull": 273.15,
-        "discountPct": 19,
+        "priceFull": 268,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_04.jpeg"
         ],
@@ -4141,10 +4181,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 314,
-        "pixPrice": 254,
+        "originalPriceFull": 270,
+        "pixPrice": 259,
         "pixDiscountPct": 3,
-        "netValue": 254,
+        "netValue": 259,
         "isHot": true,
         "mvpEnabled": false,
         "colorVariations": []
@@ -4160,8 +4200,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRG",
             "1x MNT"
         ],
-        "priceFull": 452.73,
-        "discountPct": 19,
+        "priceFull": 447,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM-VDM_01.jpeg"
         ],
@@ -4173,10 +4213,10 @@ export const productControl: ManagedProduct[] = [
             "Essenciais",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 521,
-        "pixPrice": 421,
+        "originalPriceFull": 451,
+        "pixPrice": 432,
         "pixDiscountPct": 3,
-        "netValue": 421,
+        "netValue": 432,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4192,8 +4232,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRP",
             "1x FRG"
         ],
-        "priceFull": 416.19,
-        "discountPct": 19,
+        "priceFull": 409,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-URS-BGE-BAB-BCO_01.jpeg"
         ],
@@ -4205,10 +4245,10 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Essenciais"
         ],
-        "originalPriceFull": 479,
-        "pixPrice": 387,
+        "originalPriceFull": 412,
+        "pixPrice": 396,
         "pixDiscountPct": 3,
-        "netValue": 387,
+        "netValue": 396,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4224,8 +4264,8 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x TOU"
         ],
-        "priceFull": 267.78,
-        "discountPct": 19,
+        "priceFull": 262,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-AZM-BAB-AZM_01.jpeg"
         ],
@@ -4238,10 +4278,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 308,
-        "pixPrice": 249,
+        "originalPriceFull": 264,
+        "pixPrice": 253,
         "pixDiscountPct": 3,
-        "netValue": 249,
+        "netValue": 253,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4255,8 +4295,8 @@ export const productControl: ManagedProduct[] = [
             "4x FRP",
             "1x BDL"
         ],
-        "priceFull": 222.6,
-        "discountPct": 19,
+        "priceFull": 219,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-AZM-ATC-AZM_01.jpeg"
         ],
@@ -4267,10 +4307,10 @@ export const productControl: ManagedProduct[] = [
             "var",
             "Linha Premium"
         ],
-        "originalPriceFull": 256,
-        "pixPrice": 207,
+        "originalPriceFull": 222,
+        "pixPrice": 212,
         "pixDiscountPct": 3,
-        "netValue": 207,
+        "netValue": 212,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4283,8 +4323,8 @@ export const productControl: ManagedProduct[] = [
         "features": [
             "3x FRP"
         ],
-        "priceFull": 122.61,
-        "discountPct": 19,
+        "priceFull": 121,
+        "discountPct": 2,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-BGE-BAB-AZM-ABB_01.jpeg"
         ],
@@ -4296,10 +4336,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 141,
-        "pixPrice": 114,
+        "originalPriceFull": 123,
+        "pixPrice": 117,
         "pixDiscountPct": 3,
-        "netValue": 114,
+        "netValue": 117,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4314,8 +4354,8 @@ export const productControl: ManagedProduct[] = [
             "1x FRM",
             "1x FRG"
         ],
-        "priceFull": 308.64,
-        "discountPct": 19,
+        "priceFull": 309,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-BGE-BAB-BCO_01.jpeg"
         ],
@@ -4329,10 +4369,10 @@ export const productControl: ManagedProduct[] = [
             "Chá de Bebê",
             "Custo-Benefício"
         ],
-        "originalPriceFull": 355,
-        "pixPrice": 287,
+        "originalPriceFull": 313,
+        "pixPrice": 299,
         "pixDiscountPct": 3,
-        "netValue": 287,
+        "netValue": 299,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4348,8 +4388,8 @@ export const productControl: ManagedProduct[] = [
             "1x MNT",
             "1x TOB"
         ],
-        "priceFull": 375.3,
-        "discountPct": 19,
+        "priceFull": 369,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-CNZ-BAB-BCO_01.jpeg"
         ],
@@ -4362,10 +4402,10 @@ export const productControl: ManagedProduct[] = [
             "Para Presentear",
             "Chá de Bebê"
         ],
-        "originalPriceFull": 432,
-        "pixPrice": 349,
+        "originalPriceFull": 371,
+        "pixPrice": 357,
         "pixDiscountPct": 3,
-        "netValue": 349,
+        "netValue": 357,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4385,8 +4425,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x TOB"
         ],
-        "priceFull": 603.3,
-        "discountPct": 19,
+        "priceFull": 601,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-BGE-BAB-CRE_01.jpeg"
         ],
@@ -4398,10 +4438,10 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Essenciais"
         ],
-        "originalPriceFull": 694,
-        "pixPrice": 561,
+        "originalPriceFull": 607,
+        "pixPrice": 582,
         "pixDiscountPct": 3,
-        "netValue": 561,
+        "netValue": 582,
         "mvpEnabled": false,
         "colorVariations": []
     },
@@ -4419,8 +4459,8 @@ export const productControl: ManagedProduct[] = [
             "1x TOU",
             "1x TOB"
         ],
-        "priceFull": 603.3,
-        "discountPct": 19,
+        "priceFull": 600,
+        "discountPct": 1,
         "images": [
             "/produtos/conferidos/MAS-KIT-VAR-VDM-BAB-VDM_01.jpeg"
         ],
@@ -4432,10 +4472,10 @@ export const productControl: ManagedProduct[] = [
             "Linha Premium",
             "Essenciais"
         ],
-        "originalPriceFull": 694,
-        "pixPrice": 561,
+        "originalPriceFull": 605,
+        "pixPrice": 581,
         "pixDiscountPct": 3,
-        "netValue": 561,
+        "netValue": 581,
         "mvpEnabled": false,
         "colorVariations": []
     }

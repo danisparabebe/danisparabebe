@@ -1,21 +1,21 @@
+import { UNIT_PRICES_NET } from '@/data/pricing-data';
+
 export const BASE_PRICES: Record<string, number> = {
-    // Fraldas
-    'FRP': 25.00, // Fralda Pequena (Boca)
-    'FRM': 45.00, // Fralda Média (Ombro)
-    'FRG': 65.00, // Fralda Grande (Passeio)
-
-    // Roupas
-    'BDC': 40.00, // Body Manga Curta
-    'BDL': 45.00, // Body Manga Longa
-    'MIJ': 35.00, // Mijão
-    'SHO': 30.00, // Short
-
-    // Acessórios / Outros
-    'MNT': 150.00, // Manta
-    'TOB': 180.00, // Toalha de Banho
-    'TOF': 120.00, // Toalha Fralda
-    'TOU': 30.00, // Touca
-    'FAI': 25.00, // Faixa de Cabelo
+    // Sincronizado dinamicamente com a Tabela Oficial de Precificação Unitária
+    ...UNIT_PRICES_NET,
+    // Aliases e itens complementares
+    'FRP': UNIT_PRICES_NET['FRP'] || 39.00,
+    'FRM': UNIT_PRICES_NET['FRM'] || 48.00,
+    'FRG': UNIT_PRICES_NET['FRG'] || 56.00,
+    'BDC': UNIT_PRICES_NET['BDC'] || 54.00,
+    'BDL': UNIT_PRICES_NET['BDL'] || 56.00,
+    'MIJ': UNIT_PRICES_NET['MIJ'] || 33.00,
+    'SHO': UNIT_PRICES_NET['SHO'] || 20.00,
+    'MNT': UNIT_PRICES_NET['MNT'] || 125.00,
+    'TOB': UNIT_PRICES_NET['TOB'] || 137.00,
+    'TOF': UNIT_PRICES_NET['TOF'] || 89.00,
+    'TOU': UNIT_PRICES_NET['TOU'] || 33.00,
+    'FAI': UNIT_PRICES_NET['FAI'] || 25.00,
 };
 
 export const PERSONALIZATION_PRICE = 20.00; // Custo do bordado do nome

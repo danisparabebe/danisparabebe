@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 const messages = [
-    'Frete grátis acima de R$ 350 para SP, MG, RJ, PR, RS, GO e DF',
+    'Frete grátis acima de R$ 400 para SP, RJ, MG, PR e SC',
     'Produção 100% artesanal em até 12 dias úteis',
     'Personalização inclusa com o nome do bebê',
     'Pagamento 100% seguro e protegido'
