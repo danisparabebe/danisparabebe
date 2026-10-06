@@ -58,8 +58,10 @@ export function ProductClientView({ product }: { product: ProductData }) {
     const currentPriceFull = activeVariation?.priceFull || product.priceFull;
     const currentOriginalPrice = product.originalPrice;
     const currentMainImage = activeVariation ? activeVariation.image : (product.images[selectedImageIdx] || product.images[0]);
+    const [hasMounted, setHasMounted] = useState(false);
+    useEffect(() => { setHasMounted(true); }, []);
     
-    const fav = isFavorite(product?.id);
+    const fav = hasMounted && isFavorite(product?.id);
 
     // Injeta o produto no store para que o personalizador saiba carregar os bordados dele
     useEffect(() => {
