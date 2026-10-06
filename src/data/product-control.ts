@@ -736,7 +736,7 @@ export const productControl: ManagedProduct[] = [
         "pixDiscountPct": 4,
         "discountPct": 13,
         "images": [
-            "/uploads/products/1790892423162-Kit_manta_Monograma_Rosé.jpg"
+            "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE-R-R_BCO_01.jpeg"
         ],
         "gridPosition": "HERO_LEFT",
         "category": "Kits",
