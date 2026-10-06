@@ -44,7 +44,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
     const [descExpanded, setDescExpanded] = useState(false);
     const [panPos, setPanPos] = useState({ x: 0, y: 0 });
     const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, moved: false });
-    const { addItem, openCart } = useCartStore();
+    const { addItem, openCart, clearCart } = useCartStore();
     const { toggle, isFavorite } = useFavoritesStore();
     const { setSelectedProduct } = useConfiguratorStore();
 
@@ -77,6 +77,12 @@ export function ProductClientView({ product }: { product: ProductData }) {
 
     const handleConfirmPersonalization = (data: any) => {
         setIsPersonalizationOpen(false);
+
+        // No modo "checkout direto", limpa o carrinho para mostrar apenas este produto
+        if (buyMode === 'checkout') {
+            clearCart();
+        }
+
         addItem({
             id: `${activeVariation ? activeVariation.id : product.id}-personalized-${Date.now()}`,
             productId: activeVariation ? activeVariation.id : product.id,

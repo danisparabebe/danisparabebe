@@ -981,14 +981,6 @@ export default function UnifiedCheckoutPage() {
 
                             {/* 5. BOTÃO PRINCIPAL DE PAGAMENTO — SEMPRE CLICÁVEL & RESPONSIVO NO CELULAR */}
                             <div className="space-y-2 pt-1">
-                                {/* Aviso Legal / Termo de Tonalidade */}
-                                <div className="p-2.5 bg-amber-50/70 border border-amber-200/80 rounded-xl text-amber-900 flex items-start gap-2 text-[10px] leading-snug">
-                                    <Palette className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
-                                    <p>
-                                        <strong className="text-amber-950 font-bold">Importante:</strong> Pequenas variações de tonalidade nas cores de tecidos e bordados podem ocorrer devido ao lote da matéria-prima e à tela de cada celular/computador.
-                                    </p>
-                                </div>
-
                                 <button
                                     type="button"
                                     onClick={handleBuyNow}
