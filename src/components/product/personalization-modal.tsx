@@ -21,6 +21,7 @@ interface ProductPersonalizationModalProps {
     productImage: string;
     features?: string[];
     productId?: string;
+    colorVariation?: string;
 }
 
 export function ProductPersonalizationModal({
@@ -31,15 +32,18 @@ export function ProductPersonalizationModal({
     productImage,
     features = [],
     productId = '',
+    colorVariation,
 }: ProductPersonalizationModalProps) {
     const [name, setName] = useState('');
     const [observations, setObservations] = useState('');
     const [size, setSize] = useState('');
 
     // Extrai automaticamente o Tema e a Cor pré-configurados do produto
-    const { theme, color } = useMemo(() => {
+    const { theme, color: autoColor } = useMemo(() => {
         return extractThemeAndColor(productId, productName);
     }, [productId, productName]);
+
+    const finalColor = colorVariation || autoColor;
 
     const needsSize = useMemo(() => {
         return features.some(f => {
@@ -56,7 +60,7 @@ export function ProductPersonalizationModal({
         onConfirm({
             name,
             theme,
-            color,
+            color: finalColor,
             observations,
             ...(needsSize ? { size } : {})
         });
@@ -102,7 +106,7 @@ export function ProductPersonalizationModal({
                         <div className="h-7 w-px bg-line" />
                         <div>
                             <span className="text-[10px] font-bold text-slate uppercase tracking-wider block">Cor Principal do Kit</span>
-                            <span className="font-bold text-charcoal text-sm">{color}</span>
+                            <span className="font-bold text-charcoal text-sm">{finalColor}</span>
                         </div>
                     </div>
 

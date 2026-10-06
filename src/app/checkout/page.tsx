@@ -448,7 +448,7 @@ export default function UnifiedCheckoutPage() {
                                 const totalPieces = itemFeatures.reduce((sum, i) => sum + i.qty, 0);
                                 const personalization = item.personalization || {};
                                 const babyName = personalization.name || '';
-                                const photoSrc = item.image || product?.images[0];
+                                const photoSrc = variation?.image || item.image || product?.images[0];
 
                                 return (
                                     <div key={item.id || idx} className={`${idx > 0 ? 'pt-4' : ''} space-y-3`}>
@@ -471,14 +471,14 @@ export default function UnifiedCheckoutPage() {
                                                 )}
                                             </div>
                                             <div className="flex items-center gap-2 mt-0.5 text-[10px] flex-wrap">
-                                                {(product?.shortCode || product?.technicalName) && (
+                                                {(product?.shortCode || variation?.id || product?.technicalName) && (
                                                     <span className="font-mono text-slate font-bold bg-slate-100 px-1.5 py-0.5 rounded">
-                                                        REF: {product?.shortCode || product?.technicalName}
+                                                        REF: {product?.shortCode || variation?.id || product?.technicalName}
                                                     </span>
                                                 )}
-                                                {variation?.colorName && (
+                                                {(variation?.colorName || personalization?.colorVariation || personalization?.color) && (
                                                     <span className="font-bold text-dusty-rose bg-dusty-rose/10 px-1.5 py-0.5 rounded">
-                                                        Cor: {variation.colorName}
+                                                        Cor: {variation?.colorName || personalization?.colorVariation || personalization?.color}
                                                     </span>
                                                 )}
                                                 <span className="font-bold text-slate ml-auto">

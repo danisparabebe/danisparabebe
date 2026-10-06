@@ -13,6 +13,7 @@ export interface CartItem {
     personalization?: {
         name?: string;
         color?: string;
+        colorVariation?: string;
         theme?: string;
         finishDetail?: string;
         finishColor?: string;

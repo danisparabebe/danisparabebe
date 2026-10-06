@@ -63,8 +63,10 @@ export function ProductClientView({ product }: { product: ProductData }) {
 
     // Injeta o produto no store para que o personalizador saiba carregar os bordados dele
     useEffect(() => {
-        if (product) setSelectedProduct(product);
-    }, [product, setSelectedProduct]);
+        if (product) {
+            setSelectedProduct(activeVariation ? { ...product, ...activeVariation, name: currentName, images: [currentMainImage] } : product);
+        }
+    }, [product, activeVariation, currentName, currentMainImage, setSelectedProduct]);
 
     const handleActionClick = (mode: 'cart' | 'checkout') => {
         setBuyMode(mode);
@@ -82,6 +84,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
             quantity: 1,
             personalization: {
                 ...data,
+                color: activeVariation ? activeVariation.colorName : data.color,
                 colorVariation: activeVariation ? activeVariation.colorName : undefined
             }
         });
@@ -445,10 +448,11 @@ export function ProductClientView({ product }: { product: ProductData }) {
             <ProductPersonalizationModal
                 isOpen={isPersonalizationOpen}
                 onClose={() => setIsPersonalizationOpen(false)}
-                productName={product.name}
-                productImage={product.images[0]}
+                productName={currentName}
+                productImage={currentMainImage}
                 features={product.features}
-                productId={product.id}
+                productId={activeVariation ? activeVariation.id : product.id}
+                colorVariation={activeVariation?.colorName}
                 onConfirm={handleConfirmPersonalization}
             />
 

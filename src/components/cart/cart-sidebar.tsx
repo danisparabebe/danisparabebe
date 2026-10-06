@@ -287,9 +287,9 @@ export function CartSidebar() {
                                                             Tema: <span className="font-bold text-charcoal">{item.personalization.theme}</span>
                                                         </p>
                                                     )}
-                                                    {item.personalization.color && item.personalization.color.toLowerCase() !== 'dourado' && (
+                                                    {(item.personalization.colorVariation || item.personalization.color) && (
                                                         <p className="text-[10px] text-slate uppercase leading-tight">
-                                                            Cor: <span className="font-bold text-charcoal">{item.personalization.color}</span>
+                                                            Cor: <span className="font-bold text-charcoal">{item.personalization.colorVariation || item.personalization.color}</span>
                                                         </p>
                                                     )}
                                                     {item.personalization.finishDetail && item.personalization.finishDetail !== 'Nenhum' && (
