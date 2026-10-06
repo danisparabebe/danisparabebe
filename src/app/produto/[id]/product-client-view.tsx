@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock, Palette } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useConfiguratorStore } from '@/store/configurator-store';
 import { useFavoritesStore } from '@/store/favorites-store';
@@ -428,6 +428,15 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         <p className="text-[10px] text-slate leading-relaxed">
                             <strong className="text-charcoal block mb-0.5">Prazo de Produção: Máximo 12 dias úteis</strong>
                             Cada peça é feita sob medida com carinho. Se o seu pedido ficar pronto antes, enviaremos imediatamente!
+                        </p>
+                    </div>
+
+                    {/* Color Variation Disclaimer */}
+                    <div className="flex items-start gap-2 p-3 mt-2 bg-amber-50/70 rounded-xl border border-amber-200/70 text-amber-900">
+                        <Palette className="w-4 h-4 text-amber-700 mt-0.5 shrink-0" />
+                        <p className="text-[10px] leading-relaxed">
+                            <strong className="text-amber-950 block mb-0.5 font-bold">Aviso sobre tonalidades e cores:</strong>
+                            As cores reais dos tecidos e bordados podem sofrer pequenas variações de tom em relação às fotos, dependendo do lote de fabricação da matéria-prima e da calibração de cor e brilho da tela do seu dispositivo (celular/computador).
                         </p>
                     </div>
                 </div>

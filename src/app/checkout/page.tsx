@@ -18,7 +18,8 @@ import {
     AlertCircle,
     Truck,
     Package,
-    Lock
+    Lock,
+    Palette
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatPrice } from '@/lib/pricing';
@@ -556,6 +557,17 @@ export default function UnifiedCheckoutPage() {
                                 );
                             })}
                         </div>
+
+                        {/* Aviso sobre Tonalidades e Variação de Cores na Ficha do Checkout */}
+                        <div className="mt-4 p-3.5 bg-amber-50/80 border border-amber-200/90 rounded-2xl text-amber-900 flex items-start gap-2.5 shadow-2xs">
+                            <Palette className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                            <div className="text-[11px] leading-relaxed">
+                                <p className="font-bold text-amber-950 mb-0.5">Aviso sobre tonalidades e cores:</p>
+                                <p className="text-amber-900/90">
+                                    As cores reais dos tecidos, acabamentos e bordados podem apresentar pequenas variações sutis de tom em relação às fotos exibidas na tela, de acordo com o lote da matéria-prima e a calibração de cor e iluminação do visor do seu celular ou computador.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* ─── RIGHT COLUMN: ENTREGA & PAGAMENTO ─── */}
@@ -969,6 +981,14 @@ export default function UnifiedCheckoutPage() {
 
                             {/* 5. BOTÃO PRINCIPAL DE PAGAMENTO — SEMPRE CLICÁVEL & RESPONSIVO NO CELULAR */}
                             <div className="space-y-2 pt-1">
+                                {/* Aviso Legal / Termo de Tonalidade */}
+                                <div className="p-2.5 bg-amber-50/70 border border-amber-200/80 rounded-xl text-amber-900 flex items-start gap-2 text-[10px] leading-snug">
+                                    <Palette className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
+                                    <p>
+                                        <strong className="text-amber-950 font-bold">Importante:</strong> Pequenas variações de tonalidade nas cores de tecidos e bordados podem ocorrer devido ao lote da matéria-prima e à tela de cada celular/computador.
+                                    </p>
+                                </div>
+
                                 <button
                                     type="button"
                                     onClick={handleBuyNow}

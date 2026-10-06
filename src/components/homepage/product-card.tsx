@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Heart, Clock } from 'lucide-react';
+import { Heart, Clock, Plus, ShoppingCart } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useFavoritesStore } from '@/store/favorites-store';
 import { toast } from 'sonner';
@@ -142,17 +142,29 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                         ou <span className="font-black text-charcoal bg-sage-green/40 px-1.5 py-0.5 rounded-md text-[12px]">R$ {price.toFixed(2)} no PIX</span>
                     </div>
                 </div>
-                <button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsPersonalizationOpen(true);
-                    }}
-                    className="mt-4 w-full relative overflow-hidden group/add bg-sage-green text-charcoal hover:bg-[#9CBD9F] py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/5"
-                >
-                    <span className="relative z-10">Adicionar</span>
-                    <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/add:animate-shine" />
-                </button>
+                <div className="mt-4 w-full flex items-center gap-1.5">
+                    <Link
+                        href={linkHref}
+                        className="flex-[7] basis-7/10 h-10 relative overflow-hidden group/buy bg-sage-green text-charcoal hover:bg-[#9CBD9F] rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/5 flex items-center justify-center text-center"
+                    >
+                        <span className="relative z-10">Comprar</span>
+                        <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine" />
+                    </Link>
+                    <button
+                        type="button"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setIsPersonalizationOpen(true);
+                        }}
+                        className="flex-[3] basis-3/10 h-10 relative overflow-hidden group/cart bg-charcoal/5 hover:bg-charcoal text-charcoal hover:text-white rounded-full transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/10 flex items-center justify-center gap-1"
+                        title="Adicionar ao carrinho"
+                        aria-label="Adicionar ao carrinho"
+                    >
+                        <Plus className="w-3.5 h-3.5 relative z-10 shrink-0" />
+                        <ShoppingCart className="w-4 h-4 relative z-10 shrink-0" />
+                    </button>
+                </div>
             </div>
 
             <ProductPersonalizationModal
