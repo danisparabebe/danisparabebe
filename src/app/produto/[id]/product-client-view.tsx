@@ -93,7 +93,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
             personalization: {
                 ...data,
                 color: activeVariation ? activeVariation.colorName : data.color,
-                colorVariation: activeVariation ? activeVariation.colorName : undefined
+                ...(activeVariation ? { colorVariation: activeVariation.colorName } : {})
             }
         });
 
