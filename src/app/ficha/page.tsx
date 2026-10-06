@@ -277,9 +277,9 @@ function FichaContent() {
                     </p>
                 </div>
             ) : (
-                <div className="max-w-5xl mx-auto space-y-8">
+                <div className="max-w-5xl mx-auto space-y-8 print:space-y-0 print:max-w-none print:w-full">
                     {sheetsToProduce.map((sheetItem: any, idx: number) => (
-                        <div key={idx} className="print:break-inside-avoid print:mb-8">
+                        <div key={idx} className="ficha-print-sheet print:break-inside-avoid print:w-full print:m-0 print:p-0">
                             <ProductTechnicalSheet
                                 productName={sheetItem.name}
                                 productImage={sheetItem.image}
@@ -300,6 +300,34 @@ function FichaContent() {
                     ))}
                 </div>
             )}
+
+            <style jsx global>{`
+                @media print {
+                    @page {
+                        size: A4 portrait;
+                        margin: 4mm 5mm;
+                    }
+                    html, body {
+                        background: #ffffff !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                    }
+                    .ficha-print-sheet {
+                        page-break-after: always;
+                        break-after: page;
+                        page-break-inside: avoid;
+                        break-inside: avoid;
+                        max-height: 288mm;
+                        overflow: hidden;
+                    }
+                    .ficha-print-sheet:last-child {
+                        page-break-after: auto;
+                        break-after: auto;
+                    }
+                }
+            `}</style>
         </div>
     );
 }

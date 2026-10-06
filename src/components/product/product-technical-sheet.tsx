@@ -76,7 +76,13 @@ function extractBabadoColorFromId(id: string): string {
     return '—';
 }
 
-function extractPassaFitaColor(id: string): string {
+function extractPassaFitaColor(id: string, product?: any): string {
+    if (product?.passaFitaColor) return product.passaFitaColor;
+    if (product?.ribbonColor) return product.ribbonColor;
+    if (product?.shortCode === 'DPB-0133' || id === 'FEM-KIT-BOR-RSA-BAB-RSA_02') {
+        return 'Rosa';
+    }
+
     const parts = id.split('-');
     const ribbonPart = parts.find(p => p.startsWith('R_'));
     if (ribbonPart) {
@@ -213,7 +219,7 @@ export function ProductTechnicalSheet({
         : (personalization?.color || 'Branco');
     
     let passaFitaLabel = product 
-        ? extractPassaFitaColor(product.id) 
+        ? extractPassaFitaColor(product.id, product) 
         : (personalization?.finishDetail || 'Branco');
 
     let displayObs = personalization?.observations || '';
@@ -263,36 +269,36 @@ export function ProductTechnicalSheet({
         <div className="max-w-5xl mx-auto bg-white border-2 border-slate-800 rounded-2xl shadow-md overflow-hidden text-slate-900 font-sans print:border-none print:shadow-none print:max-w-none print:m-0">
             
             {/* ═══ CABEÇALHO DA FICHA ═══ */}
-            <div className="bg-slate-900 text-white p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b-4 border-purple-600 print:bg-slate-900 print:text-white">
+            <div className="bg-slate-900 text-white p-4 sm:p-5 print:p-2.5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b-4 border-purple-600 print:bg-slate-900 print:text-white">
                 <div>
                     <div className="flex items-center gap-2">
-                        <span className="text-xs font-black tracking-widest uppercase bg-purple-600 text-white px-2 py-0.5 rounded">
+                        <span className="text-xs print:text-[9px] font-black tracking-widest uppercase bg-purple-600 text-white px-2 py-0.5 rounded">
                             DANIS PARA BEBÊ
                         </span>
-                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        <span className="text-xs print:text-[9px] font-bold text-slate-400 uppercase tracking-widest">
                             Ficha de Produção & Controle Local
                         </span>
                     </div>
-                    <h1 className="text-2xl font-black tracking-tight mt-1 text-white">
+                    <h1 className="text-xl sm:text-2xl print:text-lg font-black tracking-tight mt-0.5 text-white">
                         {product ? product.name : productName}
                     </h1>
-                    <p className="text-xs text-slate-300 font-mono mt-0.5">
+                    <p className="text-xs print:text-[10px] text-slate-300 font-mono mt-0.5">
                         Ref. Técnica: <strong className="text-amber-400">{technicalRef}</strong>
                     </p>
                 </div>
 
-                <div className="flex flex-col sm:items-end gap-1.5 shrink-0">
+                <div className="flex flex-col sm:items-end gap-1 shrink-0">
                     {orderId && (
-                        <div className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20 text-right">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Número do Pedido</p>
-                            <p className="text-base font-black text-white font-mono">#{orderId.replace('ORDER_', '')}</p>
+                        <div className="bg-white/10 px-2.5 py-1 rounded-lg border border-white/20 text-right">
+                            <p className="text-[9px] print:text-[8px] font-bold text-slate-400 uppercase tracking-wider">Número do Pedido</p>
+                            <p className="text-sm print:text-xs font-black text-white font-mono">#{orderId.replace('ORDER_', '')}</p>
                         </div>
                     )}
                     {deadline && (
-                        <div className={`px-3 py-1 rounded-md text-xs font-black uppercase flex items-center gap-1.5 ${
+                        <div className={`px-2.5 py-0.5 rounded-md text-[11px] print:text-[9px] font-black uppercase flex items-center gap-1.5 ${
                             isUrgent() ? 'bg-red-500 text-white animate-pulse' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                         }`}>
-                            <Clock className="w-3.5 h-3.5" />
+                            <Clock className="w-3 print:w-2.5 h-3 print:h-2.5" />
                             Prazo Máx: {new Date(deadline).toLocaleDateString('pt-BR')}
                         </div>
                     )}
@@ -300,133 +306,125 @@ export function ProductTechnicalSheet({
             </div>
 
             {/* ═══ CORPO PRINCIPAL EM 2 COLUNAS ═══ */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 print:grid-cols-12 gap-5 print:gap-3 p-5 print:p-2.5">
                 
                 {/* ── COLUNA ESQUERDA: FOTO, BORDADO E ACABAMENTOS (7 colunas) ── */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="lg:col-span-7 print:col-span-7 space-y-4 print:space-y-2">
 
-                    {/* BLOCO 1: NOME A BORDAR (IMPOSSÍVEL NÃO VER) */}
-                    <div className="bg-amber-50 border-3 border-amber-500 rounded-2xl p-4 text-center relative overflow-hidden shadow-sm">
-                        <div className="absolute top-0 right-0 bg-amber-500 text-slate-900 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg tracking-widest">
+                    {/* BLOCO 1: NOME A BORDAR (DESTAQUE MÁXIMO) */}
+                    <div className="bg-amber-50 border-2 border-amber-500 rounded-xl p-3 print:p-2 text-center relative overflow-hidden shadow-xs">
+                        <div className="absolute top-0 right-0 bg-amber-500 text-slate-900 text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-md tracking-wider">
                             Bordado Oficial
                         </div>
-                        <p className="text-[10px] font-black text-amber-800 uppercase tracking-[0.25em] mb-1">
+                        <p className="text-[9px] font-black text-amber-800 uppercase tracking-widest mb-0.5">
                             Nome da Criança a Bordar
                         </p>
-                        <p className="text-4xl font-black text-slate-900 tracking-tight font-serif py-1">
+                        <p className="text-3xl lg:text-4xl print:text-2xl font-black text-slate-900 tracking-tight font-serif py-0.5">
                             {babyName || 'SEM NOME'}
-                        </p>
-                        {babyName && (
-                            <p className="text-xs font-bold text-amber-900/80 uppercase tracking-wider mt-1">
-                                (Grafia em caixa mista: <span className="font-normal capitalize">{babyName}</span>)
-                            </p>
-                        )}
-                        <p className="text-[10px] font-bold text-amber-700 mt-2 bg-amber-100/70 py-1 rounded inline-block px-3">
-                            ⚠️ ATENÇÃO: Conferir grafia e acentuação antes de programar o bastidor da máquina.
                         </p>
                     </div>
 
                     {/* BLOCO 2: FOTO DO PEDIDO & REFERÊNCIA VISUAL */}
-                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
+                    <div className="bg-slate-50 border-2 border-slate-200 rounded-xl p-3 print:p-2 space-y-2 print:space-y-1">
                         <div className="flex justify-between items-center">
-                            <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                                <Sparkles className="w-4 h-4 text-purple-600" />
+                            <span className="text-xs print:text-[10px] font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                                <Sparkles className="w-3.5 h-3.5 text-purple-600" />
                                 Referência Visual do Modelo
                             </span>
-                            <span className="text-[11px] font-bold text-slate-500">
+                            <span className="text-[11px] print:text-[9px] font-bold text-slate-500">
                                 Tema: <strong className="text-slate-800">{theme || 'Padrão'}</strong>
                             </span>
                         </div>
 
-                        <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-slate-300 bg-white flex items-center justify-center shadow-inner">
+                        <div className="relative w-full aspect-[4/3] print:aspect-auto print:h-[155px] rounded-lg overflow-hidden border border-slate-300 bg-white flex items-center justify-center shadow-inner">
                             {resolvedImage ? (
                                 <Image 
                                     src={resolvedImage} 
                                     alt={productName} 
                                     fill 
-                                    className="object-contain p-2"
+                                    className="object-contain p-1.5"
                                     unoptimized
                                 />
                             ) : (
-                                <div className="text-center p-6 text-slate-400">
-                                    <FileText className="w-12 h-12 mx-auto mb-2 opacity-30" />
+                                <div className="text-center p-4 text-slate-400">
+                                    <FileText className="w-8 h-8 mx-auto mb-1 opacity-30" />
                                     <p className="text-xs font-bold uppercase tracking-wider">Foto de referência não anexada</p>
-                                    <p className="text-[10px] mt-1">Conferir modelo pelo código de catálogo {technicalRef}</p>
+                                    <p className="text-[10px] mt-0.5">Conferir modelo pelo código de catálogo {technicalRef}</p>
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    {/* BLOCO 3: GUIA COMPLETO DE ACABAMENTOS (O QUE A COSTUREIRA PRECISA SABER) */}
-                    <div className="bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-4">
-                        <div className="border-b border-slate-200 pb-2 flex justify-between items-center">
-                            <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                                <Scissors className="w-4 h-4 text-purple-600" />
+                    {/* BLOCO 3: GUIA COMPLETO DE ACABAMENTOS */}
+                    <div className="bg-white border-2 border-slate-300 rounded-xl p-3 print:p-2 space-y-3 print:space-y-1.5">
+                        <div className="border-b border-slate-200 pb-1.5 print:pb-1 flex justify-between items-center">
+                            <h3 className="text-xs print:text-[10px] font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                                <Scissors className="w-3.5 h-3.5 text-purple-600" />
                                 Guia de Acabamentos & Aviamentos
                             </h3>
-                            <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full uppercase">
+                            <span className="text-[9px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full uppercase">
                                 Costura & Montagem
                             </span>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 print:gap-2">
                             
                             {/* Babado */}
-                            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 items-center">
-                                <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-300 bg-white shrink-0">
+                            <div className="bg-slate-50 border border-slate-200 rounded-lg p-2 print:p-1.5 flex gap-2.5 items-center">
+                                <div className="relative w-14 h-14 print:w-10 print:h-10 rounded-md overflow-hidden border border-slate-300 bg-white shrink-0">
                                     {babadoImg ? (
                                         <Image src={babadoImg} alt={babadoColor} fill className="object-cover" unoptimized />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-[9px] font-bold text-slate-400 uppercase text-center p-1">
+                                        <div className="w-full h-full flex items-center justify-center text-[8px] font-bold text-slate-400 uppercase text-center p-0.5">
                                             Sem Amostra
                                         </div>
                                     )}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Babado (Bordado Inglês)</p>
-                                    <p className="text-sm font-black text-slate-800 truncate">{babadoColor}</p>
-                                    <p className="text-[10px] text-slate-500 mt-0.5">100% Algodão Premium</p>
+                                    <p className="text-[9px] print:text-[8px] font-black text-slate-400 uppercase tracking-wider">Babado (Bordado Inglês)</p>
+                                    <p className="text-xs print:text-[11px] font-black text-slate-800 truncate">{babadoColor}</p>
+                                    <p className="text-[9px] print:text-[8px] text-slate-500">100% Algodão Premium</p>
                                 </div>
                             </div>
 
                             {/* Passa-fita */}
-                            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 items-center">
-                                <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-slate-300 bg-white shrink-0">
+                            <div className="bg-slate-50 border border-slate-200 rounded-lg p-2 print:p-1.5 flex gap-2.5 items-center">
+                                <div className="relative w-14 h-14 print:w-10 print:h-10 rounded-md overflow-hidden border border-slate-300 bg-white shrink-0">
                                     {passafitaImg ? (
                                         <Image src={passafitaImg} alt={passaFitaLabel} fill className="object-cover" unoptimized />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-[9px] font-bold text-slate-400 uppercase text-center p-1">
+                                        <div className="w-full h-full flex items-center justify-center text-[8px] font-bold text-slate-400 uppercase text-center p-0.5">
                                             Sem Amostra
                                         </div>
                                     )}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Passa-Fita / Fita Cetim</p>
-                                    <p className="text-sm font-black text-slate-800 truncate">{passaFitaLabel}</p>
-                                    <p className="text-[10px] text-slate-500 mt-0.5">Fita de Cetim Embutida</p>
+                                    <p className="text-[9px] print:text-[8px] font-black text-slate-400 uppercase tracking-wider">Passa-Fita / Fita Cetim</p>
+                                    <p className="text-xs print:text-[11px] font-black text-slate-800 truncate">{passaFitaLabel}</p>
+                                    <p className="text-[9px] print:text-[8px] text-slate-500">Fita de Cetim Embutida</p>
                                 </div>
                             </div>
 
                         </div>
 
                         {/* Detalhes de Tecido Base e Linha */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-100/70 p-3 rounded-xl text-xs">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 print:gap-1 bg-slate-100/70 p-2 print:p-1.5 rounded-lg text-xs print:text-[9px]">
                             <div>
-                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Tecido Base</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Tecido Base</p>
                                 <p className="font-bold text-slate-800">100% Algodão Branco</p>
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Tema do Bordado</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Tema do Bordado</p>
                                 <p className="font-bold text-slate-800">{theme || 'Padrão'}</p>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
-                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Padrão da Vira</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Padrão da Vira</p>
                                 <p className="font-bold text-slate-800">Bordado + Babado</p>
                             </div>
                             {personalization?.size && (
-                                <div className="col-span-2 sm:col-span-3 bg-rose-50 border border-rose-200 p-2 rounded-lg flex items-center justify-between">
-                                    <span className="text-[10px] font-black text-rose-700 uppercase tracking-wider">Tamanho da Roupinha / Body</span>
-                                    <span className="text-xs font-black text-rose-900 bg-white px-2 py-0.5 rounded border border-rose-300">
+                                <div className="col-span-2 sm:col-span-3 bg-rose-50 border border-rose-200 p-1.5 rounded flex items-center justify-between">
+                                    <span className="text-[9px] font-black text-rose-700 uppercase tracking-wider">Tamanho Roupinha / Body</span>
+                                    <span className="text-[10px] font-black text-rose-900 bg-white px-1.5 py-0.5 rounded border border-rose-300">
                                         TAMANHO {personalization.size}
                                     </span>
                                 </div>
@@ -435,13 +433,13 @@ export function ProductTechnicalSheet({
 
                         {/* Observações do Cliente */}
                         {displayObs && (
-                            <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 flex gap-2.5 items-start">
-                                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                            <div className="bg-amber-50 border border-amber-300 rounded-lg p-2 print:p-1.5 flex gap-2 items-start">
+                                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                                 <div>
-                                    <p className="text-[10px] font-black text-amber-900 uppercase tracking-wider">
+                                    <p className="text-[9px] font-black text-amber-900 uppercase tracking-wider">
                                         Observação Especial do Cliente
                                     </p>
-                                    <p className="text-xs font-bold text-amber-950 mt-0.5 whitespace-pre-wrap">
+                                    <p className="text-xs print:text-[9px] font-bold text-amber-950 whitespace-pre-wrap">
                                         {displayObs}
                                     </p>
                                 </div>
@@ -452,23 +450,23 @@ export function ProductTechnicalSheet({
                 </div>
 
                 {/* ── COLUNA DIREITA: PEÇAS, MEDIDAS, CHECKLIST E EXPEDIÇÃO (5 colunas) ── */}
-                <div className="lg:col-span-5 space-y-6">
+                <div className="lg:col-span-5 print:col-span-5 space-y-4 print:space-y-2">
 
                     {/* BLOCO 4: PEÇAS A CONFECCIONAR COM MEDIDAS DE CORTE EXATAS */}
-                    <div className="bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-3">
-                        <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <div className="bg-white border-2 border-slate-300 rounded-xl p-3 print:p-2 space-y-2 print:space-y-1">
+                        <div className="flex justify-between items-center border-b border-slate-200 pb-1.5 print:pb-1">
                             <div>
-                                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                                <h3 className="text-xs print:text-[10px] font-black text-slate-900 uppercase tracking-wider">
                                     Peças do Enxoval & Corte
                                 </h3>
-                                <p className="text-[10px] text-slate-500 font-medium">Tabela oficial de medidas Danis</p>
+                                <p className="text-[9px] text-slate-500 font-medium">Tabela oficial de medidas Danis</p>
                             </div>
-                            <span className="text-xs font-black bg-slate-900 text-white px-2.5 py-1 rounded-lg uppercase">
+                            <span className="text-[10px] print:text-[9px] font-black bg-slate-900 text-white px-2 py-0.5 rounded-md uppercase">
                                 {totalPieces} {totalPieces === 1 ? 'Peça' : 'Peças'}
                             </span>
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-1.5 print:space-y-1">
                             {items.map((item, idx) => {
                                 const tax = PRODUCT_TAXONOMY[item.code];
                                 const label = tax?.type || getItemLabel(item.code);
@@ -477,24 +475,24 @@ export function ProductTechnicalSheet({
                                 const pieceSize = item.size || (['BDC', 'BDL', 'MIJ', 'SHO'].includes(item.code) ? personalization?.size : undefined);
 
                                 return (
-                                    <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-start gap-3">
-                                        <span className="bg-slate-900 text-white text-xs font-black px-2 py-1 rounded-md shrink-0 mt-0.5">
+                                    <div key={idx} className="bg-slate-50 border border-slate-200 rounded-lg p-2 print:p-1 flex items-start gap-2">
+                                        <span className="bg-slate-900 text-white text-[10px] print:text-[9px] font-black px-1.5 py-0.5 rounded shrink-0 mt-0.5">
                                             {item.qty}x
                                         </span>
                                         <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-2 flex-wrap">
-                                                <p className="text-xs font-black text-slate-900 uppercase leading-snug">
+                                            <div className="flex items-center gap-1.5 flex-wrap">
+                                                <p className="text-[11px] print:text-[10px] font-black text-slate-900 uppercase leading-snug">
                                                     {label}
                                                 </p>
                                                 {pieceSize && (
-                                                    <span className="font-black text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-300 text-[10px] uppercase tracking-wide">
-                                                        👕 Tam: {pieceSize}
+                                                    <span className="font-black text-rose-700 bg-rose-50 px-1 py-0.2 rounded border border-rose-300 text-[9px] uppercase tracking-wide">
+                                                        👕 {pieceSize}
                                                     </span>
                                                 )}
                                             </div>
-                                            <div className="flex flex-wrap gap-x-2 gap-y-0.5 mt-1 text-[11px]">
-                                                <span className="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.2 rounded border border-purple-200">
-                                                    📐 Medida: {dimensions}
+                                            <div className="flex flex-wrap gap-x-2 gap-y-0 mt-0.5 text-[10px] print:text-[8px]">
+                                                <span className="font-bold text-purple-700 bg-purple-50 px-1 py-0 rounded border border-purple-200">
+                                                    📐 {dimensions}
                                                 </span>
                                                 <span className="text-slate-500">
                                                     🧵 {material}
@@ -508,28 +506,28 @@ export function ProductTechnicalSheet({
                     </div>
 
                     {/* BLOCO 5: ROTEIRO DE PRODUÇÃO / CHECKLIST DE OFICINA */}
-                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
-                        <div className="border-b border-slate-200 pb-1.5 flex justify-between items-center">
-                            <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                                <CheckSquare className="w-4 h-4 text-emerald-600" />
-                                Checklist de Oficina (Visto Físico)
+                    <div className="bg-slate-50 border-2 border-slate-200 rounded-xl p-3 print:p-2 space-y-2 print:space-y-1">
+                        <div className="border-b border-slate-200 pb-1 flex justify-between items-center">
+                            <h3 className="text-xs print:text-[10px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <CheckSquare className="w-3.5 h-3.5 text-emerald-600" />
+                                Checklist de Oficina
                             </h3>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase">Controle Local</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase">Controle Físico</span>
                         </div>
 
-                        <div className="space-y-1.5 text-xs text-slate-700">
+                        <div className="space-y-1 print:space-y-0.5 text-xs">
                             {[
-                                { step: '1. Separação de tecidos e corte nas medidas exatas', icon: '✂️' },
-                                { step: `2. Programação do bordado (${babyName || 'Sem nome'}) e tema`, icon: '🧵' },
-                                { step: `3. Aplicação do babado (${babadoColor}) e passa-fita (${passaFitaLabel})`, icon: '🎀' },
-                                { step: '4. Costura, embainhamento e limpeza de pontas de linha', icon: '🪡' },
-                                { step: '5. Passadoria a vapor e conferência rigorosa de medidas', icon: '💨' },
-                                { step: '6. Dobra técnica, cheirinho de bebê e embalagem final', icon: '📦' },
+                                { step: '1. Separação de tecidos e corte nas medidas', icon: '✂️' },
+                                { step: `2. Programação do bordado (${babyName || 'Sem nome'})`, icon: '🧵' },
+                                { step: `3. Aplicação babado (${babadoColor}) e passa-fita (${passaFitaLabel})`, icon: '🎀' },
+                                { step: '4. Costura, embainhamento e limpeza de pontas', icon: '🪡' },
+                                { step: '5. Passadoria a vapor e conferência de medidas', icon: '💨' },
+                                { step: '6. Dobra técnica, cheirinho e embalagem final', icon: '📦' },
                             ].map((task, i) => (
-                                <div key={i} className="flex items-center gap-2.5 bg-white p-2 rounded-lg border border-slate-200/80">
-                                    <div className="w-4 h-4 border-2 border-slate-400 rounded shrink-0 print:border-slate-800" />
-                                    <span className="text-sm shrink-0">{task.icon}</span>
-                                    <span className="font-semibold text-slate-800 text-[11px] leading-tight flex-1">
+                                <div key={i} className="flex items-center gap-2 bg-white p-1.5 print:p-1 rounded-md border border-slate-200/80">
+                                    <div className="w-3.5 h-3.5 border-2 border-slate-400 rounded shrink-0 print:border-slate-800" />
+                                    <span className="text-xs shrink-0">{task.icon}</span>
+                                    <span className="font-semibold text-slate-800 text-[10px] print:text-[8px] leading-tight flex-1">
                                         {task.step}
                                     </span>
                                 </div>
@@ -538,68 +536,48 @@ export function ProductTechnicalSheet({
                     </div>
 
                     {/* BLOCO 6: EXPEDIÇÃO & DESTINATÁRIO */}
-                    <div className="bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-3">
-                        <div className="border-b border-slate-200 pb-1.5 flex justify-between items-center">
-                            <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                                <MapPin className="w-4 h-4 text-slate-700" />
+                    <div className="bg-white border-2 border-slate-300 rounded-xl p-3 print:p-2 space-y-2 print:space-y-1">
+                        <div className="border-b border-slate-200 pb-1 flex justify-between items-center">
+                            <h3 className="text-xs print:text-[10px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <MapPin className="w-3.5 h-3.5 text-slate-700" />
                                 Dados de Envio & Destinatário
                             </h3>
                             {formattedTotal && (
-                                <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
                                     {formattedTotal}
                                 </span>
                             )}
                         </div>
 
-                        <div className="space-y-2 text-xs">
+                        <div className="space-y-1.5 print:space-y-1 text-xs">
                             <div>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Cliente Destinatário</p>
-                                <p className="font-bold text-slate-900 text-sm">{customerName || 'Cliente não identificado'}</p>
+                                <p className="text-[9px] print:text-[8px] font-black text-slate-400 uppercase tracking-wider">Cliente Destinatário</p>
+                                <p className="font-bold text-slate-900 text-xs print:text-[10px]">{customerName || 'Cliente não identificado'}</p>
                             </div>
 
                             {/* Telefone / WhatsApp */}
                             {customerPhone && (
-                                <div className="flex items-center gap-2">
-                                    <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                                    {waUrl ? (
-                                        <a 
-                                            href={waUrl} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
-                                            className="font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
-                                        >
-                                            {customerPhone}
-                                            <span className="text-[10px] text-emerald-700 bg-emerald-100 px-1 rounded uppercase font-black">WhatsApp</span>
-                                        </a>
-                                    ) : (
-                                        <span className="font-bold text-slate-800">{customerPhone}</span>
-                                    )}
+                                <div className="flex items-center gap-1.5">
+                                    <Phone className="w-3 h-3 text-slate-400 shrink-0" />
+                                    <span className="font-bold text-slate-800 text-[11px] print:text-[9px]">{customerPhone}</span>
                                 </div>
-                            )}
-
-                            {/* CPF */}
-                            {customerCpf && (
-                                <p className="text-[11px] font-semibold text-slate-600">
-                                    <span className="font-bold uppercase text-[10px] text-slate-400 mr-1">CPF (Envio):</span>
-                                    {customerCpf}
-                                </p>
                             )}
 
                             {/* Endereço */}
                             {hasAddress ? (
-                                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-0.5 text-[11px]">
+                                <div className="bg-slate-50 p-2 print:p-1.5 rounded-md border border-slate-200 space-y-0.5 text-[10px] print:text-[8px]">
                                     <p className="font-bold text-slate-800">
                                         {street}{number ? `, nº ${number}` : ''} {complement ? `(${complement})` : ''}
                                     </p>
                                     {neighborhood && (
                                         <p className="text-slate-600 font-medium">Bairro: {neighborhood}</p>
                                     )}
-                                    <p className="font-bold text-slate-800 uppercase mt-1">
+                                    <p className="font-bold text-slate-800 uppercase mt-0.5">
                                         {city} - {state} <span className="font-mono text-slate-500 font-normal ml-1">CEP: {cep}</span>
                                     </p>
                                 </div>
                             ) : (
-                                <p className="text-[11px] text-slate-400 italic">Endereço de entrega não disponível no registro.</p>
+                                <p className="text-[10px] text-slate-400 italic">Endereço não disponível.</p>
                             )}
                         </div>
                     </div>
@@ -609,7 +587,7 @@ export function ProductTechnicalSheet({
             </div>
 
             {/* ═══ RODAPÉ DA FICHA ═══ */}
-            <div className="bg-slate-100 border-t border-slate-200 px-6 py-3 flex flex-col sm:flex-row justify-between items-center text-[10px] text-slate-500 font-medium gap-2">
+            <div className="bg-slate-100 border-t border-slate-200 px-5 print:px-3 py-2 print:py-1 flex flex-col sm:flex-row justify-between items-center text-[10px] print:text-[8px] text-slate-500 font-medium gap-1">
                 <span>
                     Documento de Controle Interno — Danis Para Bebê Confecções Artesanais
                 </span>

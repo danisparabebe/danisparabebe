@@ -36,6 +36,8 @@ export interface ManagedProduct {
     isHot?: boolean;
     mvpEnabled?: boolean;
     colorVariations?: ProductColorVariation[];
+    passaFitaColor?: string;
+    ribbonColor?: string;
     updatedAt?: string | null;
 }
 

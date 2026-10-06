@@ -649,6 +649,8 @@ export const productControl: ManagedProduct[] = [
         "updatedAt": "2026-10-02T00:35:45.816Z",
         "mvpEnabled": true,
         "shortCode": "DPB-0133",
+        "passaFitaColor": "Rosa",
+        "ribbonColor": "Rosa",
         "colorVariations": [],
         "pixDiscountPct": 3,
         "netValue": 429
