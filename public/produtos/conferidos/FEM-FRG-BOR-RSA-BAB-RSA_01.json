@@ -12,7 +12,7 @@
     }
   ],
   "customName": "Borboletas Rosa · Fralda Grande",
-  "updatedAt": "2026-10-06T00:01:39.410Z",
+  "updatedAt": "2026-10-06T01:09:58.182Z",
   "published": true,
   "publishedAt": "2026-02-24T21:47:59.110Z",
   "detail": "BAB",
@@ -26,8 +26,8 @@
     "/produtos/conferidos/FEM-FRG-BOR-RSA-BAB-RSA_01.jpeg"
   ],
   "colorVariations": [],
-  "priceFull": 55,
+  "priceFull": 57,
   "pixPrice": 53,
-  "originalPriceFull": 55,
-  "discountPct": 0
+  "originalPriceFull": 66,
+  "discountPct": 20
 }

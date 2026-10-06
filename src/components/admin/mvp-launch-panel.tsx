@@ -799,6 +799,19 @@ export function MvpLaunchPanel({
                                                             const val = parseFloat(e.target.value);
                                                             if (!isNaN(val)) {
                                                                 updateProductField(product.id, 'pixPrice', val);
+                                                                // Auto-calcula Cartão 3x com taxa da InfinitePay (1.0754)
+                                                                const installment = Math.round(((val * 1.0754) / 3) * 100) / 100;
+                                                                const cardTotal = Math.round(installment * 3 * 100) / 100;
+                                                                updateProductField(product.id, 'priceFull', cardTotal);
+
+                                                                const orig = product.originalPriceFull || Math.round(cardTotal * 1.15);
+                                                                if (orig <= cardTotal) {
+                                                                    const newOrig = Math.round(cardTotal * 1.15);
+                                                                    updateProductField(product.id, 'originalPriceFull', newOrig);
+                                                                    updateProductField(product.id, 'discountPct', Math.round(((newOrig - val) / newOrig) * 100));
+                                                                } else {
+                                                                    updateProductField(product.id, 'discountPct', Math.round(((orig - val) / orig) * 100));
+                                                                }
                                                             }
                                                         }}
                                                         className="text-sm font-black text-emerald-700 bg-transparent border-b-2 border-transparent hover:border-emerald-300 focus:border-emerald-500 focus:bg-white outline-none transition-all w-20"
@@ -825,6 +838,9 @@ export function MvpLaunchPanel({
                                                         title="Preço no Cartão — valor cheio parcelável"
                                                     />
                                                 </div>
+                                                <span className="text-[10px] text-slate-400 font-bold block mt-0.5">
+                                                    3x de R$ {(((product.priceFull || 0) / 3)).toFixed(2)}
+                                                </span>
                                             </div>
                                             <div>
                                                 <label className="text-[9px] font-bold text-slate-400 uppercase block">De (Riscado)</label>
