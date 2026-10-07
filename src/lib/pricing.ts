@@ -7,15 +7,15 @@ export const BASE_PRICES: Record<string, number> = {
     'FRP': UNIT_PRICES_NET['FRP'] || 39.00,
     'FRM': UNIT_PRICES_NET['FRM'] || 48.00,
     'FRG': UNIT_PRICES_NET['FRG'] || 56.00,
-    'BDC': UNIT_PRICES_NET['BDC'] || 54.00,
-    'BDL': UNIT_PRICES_NET['BDL'] || 56.00,
+    'BDC': UNIT_PRICES_NET['BDC'] || 55.00,
+    'BDL': UNIT_PRICES_NET['BDL'] || 58.00,
     'MIJ': UNIT_PRICES_NET['MIJ'] || 33.00,
     'SHO': UNIT_PRICES_NET['SHO'] || 20.00,
-    'MNT': UNIT_PRICES_NET['MNT'] || 125.00,
-    'TOB': UNIT_PRICES_NET['TOB'] || 137.00,
+    'MNT': UNIT_PRICES_NET['MNT'] || 132.00,
+    'TOB': UNIT_PRICES_NET['TOB'] || 143.00,
     'TOF': UNIT_PRICES_NET['TOF'] || 89.00,
     'TOU': UNIT_PRICES_NET['TOU'] || 33.00,
-    'FAI': UNIT_PRICES_NET['FAI'] || 25.00,
+    'FAI': UNIT_PRICES_NET['FAI'] || 26.00,
 };
 
 export const PERSONALIZATION_PRICE = 20.00; // Custo do bordado do nome

@@ -29,13 +29,9 @@ export const KIT_PRICES_NET: Record<string, number> = ${JSON.stringify(kitPrices
 
         fs.writeFileSync(filePath, code, 'utf8');
 
-        // Immediately trigger the reprice script to update all kits with the new part costs
-        // We call it directly to avoid Next.js dev server fetch deadlocks
-        try {
-            await performReprice(unitPrices, kitPrices);
-        } catch (err) {
-            console.error("Auto-reprice after save-pricing failed:", err);
-        }
+        // Proteção: NÃO sobrescrever automaticamente os kits prontos para não bagunçar
+        // os preços cadastrados dos produtos do catálogo
+        // if (reqData.repriceKits) { await performReprice(unitPrices, kitPrices); }
 
         revalidatePath('/admin/precificacao');
 

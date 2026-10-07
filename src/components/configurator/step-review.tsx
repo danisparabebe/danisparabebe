@@ -154,14 +154,13 @@ export function StepReview() {
         // Build all items first, then set them all at once (atomic update)
         const newCartItems = items.map(([id, qty]) => {
             const basePrice = BASE_PRICES[id];
-            const discountedPrice = basePrice * (1 - discountPct / 100);
             const size = itemSizes?.[id]?.trim() || undefined;
 
             return {
                 id: `kit-${id}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
                 productId: `custom-${id}`,
                 name: `${getItemLabel(id)}${size ? ` (Tam. ${size})` : ''} — Personalizado`,
-                price: discountedPrice,
+                price: basePrice,
                 image: selectedEmbroideryPhoto || '/Logos/Logomarca%20Rose.png',
                 quantity: qty,
                 personalization: {

@@ -13,18 +13,28 @@ export function WhatsAppButton() {
     const [showBalloon, setShowBalloon] = useState(false);
     const [balloonDismissed, setBalloonDismissed] = useState(false);
 
-    // Show balloon after 3 seconds on first visit (if not dismissed)
+    // Exibir balão por apenas 3 segundos e depois ocultar automaticamente
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (!balloonDismissed) {
-                setShowBalloon(true);
-            }
-        }, 3000);
-        return () => clearTimeout(timer);
+        if (balloonDismissed) return;
+
+        // Mostra o balão 1 segundo após carregar a home
+        const showTimer = setTimeout(() => {
+            setShowBalloon(true);
+        }, 1000);
+
+        // Oculta automaticamente após 3 segundos visível (4s no total)
+        const hideTimer = setTimeout(() => {
+            setShowBalloon(false);
+        }, 4000);
+
+        return () => {
+            clearTimeout(showTimer);
+            clearTimeout(hideTimer);
+        };
     }, [balloonDismissed]);
 
-    // Ocultar em rotas administrativas e fichas de impressão
-    if (!pathname || pathname.startsWith('/admin') || pathname === '/ficha') {
+    // O botão do WhatsApp deve ficar SOMENTE na página inicial (Home)
+    if (pathname !== '/') {
         return null;
     }
 

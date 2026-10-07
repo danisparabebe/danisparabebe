@@ -10,14 +10,14 @@ import type { ReactNode } from 'react';
 
 import { toast } from 'sonner';
 
-// Only items with defined pricing
-const AVAILABLE_ITEMS = TYPES.filter((t) => BASE_PRICES[t.value] !== undefined);
+// Only items with defined pricing (Toalha Fralda TOF removida do Monte Seu Kit conforme solicitado)
+const AVAILABLE_ITEMS = TYPES.filter((t) => BASE_PRICES[t.value] !== undefined && t.value !== 'TOF');
 
 // Grouped by category with Lucide icon components
 const CATEGORIES: { label: string; icon: ReactNode; ids: string[] }[] = [
     { label: 'Essenciais', icon: <Baby className="w-5 h-5 text-charcoal/70" />, ids: ['FRP', 'FRM', 'FRG', 'TOB', 'MNT'] },
     { label: 'Roupas', icon: <Shirt className="w-5 h-5 text-charcoal/70" />, ids: ['BDC', 'BDL'] },
-    { label: 'Acessórios', icon: <Gem className="w-5 h-5 text-charcoal/70" />, ids: ['FAI', 'TOF', 'TOU'] },
+    { label: 'Acessórios', icon: <Gem className="w-5 h-5 text-charcoal/70" />, ids: ['FAI', 'TOU'] },
 ];
 
 const CLOTHING_IDS = ['BDC', 'BDL'];

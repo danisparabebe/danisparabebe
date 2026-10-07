@@ -12,7 +12,7 @@ export const productControl: ManagedProduct[] = [
             "1x MNT"
         ],
         "priceFull": 211.86,
-        "originalPriceFull": 225,
+        "originalPriceFull": 240,
         "pixPrice": 197,
         "discountPct": 12,
         "images": [
@@ -128,8 +128,8 @@ export const productControl: ManagedProduct[] = [
             "2x FRM",
             "1x FRG"
         ],
-        "priceFull": 261.33,
-        "originalPriceFull": 285,
+        "priceFull": 261.23,
+        "originalPriceFull": 295,
         "pixPrice": 243,
         "discountPct": 15,
         "images": [
@@ -254,7 +254,7 @@ export const productControl: ManagedProduct[] = [
         "id": "MAS-KIT-JDE-VDM-BAB-VDM_04",
         "name": "Safari · Kit Manta",
         "technicalName": "MAS-KIT-JDE-VDM-BAB-VDM_04",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Jardim Encantado em Verde Militar combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Safari em Verde Militar combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -271,7 +271,8 @@ export const productControl: ManagedProduct[] = [
         "category": "Kits",
         "tags": [
             "novidade",
-            "jde"
+            "saf",
+            "safari"
         ],
         "published": true,
         "publishedAt": "2026-10-02T00:38:44.005Z",

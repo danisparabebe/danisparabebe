@@ -22,7 +22,7 @@ import {
     Palette
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { formatPrice } from '@/lib/pricing';
+import { formatPrice, getKitDiscountPercentage } from '@/lib/pricing';
 import { 
     FREE_SHIPPING_THRESHOLD, 
     FREE_SHIPPING_REGIONS_LABEL, 
@@ -281,12 +281,26 @@ export default function UnifiedCheckoutPage() {
 
     // Calculation & Free Shipping
     const subtotal = items.reduce((sum, it) => sum + (it.price * (it.quantity || 1)), 0);
+
+    // Desconto progressivo exclusivo para peças do Monte Seu Kit (custom-)
+    const customPiecesCount = items.reduce((acc, it) => {
+        const pid = it.productId || it.id || '';
+        return acc + (pid.startsWith('custom-') ? (it.quantity || 1) : 0);
+    }, 0);
+    const kitDiscountPct = getKitDiscountPercentage(customPiecesCount);
+    const customPiecesSubtotal = items.reduce((acc, it) => {
+        const pid = it.productId || it.id || '';
+        return acc + (pid.startsWith('custom-') ? (it.price * (it.quantity || 1)) : 0);
+    }, 0);
+    const kitDiscountAmount = kitDiscountPct > 0 ? (customPiecesSubtotal * kitDiscountPct) / 100 : 0;
+    const itemsTotalWithDiscount = subtotal - kitDiscountAmount;
+
     const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-    const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD && isStateEligible;
+    const freeShipping = itemsTotalWithDiscount >= FREE_SHIPPING_THRESHOLD && isStateEligible;
     const cheapestOptionId = [...shippingOptions].sort((a, b) => a.price - b.price)[0]?.id;
     const isCheapestSelected = shippingOption?.id === cheapestOptionId;
     const actualShippingPrice = (freeShipping && isCheapestSelected) ? 0 : (shippingOption?.price || 0);
-    const finalTotal = subtotal + actualShippingPrice;
+    const finalTotal = itemsTotalWithDiscount + actualShippingPrice;
 
     // Validation & Submit Handler
     const handleBuyNow = async () => {
@@ -927,6 +941,17 @@ export default function UnifiedCheckoutPage() {
                                         <span>Subtotal:</span>
                                         <span className="text-slate-900">{formatPrice(subtotal)}</span>
                                     </div>
+
+                                    {kitDiscountAmount > 0 && (
+                                        <div className="flex justify-between items-center text-[#245E3B] font-bold bg-[#ADCEB3]/20 px-2.5 py-1.5 rounded-lg border border-[#ADCEB3]/50">
+                                            <span className="flex items-center gap-1.5 text-xs">
+                                                <span className="w-2 h-2 rounded-full bg-[#245E3B] animate-pulse" />
+                                                Desconto Monte Seu Kit ({kitDiscountPct}% OFF):
+                                            </span>
+                                            <span className="font-black text-[#245E3B]">-{formatPrice(kitDiscountAmount)}</span>
+                                        </div>
+                                    )}
+
                                     <div className="flex justify-between items-center text-slate-600 font-bold">
                                         <span>Frete:</span>
                                         <span className={shippingOption ? 'text-slate-900' : 'text-slate-400'}>
@@ -945,8 +970,8 @@ export default function UnifiedCheckoutPage() {
                                                 </p>
                                             );
                                         }
-                                        if (isStateEligible && subtotal < FREE_SHIPPING_THRESHOLD) {
-                                            const missing = FREE_SHIPPING_THRESHOLD - subtotal;
+                                        if (isStateEligible && itemsTotalWithDiscount < FREE_SHIPPING_THRESHOLD) {
+                                            const missing = FREE_SHIPPING_THRESHOLD - itemsTotalWithDiscount;
                                             return (
                                                 <p className="text-[10px] text-amber-700 font-bold pt-1">
                                                     Faltam {formatPrice(missing)} para você ganhar Frete Grátis!
