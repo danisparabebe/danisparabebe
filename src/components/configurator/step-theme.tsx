@@ -97,6 +97,13 @@ const THEME_GALLERY: Record<string, { photos: string[]; description: string }> =
         ],
         description: 'Desenhos fofos e carinhas de bebê — doçura pura.',
     },
+    CAV: {
+        photos: [
+            '/produtos/conferidos/MAS-KIT-CAV-AZM-BAB-AZM_01.jpg',
+            '/produtos/conferidos/MAS-KIT-CAV-VDM-BAB-VDM_01.jpeg',
+        ],
+        description: 'Cavalinhos e brasões equestres — elegância e personalidade para meninos.',
+    },
 };
 
 // All photos available for a theme (for drill-down second level)
@@ -179,6 +186,13 @@ const ALL_THEME_PHOTOS: Record<string, string[]> = {
         '/produtos/conferidos/MAS-KIT-VAR-VDC-BAB-VDC_01.jpeg',
         '/produtos/conferidos/MAS-KIT-VAR-AZT-BAB-AZT_01.jpeg',
         '/produtos/conferidos/MAS-KIT-VAR-LRJ-BAB-LRJ_01.jpeg',
+    ],
+    BBZ: [
+        '/temas/bebezinha.png',
+    ],
+    CAV: [
+        '/produtos/conferidos/MAS-KIT-CAV-AZM-BAB-AZM_01.jpg',
+        '/produtos/conferidos/MAS-KIT-CAV-VDM-BAB-VDM_01.jpeg',
     ],
 };
 
@@ -264,6 +278,7 @@ export function StepTheme() {
                                         else if (embName.includes('bailarina')) finalThemeId = 'BAI';
                                         else if (embName.includes('coroa')) finalThemeId = 'COR';
                                         else if (embName.includes('nuvem')) finalThemeId = 'NUV';
+                                        else if (embName.includes('cavalinho') || embName.includes('cavalo')) finalThemeId = 'CAV';
 
                                         const uniqueKey = `${emb.url || emb.id}-${finalThemeId}`;
                                         if (!uniqueMap.has(uniqueKey)) {
