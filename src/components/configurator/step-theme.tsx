@@ -467,10 +467,10 @@ export function StepTheme() {
                         </div>
 
                         {/* Back */}
-                        <div className="hidden md:flex justify-start pt-2">
+                        <div className="flex justify-start pt-2">
                             <button
                                 onClick={previousStep}
-                                className="flex items-center gap-2 text-sm font-semibold text-slate hover:text-charcoal transition-colors border border-black/10 px-5 py-3 rounded-full hover:bg-warm-stone/50"
+                                className="flex items-center gap-2 text-sm font-semibold text-slate hover:text-charcoal transition-colors border border-black/10 px-5 py-3 rounded-full hover:bg-warm-stone/50 cursor-pointer"
                             >
                                 <ArrowLeft className="w-4 h-4" /> Voltar
                             </button>

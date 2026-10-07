@@ -120,19 +120,6 @@ export function ConfiguratorLayout() {
                     {renderStep()}
                 </div>
             </main>
-
-            {/* ── Persistent bottom back button (all steps except first) ── */}
-            {currentIdx > 0 && (
-                <div className="sticky bottom-0 z-40 bg-white/80 backdrop-blur-sm border-t border-black/5 px-4 py-3 flex md:hidden">
-                    <button
-                        onClick={previousStep}
-                        className="flex items-center gap-2 text-sm font-semibold text-charcoal hover:text-dusty-rose transition-colors"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Voltar
-                    </button>
-                </div>
-            )}
         </div>
     );
 }
