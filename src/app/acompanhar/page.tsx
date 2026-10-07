@@ -56,7 +56,7 @@ export default function AcompanharPage() {
                     transition={{ duration: 0.5 }}
                     className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-black/5"
                 >
-                    <div className="w-16 h-16 bg-dusty-rose/10 rounded-full flex items-center justify-center mx-auto mb-6 text-dusty-rose">
+                    <div className="w-16 h-16 bg-sage-green/15 text-[#245E3B] rounded-full flex items-center justify-center mx-auto mb-6 border border-sage-green/30">
                         <Package className="w-8 h-8" />
                     </div>
 
@@ -85,7 +85,7 @@ export default function AcompanharPage() {
                                         if (error) setError('');
                                     }}
                                     placeholder="ex: ORDER_abc123"
-                                    className="w-full pl-11 pr-4 py-3.5 bg-white border border-line/60 rounded-xl text-charcoal focus:outline-none focus:ring-2 focus:ring-dusty-rose/20 focus:border-dusty-rose transition-all shadow-sm placeholder:text-slate/40"
+                                    className="w-full pl-11 pr-4 py-3.5 bg-white border border-line/60 rounded-xl text-charcoal focus:outline-none focus:ring-2 focus:ring-sage-green/30 focus:border-[#245E3B] transition-all shadow-sm placeholder:text-slate/40"
                                     disabled={loading}
                                 />
                             </div>
@@ -104,7 +104,7 @@ export default function AcompanharPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full flex items-center justify-center gap-2 bg-dusty-rose text-white py-3.5 rounded-xl font-bold hover:bg-dusty-rose-dark transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md shadow-dusty-rose/20 mt-6"
+                            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#215E39] via-[#1B5231] to-[#164327] hover:from-[#287044] hover:via-[#21613a] hover:to-[#1a5130] text-white py-4 rounded-xl font-bold transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md shadow-[#215E39]/25 hover:shadow-lg hover:shadow-[#215E39]/35 mt-6 cursor-pointer active:scale-[0.98]"
                         >
                             {loading ? (
                                 <>
@@ -123,7 +123,7 @@ export default function AcompanharPage() {
                     <div className="mt-8 pt-6 border-t border-line/40 text-center">
                         <p className="text-xs text-slate">
                             Não sabe o número do pedido?{' '}
-                            <Link href="/conta?aba=pedidos" className="text-dusty-rose font-bold hover:underline">
+                            <Link href="/conta?aba=pedidos" className="text-[#245E3B] font-bold hover:underline">
                                 Acesse sua conta
                             </Link>{' '}
                             ou verifique seu e-mail de confirmação.

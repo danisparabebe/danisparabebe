@@ -41,7 +41,7 @@ export default function PedidoPublicoPage({ params }: PedidoPageProps) {
     if (loading) {
         return (
             <div className="min-h-screen bg-[#faf6f4] flex flex-col items-center justify-center p-4">
-                <RefreshCw className="w-8 h-8 animate-spin text-dusty-rose mb-3" />
+                <RefreshCw className="w-8 h-8 animate-spin text-[#245E3B] mb-3" />
                 <p className="text-xs font-black uppercase tracking-widest text-slate">
                     Localizando detalhes do enxoval...
                 </p>
@@ -53,7 +53,7 @@ export default function PedidoPublicoPage({ params }: PedidoPageProps) {
         return (
             <div className="min-h-screen bg-[#faf6f4] flex items-center justify-center p-4">
                 <div className="bg-white p-8 rounded-3xl shadow-sm border border-black/5 max-w-md w-full text-center space-y-4">
-                    <AlertCircle className="w-12 h-12 text-dusty-rose mx-auto" />
+                    <AlertCircle className="w-12 h-12 text-[#245E3B] mx-auto" />
                     <h2 className="text-xl font-serif font-black text-charcoal">Pedido não encontrado</h2>
                     <p className="text-xs text-slate font-medium">
                         Não encontramos nenhum registro com o código <strong>#{orderId}</strong>. Verifique o número digitado.
