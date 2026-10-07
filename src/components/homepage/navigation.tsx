@@ -22,7 +22,7 @@ const NavLinkDisabled = ({ name }: { name: string }) => (
         title={`${name} estará disponível em breve!`}
     >
         <span>{name}</span>
-        <span className="text-[8px] xl:text-[9px] font-extrabold uppercase tracking-tight bg-dusty-rose/20 text-dusty-rose px-1.5 py-0.5 rounded-md border border-dusty-rose/40">
+        <span className="text-[8px] xl:text-[9px] font-extrabold uppercase tracking-tight bg-sage-green/25 text-[#244b2c] px-1.5 py-0.5 rounded-md border border-sage-green/50">
             Em Breve
         </span>
     </div>
@@ -85,7 +85,7 @@ export function Navigation() {
                         {/* Todas Categorias com tag "Em Breve" */}
                         <div className="relative shrink-0 flex items-center gap-1.5 text-[11px] xl:text-[12px] font-semibold text-charcoal/60 cursor-not-allowed select-none py-1">
                             <span>Todas Categorias</span>
-                            <span className="text-[8px] xl:text-[9px] font-extrabold uppercase tracking-tight bg-dusty-rose/20 text-dusty-rose px-1.5 py-0.5 rounded-md border border-dusty-rose/40">
+                            <span className="text-[8px] xl:text-[9px] font-extrabold uppercase tracking-tight bg-sage-green/25 text-[#244b2c] px-1.5 py-0.5 rounded-md border border-sage-green/50">
                                 Em Breve
                             </span>
                             <ChevronDown className="w-3.5 h-3.5 text-slate/40" />
@@ -105,7 +105,7 @@ export function Navigation() {
                                 className="flex items-center justify-between text-sm font-bold text-charcoal/60 py-3 px-2 border-b border-black/5 cursor-not-allowed"
                             >
                                 <span>{link.name}</span>
-                                <span className="text-[9px] font-extrabold uppercase tracking-wider bg-dusty-rose/20 text-dusty-rose px-2 py-0.5 rounded-md border border-dusty-rose/40">
+                                <span className="text-[9px] font-extrabold uppercase tracking-wider bg-sage-green/25 text-[#244b2c] px-2 py-0.5 rounded-md border border-sage-green/50">
                                     Em Breve
                                 </span>
                             </div>
@@ -113,7 +113,7 @@ export function Navigation() {
 
                         <div className="flex items-center justify-between text-sm font-bold text-charcoal/60 py-3 px-2 border-b border-black/5 cursor-not-allowed">
                             <span>Todas as Categorias</span>
-                            <span className="text-[9px] font-extrabold uppercase tracking-wider bg-dusty-rose/20 text-dusty-rose px-2 py-0.5 rounded-md border border-dusty-rose/40">
+                            <span className="text-[9px] font-extrabold uppercase tracking-wider bg-sage-green/25 text-[#244b2c] px-2 py-0.5 rounded-md border border-sage-green/50">
                                 Em Breve
                             </span>
                         </div>
