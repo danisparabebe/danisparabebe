@@ -4,7 +4,7 @@ import { useConfiguratorStore } from '@/store/configurator-store';
 import { TYPES } from '@/data/admin-options';
 import { BASE_PRICES, formatPrice, PERSONALIZATION_PRICE } from '@/lib/pricing';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL } from '@/lib/shipping-rules';
-import { Minus, Plus, ArrowLeft, Truck, Baby, Shirt, Gem, Gift } from 'lucide-react';
+import { Minus, Plus, ArrowLeft, Truck, Baby, Shirt, Gem, Gift, Sparkles, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { ReactNode } from 'react';
 
@@ -42,11 +42,32 @@ export function StepItems() {
 
     const originalItemsTotal = Object.entries(itemQuantities).reduce((acc, [id, qty]) => acc + (BASE_PRICES[id] || 0) * qty, 0);
     const originalTotal = originalItemsTotal + (babyName.trim() ? PERSONALIZATION_PRICE : 0);
+    const discountAmount = Math.max(0, originalItemsTotal - finalTotal);
     const isFreeShipping = finalTotal >= FREE_SHIPPING_THRESHOLD;
 
     // Gamification Progress Calculation (Max 6 pieces for 8% OFF)
     const MAX_PIECES = 6;
     const progressPercentage = Math.min((count / MAX_PIECES) * 100, 100);
+
+    // Mensagens dinâmicas e divertidas para engajar o cliente a adicionar mais peças
+    let nextLevelMsg = '';
+    let nextPiecesNeeded = 0;
+
+    if (count === 0) {
+        nextPiecesNeeded = 2;
+        nextLevelMsg = 'Adicione 2 peças para desbloquear 3% OFF no seu kit!';
+    } else if (count < 2) {
+        nextPiecesNeeded = 2 - count;
+        nextLevelMsg = `Adicione mais ${nextPiecesNeeded} peça para liberar seu primeiro desconto de 3% OFF! 🎁`;
+    } else if (count < 4) {
+        nextPiecesNeeded = 4 - count;
+        nextLevelMsg = `Falta só mais ${nextPiecesNeeded} ${nextPiecesNeeded === 1 ? 'peça' : 'peças'} para subir seu desconto para 5% OFF! 🚀`;
+    } else if (count < 6) {
+        nextPiecesNeeded = 6 - count;
+        nextLevelMsg = `Falta só mais ${nextPiecesNeeded} ${nextPiecesNeeded === 1 ? 'peça' : 'peças'} para atingir o DESCONTO MÁXIMO de 8% OFF! 🔥`;
+    } else {
+        nextLevelMsg = '🏆 Incrível! Você desbloqueou o DESCONTO MÁXIMO de 8% OFF no seu kit personalizado!';
+    }
 
     const handleNext = () => {
         // Validate that all active clothing items have a size chosen or typed
@@ -68,7 +89,6 @@ export function StepItems() {
     const ProductCard = ({ id }: { id: string }) => {
         const qty = itemQuantities[id] || 0;
         const originalPrice = BASE_PRICES[id];
-        const currentPrice = originalPrice * (1 - discount / 100);
         const active = qty > 0;
         const label = AVAILABLE_ITEMS.find(i => i.value === id)?.label || id;
         const isClothing = CLOTHING_IDS.includes(id);
@@ -85,20 +105,23 @@ export function StepItems() {
                     }
                 `}
             >
-                {/* Header: Title and Price */}
+                {/* Header: Title and Price (Preço original SEMPRE fixo e transparente) */}
                 <div className="mb-4">
-                    <h3 className={`font-fraunces font-bold text-lg leading-tight mb-1 ${active ? 'text-charcoal' : 'text-charcoal/80'}`}>
-                        {label}
-                    </h3>
-                    <div className="flex items-baseline gap-2">
-                        <span className={`font-bold tabular-nums ${active ? 'text-sage-green text-lg' : 'text-slate'}`}>
-                            {formatPrice(currentPrice)}
-                        </span>
-                        {discount > 0 && (
-                            <span className="text-xs text-slate/50 line-through tabular-nums">
-                                {formatPrice(originalPrice)}
+                    <div className="flex items-start justify-between gap-2">
+                        <h3 className={`font-fraunces font-bold text-lg leading-tight mb-1 ${active ? 'text-charcoal' : 'text-charcoal/80'}`}>
+                            {label}
+                        </h3>
+                        {active && (
+                            <span className="shrink-0 bg-[#ADCEB3] text-[#1f2937] text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-2xs">
+                                {qty} no kit
                             </span>
                         )}
+                    </div>
+                    <div className="flex items-baseline gap-1.5 mt-1">
+                        <span className="font-bold tabular-nums text-charcoal text-lg">
+                            {formatPrice(originalPrice)}
+                        </span>
+                        <span className="text-xs text-slate-400 font-medium">/ peça</span>
                     </div>
                 </div>
 
@@ -160,12 +183,12 @@ export function StepItems() {
                     {/* Total for this item (if active) */}
                     <div className="flex-1">
                         {active ? (
-                            <span className="text-[11px] font-bold text-charcoal/60 uppercase tracking-widest">
-                                Total: <span className="text-charcoal">{formatPrice(currentPrice * qty)}</span>
+                            <span className="text-[11px] font-bold text-charcoal/70 uppercase tracking-wider">
+                                Subtotal: <span className="text-charcoal font-black">{formatPrice(originalPrice * qty)}</span>
                             </span>
                         ) : (
                             <span className="text-[11px] font-bold text-slate/40 uppercase tracking-widest">
-                                Adicionar
+                                Adicionar ao kit
                             </span>
                         )}
                     </div>
@@ -214,58 +237,134 @@ export function StepItems() {
                     Monte seu enxoval
                 </h2>
                 <p className="text-slate text-sm font-dmSans px-4">
-                    Adicione peças à sua maleta e desbloqueie descontos progressivos.
+                    Adicione peças ao seu kit e veja seu desconto crescer a cada escolha!
                 </p>
             </div>
 
-            {/* Discount Gamification Thermometer */}
-            <div className="bg-white rounded-3xl p-5 md:p-6 mx-2 md:mx-0 shadow-[0_8px_30px_-4px_rgba(0,0,0,0.06)] border border-black/[0.03]">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                        <Gift className={`w-5 h-5 ${count >= MAX_PIECES ? 'text-sage-green' : 'text-charcoal/40'}`} />
-                        <span className="font-bold text-sm text-charcoal uppercase tracking-wider">Progresso</span>
+            {/* Discount Gamification Thermometer (Redesenhado, Divertido e Vencedor) */}
+            <div className="bg-gradient-to-br from-white via-white to-emerald-50/40 rounded-3xl p-5 md:p-6 mx-2 md:mx-0 shadow-[0_8px_30px_-4px_rgba(0,0,0,0.07)] border border-black/[0.05] relative overflow-hidden">
+                
+                {/* Decoração de fundo suave */}
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#ADCEB3]/15 rounded-full blur-2xl pointer-events-none" />
+
+                {/* Header com Ícone e Status */}
+                <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="flex items-center gap-2.5">
+                        <div className={`w-9 h-9 rounded-2xl flex items-center justify-center transition-all ${
+                            discount > 0 ? 'bg-[#ADCEB3] text-[#1f2937] shadow-sm' : 'bg-warm-stone text-slate-500'
+                        }`}>
+                            <Gift className="w-5 h-5" />
+                        </div>
+                        <div>
+                            <span className="font-heading font-black text-sm md:text-base text-charcoal block leading-none">
+                                Desconto Progressivo por Peças
+                            </span>
+                            <span className="text-xs text-slate-500 font-medium">
+                                Quanto mais peças você escolhe, maior é o desconto!
+                            </span>
+                        </div>
                     </div>
+
+                    {/* Badge do Desconto Atual */}
                     {discount > 0 ? (
-                        <span className="bg-sage-green text-white px-2 py-1 rounded-md text-xs font-black shadow-sm">
-                            {discount}% OFF Ativo
-                        </span>
+                        <motion.div
+                            key={discount}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="bg-emerald-600 text-white px-3 py-1.5 rounded-full text-xs font-black shadow-md flex items-center gap-1.5 shrink-0"
+                        >
+                            <Sparkles className="w-3.5 h-3.5" />
+                            {discount}% OFF ATIVO
+                        </motion.div>
                     ) : (
-                        <span className="bg-warm-stone text-slate px-2 py-1 rounded-md text-xs font-bold">
+                        <span className="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-xs font-bold shrink-0">
                             0% OFF
                         </span>
                     )}
                 </div>
 
-                {/* Progress Track */}
-                <div className="relative h-4 bg-warm-stone rounded-full overflow-hidden border border-black/5 shadow-inner">
-                    <motion.div 
-                        className="absolute top-0 left-0 h-full bg-sage-green"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${progressPercentage}%` }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                    />
+                {/* Barra de Progresso com Marco Visual */}
+                <div className="relative pt-2 pb-1">
+                    {/* Track de fundo */}
+                    <div className="relative h-4 bg-slate-100 rounded-full overflow-hidden border border-black/5 shadow-inner">
+                        <motion.div 
+                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#ADCEB3] via-emerald-500 to-emerald-600 rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progressPercentage}%` }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                        />
+                    </div>
+
+                    {/* Marcadores / Milestones */}
+                    <div className="relative flex justify-between mt-3 px-1">
+                        {/* Meta 1: 2 peças (3%) */}
+                        <div className={`flex flex-col items-center transition-colors ${count >= 2 ? 'text-emerald-700 font-black' : 'text-slate-400 font-medium'}`}>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all mb-1 ${
+                                count >= 2 ? 'bg-emerald-500 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-200 text-slate-400'
+                            }`}>
+                                {count >= 2 ? <Check className="w-3.5 h-3.5" strokeWidth={3} /> : '2'}
+                            </div>
+                            <span className="text-[11px] leading-tight">2 peças</span>
+                            <span className={`text-[10px] font-black uppercase ${count >= 2 ? 'text-emerald-700' : 'text-slate-400'}`}>3% OFF</span>
+                        </div>
+
+                        {/* Meta 2: 4 peças (5%) */}
+                        <div className={`flex flex-col items-center transition-colors ${count >= 4 ? 'text-emerald-700 font-black' : 'text-slate-400 font-medium'}`}>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all mb-1 ${
+                                count >= 4 ? 'bg-emerald-500 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-200 text-slate-400'
+                            }`}>
+                                {count >= 4 ? <Check className="w-3.5 h-3.5" strokeWidth={3} /> : '4'}
+                            </div>
+                            <span className="text-[11px] leading-tight">4 peças</span>
+                            <span className={`text-[10px] font-black uppercase ${count >= 4 ? 'text-emerald-700' : 'text-slate-400'}`}>5% OFF</span>
+                        </div>
+
+                        {/* Meta 3: 6+ peças (8% Máximo) */}
+                        <div className={`flex flex-col items-center transition-colors ${count >= 6 ? 'text-emerald-700 font-black' : 'text-slate-400 font-medium'}`}>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all mb-1 ${
+                                count >= 6 ? 'bg-amber-400 border-amber-500 text-amber-950 shadow-sm' : 'bg-white border-slate-200 text-slate-400'
+                            }`}>
+                                {count >= 6 ? '🏆' : '6'}
+                            </div>
+                            <span className="text-[11px] leading-tight">6+ peças</span>
+                            <span className={`text-[10px] font-black uppercase ${count >= 6 ? 'text-emerald-700' : 'text-slate-400'}`}>8% OFF 🔥</span>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Markers */}
-                <div className="flex justify-between mt-2 px-1 text-[10px] font-bold uppercase tracking-widest text-slate/60">
-                    <span className={count >= 2 ? 'text-sage-green' : ''}>2 un. (3%)</span>
-                    <span className={count >= 4 ? 'text-sage-green' : ''}>4 un. (5%)</span>
-                    <span className={count >= 6 ? 'text-sage-green' : ''}>6+ un. (8%)</span>
-                </div>
+                {/* Faixa Divertida de Economia em Reais quando o desconto está ativo */}
+                {discount > 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-4 bg-emerald-50 border border-emerald-200/80 rounded-2xl p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-emerald-950"
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className="text-2xl">💰</span>
+                            <div>
+                                <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 block">
+                                    Economia no seu kit:
+                                </span>
+                                <span className="text-base md:text-lg font-black text-emerald-700 leading-none">
+                                    Você está economizando {formatPrice(discountAmount)} ({discount}% OFF)!
+                                </span>
+                            </div>
+                        </div>
+                        {count < MAX_PIECES && (
+                            <span className="text-xs font-bold text-emerald-800 bg-white border border-emerald-200 px-3 py-1.5 rounded-xl shrink-0 shadow-2xs">
+                                + Peças = + Desconto 🚀
+                            </span>
+                        )}
+                    </motion.div>
+                )}
 
-                {/* Motivational Text */}
-                {count > 0 && count < MAX_PIECES && (
-                    <p className="text-center text-xs text-charcoal/70 mt-4 font-medium">
-                        Faltam apenas <span className="font-bold text-charcoal">{count < 2 ? 2 - count : count < 4 ? 4 - count : 6 - count} peças</span> para o próximo nível de desconto!
+                {/* Mensagem Motivacional Divertida */}
+                <div className="mt-3 text-center">
+                    <p className="text-xs text-charcoal/80 font-medium">
+                        {nextLevelMsg}
                     </p>
-                )}
-                {count >= MAX_PIECES && (
-                    <p className="text-center text-xs text-sage-green mt-4 font-black uppercase tracking-wider">
-                        Desconto Máximo Alcançado! 🎉
-                    </p>
-                )}
+                </div>
             </div>
-
             {/* Continuous List of Products Grid */}
             <div className="space-y-10 px-2 md:px-0">
                 {CATEGORIES.map((cat) => {
@@ -286,35 +385,47 @@ export function StepItems() {
                 })}
             </div>
 
-            {/* Floating Summary Bar (Redesigned) */}
+            {/* Floating Summary Bar (Redesigned with Clear Savings) */}
             <AnimatePresence>
                 {count > 0 && (
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 50 }}
-                        className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] px-4 py-4 md:px-8 md:py-5"
+                        className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-black/8 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] px-4 py-3.5 md:px-8 md:py-4"
                     >
                         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
                             
-                            {/* Left: Totals */}
+                            {/* Left: Totals & Discount highlight */}
                             <div className="flex items-center justify-between w-full md:w-auto gap-6">
                                 <div>
-                                    <p className="text-slate text-[10px] uppercase tracking-widest font-bold mb-0.5">
-                                        Total ({count} {count === 1 ? 'peça' : 'peças'})
-                                    </p>
-                                    <div className="flex items-end gap-2">
-                                        <p className="text-2xl md:text-3xl font-black text-charcoal tabular-nums leading-none">
-                                            {formatPrice(finalTotal)}
-                                        </p>
+                                    <div className="flex items-center gap-2 mb-0.5">
+                                        <span className="text-slate-500 text-[11px] uppercase tracking-wider font-bold">
+                                            Total ({count} {count === 1 ? 'peça' : 'peças'})
+                                        </span>
                                         {discount > 0 && (
-                                            <p className="text-sm md:text-base text-slate line-through tabular-nums pb-0.5">
+                                            <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2 py-0.5 rounded-full border border-emerald-200">
+                                                {discount}% OFF aplicado
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="flex items-baseline gap-2.5">
+                                        <span className="text-2xl md:text-3xl font-black text-charcoal tabular-nums leading-none">
+                                            {formatPrice(finalTotal)}
+                                        </span>
+                                        {discount > 0 && (
+                                            <span className="text-sm md:text-base text-slate-400 line-through tabular-nums font-semibold">
                                                 {formatPrice(originalTotal)}
-                                            </p>
+                                            </span>
+                                        )}
+                                        {discount > 0 && (
+                                            <span className="text-xs font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                                                Economia: {formatPrice(discountAmount)}
+                                            </span>
                                         )}
                                     </div>
                                     {isFreeShipping && (
-                                        <div className="flex items-center gap-1 mt-1.5 text-sage-green font-bold text-[10px] uppercase tracking-wider">
+                                        <div className="flex items-center gap-1 mt-1 text-sage-green font-bold text-[10px] uppercase tracking-wider">
                                             <Truck className="w-3.5 h-3.5" />
                                             Frete Grátis ({FREE_SHIPPING_REGIONS_LABEL})
                                         </div>
@@ -326,15 +437,16 @@ export function StepItems() {
                             <div className="flex items-center gap-3 w-full md:w-auto">
                                 <button
                                     onClick={previousStep}
-                                    className="cursor-pointer flex items-center justify-center w-14 h-14 shrink-0 rounded-2xl bg-warm-stone text-charcoal hover:bg-slate/10 border border-black/5 transition-all active:scale-95"
+                                    className="cursor-pointer flex items-center justify-center w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-2xl bg-warm-stone text-charcoal hover:bg-slate/10 border border-black/5 transition-all active:scale-95"
+                                    title="Voltar"
                                 >
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
                                 <button
                                     onClick={handleNext}
-                                    className="cursor-pointer flex-1 md:w-[220px] bg-charcoal hover:bg-black text-white h-14 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all shadow-md active:scale-95 flex items-center justify-center"
+                                    className="cursor-pointer flex-1 md:w-[220px] bg-charcoal hover:bg-black text-white h-12 md:h-14 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
                                 >
-                                    Revisar Pedido
+                                    Revisar Pedido <Sparkles className="w-4 h-4 text-[#ADCEB3]" />
                                 </button>
                             </div>
                         </div>
