@@ -128,20 +128,20 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
         <div className="max-w-4xl mx-auto space-y-6 text-slate-800 font-sans print:max-w-none print:m-0">
             
             {/* ═══ CABEÇALHO HERO COM IDENTIDADE DANIS ═══ */}
-            <div className="bg-gradient-to-br from-[#ffffff] via-[#fffcfb] to-[#fbf2f2] border-2 border-dusty-rose/25 rounded-3xl p-6 sm:p-8 shadow-sm text-center relative overflow-hidden print:border-none print:shadow-none print:p-4">
+            <div className="bg-gradient-to-br from-[#ffffff] via-[#fbfdfb] to-[#f0f6f2] border-2 border-[#245E3B]/20 rounded-3xl p-6 sm:p-8 shadow-sm text-center relative overflow-hidden print:border-none print:shadow-none print:p-4">
                 {/* Detalhe de fundo */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-dusty-rose/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-48 h-48 bg-[#245E3B]/5 rounded-full blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
                 <div className="relative">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-dusty-rose/20 rounded-full text-[11px] font-black tracking-widest uppercase text-dusty-rose shadow-xs mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#245E3B]/20 rounded-full text-[11px] font-black tracking-widest uppercase text-[#245E3B] shadow-xs mb-3">
                         <Sparkles className="w-3.5 h-3.5" />
                         Confirmação Oficial do Enxoval
                     </span>
 
                     <h1 className="text-2xl sm:text-3xl font-black text-charcoal font-serif tracking-tight mt-1">
                         {babyName ? (
-                            <>O Enxoval do(a) <span className="text-dusty-rose">{babyName}</span> está confirmado!</>
+                            <>O Enxoval do(a) <span className="text-[#245E3B]">{babyName}</span> está confirmado!</>
                         ) : (
                             <>Seu Enxoval foi confirmado com sucesso!</>
                         )}
@@ -181,7 +181,7 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
                         { title: '1. Pedido Confirmado', subtitle: 'Pagamento recebido', done: true, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-200' },
                         { title: '2. Confecção & Bordado', subtitle: 'Bordado fio a fio', done: status !== 'pendente', icon: Scissors, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-200' },
                         { title: '3. Controle de Qualidade', subtitle: 'Passadoria & laço', done: status === 'conferencia' || status === 'enviado', icon: Sparkles, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-200' },
-                        { title: '4. Envio & Rastreio', subtitle: 'A caminho do seu lar', done: status === 'enviado', icon: Package, color: 'text-dusty-rose', bg: 'bg-rose-50 border-dusty-rose/30' },
+                        { title: '4. Envio & Rastreio', subtitle: 'A caminho do seu lar', done: status === 'enviado', icon: Package, color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' },
                     ].map((step, idx) => {
                         const Icon = step.icon;
                         return (
@@ -226,7 +226,7 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
 
                                 <div className="flex-1 text-center sm:text-left min-w-0">
                                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1">
-                                        <span className="text-[10px] font-black uppercase tracking-wider bg-rose-50 text-dusty-rose px-2.5 py-0.5 rounded-full border border-dusty-rose/20">
+                                        <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-[#245E3B] px-2.5 py-0.5 rounded-full border border-emerald-600/20">
                                             {item.quantity}x {item.quantity === 1 ? 'Unidade' : 'Unidades'}
                                         </span>
                                         {pers.theme && (
@@ -235,7 +235,7 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
                                             </span>
                                         )}
                                         {pers.size && (
-                                            <span className="text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-800 px-2.5 py-0.5 rounded-full border border-rose-300">
+                                            <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full border border-slate-200">
                                                 Tamanho: {pers.size}
                                             </span>
                                         )}
@@ -251,8 +251,8 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
 
                             {/* Destaque do Bordado (Nome do Bebê) */}
                             {pers.name && (
-                                <div className="bg-gradient-to-r from-[#fdf6f6] via-[#faf8f5] to-[#fbf4f0] border-2 border-dusty-rose/30 rounded-2xl p-5 text-center relative overflow-hidden">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-dusty-rose bg-white px-3 py-1 rounded-full shadow-xs border border-dusty-rose/15 inline-block">
+                                <div className="bg-gradient-to-r from-[#f7fbf8] via-[#fafdfb] to-[#f2f7f3] border-2 border-[#245E3B]/20 rounded-2xl p-5 text-center relative overflow-hidden">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#245E3B] bg-white px-3 py-1 rounded-full shadow-xs border border-[#245E3B]/20 inline-block">
                                         Bordado Personalizado no Enxoval
                                     </span>
                                     <p className="text-3xl sm:text-4xl font-black text-charcoal font-serif tracking-tight mt-2.5 capitalize">
@@ -337,7 +337,7 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
             <div className="bg-white border border-black/5 rounded-3xl p-6 shadow-sm space-y-4">
                 <div className="flex items-center justify-between border-b border-black/5 pb-3">
                     <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4 text-dusty-rose" />
+                        <MapPin className="w-4 h-4 text-[#245E3B]" />
                         Endereço de Entrega Cadastrado
                     </h3>
                     <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
@@ -403,8 +403,8 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
 
             {/* ═══ MENSAGEM FINAL DE AFETO ═══ */}
             <div className="text-center pt-4 pb-6 text-slate-400 text-xs">
-                <p className="flex items-center justify-center gap-1 font-serif text-dusty-rose text-sm font-bold">
-                    Feito com muito amor pela Danis Para Bebê <Heart className="w-3.5 h-3.5 fill-dusty-rose" />
+                <p className="flex items-center justify-center gap-1 font-serif text-[#245E3B] text-sm font-bold">
+                    Feito com muito amor pela Danis Para Bebê <Heart className="w-3.5 h-3.5 fill-[#245E3B]" />
                 </p>
                 <p className="text-[11px] text-slate-400 mt-1">
                     Dúvidas? Entre em contato pelo WhatsApp (18) 99751-8078

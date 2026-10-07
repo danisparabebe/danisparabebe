@@ -187,7 +187,7 @@ export function Header() {
                     <div className="flex shrink-0 lg:w-[200px] xl:w-[240px] items-center justify-end space-x-1 sm:space-x-3 relative z-[70]">
                         
                         {/* ─── ACOMPANHAR PEDIDO ─── */}
-                        <Link href="/acompanhar" className="p-2 flex items-center justify-center gap-1.5 text-charcoal hover:text-dusty-rose transition-all duration-300 outline-none hidden md:flex">
+                        <Link href="/acompanhar" className="p-2 flex items-center justify-center gap-1.5 text-charcoal hover:text-[#245E3B] transition-all duration-300 outline-none hidden md:flex">
                             <Package className="h-5 w-5 sm:h-[22px] sm:w-[22px]" />
                             <span className="hidden xl:block text-[10px] font-bold font-heading py-0.5 uppercase tracking-widest mt-0.5">Rastrear</span>
                         </Link>

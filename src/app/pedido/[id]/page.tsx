@@ -70,24 +70,23 @@ export default function PedidoPublicoPage({ params }: PedidoPageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#fdf9f7] via-[#faf6f4] to-[#f4eeea] py-8 sm:py-12 px-4 selection:bg-dusty-rose selection:text-white">
+        <div className="min-h-screen bg-gradient-to-b from-[#f7fbf8] via-[#f9fbf9] to-[#edf4ee] py-8 sm:py-12 px-4 selection:bg-[#245E3B] selection:text-white">
             {/* Barra Superior Simples */}
             <div className="max-w-4xl mx-auto mb-6 flex items-center justify-between print:hidden">
                 <Link 
                     href="/" 
-                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate hover:text-dusty-rose transition-colors"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate hover:text-[#245E3B] transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" /> Voltar à Loja
                 </Link>
 
-                <Image
-                    src={encodeURI('/Logos/Logomarca Rose.png')}
-                    alt="Danis Para Bebê"
-                    width={100}
-                    height={38}
-                    className="object-contain"
-                    unoptimized
-                />
+                <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
+                    <img
+                        src="/Logos/DANIS VERDE.png"
+                        alt="Danis Para Bebê"
+                        className="h-10 sm:h-12 w-auto object-contain"
+                    />
+                </Link>
             </div>
 
             <ClientOrderSheet order={order} />
