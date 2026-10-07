@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock, Palette } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock, Palette, Sparkles } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useConfiguratorStore } from '@/store/configurator-store';
 import { useFavoritesStore } from '@/store/favorites-store';
@@ -397,22 +397,27 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         <div className="flex flex-col gap-3">
                             <button
                                 onClick={() => handleActionClick('checkout')}
-                                className="w-full relative overflow-hidden group/buy bg-sage-green hover:bg-[#9cbd9f] text-charcoal py-3.5 px-6 rounded-xl shadow-[0_6px_20px_rgba(173,206,179,0.4)] hover:shadow-[0_6px_25px_rgba(173,206,179,0.5)] transition-all duration-300 active:scale-[0.98] cursor-pointer flex flex-col items-center justify-center border border-charcoal/5"
+                                className="w-full relative overflow-hidden group/buy bg-gradient-to-r from-[#215E39] via-[#1B5231] to-[#164327] hover:from-[#287044] hover:via-[#21613a] hover:to-[#1a5130] text-white py-4 px-6 rounded-2xl shadow-[0_8px_25px_rgba(33,94,57,0.35)] hover:shadow-[0_12px_32px_rgba(33,94,57,0.48)] transition-all duration-300 active:scale-[0.98] cursor-pointer flex flex-col items-center justify-center border border-emerald-400/25"
                             >
-                                <div className="flex items-center gap-2 mb-0.5 relative z-10">
-                                    <Lock className="w-3 h-3 text-charcoal/80" />
-                                    <span className="font-extrabold text-[9px] tracking-widest text-charcoal/80 uppercase">Compra 100% Segura</span>
+                                <div className="flex items-center gap-1.5 mb-1 relative z-10 text-emerald-200">
+                                    <Lock className="w-3.5 h-3.5 text-amber-300 drop-shadow-xs" />
+                                    <span className="font-extrabold text-[10px] tracking-widest uppercase">Compra 100% Segura</span>
                                 </div>
-                                <span className="font-extrabold text-lg tracking-tight relative z-10 text-charcoal group-hover/buy:scale-105 transition-transform duration-300 inline-block">QUERO PERSONALIZAR!</span>
-                                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-30 group-hover/buy:animate-shine" />
+                                <div className="flex items-center gap-2 relative z-10">
+                                    <span className="font-black text-lg sm:text-xl tracking-tight text-white drop-shadow-sm group-hover/buy:scale-[1.02] transition-transform duration-300 inline-block">
+                                        QUERO PERSONALIZAR!
+                                    </span>
+                                    <Sparkles className="w-4 h-4 text-amber-300 group-hover/buy:rotate-12 transition-transform duration-300" />
+                                </div>
+                                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine pointer-events-none" />
                             </button>
 
                             <button
                                 onClick={() => handleActionClick('cart')}
-                                className="w-full relative overflow-hidden group/add bg-white border-2 border-charcoal text-charcoal hover:bg-charcoal hover:text-white font-bold py-3 px-6 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] shadow-sm"
+                                className="w-full relative overflow-hidden group/add bg-white border-2 border-slate-300 hover:border-charcoal text-charcoal hover:bg-slate-50 font-bold py-3.5 px-6 rounded-2xl text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] shadow-xs"
                             >
-                                <ShoppingBag className="w-4 h-4 relative z-10" />
-                                <span className="relative z-10">Adicionar ao Carrinho</span>
+                                <ShoppingBag className="w-4 h-4 text-slate-500 group-hover/add:text-charcoal relative z-10 transition-colors" />
+                                <span className="relative z-10 font-bold">Adicionar ao Carrinho</span>
                                 <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/add:animate-shine" />
                             </button>
                         </div>
