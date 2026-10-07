@@ -1104,6 +1104,12 @@
       "name": "Floral4",
       "filename": "Floral4.png",
       "url": "/bordados/Floral4.png"
+    },
+    {
+      "id": "Borboleta2.PNG",
+      "name": "Borboleta 2",
+      "filename": "Borboleta2.PNG",
+      "url": "/bordados/Borboleta2.PNG"
     }
   ],
   "THEME_URS": [
@@ -1256,6 +1262,12 @@
       "name": "Bebe2",
       "filename": "Bebe2.png",
       "url": "/bordados/Bebe2.png"
+    },
+    {
+      "id": "Menino frescurento.png",
+      "name": "Menino frescurento",
+      "filename": "Menino frescurento.png",
+      "url": "/bordados/Menino%20frescurento.png"
     }
   ],
   "THEME_PER": [
@@ -1400,6 +1412,12 @@
       "name": "Trator",
       "filename": "Trator.png",
       "url": "/bordados/Trator.png"
+    },
+    {
+      "id": "Menino frescurento.png",
+      "name": "Menino frescurento",
+      "filename": "Menino frescurento.png",
+      "url": "/bordados/Menino%20frescurento.png"
     }
   ],
   "THEME_SAF": [
