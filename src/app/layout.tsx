@@ -5,6 +5,7 @@ import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieBanner } from "@/components/ui/cookie-banner";
 import { AuthInitializer } from "@/components/auth/auth-initializer";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 
 const fontFraunces = Fraunces({
     subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
                 <CartSidebar />
                 <Toaster position="top-center" />
                 <CookieBanner />
+                <WhatsAppButton />
             </body>
         </html>
     );
