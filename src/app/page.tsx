@@ -80,18 +80,31 @@ export default async function HomePage() {
         return null;
     }).filter(Boolean) as typeof managedProducts;
 
-    // 3. HERO ESQUERDO ("Mais Vendidos"): Filtra os Kits Manta dentre os 10 produtos do MVP
-    const kitMantaProducts = mvpProducts.filter(p => p.name.toLowerCase().includes('manta'));
-    const heroLeftSlides = getZippedProducts(kitMantaProducts, kitMantaProducts.length).map((p) => ({
+    // 4. HERO DIREITO: Prioriza os modelos explicitamente configurados com gridPosition === 'HERO_RIGHT'
+    const heroRightCandidates = managedProducts.filter(p => p.gridPosition === 'HERO_RIGHT');
+    const heroRightOrder = ['DPB-0116', 'DPB-0123', 'DPB-0134', 'DPB-0129'];
+    const sortedHeroRight = heroRightCandidates.length > 0
+        ? [...heroRightCandidates].sort((a, b) => {
+            const idxA = heroRightOrder.indexOf(a.shortCode || '');
+            const idxB = heroRightOrder.indexOf(b.shortCode || '');
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            if (idxA !== -1) return -1;
+            if (idxB !== -1) return 1;
+            return 0;
+        })
+        : getZippedProducts(mvpProducts.filter(p => p.name.toLowerCase().includes('fralda')), 4);
+
+    const heroRightSlides = sortedHeroRight.map((p) => ({
         name: p.name,
         image: p.image,
         link: `/produto/${p.shortCode || p.id}`,
         isHot: p.isHot || false
     }));
 
-    // 4. HERO DIREITO ("Ideal para Presentes"): Filtra os Kits Fraldas dentre os 10 produtos do MVP
-    const kitFraldasProducts = mvpProducts.filter(p => p.name.toLowerCase().includes('fralda'));
-    const heroRightSlides = getZippedProducts(kitFraldasProducts, kitFraldasProducts.length).map((p) => ({
+    // 3. HERO ESQUERDO: Filtra os Kits Manta do MVP excluindo os que já estão no Hero Direito
+    const heroRightIdSet = new Set(sortedHeroRight.map(p => p.id));
+    const kitMantaProducts = mvpProducts.filter(p => !heroRightIdSet.has(p.id) && (p.gridPosition === 'HERO_LEFT' || p.name.toLowerCase().includes('manta')));
+    const heroLeftSlides = getZippedProducts(kitMantaProducts, kitMantaProducts.length).map((p) => ({
         name: p.name,
         image: p.image,
         link: `/produto/${p.shortCode || p.id}`,

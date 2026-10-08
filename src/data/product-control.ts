@@ -3,9 +3,9 @@ import { ManagedProduct } from '@/types/admin';
 export const productControl: ManagedProduct[] = [
     {
         "id": "MAS-KIT-URS-VDC-BAB-VDC_02",
-        "name": "Ursinho verde Menta · Kit Manta",
+        "name": "Ursinho Azul Bebê · Kit Manta",
         "technicalName": "MAS-KIT-URS-VDC-BAB-VDC_02",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Verde Claro combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Azul Bebê combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -16,9 +16,9 @@ export const productControl: ManagedProduct[] = [
         "pixPrice": 197,
         "discountPct": 12,
         "images": [
-            "/produtos/conferidos/MAS-KIT-URS-VDC-BAB-VDC_02.jpg"
+            "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_05.jpeg"
         ],
-        "gridPosition": "FEATURED",
+        "gridPosition": "HERO_RIGHT",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -30,22 +30,22 @@ export const productControl: ManagedProduct[] = [
         "mvpEnabled": true,
         "colorVariations": [
             {
-                "id": "MAS-KIT-URS-AZM-BAB-AZM_03",
-                "colorName": "Azul Marinho",
-                "colorHex": "#1E3A8A",
-                "title": "Ursinho Marinho · Kit Manta",
-                "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
-                "image": "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_03.jpeg",
+                "id": "MAS-KIT-URS-VDC-BAB-VDC_02",
+                "colorName": "Verde Menta",
+                "colorHex": "#86EFAC",
+                "title": "Ursinho Verde Menta · Kit Manta",
+                "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Verde Menta combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+                "image": "/produtos/conferidos/MAS-KIT-URS-VDC-BAB-VDC_02.jpg",
                 "pixPrice": 197,
                 "priceFull": 211.86
             },
             {
-                "id": "MAS-KIT-URS-ABB-BAB-ABB_05",
-                "colorName": "Azul Bebê",
-                "colorHex": "#B0E0E6",
-                "title": "kit manta",
-                "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Bebê combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
-                "image": "/produtos/conferidos/MAS-KIT-URS-ABB-BAB-ABB_05.jpeg",
+                "id": "MAS-KIT-URS-AZM-BAB-AZM_03",
+                "colorName": "Azul Marinho",
+                "colorHex": "#1E3A8A",
+                "title": "Ursinho Marinho · Kit Manta",
+                "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+                "image": "/produtos/conferidos/MAS-KIT-URS-AZM-BAB-AZM_03.jpeg",
                 "pixPrice": 197,
                 "priceFull": 211.86
             }
@@ -58,7 +58,7 @@ export const productControl: ManagedProduct[] = [
         "id": "MAS-KIT-URS-VDC-BAB-VDC_01",
         "name": "kit manta",
         "technicalName": "MAS-KIT-URS-VDC-BAB-VDC_01",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Verde Claro combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Verde Claro combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -90,7 +90,7 @@ export const productControl: ManagedProduct[] = [
         "id": "MAS-KIT-URS-AZM-BAB-AZM_03",
         "name": "kit manta",
         "technicalName": "MAS-KIT-URS-AZM-BAB-AZM_03",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -122,7 +122,7 @@ export const productControl: ManagedProduct[] = [
         "id": "MAS-KIT-URS-AZM-BAB-AZM_02",
         "name": "Kit Essencial ",
         "technicalName": "MAS-KIT-URS-AZM-BAB-AZM_02",
-        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinha em Azul Marinho, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 6 peças:\n\n• 3x Fralda Pequena\n• 2x Fralda Média\n• 1x Fralda Grande\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Média: 65x33 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.",
+        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinho em Azul Marinho, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nTodas as peças recebem bordado personalizado com o nome do seu bebê — um toque de exclusividade que torna cada item insubstituível.\n\n§ITEMS§\n📦 Este kit contém 6 peças:\n\n• 3x Fralda Pequena\n• 2x Fralda Média\n• 1x Fralda Grande\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Média: 65x33 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.",
         "features": [
             "3x FRP",
             "2x FRM",
@@ -154,7 +154,7 @@ export const productControl: ManagedProduct[] = [
         "id": "MAS-KIT-URS-AZM-BAB-AZM_01",
         "name": "Kit Aconchego",
         "technicalName": "MAS-KIT-URS-AZM-BAB-AZM_01",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 6 peças:\n\n• 1x Manta\n• 1x Fralda Grande\n• 2x Fralda Pequena\n• 1x Toalha de Banho\n• 1x Touca\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 6 peças:\n\n• 1x Manta\n• 1x Fralda Grande\n• 2x Fralda Pequena\n• 1x Toalha de Banho\n• 1x Touca\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
         "features": [
             "1x MNT",
             "1x FRG",
@@ -188,7 +188,7 @@ export const productControl: ManagedProduct[] = [
         "id": "MAS-KIT-URS-ABB-BAB-ABB_05",
         "name": "kit manta",
         "technicalName": "MAS-KIT-URS-ABB-BAB-ABB_05",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Bebê combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Azul Bebê combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -267,7 +267,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-VDM-BAB-VDM_04.jpeg"
         ],
-        "gridPosition": "FEATURED",
+        "gridPosition": "HERO_RIGHT",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -467,7 +467,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE_02.jpg"
         ],
-        "gridPosition": "FEATURED",
+        "gridPosition": "HERO_RIGHT",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -675,7 +675,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/uploads/products/1791241094809-Kit_09_ótima.jpg"
         ],
-        "gridPosition": "FEATURED",
+        "gridPosition": "HERO_RIGHT",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -886,7 +886,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-CRE-BAB-CRE_02.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "Dia a Dia",
@@ -916,7 +916,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-BCO-BAB-BCO_01.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "Dia a Dia",
@@ -1208,7 +1208,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/uploads/products/1791240119239-FEM-FRP-BOR-RSA-BAB-RSA-R_01.png"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "FRP",
         "tags": [
             "novidade",
@@ -1927,7 +1927,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0037",
         "name": "Ursinho Celeste · Kit Manta",
         "technicalName": "MAS-KIT-URS-ABB-BAB-ABB-R_01",
-        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinha em Azul Bebê, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinho em Azul Bebê, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -1959,7 +1959,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0038",
         "name": "Ursinho Marinho · Kit Manta",
         "technicalName": "MAS-KIT-URS-AZM-BAB-AZM-R_01",
-        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinha em Azul Marinho, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinho em Azul Marinho, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -1991,7 +1991,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0039",
         "name": "Ursinho Verde Menta · Kit Manta",
         "technicalName": "MAS-KIT-URS-VDC-BAB-VDC-R_01",
-        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinha em Verde Claro, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinho em Verde Claro, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 3 peças:\n\n• 1x Fralda Grande\n• 1x Fralda Pequena\n• 1x Manta\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nA qualidade dos nossos tecidos é incomparável: 100% algodão, macios, hipoalergênicos e pensados para o conforto do seu bebê. Cada peça passa por um rigoroso controle de qualidade antes de chegar até você.\n\n§TIMEFRAME§\n⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
         "features": [
             "1x FRG",
             "1x FRP",
@@ -2161,7 +2161,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-MON-RSA-BAB-RSA-R_RSA_02.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -2225,7 +2225,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-FLO-RSA-BAB-RSA_02.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -2417,7 +2417,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-BAI-VRM-BAB-VRM_02.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -2514,7 +2514,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-LIL-BAB-LIL_02.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -2731,7 +2731,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/MAS-KIT-JDE-ABB-BAB-ABB-R_ABB_01.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -2764,7 +2764,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/uploads/products/1791240361561-MAS-KIT-JDE-VDM-BAB-VDM_01.png"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -3190,7 +3190,7 @@ export const productControl: ManagedProduct[] = [
         "images": [
             "/produtos/conferidos/FEM-KIT-JDE-AMA-BAB-LIL-VDC_01.jpeg"
         ],
-        "gridPosition": "HERO_RIGHT",
+        "gridPosition": "FEATURED",
         "category": "Kits",
         "tags": [
             "novidade",
@@ -4095,7 +4095,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0104",
         "name": "Ursinho Celeste · Kit Manta",
         "technicalName": "MAS-KIT-URS-ABB-BAB-ABB_01",
-        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinha em Azul Bebê, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 4 peças:\n\n• 1x Manta\n• 1x Fralda Pequena\n• 1x Fralda Grande\n• 1x Touca\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
+        "description": "§INTRO§\nLindo e cheio de personalidade! Com o tema Ursinho em Azul Bebê, cada pecinha foi pensada para os momentos mais especiais do seu bebê.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 4 peças:\n\n• 1x Manta\n• 1x Fralda Pequena\n• 1x Fralda Grande\n• 1x Touca\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
         "features": [
             "1x MNT",
             "1x FRP",
@@ -4164,7 +4164,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0106",
         "name": "Ursinho Celeste · Kit Manta",
         "technicalName": "MAS-KIT-URS-ABB-BAB-ABB_04",
-        "description": "§INTRO§\nAventura e charme! Este conjunto no tema Ursinha, em tons de Azul Bebê, traz estilo e conforto para o enxoval do seu pequeno explorador.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 4 peças:\n\n• 1x Fralda Grande\n• 1x Manta\n• 2x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
+        "description": "§INTRO§\nAventura e charme! Este conjunto no tema Ursinho, em tons de Azul Bebê, traz estilo e conforto para o enxoval do seu pequeno explorador.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 4 peças:\n\n• 1x Fralda Grande\n• 1x Manta\n• 2x Fralda Pequena\n\n§SIZES§\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Produção 100% artesanal e exclusiva. Cada kit é único, feito especialmente para o seu bebê. Não trabalhamos com estoque — tudo é criado sob medida, com amor e dedicação.",
         "features": [
             "1x FRG",
             "1x MNT",
@@ -4197,7 +4197,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0107",
         "name": "Ursinho Marinho · Kit Manta",
         "technicalName": "MAS-KIT-URS-AZM-BAB-AZM-VDM_01",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 8 peças:\n\n• 5x Fralda Pequena\n• 2x Fralda Grande\n• 1x Manta\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Azul Marinho combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nO nome do seu bebê é bordado com carinho em cada peça, garantindo que este kit seja tão especial e único quanto o seu pequeno(a).\n\n§ITEMS§\n📦 Este kit contém 8 peças:\n\n• 5x Fralda Pequena\n• 2x Fralda Grande\n• 1x Manta\n\n§SIZES§\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n\n§QUALITY§\nUtilizamos apenas tecidos 100% algodão de alta qualidade, selecionados especialmente para o contato com a pele sensível do recém-nascido. Cada costura, cada detalhe e cada acabamento é pensado para oferecer o máximo de conforto e durabilidade.\n\n§TIMEFRAME§\n⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.\n\n§CLOSING§\n✨ Este é um produto artesanal premium e exclusivo. Não existem duas peças iguais — cada kit é criado especialmente para você, do bordado ao acabamento final.",
         "features": [
             "5x FRP",
             "2x FRG",
@@ -4228,7 +4228,7 @@ export const productControl: ManagedProduct[] = [
         "shortCode": "DPB-0108",
         "name": "Ursinho Areia · Kit Manta",
         "technicalName": "MAS-KIT-URS-BGE-BAB-BCO_01",
-        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinha em Bege combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 5 peças:\n\n• 1x Toalha de Banho\n• 1x Manta\n• 2x Fralda Pequena\n• 1x Fralda Grande\n\n§SIZES§\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
+        "description": "§INTRO§\nPara um pequeno príncipe! Este kit Ursinho em Bege combina fofura e praticidade no enxoval do seu bebê.\n\n§PERSONAL§\nCada pecinha é cuidadosamente bordada e personalizada com o nome do seu bebê, transformando o enxoval em algo verdadeiramente único.\n\n§ITEMS§\n📦 Este kit contém 5 peças:\n\n• 1x Toalha de Banho\n• 1x Manta\n• 2x Fralda Pequena\n• 1x Fralda Grande\n\n§SIZES§\n📐 Toalha de Banho: 80x68 cm — Tecido Atoalhado forrado com Fralda\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n\n§QUALITY§\nTodos os materiais são premium e 100% algodão, garantindo maciez extrema e segurança para a pele delicada do bebê. Nosso padrão de qualidade é rigoroso porque sabemos que seu bebê merece o melhor.\n\n§TIMEFRAME§\n⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.\n\n§CLOSING§\n✨ Exclusividade que você não encontra em nenhum outro lugar. Produção artesanal limitada, feita sob encomenda com os melhores materiais e todo o carinho que seu bebê merece.",
         "features": [
             "1x TOB",
             "1x MNT",

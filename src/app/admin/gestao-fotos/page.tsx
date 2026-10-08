@@ -137,26 +137,36 @@ export default function GestaoFotosPage() {
             const res = await fetch('/api/admin/save-mvp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({ products: targetProducts })
             });
 
-            if (!res.ok) throw new Error("Erro ao salvar produtos");
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.error || `Erro HTTP ${res.status} ao salvar`);
+            }
 
             // 2. Extrai IDs com mvpEnabled: true para salvar em mvp-config.ts
             const selectedIds = targetProducts
                 .filter(p => p.mvpEnabled === true)
                 .map(p => p.shortCode || p.id);
 
-            await fetch('/api/mvp/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ selectedIds })
-            });
+            try {
+                await fetch('/api/mvp/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ selectedIds })
+                });
+            } catch (mvpErr) {
+                console.warn("Aviso ao salvar mvp/save:", mvpErr);
+            }
 
+            setProducts(targetProducts);
             toast.success("Lançamento MVP atualizado e publicado com sucesso! 🎉", { id: 'save-mvp-launch' });
         } catch (error: any) {
             console.error("Erro ao salvar lançamento", error);
-            toast.error("Falha ao salvar Lançamento MVP.", { id: 'save-mvp-launch' });
+            toast.error(error.message || "Falha ao salvar Lançamento MVP.", { id: 'save-mvp-launch' });
         } finally {
             setIsSavingMvpLaunch(false);
         }

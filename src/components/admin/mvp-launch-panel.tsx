@@ -248,27 +248,45 @@ export function MvpLaunchPanel({
             if (p.id !== productId) return p;
 
             const oldCover = p.images[0];
+            const oldTitle = p.name;
+            const oldDesc = p.description;
+
+            // Identifica a cor do produto principal anterior
+            const detectedOldColor = detectColorFromProduct({ name: oldTitle, id: p.id } as any) || 'Cor Original';
+            const oldColorHex = getColorHex(detectedOldColor);
+
             const newCover = variation.image;
+            const newTitle = variation.title || p.name;
+            const newDesc = variation.description || p.description;
 
             // Coloca a imagem da variação na posição 0
             const updatedImages = [newCover, ...p.images.filter(img => img !== newCover)];
 
-            // Atualiza a variação para que fique com a imagem antiga ou se mantenha
+            // Troca a variação clicada pelos dados da capa antiga
             const updatedVars = (p.colorVariations || []).map(v => {
                 if (v.id === variation.id) {
-                    return { ...v, image: oldCover };
+                    return {
+                        ...v,
+                        colorName: detectedOldColor,
+                        colorHex: oldColorHex,
+                        title: oldTitle,
+                        description: oldDesc,
+                        image: oldCover,
+                    };
                 }
                 return v;
             });
 
             return {
                 ...p,
+                name: newTitle,
+                description: newDesc,
                 images: updatedImages,
                 colorVariations: updatedVars
             };
         }));
 
-        toast.success(`Foto de capa alterada para a cor "${variation.colorName}"! 🌟`);
+        toast.success(`Capa e informações alteradas para "${variation.colorName}"! 🌟`);
     };
 
     const handleReplaceMainCover = (newImageUrl: string) => {
@@ -622,7 +640,7 @@ export function MvpLaunchPanel({
                         </Button>
 
                         <Button
-                            onClick={() => onSaveMvp()}
+                            onClick={() => onSaveMvp(products)}
                             disabled={isSaving}
                             className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black h-9 px-5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2"
                         >

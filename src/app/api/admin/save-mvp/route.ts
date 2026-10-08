@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { ManagedProduct } from '@/types/admin';
+import { productControl } from '@/data/product-control';
 
 export async function POST(req: Request) {
     try {
@@ -14,6 +15,18 @@ export async function POST(req: Request) {
         // Garante que todo produto tenha um shortCode permanente (DPB-XXXX) único e sequencial
         const usedCodes = new Set<string>();
         let maxNum = 0;
+        
+        // Mapeia códigos já usados no catálogo completo
+        productControl.forEach((p: ManagedProduct) => {
+            if (p.shortCode) {
+                usedCodes.add(p.shortCode.toUpperCase());
+                const m = p.shortCode.match(/DPB-(\d+)/i);
+                if (m) {
+                    const n = parseInt(m[1], 10);
+                    if (n > maxNum) maxNum = n;
+                }
+            }
+        });
         
         products.forEach((p: ManagedProduct) => {
             if (p.shortCode) {
@@ -40,6 +53,27 @@ export async function POST(req: Request) {
             };
         });
 
+        // MERGE INTELIGENTE: Se a lista enviada for parcial (ex: apenas itens do MVP),
+        // mescla com o catálogo completo para NUNCA perder os outros produtos!
+        let fullCatalog = [...productControl];
+        const incomingMap = new Map(normalizedProducts.map((p: ManagedProduct) => [p.id, p]));
+
+        if (normalizedProducts.length < fullCatalog.length && normalizedProducts.length > 0) {
+            fullCatalog = fullCatalog.map((existing: ManagedProduct) => {
+                if (incomingMap.has(existing.id)) {
+                    return incomingMap.get(existing.id)!;
+                }
+                return existing;
+            });
+            for (const p of normalizedProducts) {
+                if (!fullCatalog.some((c: ManagedProduct) => c.id === p.id)) {
+                    fullCatalog.push(p);
+                }
+            }
+        } else if (normalizedProducts.length >= fullCatalog.length) {
+            fullCatalog = normalizedProducts;
+        }
+
         // 1. Grava no banco de dados principal (src/data/product-control.ts)
         const filePath = path.join(/*turbopackIgnore: true*/ process.cwd(), 'src', 'data', 'product-control.ts');
         const dirPath = path.dirname(filePath);
@@ -47,7 +81,7 @@ export async function POST(req: Request) {
             fs.mkdirSync(dirPath, { recursive: true });
         }
 
-        const code = `import { ManagedProduct } from '@/types/admin';\n\nexport const productControl: ManagedProduct[] = ${JSON.stringify(normalizedProducts, null, 4)};\n`;
+        const code = `import { ManagedProduct } from '@/types/admin';\n\nexport const productControl: ManagedProduct[] = ${JSON.stringify(fullCatalog, null, 4)};\n`;
         fs.writeFileSync(filePath, code, 'utf8');
 
         // 2. Sincroniza os arquivos de metadados originais (public/produtos/conferidos/[id].json)
