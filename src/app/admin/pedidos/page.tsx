@@ -55,6 +55,9 @@ interface Order {
     items: OrderItem[];
     requestedMethod?: string;
     shippingAmount?: number;
+    trackingCode?: string;
+    trackingUrl?: string;
+    postedAt?: string;
     superfrete?: {
         cartId?: string;
         status?: string;
@@ -442,6 +445,22 @@ export default function AdminPedidosPage() {
                                                         <Phone className="w-3 h-3" />
                                                         <span>{order.customerPhone}</span>
                                                     </a>
+                                                )}
+                                                {order.trackingCode && (
+                                                    <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                                                        <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center gap-1">
+                                                            <Truck className="w-3 h-3 text-emerald-600" />
+                                                            {order.trackingCode}
+                                                        </span>
+                                                        <a
+                                                            href={order.trackingUrl || `https://rastreio.superfrete.com/#/tracking/${order.trackingCode}`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-[10px] text-emerald-700 hover:text-emerald-900 underline font-semibold"
+                                                        >
+                                                            Rastrear
+                                                        </a>
+                                                    </div>
                                                 )}
                                             </div>
 

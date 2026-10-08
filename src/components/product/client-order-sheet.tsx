@@ -16,8 +16,12 @@ import {
     ShieldCheck, 
     Scissors,
     AlertCircle,
-    Calendar
+    Calendar,
+    Truck,
+    ExternalLink,
+    Copy
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { BABADOS, PASSA_FITAS, TYPES } from '@/data/admin-options';
 import { PRODUCT_TAXONOMY } from '@/data/product-taxonomy';
 
@@ -31,6 +35,9 @@ interface ClientOrderSheetProps {
         deadlineDate?: string;
         totalAmount?: number;
         shippingAmount?: number;
+        trackingCode?: string;
+        trackingUrl?: string;
+        postedAt?: string;
         address?: {
             street?: string;
             number?: string;
@@ -181,7 +188,7 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
                         { title: '1. Pedido Confirmado', subtitle: 'Pagamento recebido', done: true, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-200' },
                         { title: '2. Confecção & Bordado', subtitle: 'Bordado fio a fio', done: status !== 'pendente', icon: Scissors, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-200' },
                         { title: '3. Controle de Qualidade', subtitle: 'Passadoria & laço', done: status === 'conferencia' || status === 'enviado', icon: Sparkles, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-200' },
-                        { title: '4. Envio & Rastreio', subtitle: 'A caminho do seu lar', done: status === 'enviado', icon: Package, color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' },
+                        { title: '4. Envio & Rastreio', subtitle: 'A caminho do seu lar', done: status === 'enviado' || !!order.trackingCode, icon: Package, color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' },
                     ].map((step, idx) => {
                         const Icon = step.icon;
                         return (
@@ -199,6 +206,59 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
                     })}
                 </div>
             </div>
+
+            {/* ═══ CARD DE RASTREAMENTO (QUANDO POSTADO OU COM CÓDIGO) ═══ */}
+            {(order.trackingCode || status === 'enviado') && (
+                <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-2 border-emerald-300 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-3.5">
+                        <div className="w-12 h-12 rounded-2xl bg-[#245E3B] text-white flex items-center justify-center shrink-0 shadow-sm">
+                            <Truck className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-[#245E3B] bg-emerald-200/80 px-2 py-0.5 rounded-full">
+                                {status === 'enviado' ? '🚚 Pedido Postado & A Caminho' : '📦 Etiqueta Criada'}
+                            </span>
+                            <p className="text-sm font-bold text-slate-800 mt-1">
+                                {order.trackingCode ? (
+                                    <>Código de Rastreio: <span className="font-mono font-black text-[#245E3B] text-base">{order.trackingCode}</span></>
+                                ) : (
+                                    'Seu pedido foi despachado e está a caminho do seu lar!'
+                                )}
+                            </p>
+                            {order.postedAt && (
+                                <p className="text-[11px] text-slate-500 font-medium">
+                                    Postado em {new Date(order.postedAt).toLocaleDateString('pt-BR')} às {new Date(order.postedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {order.trackingCode && (
+                        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    navigator.clipboard.writeText(order.trackingCode!);
+                                    toast.success('Código de rastreio copiado!');
+                                }}
+                                className="flex-1 sm:flex-none px-3.5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 border border-emerald-200 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                            >
+                                <Copy className="w-3.5 h-3.5" />
+                                Copiar
+                            </button>
+                            <a
+                                href={order.trackingUrl || `https://rastreio.superfrete.com/#/tracking/${order.trackingCode}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 sm:flex-none px-4 py-2.5 bg-[#245E3B] hover:bg-[#1b472c] text-white rounded-xl text-xs font-bold uppercase transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                            >
+                                Rastrear
+                                <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                        </div>
+                    )}
+                </div>
+            )}
 
             {/* ═══ DETALHES DE CADA ITEM DO ENXOVAL ═══ */}
             <div className="space-y-6">

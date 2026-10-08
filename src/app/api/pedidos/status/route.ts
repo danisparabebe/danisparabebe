@@ -83,6 +83,9 @@ export async function GET(request: Request) {
                 shippingAmount: typeof data.shippingAmount === 'number' ? data.shippingAmount : 0,
                 createdAt: data.createdAt || null,
                 deadlineDate: data.deadlineDate || null,
+                trackingCode: data.trackingCode || data.superfrete?.tracking || null,
+                trackingUrl: data.trackingUrl || data.superfrete?.trackingUrl || null,
+                postedAt: data.postedAt || null,
             }
         });
     } catch (e: any) {

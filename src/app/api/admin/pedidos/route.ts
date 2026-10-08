@@ -99,6 +99,9 @@ export async function GET() {
                 requestedMethod: data.requestedMethod || null,
                 shippingAmount: data.shippingAmount || 0,
                 superfrete: data.superfrete || null,
+                trackingCode: data.trackingCode || data.superfrete?.tracking || null,
+                trackingUrl: data.trackingUrl || data.superfrete?.trackingUrl || null,
+                postedAt: data.postedAt || null,
             });
         });
 
