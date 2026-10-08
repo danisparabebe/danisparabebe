@@ -988,23 +988,30 @@ export default function UnifiedCheckoutPage() {
                                         return null;
                                     })()}
 
-                                    <div className="border-t border-slate-200 pt-2.5 mt-2 flex justify-between items-baseline">
-                                        <div>
-                                            <span className="text-xs font-black text-slate-500 uppercase tracking-wider block">
-                                                Valor Total
-                                            </span>
-                                            <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded uppercase">
-                                                Ambiente Seguro
-                                            </span>
+                                    <div className="border-t border-slate-200 pt-2.5 mt-2">
+                                        <div className="flex justify-between items-center">
+                                            <div>
+                                                <span className="text-xs font-black text-slate-500 uppercase tracking-wider block">
+                                                    Valor Total
+                                                </span>
+                                                <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded uppercase">
+                                                    Ambiente Seguro
+                                                </span>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="flex items-center justify-end gap-2">
+                                                    <span className="text-2xl font-black text-emerald-700 tracking-tight">
+                                                        {formatPrice(finalTotal)}
+                                                    </span>
+                                                    <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded-full">
+                                                        no PIX
+                                                    </span>
+                                                </div>
+                                                <p className="text-[11px] font-bold text-slate-500 mt-0.5">
+                                                    ou 12x de R$ {(finalTotal * 0.10).toFixed(2).replace('.', ',')} no cartão
+                                                </p>
+                                            </div>
                                         </div>
-                                        <span className="text-2xl font-black text-emerald-700 tracking-tight">
-                                            {formatPrice(finalTotal)}
-                                        </span>
-                                    </div>
-                                    <div className="text-right mt-0.5">
-                                        <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                                            no PIX · ou 12x de R$ {(finalTotal * 0.10).toFixed(2).replace('.', ',')} no cartão
-                                        </span>
                                     </div>
                                 </div>
                             </div>

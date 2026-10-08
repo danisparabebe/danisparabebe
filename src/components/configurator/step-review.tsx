@@ -562,38 +562,43 @@ export function StepReview() {
 
                             <div className="h-px bg-white/20 w-full my-3" />
                             
-                            <div className="flex justify-between items-end">
+                            <div className="flex justify-between items-center">
                                 <span className="font-black text-sm uppercase tracking-widest text-sage-green">Total</span>
-                                <span className="text-2xl font-black tabular-nums tracking-tight">
-                                    {(() => {
-                                        let finalShipping = 0;
-                                        if (shippingOption) {
-                                            const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
-                                            const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                            const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
-                                            if (!((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible)) {
-                                                finalShipping = shippingOption.price || 0;
+                                <div className="text-right">
+                                    <div className="flex items-center justify-end gap-2">
+                                        <span className="text-2xl font-black tabular-nums tracking-tight text-white">
+                                            {(() => {
+                                                let finalShipping = 0;
+                                                if (shippingOption) {
+                                                    const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                                    const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                                    const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
+                                                    if (!((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible)) {
+                                                        finalShipping = shippingOption.price || 0;
+                                                    }
+                                                }
+                                                return formatPrice(total + finalShipping);
+                                            })()}
+                                        </span>
+                                        <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-500 text-white px-2 py-0.5 rounded-full">
+                                            no PIX
+                                        </span>
+                                    </div>
+                                    <p className="text-[11px] font-bold text-white/80 mt-1">
+                                        ou 12x de R$ {(() => {
+                                            let finalShipping = 0;
+                                            if (shippingOption) {
+                                                const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                                const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                                const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
+                                                if (!((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible)) {
+                                                    finalShipping = shippingOption.price || 0;
+                                                }
                                             }
-                                        }
-                                        return formatPrice(total + finalShipping);
-                                    })()}
-                                </span>
-                            </div>
-                            <div className="text-center mt-1.5">
-                                <span className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">
-                                    no PIX · ou 12x de R$ {(() => {
-                                        let finalShipping = 0;
-                                        if (shippingOption) {
-                                            const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
-                                            const isStateEligible = isEligibleForFreeShipping(formData.state || '');
-                                            const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
-                                            if (!((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible)) {
-                                                finalShipping = shippingOption.price || 0;
-                                            }
-                                        }
-                                        return ((total + finalShipping) * 0.10).toFixed(2).replace('.', ',');
-                                    })()} no cartão
-                                </span>
+                                            return ((total + finalShipping) * 0.10).toFixed(2).replace('.', ',');
+                                        })()} no cartão
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
