@@ -65,3 +65,12 @@ export function formatPrice(value: number): string {
         currency: 'BRL'
     }).format(value);
 }
+
+/**
+ * Calcula a parcela de 12x no cartão de crédito via InfinitePay
+ * Taxa exata do repasse InfinitePay ao comprador em 12x: 10% do valor à vista por parcela
+ * Exemplo real: R$ 404,80 à vista -> 12x de R$ 40,48
+ */
+export function getInfinitePayInstallment12x(value: number): number {
+    return value * 0.10;
+}

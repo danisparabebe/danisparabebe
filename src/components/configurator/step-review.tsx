@@ -579,6 +579,22 @@ export function StepReview() {
                                     })()}
                                 </span>
                             </div>
+                            <div className="text-center mt-1.5">
+                                <span className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">
+                                    no PIX · ou 12x de R$ {(() => {
+                                        let finalShipping = 0;
+                                        if (shippingOption) {
+                                            const cheapestOption = [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                            const isStateEligible = isEligibleForFreeShipping(formData.state || '');
+                                            const isCheapestPrimary = shippingOption.id === cheapestOption?.id;
+                                            if (!((total >= (FREE_SHIPPING_THRESHOLD || 99999)) && isCheapestPrimary && isStateEligible)) {
+                                                finalShipping = shippingOption.price || 0;
+                                            }
+                                        }
+                                        return ((total + finalShipping) * 0.10).toFixed(2).replace('.', ',');
+                                    })()} no cartão
+                                </span>
+                            </div>
                         </div>
 
                         <div className="flex gap-3">

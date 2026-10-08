@@ -1001,6 +1001,11 @@ export default function UnifiedCheckoutPage() {
                                             {formatPrice(finalTotal)}
                                         </span>
                                     </div>
+                                    <div className="text-right mt-0.5">
+                                        <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                                            no PIX · ou 12x de R$ {(finalTotal * 0.10).toFixed(2).replace('.', ',')} no cartão
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 

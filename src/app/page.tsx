@@ -40,8 +40,8 @@ export default async function HomePage() {
     const managedProducts = productControl.map(p => {
         const pixPrice = p.pixPrice || getFinalPrice(p);
         
-        // Taxa InfinitePay 3x
-        const realInstallment3x = (pixPrice * 1.0754) / 3;
+        // Taxa exata InfinitePay 12x (10% do valor à vista por mês)
+        const installment12x = pixPrice * 0.10;
         const available = isProductAvailable(p.id) || isProductAvailable(p.shortCode || '');
 
         return {
@@ -51,8 +51,8 @@ export default async function HomePage() {
             category: p.category || 'Geral',
             price: pixPrice,
             originalPrice: p.originalPriceFull && p.originalPriceFull > p.priceFull ? p.originalPriceFull : undefined,
-            installmentPrice: realInstallment3x,
-            installments: 3,
+            installmentPrice: installment12x,
+            installments: 12,
             image: p.images?.[0] ? encodeURI(p.images[0]) : '/Logos/Logomarca%20Rose.png',
             badge: available ? (p.badge || (p.tags?.includes('oferta') ? 'Oferta' : undefined)) : 'Em Breve',
             gridPosition: p.gridPosition,

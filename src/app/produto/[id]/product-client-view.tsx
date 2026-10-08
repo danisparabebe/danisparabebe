@@ -265,7 +265,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         <div className="flex items-center gap-2 mt-1">
                             <ShieldCheck className="w-3.5 h-3.5 text-sage-green-dark" />
                             <span className="text-[11px] font-medium text-slate uppercase tracking-wider">
-                                ou 3x de R$ {((currentPixPrice * 1.0754) / 3).toFixed(2).replace('.', ',')} no cartão via InfinitePay
+                                ou 12x de R$ {(currentPixPrice * 0.10).toFixed(2).replace('.', ',')} no cartão
                             </span>
                         </div>
                     </div>
