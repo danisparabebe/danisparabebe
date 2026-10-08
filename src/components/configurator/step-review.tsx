@@ -497,7 +497,10 @@ export function StepReview() {
                                     })()}
 
                                     {showAllShipping && shippingOptions
-                                        .filter(option => option !== shippingOption && option !== [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0])
+                                        .filter(option => {
+                                            const currentPrimary = shippingOption || [...shippingOptions].sort((a, b) => (a.price||0) - (b.price||0))[0];
+                                            return option.id ? option.id !== currentPrimary?.id : option !== currentPrimary;
+                                        })
                                         .sort((a, b) => (a.price || 0) - (b.price || 0))
                                         .map((option, idx) => {
                                             const isStateEligible = isEligibleForFreeShipping(formData.state || '');
