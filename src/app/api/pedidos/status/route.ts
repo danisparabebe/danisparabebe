@@ -13,23 +13,38 @@ export async function GET(request: Request) {
             return NextResponse.json({ ok: false, error: 'ID do pedido não informado' }, { status: 400 });
         }
 
+        const cleanId = id.replace(/[^0-9a-zA-Z_]/g, '');
+
         // Tenta buscar diretamente pelo ID
-        let docSnap = await adminDb.collection('orders').doc(id).get();
+        let docSnap = await adminDb.collection('orders').doc(cleanId).get();
 
         // Se não encontrar, tenta com prefixo ORDER_
-        if (!docSnap.exists && !id.startsWith('ORDER_')) {
-            docSnap = await adminDb.collection('orders').doc(`ORDER_${id}`).get();
+        if (!docSnap.exists && !cleanId.startsWith('ORDER_')) {
+            docSnap = await adminDb.collection('orders').doc(`ORDER_${cleanId}`).get();
         }
 
         // Se ainda não encontrar, pesquisa pelo campo id no documento
         if (!docSnap.exists) {
             const querySnap = await adminDb.collection('orders')
-                .where('id', '==', id)
+                .where('id', '==', cleanId)
                 .limit(1)
                 .get();
 
             if (!querySnap.empty) {
                 docSnap = querySnap.docs[0];
+            }
+        }
+
+        // Se ainda não encontrar (ex: cliente digitou os 6 dígitos finais como 488243)
+        if (!docSnap.exists && cleanId.length >= 4) {
+            const recentSnap = await adminDb.collection('orders').orderBy('createdAt', 'desc').limit(100).get();
+            const found = recentSnap.docs.find(d => {
+                const docId = d.id;
+                const fieldId = d.data()?.id ? String(d.data().id) : '';
+                return docId.includes(cleanId) || fieldId.includes(cleanId);
+            });
+            if (found) {
+                docSnap = found;
             }
         }
 
@@ -49,6 +64,11 @@ export async function GET(request: Request) {
             };
         });
 
+        const rawStatus = (data.status || 'pendente').toLowerCase();
+        const displayStatus = (rawStatus === 'pago_aprovado' || rawStatus === 'approved' || rawStatus === 'paid')
+            ? 'pago'
+            : rawStatus;
+
         // Retorna informações seguras para exibição pública do cliente
         return NextResponse.json({
             ok: true,
@@ -58,7 +78,7 @@ export async function GET(request: Request) {
                 customerPhone: data.customerPhone || '',
                 address: data.address || null,
                 items,
-                status: data.status || 'pendente',
+                status: displayStatus,
                 totalAmount: typeof data.totalAmount === 'number' ? data.totalAmount : 0,
                 shippingAmount: typeof data.shippingAmount === 'number' ? data.shippingAmount : 0,
                 createdAt: data.createdAt || null,

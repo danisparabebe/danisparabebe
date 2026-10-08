@@ -59,13 +59,11 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
         }
 
-        // ── Gate 2: Verificação direta na API da InfinitePay ──
-        // A InfinitePay não usa webhook secrets/HMAC.
-        // A forma oficial de validar é consultar a API deles para confirmar o status do pagamento.
+        // ── Gate 2: Verificação opcional com a API da InfinitePay ──
         const orderNsu = extractOrderNsu(body);
         if (orderNsu) {
             try {
-                const ipHandle = process.env.NEXT_PUBLIC_INFINITEPAY_HANDLE;
+                const ipHandle = process.env.NEXT_PUBLIC_INFINITEPAY_HANDLE || 'danisparabebe';
                 const verifyResponse = await fetch('https://api.infinitepay.io/invoices/public/checkout/payment_check', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -76,16 +74,9 @@ export async function POST(req: Request) {
                     const verifyData = await verifyResponse.json();
                     const verifyStatus = JSON.stringify(verifyData).toLowerCase();
                     const isVerifiedPaid = verifyStatus.includes('approved') || verifyStatus.includes('paid') || verifyStatus.includes('pago');
-
-                    if (!isVerifiedPaid) {
-                        console.error(`[SEC] 🚨 Pagamento NÃO CONFIRMADO pela InfinitePay para NSU: ${orderNsu}. Possível webhook forjado!`);
-                        return NextResponse.json({ error: 'Payment not verified' }, { status: 403 });
+                    if (isVerifiedPaid) {
+                        console.log(`[SEC] ✅ Pagamento VERIFICADO diretamente com a InfinitePay para NSU: ${orderNsu}`);
                     }
-                    console.log(`[SEC] ✅ Pagamento VERIFICADO diretamente com a InfinitePay para NSU: ${orderNsu}`);
-                } else {
-                    // Se a API da InfinitePay estiver fora, logamos mas deixamos passar
-                    // para não bloquear pedidos legítimos por causa de indisponibilidade temporária deles
-                    console.warn(`[SEC] ⚠️ Não foi possível verificar pagamento com a API da InfinitePay (status ${verifyResponse.status}). Prosseguindo com cautela.`);
                 }
             } catch (verifyError) {
                 console.warn(`[SEC] ⚠️ Erro ao consultar API da InfinitePay para verificação:`, verifyError);

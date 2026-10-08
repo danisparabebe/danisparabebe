@@ -185,7 +185,9 @@ export async function POST(request: Request) {
             console.log(`🚚 Frete GRÁTIS aplicado`);
         }
 
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+        const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.trim() !== '')
+            ? process.env.NEXT_PUBLIC_SITE_URL.trim()
+            : 'https://danisparabebe.com.br';
         const orderId = `ORDER_${Date.now()}`;
         const totalAmount = calculatedTotalAmountCents;
 
@@ -272,7 +274,8 @@ export async function POST(request: Request) {
             handle: ipHandle,
             amount: totalAmount,
             order_nsu: orderId,
-            redirect_url: `${baseUrl}/sucesso?session_id=${orderId}`,
+            redirect_url: `${siteUrl}/sucesso?session_id=${orderId}`,
+            webhook_url: `${siteUrl}/api/webhooks/infinitepay`,
             customer: customerPayload,
             address: addressPayload,
             items: ipItems.map((item: any) => ({
