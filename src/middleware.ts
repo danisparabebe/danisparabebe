@@ -42,9 +42,10 @@ export function middleware(req: NextRequest) {
             
             try {
                 const [user, pwd] = atob(authValue).split(':');
+                const adminUser = process.env.ADMIN_USER || 'admin';
                 const adminPwd = process.env.ADMIN_PASSWORD;
 
-                if (user === 'admin' && adminPwd && pwd === adminPwd) {
+                if (user === adminUser && adminPwd && pwd === adminPwd) {
                     // Login com sucesso: reseta qualquer contador de falhas do IP
                     failedAttemptsMap.delete(ip);
                     console.log(`[SEC-LOG ${new Date().toISOString()}] ✅ Admin Acessado. IP: ${ip} - Rota: ${pathname}`);

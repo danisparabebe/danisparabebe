@@ -156,3 +156,53 @@ export async function PATCH(req: Request) {
         );
     }
 }
+
+export async function DELETE() {
+    try {
+        const snapshot = await adminDb.collection('orders').get();
+        if (snapshot.empty) {
+            return NextResponse.json({ ok: true, count: 0, message: 'Nenhum pedido encontrado. O painel já está zerado.' });
+        }
+
+        let batch = adminDb.batch();
+        let count = 0;
+        let totalDeleted = 0;
+        const archivedAt = new Date().toISOString();
+
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            // Salva backup silencioso em orders_archive para segurança
+            const archiveRef = adminDb.collection('orders_archive').doc(doc.id);
+            batch.set(archiveRef, { ...data, _archivedAt: archivedAt });
+
+            // Remove da coleção principal de pedidos ativos
+            batch.delete(doc.ref);
+            count++;
+            totalDeleted++;
+
+            if (count >= 300) {
+                await batch.commit();
+                batch = adminDb.batch();
+                count = 0;
+            }
+        }
+
+        if (count > 0) {
+            await batch.commit();
+        }
+
+        console.log(`[ADMIN-CLEANUP] 🧹 ${totalDeleted} pedidos de teste arquivados e zerados do painel principal.`);
+        return NextResponse.json({
+            ok: true,
+            count: totalDeleted,
+            message: `${totalDeleted} pedidos de teste foram arquivados e o painel foi zerado com sucesso!`
+        });
+    } catch (err: any) {
+        console.error('❌ Erro ao limpar pedidos no Admin API:', err);
+        return NextResponse.json(
+            { ok: false, error: err.message || 'Falha ao limpar pedidos no servidor' },
+            { status: 500 }
+        );
+    }
+}
+

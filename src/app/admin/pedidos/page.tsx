@@ -18,7 +18,8 @@ import {
     ShoppingBag,
     Tag,
     Image as ImageIcon,
-    Loader2
+    Loader2,
+    Trash2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
@@ -171,6 +172,36 @@ export default function AdminPedidosPage() {
         }
     };
 
+    const handleClearOrders = async () => {
+        if (orders.length === 0) {
+            toast.info('O painel de pedidos já está zerado!');
+            return;
+        }
+
+        const confirmed = window.confirm(
+            '⚠️ ATENÇÃO: Tem certeza que deseja zerar o painel de pedidos?\n\n' +
+            `Todos os ${orders.length} pedidos de teste atuais serão arquivados com segurança no banco de dados e a tela começará totalmente limpa para os clientes reais.\n\nDeseja continuar?`
+        );
+        if (!confirmed) return;
+
+        setLoading(true);
+        try {
+            const res = await fetch('/api/admin/pedidos', { method: 'DELETE' });
+            const data = await res.json();
+            if (data.ok) {
+                toast.success(data.message || 'Painel de pedidos zerado com sucesso!');
+                setOrders([]);
+            } else {
+                toast.error(data.error || 'Erro ao limpar pedidos.');
+            }
+        } catch (err: any) {
+            console.error('Erro ao limpar pedidos:', err);
+            toast.error('Erro de conexão ao limpar pedidos.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'pago': return 'bg-emerald-100 text-emerald-800 border-emerald-300';
@@ -317,6 +348,15 @@ export default function AdminPedidosPage() {
                             >
                                 <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
                                 {refreshing ? 'Sincronizando...' : 'Atualizar'}
+                            </button>
+                            <button
+                                onClick={handleClearOrders}
+                                disabled={loading || orders.length === 0}
+                                className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 hover:bg-rose-100 active:scale-95 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition-all disabled:opacity-40"
+                                title="Zerar e arquivar todos os pedidos de teste"
+                            >
+                                <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                                <span>Zerar Pedidos</span>
                             </button>
                         </div>
                     </div>
