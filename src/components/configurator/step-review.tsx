@@ -25,9 +25,12 @@ export function StepReview() {
         itemQuantities, itemSizes, getTotalPrice, previousStep, reset, getDiscountPercentage,
     } = store;
 
-    const total = getTotalPrice();
-    const discountPct = getDiscountPercentage();
     const items = Object.entries(itemQuantities).filter(([, q]) => q > 0);
+    const grossTotal = items.reduce((sum, [id, q]) => sum + (BASE_PRICES[id] || 0) * q, 0);
+    const discountPct = getDiscountPercentage();
+    const discountAmount = discountPct > 0 ? (grossTotal * discountPct) / 100 : 0;
+    const finalItemsTotal = grossTotal - discountAmount;
+    const total = finalItemsTotal;
     const colorLabel = getColorLabel(acabamentoColor);
 
     const babadoImg = BABADOS.find(b => b.id === acabamentoColor)?.img;
@@ -336,7 +339,7 @@ export function StepReview() {
                                 <table className="w-full text-[10px]">
                                     <tbody>
                                         {items.map(([id, qty]) => {
-                                            const unPrice = BASE_PRICES[id] * (1 - discountPct / 100);
+                                            const unPrice = BASE_PRICES[id] || 0;
                                             return (
                                                 <tr key={id} className="border-b border-black/5 last:border-0">
                                                     <td className="py-1 w-6"><span className="bg-slate-100 text-slate font-bold px-1 py-0.5 rounded">{qty}x</span></td>
@@ -531,8 +534,18 @@ export function StepReview() {
                         <div className="bg-[#1f2937] rounded-xl p-4 shadow-md text-white">
                             <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2 text-white/80">
                                 <span>Subtotal Enxoval</span>
-                                <span>{formatPrice(total)}</span>
+                                <span>{formatPrice(grossTotal)}</span>
                             </div>
+
+                            {discountAmount > 0 && (
+                                <div className="flex justify-between text-xs font-black uppercase tracking-wider mb-2 text-[#7dd395] bg-emerald-950/60 px-2.5 py-1.5 rounded-lg border border-emerald-500/30">
+                                    <span className="flex items-center gap-1.5">
+                                        <span className="w-2 h-2 rounded-full bg-[#52d47e] animate-pulse" />
+                                        Desconto Monte Seu Kit ({discountPct}% OFF)
+                                    </span>
+                                    <span>-{formatPrice(discountAmount)}</span>
+                                </div>
+                            )}
                             
                             {shippingOption && (
                                 <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2 text-white/80">

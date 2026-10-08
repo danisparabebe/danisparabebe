@@ -146,7 +146,6 @@ export function StepItems() {
                         {/* Botões Rápidos de Tamanho */}
                         <div className="flex gap-1.5 mb-2">
                             {[
-                                { val: 'RN', sub: 'Recém-nascido' },
                                 { val: 'P', sub: '0-3m' },
                                 { val: 'M', sub: '3-6m' },
                                 { val: 'G', sub: '6-9m' },
@@ -170,7 +169,7 @@ export function StepItems() {
                         {/* Campo de Texto para Digitar Tamanho */}
                         <input
                             type="text"
-                            placeholder="Ou digite o tamanho desejado (ex: RN, P, M, G...)"
+                            placeholder="Ou digite o tamanho desejado (ex: P, M, G...)"
                             value={currentSize}
                             onChange={(e) => setItemSize(id, e.target.value)}
                             className="w-full px-3 py-1.5 rounded-xl border border-line text-xs font-semibold text-charcoal placeholder:text-slate/40 focus:ring-2 focus:ring-sage-green focus:border-sage-green outline-none bg-white transition-all"
