@@ -185,9 +185,16 @@ export async function POST(request: Request) {
             console.log(`🚚 Frete GRÁTIS aplicado`);
         }
 
-        const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.trim() !== '')
-            ? process.env.NEXT_PUBLIC_SITE_URL.trim()
-            : 'https://danisparabebe.com.br';
+        const reqOrigin = request.headers.get('origin') || request.headers.get('referer') || '';
+        let siteUrl = 'https://danisparabebe.com.br';
+        if (reqOrigin && reqOrigin.startsWith('http') && !reqOrigin.includes('localhost')) {
+            try {
+                const u = new URL(reqOrigin);
+                siteUrl = `${u.protocol}//${u.host}`;
+            } catch {}
+        } else if (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.trim() !== '') {
+            siteUrl = process.env.NEXT_PUBLIC_SITE_URL.trim();
+        }
         const orderId = `ORDER_${Date.now()}`;
         const totalAmount = calculatedTotalAmountCents;
 

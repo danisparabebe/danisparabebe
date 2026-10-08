@@ -17,7 +17,8 @@ import {
     ChevronRight,
     ShoppingBag,
     Tag,
-    Image as ImageIcon
+    Image as ImageIcon,
+    Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
@@ -54,12 +55,19 @@ interface Order {
     items: OrderItem[];
     requestedMethod?: string;
     shippingAmount?: number;
+    superfrete?: {
+        cartId?: string;
+        status?: string;
+        printUrl?: string;
+        price?: number;
+    } | null;
 }
 
 export default function AdminPedidosPage() {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [generatingEtiquetaId, setGeneratingEtiquetaId] = useState<string | null>(null);
     const [filterStatus, setFilterStatus] = useState<string>('todos');
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -129,6 +137,34 @@ export default function AdminPedidosPage() {
             console.error(err);
             toast.error('Erro ao atualizar status. Revertendo...');
             setOrders(previousOrders);
+        }
+    };
+
+    const handleGerarEtiqueta = async (orderId: string) => {
+        setGeneratingEtiquetaId(orderId);
+        try {
+            const res = await fetch('/api/admin/shipping/etiqueta', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId })
+            });
+            const data = await res.json();
+            if (data.ok) {
+                if (data.printUrl) {
+                    toast.success('Etiqueta gerada e pronta!');
+                    window.open(data.printUrl, '_blank');
+                } else {
+                    toast.success(data.message || 'Etiqueta criada na SuperFrete!');
+                    window.open(data.panelUrl || 'https://web.superfrete.com/#/minhas-etiquetas', '_blank');
+                }
+                fetchOrders(false);
+            } else {
+                toast.error(data.error || 'Falha ao gerar etiqueta na SuperFrete.');
+            }
+        } catch (err: any) {
+            toast.error(err.message || 'Erro ao conectar com a SuperFrete.');
+        } finally {
+            setGeneratingEtiquetaId(null);
         }
     };
 
@@ -255,10 +291,21 @@ export default function AdminPedidosPage() {
 
                         <div className="flex items-center gap-3">
                             {lastUpdated && (
-                                <span className="text-xs text-slate-400 font-medium">
+                                <span className="text-xs text-slate-400 font-medium hidden sm:inline">
                                     Atualizado às {lastUpdated.toLocaleTimeString('pt-BR')}
                                 </span>
                             )}
+                            <a
+                                href="https://web.superfrete.com/#/minhas-etiquetas"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold transition-all shadow-xs"
+                                title="Abrir painel oficial da SuperFrete em nova aba"
+                            >
+                                <Truck className="w-3.5 h-3.5 text-emerald-600" />
+                                <span>Painel SuperFrete</span>
+                                <ExternalLink className="w-3 h-3 text-emerald-600" />
+                            </a>
                             <button
                                 onClick={() => fetchOrders(false)}
                                 disabled={refreshing || loading}
@@ -451,6 +498,30 @@ export default function AdminPedidosPage() {
                                                     <FileText className="w-3.5 h-3.5" /> 
                                                     Ver Ficha Técnica
                                                 </Link>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleGerarEtiqueta(order.id)}
+                                                    disabled={generatingEtiquetaId === order.id}
+                                                    className={`flex items-center justify-center gap-1.5 p-2 text-white rounded-xl text-xs font-bold uppercase transition-all shadow-sm active:scale-95 disabled:opacity-50 ${
+                                                        order.superfrete?.printUrl
+                                                            ? 'bg-blue-600 hover:bg-blue-700'
+                                                            : order.superfrete?.cartId
+                                                            ? 'bg-amber-600 hover:bg-amber-700'
+                                                            : 'bg-emerald-600 hover:bg-emerald-700'
+                                                    }`}
+                                                    title={order.superfrete?.cartId ? 'Etiqueta já criada na SuperFrete. Clique para abrir ou reimprimir.' : 'Gerar etiqueta de envio na SuperFrete'}
+                                                >
+                                                    {generatingEtiquetaId === order.id ? (
+                                                        <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Gerando...</>
+                                                    ) : order.superfrete?.printUrl ? (
+                                                        <><Truck className="w-3.5 h-3.5" /> Imprimir Etiqueta</>
+                                                    ) : order.superfrete?.cartId ? (
+                                                        <><Truck className="w-3.5 h-3.5" /> Ver na SuperFrete</>
+                                                    ) : (
+                                                        <><Truck className="w-3.5 h-3.5" /> Gerar Etiqueta SuperFrete</>
+                                                    )}
+                                                </button>
                                             </div>
 
                                         </div>

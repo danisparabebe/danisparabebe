@@ -98,6 +98,7 @@ export async function GET() {
                 items,
                 requestedMethod: data.requestedMethod || null,
                 shippingAmount: data.shippingAmount || 0,
+                superfrete: data.superfrete || null,
             });
         });
 
