@@ -4,8 +4,67 @@ import { productControl } from '@/data/product-control';
 
 export const dynamic = 'force-dynamic';
 
+// --- SECURITY: ANTI-SCRAPING RATE LIMITER (LGPD Protection) ---
+const statusRateLimitMap = new Map<string, { count: number; timestamp: number }>();
+const STATUS_RATE_LIMIT_WINDOW = 60 * 1000; // 1 minuto
+const MAX_STATUS_REQUESTS = 25; // Limite por IP para impedir enumeração e scraping de pedidos
+
+// --- SECURITY: LGPD DATA MASKING ---
+function maskCustomerName(name: string): string {
+    if (!name) return 'Cliente';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0];
+    const first = parts[0];
+    const lastInitial = parts[parts.length - 1].charAt(0).toUpperCase();
+    return `${first} ${lastInitial}.`;
+}
+
+function maskPhone(phone: string): string {
+    if (!phone) return '';
+    const clean = phone.replace(/\D/g, '');
+    if (clean.length === 11) {
+        return `(${clean.slice(0, 2)}) ${clean.slice(2, 3)}****-${clean.slice(7)}`;
+    }
+    if (clean.length === 10) {
+        return `(${clean.slice(0, 2)}) ${clean.slice(2, 3)}***-${clean.slice(6)}`;
+    }
+    return phone.length > 4 ? phone.slice(0, 4) + '****' + phone.slice(-2) : '****';
+}
+
+function maskAddress(addr: any) {
+    if (!addr || typeof addr !== 'object') return null;
+    const cep = (addr.postal_code || addr.cep || '').replace(/\D/g, '');
+    const maskedCep = cep.length === 8 ? `${cep.slice(0, 5)}-***` : cep;
+
+    return {
+        street: addr.street || '',
+        number: '***',
+        complement: '',
+        neighborhood: addr.neighborhood || '',
+        city: addr.city || '',
+        state: addr.state || '',
+        postal_code: maskedCep,
+        cep: maskedCep,
+    };
+}
+
 export async function GET(request: Request) {
     try {
+        // Anti-scraping rate check
+        const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
+        const nowMs = Date.now();
+        const hit = statusRateLimitMap.get(ip);
+
+        if (hit && (nowMs - hit.timestamp) < STATUS_RATE_LIMIT_WINDOW) {
+            if (hit.count >= MAX_STATUS_REQUESTS) {
+                console.warn(`🚨 BLOCKED: Status query rate limit exceeded by IP: ${ip}`);
+                return NextResponse.json({ ok: false, error: 'Muitas consultas. Aguarde um instante.' }, { status: 429 });
+            }
+            hit.count++;
+        } else {
+            statusRateLimitMap.set(ip, { count: 1, timestamp: nowMs });
+        }
+
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id') || searchParams.get('session_id') || searchParams.get('order_id');
 
@@ -14,6 +73,9 @@ export async function GET(request: Request) {
         }
 
         const cleanId = id.replace(/[^0-9a-zA-Z_]/g, '');
+        if (cleanId.length < 4) {
+            return NextResponse.json({ ok: false, error: 'Identificador do pedido inválido' }, { status: 400 });
+        }
 
         // Tenta buscar diretamente pelo ID
         let docSnap = await adminDb.collection('orders').doc(cleanId).get();
@@ -69,14 +131,14 @@ export async function GET(request: Request) {
             ? 'pago'
             : rawStatus;
 
-        // Retorna informações seguras para exibição pública do cliente
+        // Retorna informações seguras com mascaramento LGPD para exibição pública
         return NextResponse.json({
             ok: true,
             order: {
                 id: docSnap.id,
-                customerName: data.customerName || 'Cliente',
-                customerPhone: data.customerPhone || '',
-                address: data.address || null,
+                customerName: maskCustomerName(data.customerName),
+                customerPhone: maskPhone(data.customerPhone),
+                address: maskAddress(data.address),
                 items,
                 status: displayStatus,
                 totalAmount: typeof data.totalAmount === 'number' ? data.totalAmount : 0,

@@ -6,7 +6,15 @@ export async function POST(req: Request) {
     try {
         const { oldFilename, newSKU, sourceDir, composition, customName, filters } = await req.json();
 
-        // Validate directories
+        if (!oldFilename || !newSKU || typeof oldFilename !== 'string' || typeof newSKU !== 'string') {
+            return NextResponse.json({ error: 'oldFilename e newSKU são obrigatórios' }, { status: 400 });
+        }
+
+        const safeOldFilename = path.basename(oldFilename);
+        const safeSKU = String(newSKU).replace(/[^a-zA-Z0-9_-]/g, '');
+        if (!safeSKU) {
+            return NextResponse.json({ error: 'SKU inválido' }, { status: 400 });
+        }
         const uploadsProductsDir = path.join(process.cwd(), 'public', 'uploads', 'products');
         const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
         const productsDir = path.join(process.cwd(), 'public', 'produtos');
@@ -34,7 +42,7 @@ export async function POST(req: Request) {
         for (const dir of candidateFolders) {
             if (!fs.existsSync(dir)) continue;
 
-            const exact = path.join(dir, oldFilename);
+            const exact = path.join(dir, safeOldFilename);
             if (fs.existsSync(exact)) {
                 oldPath = exact;
                 break;
@@ -42,7 +50,7 @@ export async function POST(req: Request) {
 
             // Fallback: check normalized or decoded filename
             try {
-                const decoded = decodeURIComponent(oldFilename);
+                const decoded = decodeURIComponent(safeOldFilename);
                 const decodedPath = path.join(dir, decoded);
                 if (fs.existsSync(decodedPath)) {
                     oldPath = decodedPath;
@@ -54,10 +62,10 @@ export async function POST(req: Request) {
             try {
                 const files = fs.readdirSync(dir);
                 const found = files.find(f => 
-                    f === oldFilename || 
-                    f.normalize('NFC') === oldFilename.normalize('NFC') ||
-                    f.normalize('NFD') === oldFilename.normalize('NFD') ||
-                    (f.includes(oldFilename.slice(0, 13))) // match timestamp prefix if any
+                    f === safeOldFilename || 
+                    f.normalize('NFC') === safeOldFilename.normalize('NFC') ||
+                    f.normalize('NFD') === safeOldFilename.normalize('NFD') ||
+                    (f.includes(safeOldFilename.slice(0, 13))) // match timestamp prefix if any
                 );
                 if (found) {
                     oldPath = path.join(dir, found);
@@ -69,19 +77,19 @@ export async function POST(req: Request) {
         }
 
         if (!oldPath || !fs.existsSync(oldPath)) {
-            console.error(`[Rename] File not found: ${oldFilename} in candidate folders:`, candidateFolders);
-            return NextResponse.json({ error: `Source file not found: ${oldFilename}` }, { status: 404 });
+            console.error(`[Rename] File not found: ${safeOldFilename} in candidate folders:`, candidateFolders);
+            return NextResponse.json({ error: `Source file not found: ${safeOldFilename}` }, { status: 404 });
         }
 
         // Handle sequence numbering
         let attempt = 1;
-        let finalFilename = `${newSKU}_01${path.extname(oldPath)}`;
+        let finalFilename = `${safeSKU}_01${path.extname(oldPath)}`;
         let finalPath = path.join(targetDir, finalFilename);
 
         while (fs.existsSync(finalPath) && finalPath !== oldPath) {
             attempt++;
             const suffix = attempt.toString().padStart(2, '0');
-            finalFilename = `${newSKU}_${suffix}${path.extname(oldPath)}`;
+            finalFilename = `${safeSKU}_${suffix}${path.extname(oldPath)}`;
             finalPath = path.join(targetDir, finalFilename);
         }
 

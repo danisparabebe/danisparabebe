@@ -17,9 +17,16 @@ export async function POST(req: Request) {
             fs.mkdirSync(BORDADOS_DIR, { recursive: true });
         }
 
+        const ext = path.extname(file.name).toLowerCase();
+        const ALLOWED_EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
+        if (!ALLOWED_EXTS.includes(ext)) {
+            return NextResponse.json({ success: false, error: 'Apenas imagens (JPG, PNG, WEBP) são permitidas.' }, { status: 400 });
+        }
+
         const buffer = Buffer.from(await file.arrayBuffer());
-        // Use the original filename to allow overwriting if intended
-        const safeFilename = file.name.replace(/[^a-zA-Z0-9.\-_ ()]/g, ''); 
+        // Use the original filename to allow overwriting if intended, but strictly sanitize
+        const baseName = path.basename(file.name);
+        const safeFilename = baseName.replace(/[^a-zA-Z0-9.\-_ ()]/g, ''); 
         const filePath = path.join(BORDADOS_DIR, safeFilename);
 
         fs.writeFileSync(filePath, buffer);

@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
 
-const SUPERFRETE_TOKEN = process.env.SUPERFRETE_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjUzOTY2NDEsInN1YiI6IjA4NGd3UkRqOW5YblZ5RnZmMmZmcnZkMjNaNTMifQ.kc-ypJj0RZc5oJew64IUKMIKkaIOOF5KtMmNzTzuPz8';
+const SUPERFRETE_TOKEN = process.env.SUPERFRETE_TOKEN;
 
 export async function POST(req: Request) {
     try {
+        if (!SUPERFRETE_TOKEN) {
+            return NextResponse.json({ ok: false, error: 'SUPERFRETE_TOKEN não configurado no servidor' }, { status: 500 });
+        }
+
         const body = await req.json();
         const { orderId, serviceCode } = body;
 

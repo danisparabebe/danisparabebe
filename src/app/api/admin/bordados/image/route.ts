@@ -15,7 +15,8 @@ export async function GET(req: Request) {
             return new NextResponse('File not provided', { status: 400 });
         }
 
-        const filePath = path.join(BORDADOS_DIR, file);
+        const safeName = path.basename(file);
+        const filePath = path.join(BORDADOS_DIR, safeName);
 
         if (!fs.existsSync(filePath)) {
             return new NextResponse('File not found', { status: 404 });

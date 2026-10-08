@@ -20,8 +20,15 @@ export async function POST(req: NextRequest) {
             fs.mkdirSync(uploadsDir, { recursive: true });
         }
 
-        // Usar timestamp para evitar conflitos de nomes
-        const filename = `${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
+        const ext = path.extname(file.name).toLowerCase();
+        const ALLOWED_EXTS = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+        if (!ALLOWED_EXTS.includes(ext)) {
+            return NextResponse.json({ error: 'Apenas imagens (JPG, PNG, WEBP, GIF) são permitidas' }, { status: 400 });
+        }
+
+        // Usar timestamp e nome higienizado para evitar conflitos e path traversal
+        const safeBase = path.basename(file.name).replace(/[^a-zA-Z0-9._-]/g, '_');
+        const filename = `${Date.now()}-${safeBase}`;
         const filePath = path.join(uploadsDir, filename);
 
         fs.writeFileSync(filePath, buffer);

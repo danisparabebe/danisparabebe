@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 
-const SUPERFRETE_DEFAULT_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjUzOTY2NDEsInN1YiI6IjA4NGd3UkRqOW5YblZ5RnZmMmZmcnZkMjNaNTMifQ.kc-ypJj0RZc5oJew64IUKMIKkaIOOF5KtMmNzTzuPz8';
-
 export async function POST(req: Request) {
     let rawCep = '';
     let totalWeight = 0.8;
@@ -22,7 +20,15 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'CEP inválido. Deve conter 8 dígitos.' }, { status: 400 });
     }
 
-    const token = process.env.SUPERFRETE_TOKEN || SUPERFRETE_DEFAULT_TOKEN;
+    const token = process.env.SUPERFRETE_TOKEN;
+    if (!token) {
+        console.warn('[Security] SUPERFRETE_TOKEN não configurado no ambiente. Usando taxas estimadas de segurança.');
+        return NextResponse.json([
+            { id: 1, name: 'CORREIOS PAC', price: 24.90, days: 7, carrier: 'CORREIOS' },
+            { id: 3, name: 'JADLOG', price: 18.90, days: 5, carrier: 'JADLOG' },
+            { id: 2, name: 'CORREIOS SEDEX', price: 38.90, days: 3, carrier: 'CORREIOS' }
+        ]);
+    }
     const originCep = (process.env.NEXT_PUBLIC_ORIGIN_CEP || '16201348').replace(/\D/g, '');
 
     try {

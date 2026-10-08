@@ -1,6 +1,16 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
 import { z } from 'zod';
+import { FREE_SHIPPING_THRESHOLD, isEligibleForFreeShipping } from '@/lib/shipping-rules';
+
+function sanitizeText(str: unknown, maxLen = 150): string {
+    if (typeof str !== 'string') return '';
+    return str
+        .replace(/<[^>]*>/g, '')
+        .replace(/[\x00-\x1F\x7F]/g, '')
+        .trim()
+        .slice(0, maxLen);
+}
 
 // --- SECURITY: RATE LIMITING IN-MEMORY (Anti-Bot) ---
 // Evita ataques cibernéticos de spam massivo na API gerando faturas falsas para esgotar cota.
@@ -151,10 +161,12 @@ export async function POST(request: Request) {
             // A InfinitePay repassará as taxas de cartão de crédito no gateway caso essa forma de pgto seja escolhida.
             let priceCents = Math.round(authenticPrice * 100);
 
-            let desc = item.name;
+            let desc = sanitizeText(item.name, 100);
             if (item.personalization?.name) {
-                const temaDesc = item.personalization.theme ? ` | Tema: ${item.personalization.theme}` : '';
-                desc += ` (Bordado: ${item.personalization.name}${temaDesc})`;
+                const safeName = sanitizeText(item.personalization.name, 30);
+                const safeTheme = sanitizeText(item.personalization.theme, 50);
+                const temaDesc = safeTheme ? ` | Tema: ${safeTheme}` : '';
+                desc += ` (Bordado: ${safeName}${temaDesc})`;
             }
 
             const mapped = {
@@ -168,8 +180,18 @@ export async function POST(request: Request) {
             console.log(`🏷️ Item verificado: ${mapped.description} | Preço Segurou: R$ ${(authenticPrice).toFixed(2)}`);
         }
 
-        // 2. Add Shipping as a Line Item (if greater than 0)
-        const effectiveShipping = shipping || 0;
+        // 2. Add Shipping as a Line Item (and validate eligibility)
+        const effectiveShipping = typeof shipping === 'number' ? shipping : 0;
+        const cartSubtotal = calculatedTotalAmountCents / 100;
+        const customerState = sanitizeText(customer.state, 2).toUpperCase().trim();
+        const qualifiesForFreeShipping = cartSubtotal >= FREE_SHIPPING_THRESHOLD && isEligibleForFreeShipping(customerState);
+
+        if (effectiveShipping <= 0 && !qualifiesForFreeShipping) {
+            console.error(`🚨 BLOCKED: Tentativa de frete grátis não autorizado. Subtotal: R$ ${cartSubtotal}, Estado: ${customerState}`);
+            return NextResponse.json({ 
+                error: 'O valor do frete é obrigatório para esta localidade e valor do pedido.' 
+            }, { status: 400 });
+        }
 
         if (effectiveShipping > 0) {
             const shippingCents = Math.round(effectiveShipping * 100);
@@ -182,7 +204,7 @@ export async function POST(request: Request) {
             calculatedTotalAmountCents += shippingCents;
             console.log(`🚚 Shipping verificado: R$ ${(effectiveShipping).toFixed(2)}`);
         } else {
-            console.log(`🚚 Frete GRÁTIS aplicado`);
+            console.log(`🚚 Frete GRÁTIS legítimo aplicado (Subtotal: R$ ${cartSubtotal}, Estado: ${customerState})`);
         }
 
         const reqOrigin = request.headers.get('origin') || request.headers.get('referer') || '';
@@ -205,27 +227,39 @@ export async function POST(request: Request) {
         const now = new Date();
         const deadline = addBusinessDays(now, 12);
         
+        const cleanCustomerName = sanitizeText(customer.name, 100) || 'Cliente';
+        const cleanCustomerEmail = sanitizeText(customer.email, 100);
+        const cleanStreet = sanitizeText(customer.street, 120);
+        const cleanNumber = sanitizeText(customer.number, 20);
+        const cleanComplement = sanitizeText(customer.complement, 80);
+        const cleanNeighborhood = sanitizeText(customer.neighborhood, 80);
+        const cleanCity = sanitizeText(customer.city, 80);
+        const cleanState = sanitizeText(customer.state, 2).toUpperCase();
+        const cleanPhone = (customer.phone || '').replace(/\D/g, '').slice(0, 15);
+        const cleanCep = (customer.cep || '').replace(/\D/g, '').slice(0, 8);
+        const cleanCpf = (customer.cpf || '').replace(/\D/g, '').slice(0, 11);
+
         try {
             const orderData = {
                 id: orderId,
-                customerName: customer?.name || 'Cliente',
-                customerEmail: customer?.email || '',
-                customerPhone: customer?.phone || '',
-                customerCpf: customer?.cpf || '',
+                customerName: cleanCustomerName,
+                customerEmail: cleanCustomerEmail,
+                customerPhone: cleanPhone,
+                customerCpf: cleanCpf,
                 address: {
-                    line1: [customer?.street, customer?.number].filter(Boolean).join(', '),
-                    line2: [customer?.complement, customer?.neighborhood].filter(Boolean).join(' - '),
-                    street: customer?.street || '',
-                    number: customer?.number || '',
-                    complement: customer?.complement || '',
-                    neighborhood: customer?.neighborhood || '',
-                    city: customer?.city || '',
-                    state: customer?.state || '',
-                    postal_code: customer?.cep || '',
+                    line1: [cleanStreet, cleanNumber].filter(Boolean).join(', '),
+                    line2: [cleanComplement, cleanNeighborhood].filter(Boolean).join(' - '),
+                    street: cleanStreet,
+                    number: cleanNumber,
+                    complement: cleanComplement,
+                    neighborhood: cleanNeighborhood,
+                    city: cleanCity,
+                    state: cleanState,
+                    postal_code: cleanCep,
                 },
                 items: items,
                 totalAmount: totalAmount / 100,
-                shippingAmount: shipping || 0,
+                shippingAmount: effectiveShipping,
                 userId: userId || '',
                 createdAt: now.toISOString(),
                 deadlineDate: deadline.toISOString(),
@@ -248,33 +282,29 @@ export async function POST(request: Request) {
         console.log('🏪 Handle:', ipHandle);
         if (!ipHandle) throw new Error("NEXT_PUBLIC_INFINITEPAY_HANDLE is missing in .env.local");
 
-        const cleanPhone = (customer.phone || '').replace(/\D/g, '');
         const formattedPhone = cleanPhone.length >= 10
             ? (cleanPhone.startsWith('55') ? `+${cleanPhone}` : `+55${cleanPhone}`)
             : cleanPhone;
 
-        const cleanCep = (customer.cep || '').replace(/\D/g, '');
-        const cleanCpf = (customer.cpf || '').replace(/\D/g, '');
-
         const customerPayload: Record<string, any> = {
-            name: customer.name,
+            name: cleanCustomerName,
         };
         if (formattedPhone) customerPayload.phone_number = formattedPhone;
-        if (customer.email && customer.email.trim() !== '') {
-            customerPayload.email = customer.email.trim();
+        if (cleanCustomerEmail) {
+            customerPayload.email = cleanCustomerEmail;
         }
         if (cleanCpf) customerPayload.tax_id = cleanCpf;
 
         const addressPayload: Record<string, any> = {
             cep: cleanCep,
-            street: customer.street || '',
-            number: customer.number || '',
-            neighborhood: customer.neighborhood || '',
-            city: customer.city || '',
-            state: customer.state || '',
+            street: cleanStreet,
+            number: cleanNumber,
+            neighborhood: cleanNeighborhood,
+            city: cleanCity,
+            state: cleanState,
         };
-        if (customer.complement && customer.complement.trim() !== '') {
-            addressPayload.complement = customer.complement.trim();
+        if (cleanComplement) {
+            addressPayload.complement = cleanComplement;
         }
 
         const ipPayload: any = {
