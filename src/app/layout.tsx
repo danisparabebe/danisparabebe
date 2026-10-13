@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { CookieBanner } from "@/components/ui/cookie-banner";
 import { AuthInitializer } from "@/components/auth/auth-initializer";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity";
 
 const fontFraunces = Fraunces({
     subsets: ["latin"],
@@ -50,6 +51,7 @@ export default function RootLayout({
                     }}
                 />
                 {children}
+                <MicrosoftClarity />
                 <AuthInitializer />
                 <CartSidebar />
                 <Toaster position="top-center" />
