@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
@@ -36,10 +35,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR" suppressHydrationWarning className={`${fontFraunces.variable} ${fontDmSans.variable}`}>
-            <body className="antialiased">
-                <Script
-                    id="microsoft-clarity"
-                    strategy="afterInteractive"
+            <head>
+                <script
+                    type="text/javascript"
                     dangerouslySetInnerHTML={{
                         __html: `
                             (function(c,l,a,r,i,t,y){
@@ -50,6 +48,8 @@ export default function RootLayout({
                         `,
                     }}
                 />
+            </head>
+            <body className="antialiased">
                 {children}
                 <MicrosoftClarity />
                 <AuthInitializer />
