@@ -30,6 +30,7 @@ interface ProductData {
     colorVariations?: ProductColorVariation[];
     initialVariationId?: string;
     tags?: string[];
+    shortCode?: string;
 }
 
 export function ProductClientView({ product }: { product: ProductData }) {

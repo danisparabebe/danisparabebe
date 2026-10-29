@@ -47,6 +47,7 @@ async function getProduct(rawId: string) {
             colorVariations: managedProduct.colorVariations || [],
             initialVariationId,
             tags: managedProduct.tags || [],
+            shortCode: managedProduct.shortCode || getShortCode(managedProduct.id),
         };
     }
 
@@ -97,6 +98,7 @@ async function getProduct(rawId: string) {
             description: metadata.observations || `Produto ${metadata.type} com tema ${metadata.themeName}.`,
             discountPct: 5, // Fallback legacy logic
             metadata,
+            shortCode: getShortCode(id),
         };
     } catch (e) {
         console.error('Error parsing legacy product', e);
@@ -111,7 +113,7 @@ export default async function ProductPage({ params }: PageProps) {
     // If it's a long product ID, check if we have a shortCode for it and redirect to clean the URL
     const mappedShortCode = getShortCode(decodedId);
     if (mappedShortCode && mappedShortCode.toUpperCase() !== decodedId.toUpperCase()) {
-        redirect(/produto/);
+        redirect(`/produto/${mappedShortCode}`);
     }
 
     const product = await getProduct(decodedId);
