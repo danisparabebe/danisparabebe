@@ -2,6 +2,78 @@ import { ManagedProduct } from '@/types/admin';
 
 export const productControl: ManagedProduct[] = [
     {
+        "id": "FEM-KIT-MAN-BOR-RSE-PROMO-INAU_01",
+        "shortCode": "DPB-INAU-FEM",
+        "name": "Kit Manta Borboletas Rosa · Leve 4 Pague 3 (+ Brinde Fralda de Boca)",
+        "technicalName": "FEM-KIT-MAN-BOR-RSE-PROMO-INAU_01",
+        "description": "§INTRO§\nPromoção Especial de Inauguração: LEVE 4 E PAGUE 3!\nNa compra do Kit Manta com 3 peças artesanais, você ganha 1 Fralda de Boca bordada de brinde como 4ª peça do seu enxoval.\n\n§ADVANTAGE§\nDe R$ 249,00 por apenas R$ 197,00 no PIX (R$ 52,00 de desconto) ou em 3x de R$ 70,62 no cartão via InfinitePay.\n\n§EXCLUSIVITY§\n⚠️ ATENÇÃO: Esta condição promocional é válida exclusivamente para esta opção (Borboletas Rosa), limitada a apenas 5 unidades. Os demais kits e produtos do site seguem os valores regulares de catálogo.\n\n§PERSONAL§\nTodas as peças, inclusive a fralda de boca de brinde, recebem bordado artesanal personalizado com o nome do seu bebê.\n\n§ITEMS§\n📦 Este kit promocional contém 4 peças completas:\n\n• 1x Manta Forrada\n• 1x Fralda Grande de Passeio\n• 1x Fralda Pequena de Ombro\n• 🎁 1x Fralda de Boca Bordada Personalizada (BRINDE DA PROMOÇÃO)\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda de Boca (Brinde): 38x32 cm — Tecido Duplo 100% Algodão\n\n§FINISH§\n🎀 Estampa e Cor Exclusivas: Borboletas Rosa com acabamento delicado. Apenas esta cor disponível nesta ação de inauguração.\n\n§QUALITY§\n100% algodão hipoalergênico premium, ultra macio e seguro para a pele sensível do recém-nascido.\n\n§TIMEFRAME§\n⏱️ Produção artesanal sob medida. ATENÇÃO: Apenas 5 unidades disponíveis nesta estampa!",
+        "features": [
+            "1x MNT",
+            "1x FRG",
+            "1x FRP",
+            "1x FRP"
+        ],
+        "priceFull": 211.85,
+        "originalPriceFull": 249,
+        "pixPrice": 197,
+        "pixDiscountPct": 21,
+        "discountPct": 15,
+        "netValue": 197,
+        "images": [
+            "/produtos/conferidos/FEM-KIT-MAN-BOR-RSE-PROMO-INAU_01.jpeg"
+        ],
+        "gridPosition": "FEATURED",
+        "category": "Kits",
+        "tags": [
+            "inauguracao",
+            "destaque",
+            "oferta",
+            "brinde",
+            "leve4pague3",
+            "borboletas"
+        ],
+        "badge": "Leve 4 Pague 3",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true
+    },
+    {
+        "id": "MAS-KIT-MAN-SAF-VDM-PROMO-INAU_01",
+        "shortCode": "DPB-INAU-MAS",
+        "name": "Kit Manta Safari Verde Militar · Leve 4 Pague 3 (+ Brinde Fralda de Boca)",
+        "technicalName": "MAS-KIT-MAN-SAF-VDM-PROMO-INAU_01",
+        "description": "§INTRO§\nPromoção Especial de Inauguração: LEVE 4 E PAGUE 3!\nNa compra do Kit Manta com 3 peças artesanais, você ganha 1 Fralda de Boca bordada de brinde como 4ª peça do seu enxoval.\n\n§ADVANTAGE§\nDe R$ 249,00 por apenas R$ 197,00 no PIX (R$ 52,00 de desconto) ou em 3x de R$ 70,62 no cartão via InfinitePay.\n\n§EXCLUSIVITY§\n⚠️ ATENÇÃO: Esta condição promocional é válida exclusivamente para esta opção (Safari Verde Militar), limitada a apenas 5 unidades. Os demais kits e produtos do site seguem os valores regulares de catálogo.\n\n§PERSONAL§\nTodas as peças, inclusive a fralda de boca de brinde, recebem bordado artesanal personalizado com o nome do seu bebê.\n\n§ITEMS§\n📦 Este kit promocional contém 4 peças completas:\n\n• 1x Manta Forrada\n• 1x Fralda Grande de Passeio\n• 1x Fralda Pequena de Ombro\n• 🎁 1x Fralda de Boca Bordada Personalizada (BRINDE DA PROMOÇÃO)\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda Pequena: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Fralda de Boca (Brinde): 38x32 cm — Tecido Duplo 100% Algodão\n\n§FINISH§\n🎀 Estampa e Cor Exclusivas: Safari Verde Militar com acabamento refinado. Apenas esta cor disponível nesta ação de inauguração.\n\n§QUALITY§\n100% algodão hipoalergênico premium, ultra macio e seguro para a pele sensível do recém-nascido.\n\n§TIMEFRAME§\n⏱️ Produção artesanal sob medida. ATENÇÃO: Apenas 5 unidades disponíveis nesta estampa!",
+        "features": [
+            "1x MNT",
+            "1x FRG",
+            "1x FRP",
+            "1x FRP"
+        ],
+        "priceFull": 211.85,
+        "originalPriceFull": 249,
+        "pixPrice": 197,
+        "pixDiscountPct": 21,
+        "discountPct": 15,
+        "netValue": 197,
+        "images": [
+            "/produtos/conferidos/MAS-KIT-MAN-SAF-VDM-PROMO-INAU_01.jpeg"
+        ],
+        "gridPosition": "FEATURED",
+        "category": "Kits",
+        "tags": [
+            "inauguracao",
+            "destaque",
+            "oferta",
+            "brinde",
+            "leve4pague3",
+            "safari"
+        ],
+        "badge": "Leve 4 Pague 3",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true
+    },
+    {
         "id": "MAS-KIT-URS-VDC-BAB-VDC_02",
         "name": "Ursinho Azul Bebê · Kit Manta",
         "technicalName": "MAS-KIT-URS-VDC-BAB-VDC_02",

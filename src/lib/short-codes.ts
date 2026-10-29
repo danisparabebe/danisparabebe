@@ -71,7 +71,9 @@ export function getShortCode(productId: string): string {
  * Check if a string looks like a short code (DPB-XXXX format)
  */
 export function isShortCode(value: string): boolean {
-    return /^DPB-\d{4,}$/i.test(value);
+    if (!value) return false;
+    buildMaps();
+    return _shortToId!.has(value.toUpperCase()) || /^DPB-[A-Z0-9_-]+$/i.test(value);
 }
 
 /**

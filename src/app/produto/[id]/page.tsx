@@ -46,6 +46,7 @@ async function getProduct(rawId: string) {
             comingSoon: !available,
             colorVariations: managedProduct.colorVariations || [],
             initialVariationId,
+            tags: managedProduct.tags || [],
         };
     }
 
@@ -108,11 +109,9 @@ export default async function ProductPage({ params }: PageProps) {
     const decodedId = decodeURIComponent(id);
 
     // If it's a long product ID, check if we have a shortCode for it and redirect to clean the URL
-    if (!/^DPB-\d+$/i.test(decodedId)) {
-        const mappedShortCode = getShortCode(decodedId);
-        if (mappedShortCode) {
-            redirect(`/produto/${mappedShortCode}`);
-        }
+    const mappedShortCode = getShortCode(decodedId);
+    if (mappedShortCode && mappedShortCode.toUpperCase() !== decodedId.toUpperCase()) {
+        redirect(/produto/);
     }
 
     const product = await getProduct(decodedId);

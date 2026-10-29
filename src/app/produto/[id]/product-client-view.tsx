@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock, Palette, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, CreditCard, ShoppingBag, Heart, ZoomIn, X, Lock, Tag, ChevronDown, ChevronUp, Wand2, Info, Clock, Palette, Sparkles, Gift, Flame } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useConfiguratorStore } from '@/store/configurator-store';
 import { useFavoritesStore } from '@/store/favorites-store';
@@ -29,6 +29,7 @@ interface ProductData {
     comingSoon?: boolean;
     colorVariations?: ProductColorVariation[];
     initialVariationId?: string;
+    tags?: string[];
 }
 
 export function ProductClientView({ product }: { product: ProductData }) {
@@ -41,6 +42,34 @@ export function ProductClientView({ product }: { product: ProductData }) {
     const [zoomLevel, setZoomLevel] = useState(1);
     const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
     const [buyMode, setBuyMode] = useState<'cart' | 'checkout'>('cart');
+
+    const isPromoProduct = Boolean(
+        product.tags?.includes('inauguracao') || 
+        product.tags?.includes('leve4pague3') || 
+        product.shortCode?.startsWith('DPB-INAU')
+    );
+    const isFemPromo = product.shortCode === 'DPB-INAU-FEM' || product.id?.includes('BOR-RSE');
+    const isMasPromo = product.shortCode === 'DPB-INAU-MAS' || product.id?.includes('SAF-VDM');
+
+    const [promoStock, setPromoStock] = useState<number>(5);
+    const [isPromoSoldOut, setIsPromoSoldOut] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (!isPromoProduct) return;
+        let isMounted = true;
+        fetch('/api/inauguration-stock')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (!isMounted || !data) return;
+                const info = isFemPromo ? data.fem : isMasPromo ? data.mas : null;
+                if (info) {
+                    setPromoStock(info.available);
+                    setIsPromoSoldOut(info.isSoldOut);
+                }
+            })
+            .catch(() => {});
+        return () => { isMounted = false; };
+    }, [isPromoProduct, isFemPromo, isMasPromo]);
     const [descExpanded, setDescExpanded] = useState(false);
     const [panPos, setPanPos] = useState({ x: 0, y: 0 });
     const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, moved: false });
@@ -263,12 +292,36 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         </div>
                         
                         <div className="flex items-center gap-2 mt-1">
-                            <ShieldCheck className="w-3.5 h-3.5 text-sage-green-dark" />
-                            <span className="text-[11px] font-medium text-slate uppercase tracking-wider">
-                                ou 12x de R$ {(currentPixPrice * 0.10).toFixed(2).replace('.', ',')} no cartão
+                            <ShieldCheck className="w-3.5 h-3.5 text-sage-green-dark shrink-0" />
+                            <span className="text-[11px] font-semibold text-slate uppercase tracking-wider">
+                                {product.tags?.includes('inauguracao') || product.shortCode?.startsWith('DPB-INAU')
+                                    ? 'ou em 3x de R$ 70,62 no cartão via InfinitePay'
+                                    : `ou 12x de R$ ${(currentPixPrice * 0.10).toFixed(2).replace('.', ',')} no cartão`
+                                }
                             </span>
                         </div>
                     </div>
+
+                    {/* Inauguration Promo Callout: Leve 4 Pague 3 */}
+                    {(product.tags?.includes('inauguracao') || product.tags?.includes('leve4pague3') || product.shortCode?.startsWith('DPB-INAU')) && (
+                        <div className="p-3.5 sm:p-4 bg-[#F4F8F5] border border-[#ADCEB3]/80 rounded-2xl shadow-xs space-y-2">
+                            <div className="flex items-center justify-between gap-2">
+                                <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#245E3B]">
+                                    <Gift className="w-4 h-4 text-[#245E3B] shrink-0" />
+                                    Leve 4, Pague 3 · Brinde Incluso
+                                </span>
+                                <span className="text-[11px] font-bold text-red-600 bg-red-50 border border-red-200/80 px-2 py-0.5 rounded-full shrink-0">
+                                    Apenas 5 unidades
+                                </span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-charcoal font-medium leading-relaxed">
+                                Kit Manta com 3 peças + <strong className="font-bold text-[#245E3B]">1 Fralda de Boca bordada</strong> com o nome do bebê de brinde.
+                            </p>
+                            <p className="text-[11px] text-slate-500 font-medium">
+                                * Promoção exclusiva para este modelo (demais kits com valor padrão).
+                            </p>
+                        </div>
+                    )}
 
                     {/* Collapsible Description — Rich Renderer */}
                     <div className="border border-line rounded-xl overflow-hidden">

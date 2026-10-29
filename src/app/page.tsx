@@ -2,6 +2,7 @@ import { TopBar } from '@/components/homepage/top-bar';
 import { Header } from '@/components/homepage/header';
 import { Navigation } from '@/components/homepage/navigation';
 import { HeroGrid } from '@/components/homepage/hero-grid';
+import { InaugurationBanner } from '@/components/homepage/inauguration-banner';
 import { ProductGrid } from '@/components/homepage/product-grid';
 import { SocialProof } from '@/components/homepage/social-proof';
 import { Footer } from '@/components/homepage/footer';
@@ -65,8 +66,10 @@ export default async function HomePage() {
     const productMap = new Map(managedProducts.map(p => [p.id, p]));
     const productByCodeMap = new Map(managedProducts.map(p => [p.shortCode || '', p]));
 
-    // 2. Extrai exatamente os 10 produtos selecionados do MVP
-    const mvpProducts = MVP_PRODUCT_SELECTION.map((code) => {
+    // 2. Extrai exatamente os 10 produtos selecionados do MVP (excluindo os do banner de inauguração)
+    const mvpProducts = MVP_PRODUCT_SELECTION
+        .filter(code => !code.startsWith('DPB-INAU-'))
+        .map((code) => {
         const trimmed = code.trim();
         const resolvedId = resolveProductId(trimmed);
         const found = productMap.get(resolvedId) || productMap.get(trimmed) || productByCodeMap.get(trimmed);
@@ -121,6 +124,9 @@ export default async function HomePage() {
             <Navigation />
 
             <main className="pb-20">
+                {/* 🌟 BANNER SUPREMO DE INAUGURAÇÃO (Campanha Instagram + Brinde) */}
+                <InaugurationBanner />
+
                 {/* Hero Section — Carrosséis Duplos com os produtos dos 10 kits MVP */}
                 <HeroGrid
                     leftSlides={heroLeftSlides}

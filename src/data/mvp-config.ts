@@ -6,6 +6,8 @@
  */
 
 export const MVP_PRODUCT_SELECTION: string[] = [
+    "DPB-INAU-FEM",
+    "DPB-INAU-MAS",
     "DPB-0116",
     "DPB-0119",
     "DPB-0120",
