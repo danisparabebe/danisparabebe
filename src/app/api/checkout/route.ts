@@ -270,7 +270,12 @@ export async function POST(request: Request) {
             const sanitizedData = JSON.parse(JSON.stringify(orderData));
             
             adminDb.collection('orders').doc(orderId).set(sanitizedData)
-                .then(() => console.log(`✅ Pre-registered Order ${orderId} in Firebase.`))
+                .then(() => {
+                    console.log(`✅ Pre-registered Order ${orderId} in Firebase.`);
+                    if (cleanPhone) {
+                        adminDb.collection('orders').doc(`LEAD_${cleanPhone}`).delete().catch(() => {});
+                    }
+                })
                 .catch(err => console.error("❌ Failed to pre-register in Firebase:", err));
 
         } catch (dbErr) {

@@ -218,7 +218,7 @@ export default function AdminPedidosPage() {
             case 'em_producao': return 'Em Produção';
             case 'conferencia': return 'Em Conferência';
             case 'enviado': return 'Enviado';
-            default: return 'Pendente';
+            default: return 'Pendentes / Abandonados';
         }
     };
 
@@ -242,6 +242,27 @@ export default function AdminPedidosPage() {
         const raw = phone.replace(/\D/g, '');
         if (!raw) return '';
         return raw.startsWith('55') ? raw : `55${raw}`;
+    };
+
+    const generateRecoveryWhatsAppUrl = (order: Order) => {
+        const cleanPhone = getCleanPhone(order.customerPhone);
+        if (!cleanPhone) return null;
+
+        const firstName = (order.customerName || 'mamãe').trim().split(' ')[0];
+        const babyName = order.items?.find(i => i.personalization?.name)?.personalization?.name;
+        const themeName = order.items?.find(i => i.personalization?.theme)?.personalization?.theme;
+
+        let msg = `Olá, ${firstName}! Tudo bem? Aqui é a Dani, da Dani's Para Bebê 💕\n\n`;
+
+        if (babyName) {
+            msg += `Vi que você começou a montar o enxoval do *${babyName}*${themeName ? ` com o tema *${themeName}*` : ''} no nosso site! Que escolha linda!\n\n`;
+        } else {
+            msg += `Vi que você estava montando seu enxoval aqui no nosso site com muito carinho!\n\n`;
+        }
+
+        msg += `Ficou alguma dúvida sobre os tecidos, prazo de confecção ou formas de pagamento? Posso te ajudar a concluir seu pedido por aqui se preferir! 😊`;
+
+        return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
     };
 
     const filteredOrders = filterStatus === 'todos' 
@@ -389,6 +410,25 @@ export default function AdminPedidosPage() {
                         })}
                     </div>
 
+                    {/* Banner de Ajuda e Recuperação de Vendas via WhatsApp */}
+                    {filterStatus === 'pendente' && (
+                        <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-100 border-2 border-emerald-300 p-4 rounded-2xl flex items-center justify-between gap-4 shadow-xs">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                    <Phone className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h4 className="font-black text-sm text-emerald-950 uppercase tracking-tight">
+                                        Recuperação de Vendas via WhatsApp
+                                    </h4>
+                                    <p className="text-xs text-emerald-800 font-medium">
+                                        Estas mamães começaram a montar o enxoval mas não concluíram o pagamento. Toque em <strong>Recuperar no WhatsApp</strong> para abrir a conversa já com uma mensagem carinhosa e personalizada com o nome do bebê!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Mensagem de Erro (se houver) */}
                     {errorMsg && (
                         <div className="p-4 bg-red-50 border border-red-200 rounded-2xl flex items-center justify-between text-red-700">
@@ -468,6 +508,11 @@ export default function AdminPedidosPage() {
                                                             Prazo Crítico
                                                         </span>
                                                     )}
+                                                    {order.status === 'pendente' && (
+                                                        <span className="text-[9px] font-black bg-amber-100 text-amber-800 border border-amber-300 px-1.5 py-0.5 rounded uppercase">
+                                                            Aguardando Pagamento
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <p className="font-bold text-slate-800 text-base leading-snug">{order.customerName}</p>
                                                 {order.customerEmail && (
@@ -486,6 +531,17 @@ export default function AdminPedidosPage() {
                                                         <span>{order.customerPhone}</span>
                                                     </a>
                                                 )}
+                                                {(() => {
+                                                    const babyName = order.items?.find(i => i.personalization?.name)?.personalization?.name;
+                                                    const themeName = order.items?.find(i => i.personalization?.theme)?.personalization?.theme;
+                                                    if (!babyName && !themeName) return null;
+                                                    return (
+                                                        <div className="mt-1 p-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] space-y-0.5">
+                                                            {babyName && <p className="font-bold text-slate-700">👶 Bebê: <span className="font-black text-slate-900">{babyName}</span></p>}
+                                                            {themeName && <p className="text-slate-600">🧵 Tema: <span className="font-bold text-slate-800">{themeName}</span></p>}
+                                                        </div>
+                                                    );
+                                                })()}
                                                 {order.trackingCode && (
                                                     <div className="mt-1 flex items-center gap-1.5 flex-wrap">
                                                         <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center gap-1">
@@ -558,29 +614,48 @@ export default function AdminPedidosPage() {
                                                     Ver Ficha Técnica
                                                 </Link>
 
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleGerarEtiqueta(order.id)}
-                                                    disabled={generatingEtiquetaId === order.id}
-                                                    className={`flex items-center justify-center gap-1.5 p-2 text-white rounded-xl text-xs font-bold uppercase transition-all shadow-sm active:scale-95 disabled:opacity-50 ${
-                                                        order.superfrete?.printUrl
-                                                            ? 'bg-blue-600 hover:bg-blue-700'
-                                                            : order.superfrete?.cartId
-                                                            ? 'bg-amber-600 hover:bg-amber-700'
-                                                            : 'bg-emerald-600 hover:bg-emerald-700'
-                                                    }`}
-                                                    title={order.superfrete?.cartId ? 'Etiqueta já criada na SuperFrete. Clique para abrir ou reimprimir.' : 'Gerar etiqueta de envio na SuperFrete'}
-                                                >
-                                                    {generatingEtiquetaId === order.id ? (
-                                                        <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Gerando...</>
-                                                    ) : order.superfrete?.printUrl ? (
-                                                        <><Truck className="w-3.5 h-3.5" /> Imprimir Etiqueta</>
-                                                    ) : order.superfrete?.cartId ? (
-                                                        <><Truck className="w-3.5 h-3.5" /> Ver na SuperFrete</>
+                                                {order.status === 'pendente' ? (
+                                                    cleanPhone ? (
+                                                        <a
+                                                            href={generateRecoveryWhatsAppUrl(order)!}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center justify-center gap-1.5 p-2 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white rounded-xl text-xs font-black uppercase transition-all shadow-md ring-2 ring-emerald-300 text-center animate-pulse"
+                                                            title="Enviar mensagem personalizada de recuperação no WhatsApp"
+                                                        >
+                                                            <Phone className="w-3.5 h-3.5 shrink-0" />
+                                                            <span>Recuperar WhatsApp</span>
+                                                        </a>
                                                     ) : (
-                                                        <><Truck className="w-3.5 h-3.5" /> Gerar Etiqueta SuperFrete</>
-                                                    )}
-                                                </button>
+                                                        <div className="p-2 bg-slate-100 text-slate-400 rounded-xl text-[10px] text-center font-bold">
+                                                            Sem WhatsApp
+                                                        </div>
+                                                    )
+                                                ) : (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleGerarEtiqueta(order.id)}
+                                                        disabled={generatingEtiquetaId === order.id}
+                                                        className={`flex items-center justify-center gap-1.5 p-2 text-white rounded-xl text-xs font-bold uppercase transition-all shadow-sm active:scale-95 disabled:opacity-50 ${
+                                                            order.superfrete?.printUrl
+                                                                ? 'bg-blue-600 hover:bg-blue-700'
+                                                                : order.superfrete?.cartId
+                                                                ? 'bg-amber-600 hover:bg-amber-700'
+                                                                : 'bg-emerald-600 hover:bg-emerald-700'
+                                                        }`}
+                                                        title={order.superfrete?.cartId ? 'Etiqueta já criada na SuperFrete. Clique para abrir ou reimprimir.' : 'Gerar etiqueta de envio na SuperFrete'}
+                                                    >
+                                                        {generatingEtiquetaId === order.id ? (
+                                                            <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Gerando...</>
+                                                        ) : order.superfrete?.printUrl ? (
+                                                            <><Truck className="w-3.5 h-3.5" /> Imprimir Etiqueta</>
+                                                        ) : order.superfrete?.cartId ? (
+                                                            <><Truck className="w-3.5 h-3.5" /> Ver na SuperFrete</>
+                                                        ) : (
+                                                            <><Truck className="w-3.5 h-3.5" /> Gerar Etiqueta SuperFrete</>
+                                                        )}
+                                                    </button>
+                                                )}
                                             </div>
 
                                         </div>

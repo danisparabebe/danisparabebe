@@ -304,6 +304,26 @@ export default function UnifiedCheckoutPage() {
     const actualShippingPrice = (freeShipping && isCheapestSelected) ? 0 : (shippingOption?.price || 0);
     const finalTotal = itemsTotalWithDiscount + actualShippingPrice;
 
+    // Auto-captura de carrinho abandonado para recuperação no WhatsApp
+    useEffect(() => {
+        const cleanPhone = formData.phone.replace(/\D/g, '');
+        if (formData.name.trim().length >= 2 && cleanPhone.length >= 10 && items.length > 0) {
+            const timer = setTimeout(() => {
+                fetch('/api/checkout/abandoned', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customer: formData,
+                        items,
+                        totalAmount: finalTotal,
+                        source: 'checkout'
+                    })
+                }).catch(() => {});
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [formData.name, formData.phone, formData.cep, formData.street, formData.number, items, finalTotal]);
+
     // Validation & Submit Handler
     const handleBuyNow = async () => {
         const newErrors: Record<string, boolean> = {};

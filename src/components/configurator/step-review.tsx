@@ -32,6 +32,7 @@ export function StepReview() {
     const finalItemsTotal = grossTotal - discountAmount;
     const total = finalItemsTotal;
     const colorLabel = getColorLabel(acabamentoColor);
+    const passafitaLabel = PASSA_FITAS.find(p => p.id === passafitaColor)?.label || passafitaColor;
 
     const babadoImg = BABADOS.find(b => b.id === acabamentoColor)?.img;
     const passafitaImg = PASSA_FITAS.find(p => p.id === passafitaColor)?.img;
@@ -65,6 +66,39 @@ export function StepReview() {
             } catch (e) {}
         }
     }, []);
+
+    // Auto-captura de carrinho abandonado para recuperação no WhatsApp
+    useEffect(() => {
+        const cleanPhone = formData.phone.replace(/\D/g, '');
+        if (formData.name.trim().length >= 2 && cleanPhone.length >= 10 && items.length > 0) {
+            const timer = setTimeout(() => {
+                const builtItems = items.map(([id, qty]) => ({
+                    id: `custom-${id}`,
+                    name: `${getItemLabel(id)}${itemSizes?.[id] ? ` (Tam. ${itemSizes[id]})` : ''}`,
+                    price: BASE_PRICES[id] || 0,
+                    quantity: qty,
+                    personalization: {
+                        name: babyName || undefined,
+                        theme: selectedThemeName || undefined,
+                        color: colorLabel,
+                        finishDetail: passafitaLabel || undefined,
+                    }
+                }));
+
+                fetch('/api/checkout/abandoned', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customer: formData,
+                        items: builtItems,
+                        totalAmount: total,
+                        source: 'monte-seu-kit'
+                    })
+                }).catch(() => {});
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [formData.name, formData.phone, formData.cep, formData.street, formData.number, items, total, babyName, selectedThemeName]);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newData = { ...formData, [e.target.name]: e.target.value };
@@ -151,7 +185,6 @@ export function StepReview() {
         setIsLoadingAddress(false);
     };
 
-    const passafitaLabel = PASSA_FITAS.find(p => p.id === passafitaColor)?.label || passafitaColor;
     const CLOTHING_IDS = ['BDC', 'BDL'];
 
     const buildCartItems = () => {
