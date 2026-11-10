@@ -7,7 +7,7 @@ import { BASE_PRICES, formatPrice } from '@/lib/pricing';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp, Truck } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp, Truck, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL, isEligibleForFreeShipping } from '@/lib/shipping-rules';
 
@@ -47,6 +47,7 @@ export function StepReview() {
     const [shippingOption, setShippingOption] = useState<any | null>(null);
     const [shippingOptions, setShippingOptions] = useState<any[]>([]);
     const [showAllShipping, setShowAllShipping] = useState(false);
+    const [paymentRedirectUrl, setPaymentRedirectUrl] = useState<string | null>(null);
 
     // --- CACHE ON MOUNT ---
     useEffect(() => {
@@ -234,9 +235,14 @@ export function StepReview() {
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Falha ao iniciar pagamento');
             if (data.url) {
-                toast.success('Redirecionando...', { id: loadingToast });
+                toast.success('Redirecionando para pagamento seguro...', { id: loadingToast });
                 localStorage.setItem('lastOrder', JSON.stringify({ items, customer: formData }));
-                window.location.href = data.url;
+                setPaymentRedirectUrl(data.url);
+                try {
+                    window.location.assign(data.url);
+                } catch (e) {
+                    window.location.href = data.url;
+                }
             } else {
                 throw new Error('URL nao gerada.');
             }
@@ -248,9 +254,10 @@ export function StepReview() {
 
     // Format Observation
     const detailObs = observations;
+    const grandTotal = total + getActualShippingCost();
 
     return (
-        <div className="max-w-5xl mx-auto space-y-4 pb-4">
+        <div className="max-w-5xl mx-auto space-y-4 pb-28 md:pb-4">
             {/* Split Layout Container */}
             <div className="flex flex-col md:flex-row gap-4 items-stretch">
 
@@ -641,6 +648,80 @@ export function StepReview() {
                     </div>
                 </div>
             </div>
+
+            {/* Sticky Mobile Checkout Bar para Instagram WebView (Fase 4 UX) */}
+            <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-black/10 shadow-[0_-8px_25px_rgba(0,0,0,0.12)] p-3">
+                <div className="flex items-center justify-between gap-3">
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                            Total {shippingOption ? '+ Frete' : ''}
+                        </span>
+                        <div className="flex items-baseline gap-1.5">
+                            <span className="text-xl font-black text-charcoal tabular-nums">
+                                {formatPrice(grandTotal)}
+                            </span>
+                            <span className="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
+                                no PIX
+                            </span>
+                        </div>
+                        <span className="text-[10px] font-medium text-slate-500">
+                            ou 12x de R$ {(grandTotal * 0.10).toFixed(2).replace('.', ',')}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={handleCart}
+                            disabled={isProcessing}
+                            className="w-11 h-11 flex items-center justify-center rounded-xl border-2 border-sage-green text-charcoal hover:bg-sage-green/20 transition-colors shrink-0 cursor-pointer disabled:opacity-50"
+                            title="Adicionar ao carrinho"
+                        >
+                            <ShoppingCart className="w-4 h-4" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleBuyNow}
+                            disabled={isProcessing}
+                            className="bg-[#1a9e52] hover:bg-[#158043] text-white px-5 h-11 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center shadow-md active:scale-95 transition-all cursor-pointer disabled:opacity-60"
+                        >
+                            {isProcessing ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                'PAGAR AGORA'
+                            )}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Fallback de Transição Segura para Instagram WebView */}
+            {paymentRedirectUrl && (
+                <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border border-black/10">
+                        <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <ShieldCheck className="w-8 h-8 text-emerald-600" />
+                        </div>
+                        <h3 className="font-fraunces text-xl font-bold text-charcoal mb-2">
+                            Conectando ao Pagamento Seguro
+                        </h3>
+                        <p className="text-slate-600 text-xs mb-5 leading-relaxed">
+                            Você será direcionada para o ambiente protegido da InfinitePay para finalizar seu pedido.
+                        </p>
+                        <a
+                            href={paymentRedirectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full bg-[#1a9e52] hover:bg-[#158043] text-white py-3.5 px-6 rounded-xl font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
+                        >
+                            Abrir Pagamento Seguro
+                            <ExternalLink className="w-4 h-4" />
+                        </a>
+                        <p className="text-[11px] text-slate-400 mt-3">
+                            Toque no botão acima se a página não carregar automaticamente em 3 segundos.
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

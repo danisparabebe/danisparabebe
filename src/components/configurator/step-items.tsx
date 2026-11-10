@@ -4,9 +4,9 @@ import { useConfiguratorStore } from '@/store/configurator-store';
 import { TYPES } from '@/data/admin-options';
 import { BASE_PRICES, formatPrice, PERSONALIZATION_PRICE } from '@/lib/pricing';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL } from '@/lib/shipping-rules';
-import { Minus, Plus, ArrowLeft, Truck, Baby, Shirt, Gem, Gift, Sparkles, Check } from 'lucide-react';
+import { Minus, Plus, ArrowLeft, Truck, Baby, Shirt, Gem, Gift, Sparkles, Check, ShoppingBag, ChevronUp, ChevronDown, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
 import { toast } from 'sonner';
 
@@ -35,6 +35,8 @@ export function StepItems() {
         getItemCount, 
         babyName 
     } = useConfiguratorStore();
+
+    const [showItemsDrawer, setShowItemsDrawer] = useState(false);
 
     const count = getItemCount();
     const discount = getDiscountPercentage();
@@ -384,6 +386,140 @@ export function StepItems() {
                 })}
             </div>
 
+            {/* Drawer de Resumo das Peças Selecionadas (Fase 4 UX) */}
+            <AnimatePresence>
+                {showItemsDrawer && count > 0 && (
+                    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowItemsDrawer(false)}
+                            className="absolute inset-0 bg-black/60 backdrop-blur-xs"
+                        />
+                        {/* Drawer Sheet */}
+                        <motion.div
+                            initial={{ y: '100%' }}
+                            animate={{ y: 0 }}
+                            exit={{ y: '100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                            className="relative z-10 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-black/10 overflow-hidden flex flex-col max-h-[80vh]"
+                        >
+                            {/* Header */}
+                            <div className="flex items-center justify-between p-4 border-b border-black/8 bg-[#faf9f7] shrink-0">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-sage-green/20 flex items-center justify-center text-charcoal">
+                                        <ShoppingBag className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-fraunces font-bold text-base text-charcoal leading-none">
+                                            Peças no seu Kit
+                                        </h3>
+                                        <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                                            {count} {count === 1 ? 'peça selecionada' : 'peças selecionadas'}
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowItemsDrawer(false)}
+                                    className="p-1.5 rounded-full hover:bg-black/5 text-charcoal transition-colors cursor-pointer"
+                                    title="Fechar"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            {/* Items List */}
+                            <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar divide-y divide-black/5">
+                                {Object.entries(itemQuantities)
+                                    .filter(([, q]) => q > 0)
+                                    .map(([id, qty]) => {
+                                        const label = AVAILABLE_ITEMS.find(i => i.value === id)?.label || id;
+                                        const price = BASE_PRICES[id] || 0;
+                                        const isClothing = CLOTHING_IDS.includes(id);
+                                        const currentSize = itemSizes[id] || '';
+
+                                        return (
+                                            <div key={id} className="pt-3 first:pt-0 flex items-center justify-between gap-3">
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                                                        <h4 className="font-bold text-sm text-charcoal truncate">{label}</h4>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 mt-1 pl-3.5">
+                                                        <span className="text-xs text-slate-500 font-medium">
+                                                            {formatPrice(price)} un.
+                                                        </span>
+                                                        {isClothing && (
+                                                            <span className="text-[10px] font-black uppercase bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded border border-rose-200">
+                                                                Tam: {currentSize || 'Pendente'}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Stepper directly inside drawer */}
+                                                <div className="flex items-center gap-2 bg-warm-stone rounded-full p-1 border border-black/5 shrink-0">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setItemQuantity(id, qty - 1)}
+                                                        className="w-7 h-7 flex items-center justify-center rounded-full bg-white text-charcoal shadow-2xs hover:bg-slate-100 transition-colors cursor-pointer"
+                                                        title="Diminuir"
+                                                    >
+                                                        <Minus className="w-3.5 h-3.5" />
+                                                    </button>
+                                                    <span className="w-5 text-center font-black text-xs tabular-nums text-charcoal">
+                                                        {qty}
+                                                    </span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setItemQuantity(id, qty + 1)}
+                                                        className="w-7 h-7 flex items-center justify-center rounded-full bg-charcoal text-white hover:bg-black transition-colors cursor-pointer"
+                                                        title="Aumentar"
+                                                    >
+                                                        <Plus className="w-3.5 h-3.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                            </div>
+
+                            {/* Drawer Footer */}
+                            <div className="p-4 border-t border-black/8 bg-[#faf9f7] shrink-0 space-y-2">
+                                <div className="flex justify-between items-center text-xs">
+                                    <span className="font-bold text-slate-500 uppercase tracking-wider">Subtotal:</span>
+                                    <span className="font-bold text-charcoal">{formatPrice(originalItemsTotal)}</span>
+                                </div>
+                                {discount > 0 && (
+                                    <div className="flex justify-between items-center text-xs text-emerald-700 font-black">
+                                        <span className="uppercase tracking-wider">Desconto Monte Seu Kit ({discount}% OFF):</span>
+                                        <span>-{formatPrice(discountAmount)}</span>
+                                    </div>
+                                )}
+                                <div className="flex justify-between items-center pt-2 border-t border-black/5 text-sm font-black text-charcoal">
+                                    <span>Total com Desconto:</span>
+                                    <span className="text-base text-emerald-700">{formatPrice(finalTotal)}</span>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowItemsDrawer(false);
+                                        handleNext();
+                                    }}
+                                    className="w-full mt-2 bg-charcoal hover:bg-black text-white h-12 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                                >
+                                    Confirmar e Revisar <Sparkles className="w-4 h-4 text-[#ADCEB3]" />
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
             {/* Floating Summary Bar (Redesigned with Clear Savings) */}
             <AnimatePresence>
                 {count > 0 && (
@@ -391,23 +527,43 @@ export function StepItems() {
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 50 }}
-                        className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-black/8 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] px-4 py-3.5 md:px-8 md:py-4"
+                        className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-black/8 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] px-4 py-3 md:px-8 md:py-4"
                     >
-                        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                             
-                            {/* Left: Totals & Discount highlight */}
-                            <div className="flex items-center justify-between w-full md:w-auto gap-6">
+                            {/* Left: Totals, Drawer Toggle & Dynamic discount highlight */}
+                            <div className="flex items-center justify-between w-full md:w-auto gap-4">
                                 <div>
-                                    <div className="flex items-center gap-2 mb-0.5">
-                                        <span className="text-slate-500 text-[11px] uppercase tracking-wider font-bold">
-                                            Total ({count} {count === 1 ? 'peça' : 'peças'})
-                                        </span>
+                                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowItemsDrawer(prev => !prev)}
+                                            className="cursor-pointer flex items-center gap-1.5 text-[11px] font-bold text-charcoal bg-warm-stone/80 hover:bg-warm-stone px-2.5 py-1 rounded-lg border border-black/5 transition-colors active:scale-95"
+                                            title="Ver peças escolhidas"
+                                        >
+                                            <ShoppingBag className="w-3.5 h-3.5 text-charcoal/70" />
+                                            <span>Ver peças ({count})</span>
+                                            {showItemsDrawer ? <ChevronDown className="w-3 h-3 text-slate-500" /> : <ChevronUp className="w-3 h-3 text-slate-500" />}
+                                        </button>
+                                        
                                         {discount > 0 && (
                                             <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2 py-0.5 rounded-full border border-emerald-200">
                                                 {discount}% OFF aplicado
                                             </span>
                                         )}
+
+                                        {count < 6 && (
+                                            <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                                <Sparkles className="w-3 h-3 text-emerald-600" />
+                                                {count < 2 
+                                                    ? `+${2 - count} peça para 3% OFF` 
+                                                    : count < 4 
+                                                        ? `+${4 - count} peça${4 - count > 1 ? 's' : ''} para 5% OFF` 
+                                                        : `+${6 - count} peça${6 - count > 1 ? 's' : ''} para 8% OFF (Máx)`}
+                                            </span>
+                                        )}
                                     </div>
+
                                     <div className="flex items-baseline gap-2.5">
                                         <span className="text-2xl md:text-3xl font-black text-charcoal tabular-nums leading-none">
                                             {formatPrice(finalTotal)}
