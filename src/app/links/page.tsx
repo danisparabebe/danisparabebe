@@ -3,10 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { 
     Sparkles, 
-    Gift, 
     MessageCircle, 
     ShoppingBag, 
-    HelpCircle, 
+    BookOpen, 
     ChevronRight, 
     ShieldCheck, 
     Heart, 
@@ -16,7 +15,7 @@ import {
 
 export const metadata: Metadata = {
     title: "Links Oficiais | Dani's Para Bebê",
-    description: "Acesse nossos canais oficiais, monte seu enxoval personalizado ou fale direto com a Dani no WhatsApp.",
+    description: "Acesse nossos canais oficiais, conheça nossa loja online, monte seu enxoval personalizado ou fale direto com a Dani no WhatsApp.",
     openGraph: {
         title: "Dani's Para Bebê | Links Oficiais",
         description: "Enxovais de bebê bordados com carinho e exclusividade. Acesse nossos canais oficiais.",
@@ -24,10 +23,10 @@ export const metadata: Metadata = {
         siteName: "Dani's Para Bebê",
         images: [
             {
-                url: "https://danisparabebe.com.br/Logos/perfil%20no%20insta%20atualizado.png",
+                url: "https://danisparabebe.com.br/Logos/DANIS%20VERDE.png",
                 width: 500,
                 height: 500,
-                alt: "Dani's Para Bebê - Links Oficiais",
+                alt: "Dani's Para Bebê - Logo Oficial",
             },
         ],
         locale: "pt_BR",
@@ -54,54 +53,46 @@ interface LinkItem {
 
 const LINKS: LinkItem[] = [
     {
-        id: 'monte-seu-kit',
-        title: 'Monte seu Enxoval Personalizado',
-        subtitle: 'Escolha temas, cores e o nome bordado em cada peça',
-        href: '/monte-seu-kit',
-        badge: 'O Mais Amado',
-        badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-        icon: Sparkles,
-        iconBg: 'bg-emerald-500 text-white',
-        isPrimary: true,
-    },
-    {
-        id: 'promo-inauguracao',
-        title: 'Promoção Leve 4 Pague 3',
-        subtitle: 'Kit 4 peças completo com brinde por R$ 197 no PIX',
-        href: '/#promocao-inauguracao',
-        badge: 'Brinde Incluso',
-        badgeColor: 'bg-amber-100 text-amber-900 border-amber-300',
-        icon: Gift,
-        iconBg: 'bg-amber-500 text-white',
+        id: 'loja',
+        title: 'Conhecer a Loja Online',
+        subtitle: 'Enxovais bordados, toalhas, mantas e bodies',
+        href: '/',
+        badge: 'Loja Oficial',
+        badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        icon: ShoppingBag,
+        iconBg: 'bg-[#245E3B] text-white',
     },
     {
         id: 'whatsapp',
         title: 'Falar com a Dani no WhatsApp',
-        subtitle: 'Atendimento direto, carinhoso e tiramos qualquer dúvida',
+        subtitle: 'Atendimento direto, carinhoso e tire qualquer dúvida',
         href: WHATSAPP_URL,
         badge: 'Online Agora',
-        badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-300',
+        badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
         icon: MessageCircle,
         iconBg: 'bg-[#25D366] text-white',
         isExternal: true,
     },
     {
-        id: 'catalogo',
-        title: 'Ver Catálogo Completo na Loja',
-        subtitle: 'Toalhas de banho, mantas, fraldinhas e bodies bordados',
-        href: '/',
-        badge: '100% Algodão',
-        badgeColor: 'bg-slate-100 text-slate-700 border-slate-200',
-        icon: ShoppingBag,
-        iconBg: 'bg-[#1f2937] text-white',
+        id: 'monte-seu-kit',
+        title: 'Monte seu Enxoval Personalizado',
+        subtitle: 'Escolha temas, cores e o nome bordado em cada peça',
+        href: '/monte-seu-kit',
+        badge: 'O Mais Amado',
+        badgeColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+        icon: Sparkles,
+        iconBg: 'bg-emerald-600 text-white',
+        isPrimary: true,
     },
     {
-        id: 'duvidas',
-        title: 'Dúvidas Frequentes & Prazos',
-        subtitle: 'Prazo de confecção (7-12 dias), frete e formas de pagamento',
-        href: '/perguntas-frequentes',
-        icon: HelpCircle,
-        iconBg: 'bg-slate-200 text-slate-700',
+        id: 'catalogo',
+        title: 'Ver Catálogo Completo',
+        subtitle: 'Confira todas as fotos e temas das nossas coleções',
+        href: '/catalogo',
+        badge: 'Lookbook',
+        badgeColor: 'bg-slate-100 text-slate-700 border-slate-200',
+        icon: BookOpen,
+        iconBg: 'bg-[#1f2937] text-white',
     },
 ];
 
@@ -115,17 +106,18 @@ export default function LinksPage() {
                 {/* Profile Header */}
                 <header className="flex flex-col items-center text-center space-y-3 pt-2">
                     
-                    {/* Avatar with Glow and Verified Indicator */}
+                    {/* Avatar with Real Green Logo */}
                     <div className="relative group">
                         <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#ADCEB3] to-[#245E3B] opacity-60 blur-xs transition-opacity group-hover:opacity-80" />
-                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white">
+                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white flex items-center justify-center p-3">
                             <Image
-                                src="/Logos/perfil no insta atualizado.png"
+                                src="/Logos/DANIS VERDE.png"
                                 alt="Dani's Para Bebê"
-                                width={112}
-                                height={112}
+                                width={100}
+                                height={100}
                                 priority
-                                className="w-full h-full object-cover"
+                                sizes="(max-width: 640px) 96px, 112px"
+                                className="w-full h-full object-contain"
                             />
                         </div>
                     </div>

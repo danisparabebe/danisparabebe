@@ -15,7 +15,7 @@ describe('Regressão: Página Oficial de Links da Bio (/links)', () => {
         assert.ok(content.includes('@danisparabebe'), 'Deve conter o arroba oficial do Instagram');
         assert.ok(content.includes('5518997518078'), 'Deve utilizar o telefone oficial de atendimento');
         assert.ok(content.includes('/monte-seu-kit'), 'Deve conter link direto para o Monte Seu Kit');
-        assert.ok(content.includes('/#promocao-inauguracao'), 'Deve conter link para a promoção');
+        assert.ok(content.includes('/catalogo'), 'Deve conter link para o catálogo completo');
         assert.ok(content.includes('InfinitePay'), 'Deve destacar segurança InfinitePay');
     });
 
