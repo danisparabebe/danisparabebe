@@ -19,7 +19,8 @@ import {
     Truck,
     Package,
     Lock,
-    Palette
+    Palette,
+    ExternalLink
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatPrice, getKitDiscountPercentage } from '@/lib/pricing';
@@ -69,6 +70,7 @@ export default function UnifiedCheckoutPage() {
     const [addressLoaded, setAddressLoaded] = useState(false);
     const [isLoadingAddress, setIsLoadingAddress] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [paymentRedirectUrl, setPaymentRedirectUrl] = useState<string | null>(null);
 
     // Shipping State
     const [shippingOption, setShippingOption] = useState<any | null>(null);
@@ -388,7 +390,14 @@ export default function UnifiedCheckoutPage() {
             if (data.url) {
                 toast.success('Redirecionando para pagamento seguro...', { id: loadingToast });
                 localStorage.setItem('lastOrder', JSON.stringify({ items, customer: formData }));
-                window.location.href = data.url;
+                setPaymentRedirectUrl(data.url);
+                
+                // Fallback para WebView do Instagram: se o redirect do window.location.href travar ou for bloqueado pelo app
+                try {
+                    window.location.assign(data.url);
+                } catch (e) {
+                    window.location.href = data.url;
+                }
             } else {
                 throw new Error('Link de pagamento não gerado.');
             }
@@ -1050,6 +1059,67 @@ export default function UnifiedCheckoutPage() {
 
                 </div>
             </main>
+
+            {/* ─── STICKY BOTTOM BAR NO MOBILE (Checkout Rápido com Teclado Aberto) ─── */}
+            <div className="md:hidden fixed bottom-0 inset-x-0 bg-white/98 backdrop-blur-md border-t border-slate-200 px-4 py-3 z-40 shadow-[0_-8px_20px_rgba(0,0,0,0.08)] flex items-center justify-between gap-3">
+                <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total com frete</span>
+                    <div className="flex items-baseline gap-1.5">
+                        <span className="text-lg font-black text-emerald-700 leading-tight">{formatPrice(finalTotal)}</span>
+                        <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">PIX</span>
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    onClick={handleBuyNow}
+                    disabled={isProcessing}
+                    className="flex-1 max-w-[200px] bg-[#1a9e52] hover:bg-[#158043] active:scale-[0.98] text-white py-3 px-4 rounded-xl font-black text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-60"
+                >
+                    {isProcessing ? (
+                        <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>CONECTANDO...</span>
+                        </>
+                    ) : (
+                        <>
+                            <Lock className="w-3.5 h-3.5" />
+                            <span>PAGAR AGORA</span>
+                        </>
+                    )}
+                </button>
+            </div>
+
+            {/* Espaçador no mobile para a sticky bar não sobrepor o rodapé */}
+            <div className="md:hidden h-20" />
+
+            {/* ─── FALLBACK DE NAVEGAÇÃO SEGURA (Instagram WebView Fallback Modal) ─── */}
+            {paymentRedirectUrl && (
+                <div className="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border-2 border-emerald-600 animate-in fade-in zoom-in-95 duration-200">
+                        <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
+                            <ShieldCheck className="w-6 h-6" />
+                        </div>
+                        <div className="space-y-1">
+                            <h3 className="font-black text-slate-900 text-base">Redirecionando para o Pagamento...</h3>
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                                Se a página de pagamento seguro não carregar automaticamente no seu Instagram, clique no botão verde abaixo:
+                            </p>
+                        </div>
+                        <a
+                            href={paymentRedirectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full inline-flex items-center justify-center gap-2 bg-[#1a9e52] hover:bg-[#158043] text-white py-3.5 px-4 rounded-xl font-black text-sm uppercase tracking-wider shadow-md transition-all"
+                        >
+                            <span>ABRIR PAGAMENTO AGORA</span>
+                            <ExternalLink className="w-4 h-4" />
+                        </a>
+                        <p className="text-[10px] text-slate-400">
+                            Ambiente 100% Criptografado & Oficial InfinitePay
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -21,10 +21,44 @@ const fontDmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "Danis Para Bebê - Enxovais Personalizados Premium",
-    description: "Enxovais personalizados de alto padrão. Feito à mão com amor e exclusividade para o seu bebê.",
+    metadataBase: new URL("https://danisparabebe.com.br"),
+    title: "Dani's Para Bebê - Enxovais Personalizados Premium",
+    description: "Enxovais personalizados de alto padrão. Peças 100% algodão bordadas artesanalmente com o nome do seu bebê.",
     verification: {
         google: "google28ab37d3c9f67d0e",
+        other: {
+            "facebook-domain-verification": "yucv64e1adxb039fkf7a13gaxi4j8q",
+        },
+    },
+    openGraph: {
+        type: "website",
+        locale: "pt_BR",
+        url: "https://danisparabebe.com.br",
+        siteName: "Dani's Para Bebê",
+        title: "Dani's Para Bebê - Enxovais Personalizados Premium",
+        description: "Enxovais de bebê bordados com exclusividade. 100% algodão, maciez e sofisticação para o seu pequeno.",
+        images: [
+            {
+                url: "/produtos/conferidos/MAS-KIT-MAN-SAF-VDM-PROMO-INAU_01.jpeg",
+                width: 800,
+                height: 800,
+                alt: "Dani's Para Bebê - Enxovais Bordados Personalizados",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Dani's Para Bebê - Enxovais Personalizados Premium",
+        description: "Enxovais de bebê bordados com exclusividade. Peças 100% algodão feitas com amor.",
+        images: ["/produtos/conferidos/MAS-KIT-MAN-SAF-VDM-PROMO-INAU_01.jpeg"],
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+        },
     },
 };
 
@@ -36,6 +70,7 @@ export default function RootLayout({
     return (
         <html lang="pt-BR" suppressHydrationWarning className={`${fontFraunces.variable} ${fontDmSans.variable}`}>
             <head>
+                <meta name="facebook-domain-verification" content="yucv64e1adxb039fkf7a13gaxi4j8q" />
                 <script
                     type="text/javascript"
                     dangerouslySetInnerHTML={{

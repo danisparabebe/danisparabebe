@@ -8,6 +8,7 @@ import { useCartStore } from '@/store/cart-store';
 import { useConfiguratorStore } from '@/store/configurator-store';
 import { useFavoritesStore } from '@/store/favorites-store';
 import { ProductPersonalizationModal } from '@/components/product/personalization-modal';
+import { ProductShippingCalculator } from '@/components/product/product-shipping-calculator';
 import { formatCategoryName, getCategoryDetails } from '@/lib/utils';
 
 import { ProductColorVariation } from '@/types/admin';
@@ -71,7 +72,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
             .catch(() => {});
         return () => { isMounted = false; };
     }, [isPromoProduct, isFemPromo, isMasPromo]);
-    const [descExpanded, setDescExpanded] = useState(false);
+    const [descExpanded, setDescExpanded] = useState(true);
     const [panPos, setPanPos] = useState({ x: 0, y: 0 });
     const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, lastX: 0, lastY: 0, moved: false });
     const { addItem, openCart, clearCart } = useCartStore();
@@ -242,9 +243,9 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             className="w-full h-auto p-1 transition-transform duration-500 group-hover:scale-[1.02]"
                             priority
                         />
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm text-charcoal px-4 py-2 rounded-full text-xs font-bold shadow-sm flex items-center gap-2 opacity-90 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-                            <ZoomIn className="w-3.5 h-3.5 text-sage-green-dark" />
-                            Ampliar
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm text-charcoal px-4 py-2 rounded-full text-xs font-bold shadow-md border border-black/5 flex items-center gap-2 opacity-100 transition-transform active:scale-95 duration-200">
+                            <ZoomIn className="w-4 h-4 text-[#245E3B]" />
+                            <span>Toque para ver detalhes do bordado</span>
                         </div>
                         <button onClick={(e) => { e.stopPropagation(); toggle(product.id); }} className="absolute top-3 right-3 p-2.5 bg-white/80 backdrop-blur-md rounded-full shadow-sm z-20 cursor-pointer hover:scale-110 active:scale-95 transition-all outline-none">
                             <Heart className={`w-4 h-4 transition-colors duration-300 ${fav ? 'fill-dusty-rose text-dusty-rose' : 'text-slate hover:text-dusty-rose'}`} />
@@ -491,6 +492,9 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             </div>
                         ))}
                     </div>
+
+                    {/* Simulador de Frete & Prazo */}
+                    <ProductShippingCalculator productPrice={currentPixPrice} />
 
                     {/* Production Time Notice */}
                     <div className="flex items-start gap-2 p-3 mt-3 bg-warm-stone/20 rounded-xl border border-line">

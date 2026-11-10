@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Permitir bots oficiais da Meta / Instagram para verificação de links de Stories e Bios
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Impedir indexação de páginas administrativas e checkout de pedidos
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /checkout
+Disallow: /pedido/*
+
+Sitemap: https://danisparabebe.com.br/sitemap.xml

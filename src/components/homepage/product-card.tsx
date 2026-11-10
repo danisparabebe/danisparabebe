@@ -99,7 +99,7 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
     // --- NORMAL VARIANT (unchanged) ---
     return (
         <div className="group relative flex flex-col h-full">
-            <Link href={linkHref} className="block" target="_blank">
+            <Link href={linkHref} className="block">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] bg-[#FAF9F8] shadow-sm border border-black/5">
                     <Image
                         src={image}
@@ -127,8 +127,10 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
             </button>
 
             <div className="mt-3 flex flex-col flex-1 px-1">
-                {category && <p className="text-[11px] text-slate uppercase tracking-wider font-medium">{category}</p>}
-                <h3 className="text-sm font-semibold text-charcoal line-clamp-2 min-h-[2.5rem] mt-1 pr-8 leading-snug">{name}</h3>
+                <Link href={linkHref} className="block group/title">
+                    {category && <p className="text-[11px] text-slate uppercase tracking-wider font-medium group-hover/title:text-sage-green-dark transition-colors">{category}</p>}
+                    <h3 className="text-sm font-semibold text-charcoal line-clamp-2 min-h-[2.5rem] mt-1 pr-8 leading-snug group-hover/title:text-sage-green-dark transition-colors">{name}</h3>
+                </Link>
                 <div className="space-y-1 mt-auto pt-3">
                     {installmentPrice && (
                         <div className="text-sm text-charcoal">
