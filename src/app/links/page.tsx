@@ -14,19 +14,19 @@ import {
 import { CatalogoButton } from './catalogo-button';
 
 export const metadata: Metadata = {
-    title: "Links Oficiais | Dani's Para Bebê",
+    title: "Links Oficiais | Danis Para Bebê",
     description: "Acesse nossos canais oficiais, conheça nossa loja online, monte seu enxoval personalizado ou fale direto com a Dani no WhatsApp.",
     openGraph: {
-        title: "Dani's Para Bebê | Links Oficiais",
+        title: "Danis Para Bebê | Links Oficiais",
         description: "Enxovais de bebê bordados com carinho e exclusividade. Acesse nossos canais oficiais.",
         url: "https://danisparabebe.com.br/links",
-        siteName: "Dani's Para Bebê",
+        siteName: "Danis Para Bebê",
         images: [
             {
-                url: "https://danisparabebe.com.br/Logos/DANIS%20VERDE.png",
+                url: "https://danisparabebe.com.br/Logos/DANIS%20VERDE-BRANCO.png",
                 width: 500,
                 height: 500,
-                alt: "Dani's Para Bebê - Logo Oficial",
+                alt: "Danis Para Bebê - Logo Oficial",
             },
         ],
         locale: "pt_BR",
@@ -96,18 +96,18 @@ export default function LinksPage() {
                 {/* Profile Header */}
                 <header className="flex flex-col items-center text-center space-y-3 pt-2">
                     
-                    {/* Avatar with Real Green Logo */}
+                    {/* Avatar with Full Green Logo */}
                     <div className="relative group">
                         <div className="absolute -inset-1 rounded-[1.25rem] bg-gradient-to-br from-[#ADCEB3] to-[#245E3B] opacity-60 blur-xs transition-opacity group-hover:opacity-80" />
-                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-white flex items-center justify-center p-3">
+                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-[#ADCEB3]">
                             <Image
-                                src="/Logos/DANIS VERDE.png"
-                                alt="Dani's Para Bebê"
-                                width={100}
-                                height={100}
+                                src="/Logos/DANIS VERDE-BRANCO.png"
+                                alt="Danis Para Bebê"
+                                width={112}
+                                height={112}
                                 priority
                                 sizes="(max-width: 640px) 96px, 112px"
-                                className="w-full h-full object-contain"
+                                className="w-full h-full object-cover"
                             />
                         </div>
                     </div>
@@ -115,7 +115,7 @@ export default function LinksPage() {
                     {/* Brand Name & Handle */}
                     <div className="space-y-1">
                         <h1 className="font-fraunces font-bold text-2xl sm:text-3xl text-charcoal flex items-center justify-center gap-1.5 leading-tight">
-                            Dani's Para Bebê
+                            Danis Para Bebê
                             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#245E3B] text-white text-[11px]" title="Loja Oficial">
                                 ✓
                             </span>
