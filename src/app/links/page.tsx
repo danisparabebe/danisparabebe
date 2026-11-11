@@ -134,7 +134,7 @@ export default function LinksPage() {
                     {/* Quick highlights pill */}
                     <div className="flex items-center gap-2 pt-1">
                         <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full">
-                            <Truck className="w-3 h-3 text-emerald-600" /> Frete Grátis acima de R$ 250
+                            <Truck className="w-3 h-3 text-emerald-600" /> Frete Grátis acima de R$ 400
                         </span>
                     </div>
                 </header>
