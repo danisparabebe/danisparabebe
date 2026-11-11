@@ -5,13 +5,13 @@ import {
     Sparkles, 
     MessageCircle, 
     ShoppingBag, 
-    BookOpen, 
     ChevronRight, 
     ShieldCheck, 
     Heart, 
     Instagram,
     Truck
 } from 'lucide-react';
+import { CatalogoButton } from './catalogo-button';
 
 export const metadata: Metadata = {
     title: "Links Oficiais | Dani's Para Bebê",
@@ -84,16 +84,6 @@ const LINKS: LinkItem[] = [
         iconBg: 'bg-emerald-600 text-white',
         isPrimary: true,
     },
-    {
-        id: 'catalogo',
-        title: 'Ver Catálogo Completo',
-        subtitle: 'Confira todas as fotos e temas das nossas coleções',
-        href: '/catalogo',
-        badge: 'Lookbook',
-        badgeColor: 'bg-slate-100 text-slate-700 border-slate-200',
-        icon: BookOpen,
-        iconBg: 'bg-[#1f2937] text-white',
-    },
 ];
 
 export default function LinksPage() {
@@ -108,8 +98,8 @@ export default function LinksPage() {
                     
                     {/* Avatar with Real Green Logo */}
                     <div className="relative group">
-                        <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#ADCEB3] to-[#245E3B] opacity-60 blur-xs transition-opacity group-hover:opacity-80" />
-                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white flex items-center justify-center p-3">
+                        <div className="absolute -inset-1 rounded-[1.25rem] bg-gradient-to-br from-[#ADCEB3] to-[#245E3B] opacity-60 blur-xs transition-opacity group-hover:opacity-80" />
+                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-white flex items-center justify-center p-3">
                             <Image
                                 src="/Logos/DANIS VERDE.png"
                                 alt="Dani's Para Bebê"
@@ -197,6 +187,9 @@ export default function LinksPage() {
                             </Link>
                         );
                     })}
+
+                    {/* Catálogo com seletor Meninos/Meninas */}
+                    <CatalogoButton />
                 </div>
 
                 {/* Trust Badges */}

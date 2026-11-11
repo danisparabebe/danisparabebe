@@ -5,6 +5,7 @@ import path from 'node:path';
 
 describe('Regressão: Página Oficial de Links da Bio (/links)', () => {
     const linksPagePath = path.resolve(process.cwd(), 'src/app/links/page.tsx');
+    const cataloButtonPath = path.resolve(process.cwd(), 'src/app/links/catalogo-button.tsx');
     const sitemapPath = path.resolve(process.cwd(), 'src/app/sitemap.ts');
 
     test('Página /links deve existir com metatags e branding oficial', () => {
@@ -17,6 +18,16 @@ describe('Regressão: Página Oficial de Links da Bio (/links)', () => {
         assert.ok(content.includes('/monte-seu-kit'), 'Deve conter link direto para o Monte Seu Kit');
         assert.ok(content.includes('/catalogo'), 'Deve conter link para o catálogo completo');
         assert.ok(content.includes('InfinitePay'), 'Deve destacar segurança InfinitePay');
+    });
+
+    test('Componente CatalogoButton deve oferecer opções Meninas e Meninos', () => {
+        assert.ok(fs.existsSync(cataloButtonPath), 'src/app/links/catalogo-button.tsx deve existir');
+        const content = fs.readFileSync(cataloButtonPath, 'utf-8');
+
+        assert.ok(content.includes('gender=menina'), 'Deve conter link para coleção Meninas');
+        assert.ok(content.includes('gender=menino'), 'Deve conter link para coleção Meninos');
+        assert.ok(content.includes("'use client'"), 'Deve ser um Client Component (interativo)');
+        assert.ok(content.includes('useState'), 'Deve usar estado para controlar expansão');
     });
 
     test('Sitemap deve incluir a rota /links', () => {
