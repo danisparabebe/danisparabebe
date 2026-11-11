@@ -2,9 +2,6 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
-    Sparkles, 
-    MessageCircle, 
-    ShoppingBag, 
     ChevronRight, 
     ShieldCheck, 
     Heart, 
@@ -45,8 +42,7 @@ interface LinkItem {
     href: string;
     badge?: string;
     badgeColor?: string;
-    icon: any;
-    iconBg: string;
+    iconSrc: string;
     isExternal?: boolean;
     isPrimary?: boolean;
 }
@@ -59,8 +55,7 @@ const LINKS: LinkItem[] = [
         href: '/',
         badge: 'Loja Oficial',
         badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-        icon: ShoppingBag,
-        iconBg: 'bg-[#245E3B] text-white',
+        iconSrc: '/Icons link do insta/Icon Loja.jpg',
     },
     {
         id: 'whatsapp',
@@ -69,8 +64,7 @@ const LINKS: LinkItem[] = [
         href: WHATSAPP_URL,
         badge: 'Online Agora',
         badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-        icon: MessageCircle,
-        iconBg: 'bg-[#25D366] text-white',
+        iconSrc: '/Icons link do insta/Icon Whats.jpg',
         isExternal: true,
     },
     {
@@ -80,8 +74,7 @@ const LINKS: LinkItem[] = [
         href: '/monte-seu-kit',
         badge: 'O Mais Amado',
         badgeColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-        icon: Sparkles,
-        iconBg: 'bg-emerald-600 text-white',
+        iconSrc: '/Icons link do insta/Icon Monte seu kit.jpg',
         isPrimary: true,
     },
 ];
@@ -96,7 +89,7 @@ export default function LinksPage() {
                 {/* Profile Header */}
                 <header className="flex flex-col items-center text-center space-y-3 pt-2">
                     
-                    {/* Avatar with Full Green Logo */}
+                    {/* Avatar with Full Green Logo — zoomed so text is clearly visible */}
                     <div className="relative group">
                         <div className="absolute -inset-1 rounded-[1.25rem] bg-gradient-to-br from-[#ADCEB3] to-[#245E3B] opacity-60 blur-xs transition-opacity group-hover:opacity-80" />
                         <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-[#ADCEB3]">
@@ -107,7 +100,7 @@ export default function LinksPage() {
                                 height={112}
                                 priority
                                 sizes="(max-width: 640px) 96px, 112px"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover scale-[1.75] transition-transform group-hover:scale-[1.85]"
                             />
                         </div>
                     </div>
@@ -142,7 +135,6 @@ export default function LinksPage() {
                 {/* Links Stack */}
                 <div className="w-full space-y-3 pt-2">
                     {LINKS.map((link) => {
-                        const Icon = link.icon;
                         const isExternal = link.isExternal;
 
                         return (
@@ -160,9 +152,16 @@ export default function LinksPage() {
                                     }
                                 `}
                             >
-                                {/* Left Icon Badge */}
-                                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-xs transition-transform group-hover:scale-105 ${link.iconBg}`}>
-                                    <Icon className="w-5 h-5" />
+                                {/* Left Icon — custom image, square with rounded corners */}
+                                <div className="w-11 h-11 rounded-xl overflow-hidden shrink-0 shadow-sm transition-transform group-hover:scale-105">
+                                    <Image
+                                        src={link.iconSrc}
+                                        alt={link.title}
+                                        width={44}
+                                        height={44}
+                                        className="w-full h-full object-cover"
+                                        sizes="44px"
+                                    />
                                 </div>
 
                                 {/* Texts */}

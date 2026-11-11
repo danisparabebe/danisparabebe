@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, ChevronRight, ChevronDown, Baby } from 'lucide-react';
+import Image from 'next/image';
+import { ChevronRight, ChevronDown, Baby } from 'lucide-react';
 
 export function CatalogoButton() {
     const [expanded, setExpanded] = useState(false);
@@ -20,9 +21,16 @@ export function CatalogoButton() {
                     ${expanded ? 'border-[#245E3B]/20 shadow-sm' : ''}
                 `}
             >
-                {/* Left Icon Badge */}
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-xs transition-transform group-hover:scale-105 bg-[#1f2937] text-white">
-                    <BookOpen className="w-5 h-5" />
+                {/* Left Icon — custom image, square with rounded corners */}
+                <div className="w-11 h-11 rounded-xl overflow-hidden shrink-0 shadow-sm transition-transform group-hover:scale-105">
+                    <Image
+                        src="/Icons link do insta/Icon Catálogo.jpg"
+                        alt="Catálogo"
+                        width={44}
+                        height={44}
+                        className="w-full h-full object-cover"
+                        sizes="44px"
+                    />
                 </div>
 
                 {/* Texts */}
