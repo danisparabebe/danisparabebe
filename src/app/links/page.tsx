@@ -9,6 +9,7 @@ import {
     Truck
 } from 'lucide-react';
 import { CatalogoButton } from './catalogo-button';
+import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL } from '@/lib/shipping-rules';
 
 export const metadata: Metadata = {
     title: "Links Oficiais | Danis Para Bebê",
@@ -123,9 +124,9 @@ export default function LinksPage() {
                     </p>
 
                     {/* Quick highlights pill */}
-                    <div className="flex items-center gap-2 pt-1">
-                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full">
-                            <Truck className="w-3 h-3 text-emerald-600" /> Frete Grátis acima de R$ 400
+                    <div className="flex items-center justify-center gap-2 pt-1 px-2">
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-center">
+                            <Truck className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> Frete Grátis acima de R$ {FREE_SHIPPING_THRESHOLD} ({FREE_SHIPPING_REGIONS_LABEL})
                         </span>
                     </div>
                 </header>
@@ -216,7 +217,7 @@ export default function LinksPage() {
                     <span>Siga-nos no Instagram</span>
                 </Link>
                 <p className="text-[10px] text-slate-400">
-                    © {new Date().getFullYear()} Dani's Para Bebê • danisparabebe.com.br
+                    © {new Date().getFullYear()} Danis Para Bebê • danisparabebe.com.br
                 </p>
             </footer>
 
