@@ -62,8 +62,6 @@ const LINKS: LinkItem[] = [
         title: 'Falar com a Dani no WhatsApp',
         subtitle: 'Atendimento direto, carinhoso e tire qualquer dúvida',
         href: WHATSAPP_URL,
-        badge: 'Online Agora',
-        badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
         iconSrc: '/Icons link do insta/Icon Whats.jpg',
         isExternal: true,
     },
@@ -89,18 +87,18 @@ export default function LinksPage() {
                 {/* Profile Header */}
                 <header className="flex flex-col items-center text-center space-y-3 pt-2">
                     
-                    {/* Avatar with Full Green Logo — zoomed so text is clearly visible */}
+                    {/* Avatar with Custom Green Background and Crisp White Logo */}
                     <div className="relative group">
                         <div className="absolute -inset-1 rounded-[1.25rem] bg-gradient-to-br from-[#ADCEB3] to-[#245E3B] opacity-60 blur-xs transition-opacity group-hover:opacity-80" />
-                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-[#ADCEB3]">
+                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-[#ADCEB3] flex items-center justify-center p-3">
                             <Image
-                                src="/Logos/DANIS VERDE-BRANCO.png"
+                                src="/Logos/DANIS BRANCA.png"
                                 alt="Danis Para Bebê"
                                 width={112}
                                 height={112}
                                 priority
                                 sizes="(max-width: 640px) 96px, 112px"
-                                className="w-full h-full object-cover scale-[1.75] transition-transform group-hover:scale-[1.85]"
+                                className="w-full h-auto object-contain transition-transform group-hover:scale-105"
                             />
                         </div>
                     </div>
