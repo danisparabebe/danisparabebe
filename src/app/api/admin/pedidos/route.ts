@@ -157,8 +157,45 @@ export async function PATCH(req: Request) {
     }
 }
 
-export async function DELETE() {
+export async function DELETE(req: Request) {
     try {
+        const { searchParams } = new URL(req.url);
+        const orderId = searchParams.get('orderId');
+
+        // Exclusão individual de um pedido específico
+        if (orderId) {
+            const docRef = adminDb.collection('orders').doc(orderId);
+            const docSnap = await docRef.get();
+
+            if (!docSnap.exists) {
+                return NextResponse.json(
+                    { ok: false, error: 'Pedido não encontrado no banco de dados' },
+                    { status: 404 }
+                );
+            }
+
+            const data = docSnap.data();
+            const archivedAt = new Date().toISOString();
+
+            // Salva backup silencioso em orders_archive para total segurança
+            await adminDb.collection('orders_archive').doc(orderId).set({
+                ...data,
+                _archivedAt: archivedAt,
+                _deleteReason: 'manual_individual_admin'
+            });
+
+            // Remove da coleção principal de pedidos ativos
+            await docRef.delete();
+
+            console.log(`[ADMIN-DELETE] 🗑️ Pedido ${orderId} excluído e arquivado com sucesso.`);
+            return NextResponse.json({
+                ok: true,
+                orderId,
+                message: 'Pedido excluído com sucesso!'
+            });
+        }
+
+        // Exclusão em lote / Zerar painel (comportamento original)
         const snapshot = await adminDb.collection('orders').get();
         if (snapshot.empty) {
             return NextResponse.json({ ok: true, count: 0, message: 'Nenhum pedido encontrado. O painel já está zerado.' });
@@ -173,7 +210,7 @@ export async function DELETE() {
             const data = doc.data();
             // Salva backup silencioso em orders_archive para segurança
             const archiveRef = adminDb.collection('orders_archive').doc(doc.id);
-            batch.set(archiveRef, { ...data, _archivedAt: archivedAt });
+            batch.set(archiveRef, { ...data, _archivedAt: archivedAt, _deleteReason: 'clear_all_admin' });
 
             // Remove da coleção principal de pedidos ativos
             batch.delete(doc.ref);
@@ -198,9 +235,9 @@ export async function DELETE() {
             message: `${totalDeleted} pedidos de teste foram arquivados e o painel foi zerado com sucesso!`
         });
     } catch (err: any) {
-        console.error('❌ Erro ao limpar pedidos no Admin API:', err);
+        console.error('❌ Erro ao excluir pedido no Admin API:', err);
         return NextResponse.json(
-            { ok: false, error: err.message || 'Falha ao limpar pedidos no servidor' },
+            { ok: false, error: err.message || 'Falha ao excluir pedido no servidor' },
             { status: 500 }
         );
     }

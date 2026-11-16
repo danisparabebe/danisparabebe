@@ -72,6 +72,7 @@ export default function AdminPedidosPage() {
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [generatingEtiquetaId, setGeneratingEtiquetaId] = useState<string | null>(null);
+    const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null);
     const [filterStatus, setFilterStatus] = useState<string>('todos');
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -199,6 +200,35 @@ export default function AdminPedidosPage() {
             toast.error('Erro de conexão ao limpar pedidos.');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDeleteOrder = async (orderId: string, customerName?: string) => {
+        const name = customerName || 'Cliente';
+        const shortId = orderId.slice(-6).toUpperCase();
+        const confirmed = window.confirm(
+            `⚠️ Tem certeza que deseja excluir o pedido #${shortId} (${name})?\n\n` +
+            'O pedido será removido da lista ativa com backup de segurança no arquivo.'
+        );
+        if (!confirmed) return;
+
+        setDeletingOrderId(orderId);
+        try {
+            const res = await fetch(`/api/admin/pedidos?orderId=${encodeURIComponent(orderId)}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if (data.ok) {
+                toast.success('Pedido excluído com sucesso!');
+                setOrders(prev => prev.filter(o => o.id !== orderId));
+            } else {
+                toast.error(data.error || 'Erro ao excluir pedido.');
+            }
+        } catch (err: any) {
+            console.error('Erro ao excluir pedido:', err);
+            toast.error('Erro de conexão ao excluir pedido.');
+        } finally {
+            setDeletingOrderId(null);
         }
     };
 
@@ -656,6 +686,20 @@ export default function AdminPedidosPage() {
                                                         )}
                                                     </button>
                                                 )}
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleDeleteOrder(order.id, order.customerName)}
+                                                    disabled={deletingOrderId === order.id}
+                                                    className="flex items-center justify-center gap-1.5 p-2 text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 active:scale-95 rounded-xl text-xs font-bold uppercase transition-all shadow-xs disabled:opacity-50"
+                                                    title="Excluir este pedido do painel ativo"
+                                                >
+                                                    {deletingOrderId === order.id ? (
+                                                        <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Excluindo...</>
+                                                    ) : (
+                                                        <><Trash2 className="w-3.5 h-3.5" /> Excluir Pedido</>
+                                                    )}
+                                                </button>
                                             </div>
 
                                         </div>
