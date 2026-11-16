@@ -38,19 +38,26 @@ export async function GET() {
             const data = doc.data() || {};
             const createdAt = toIsoString(data.createdAt) || new Date().toISOString();
 
-            // Se deadlineDate não existir, calcula 15 dias a partir de createdAt
-            let deadlineDate = toIsoString(data.deadlineDate);
-            if (!deadlineDate) {
-                const d = new Date(createdAt);
-                d.setDate(d.getDate() + 15);
-                deadlineDate = d.toISOString();
-            }
-
             let rawStatus = (data.status || 'pendente').toLowerCase();
             if (rawStatus === 'pago_aprovado' || rawStatus === 'approved' || rawStatus === 'paid') {
                 rawStatus = 'pago';
             } else if (rawStatus === 'pending') {
                 rawStatus = 'pendente';
+            }
+
+            const paymentDate = toIsoString(data.paymentDate);
+
+            // Regra de Negócio: O prazo de produção/envio só começa a contar APÓS a confirmação do pagamento.
+            // Se o pedido estiver pendente, o prazo NÃO deve contar (deadlineDate = null).
+            let deadlineDate: string | null = null;
+            if (rawStatus !== 'pendente') {
+                deadlineDate = toIsoString(data.deadlineDate);
+                if (!deadlineDate) {
+                    const baseDate = paymentDate ? new Date(paymentDate) : new Date(createdAt);
+                    const d = new Date(baseDate);
+                    d.setDate(d.getDate() + 15);
+                    deadlineDate = d.toISOString();
+                }
             }
 
             const totalAmount = typeof data.totalAmount === 'number'
@@ -92,6 +99,7 @@ export async function GET() {
                 customerCpf: data.customerCpf || data.address?.cpf || '',
                 totalAmount,
                 createdAt,
+                paymentDate,
                 deadlineDate,
                 address: data.address || null,
                 status: rawStatus,
@@ -142,10 +150,33 @@ export async function PATCH(req: Request) {
             );
         }
 
-        await adminDb.collection('orders').doc(orderId).update({
+        const orderRef = adminDb.collection('orders').doc(orderId);
+        const orderSnap = await orderRef.get();
+        const existingData = orderSnap.data() || {};
+        const now = new Date();
+
+        const updatePayload: Record<string, any> = {
             status,
-            updatedAt: new Date().toISOString()
-        });
+            updatedAt: now.toISOString()
+        };
+
+        if (status === 'pendente') {
+            // Se voltou para pendente, o prazo é suspenso
+            updatePayload.deadlineDate = null;
+        } else {
+            // Se foi para pago ou produção e não tinha deadlineDate nem paymentDate, inicia contagem de 15 dias a partir de agora
+            if (!existingData.paymentDate) {
+                updatePayload.paymentDate = now.toISOString();
+            }
+            if (!existingData.deadlineDate) {
+                const baseDate = existingData.paymentDate ? new Date(existingData.paymentDate) : now;
+                const deadline = new Date(baseDate);
+                deadline.setDate(deadline.getDate() + 15);
+                updatePayload.deadlineDate = deadline.toISOString();
+            }
+        }
+
+        await orderRef.update(updatePayload);
 
         return NextResponse.json({ ok: true, orderId, status });
     } catch (err: any) {

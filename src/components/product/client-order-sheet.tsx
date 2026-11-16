@@ -104,8 +104,9 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
     const babyName = personalizedItem?.personalization?.name || '';
     const mainTheme = personalizedItem?.personalization?.theme || '';
 
-    // Deadline formatted
-    const deadlineFormatted = deadlineDate 
+    // Deadline formatted — só conta após confirmação do pagamento
+    const isPending = (status || '').toLowerCase().includes('pendente');
+    const deadlineFormatted = !isPending && deadlineDate 
         ? new Date(deadlineDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
         : null;
 
@@ -162,12 +163,17 @@ export function ClientOrderSheet({ order }: ClientOrderSheetProps) {
                         <span className="bg-white/80 border border-black/5 px-3 py-1.5 rounded-xl font-mono text-slate-600 font-bold">
                             Pedido #{cleanOrderId}
                         </span>
-                        {deadlineFormatted && (
+                        {isPending ? (
+                            <span className="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5 text-amber-600" />
+                                Prazo de Envio: Inicia após confirmação do pagamento
+                            </span>
+                        ) : deadlineFormatted ? (
                             <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5">
                                 <Clock className="w-3.5 h-3.5 text-emerald-600" />
                                 Previsão de Envio: {deadlineFormatted}
                             </span>
-                        )}
+                        ) : null}
                         {formattedTotal && (
                             <span className="bg-white/80 border border-black/5 px-3 py-1.5 rounded-xl font-bold text-slate-800">
                                 Total: {formattedTotal}

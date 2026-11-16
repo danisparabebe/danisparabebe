@@ -50,7 +50,8 @@ interface Order {
     customerCpf?: string;
     totalAmount: number;
     createdAt: string;
-    deadlineDate: string;
+    paymentDate?: string | null;
+    deadlineDate?: string | null;
     address: Record<string, any> | null;
     status: 'pendente' | 'pago' | 'em_producao' | 'conferencia' | 'enviado';
     items: OrderItem[];
@@ -490,7 +491,7 @@ export default function AdminPedidosPage() {
                     ) : (
                         <div className="grid gap-4">
                             {filteredOrders.map(order => {
-                                const urgent = order.status !== 'enviado' && isUrgent(order.deadlineDate);
+                                const urgent = order.status !== 'enviado' && order.status !== 'pendente' && isUrgent(order.deadlineDate || undefined);
                                 
                                 // Ficha Técnica Completa de Produção
                                 const fichaDataPayload = JSON.stringify({
@@ -601,12 +602,26 @@ export default function AdminPedidosPage() {
                                                 </div>
                                                 <div>
                                                     <p className={`text-[9px] font-black uppercase tracking-widest mb-0.5 ${urgent ? 'text-red-500' : 'text-slate-400'}`}>
-                                                        Prazo Máximo de Envio
+                                                        Prazo de Envio
                                                     </p>
-                                                    <div className={`flex items-center gap-1.5 text-sm font-black ${urgent ? 'text-red-600' : 'text-emerald-700'}`}>
-                                                        <Clock className="w-4 h-4" />
-                                                        {formatDate(order.deadlineDate)}
-                                                    </div>
+                                                    {order.status === 'pendente' ? (
+                                                        <div className="flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-1 rounded-lg">
+                                                            <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                                                            <span>Inicia após pagamento</span>
+                                                        </div>
+                                                    ) : (
+                                                        <>
+                                                            <div className={`flex items-center gap-1.5 text-sm font-black ${urgent ? 'text-red-600' : 'text-emerald-700'}`}>
+                                                                <Clock className="w-4 h-4" />
+                                                                {formatDate(order.deadlineDate || undefined)}
+                                                            </div>
+                                                            {order.paymentDate && (
+                                                                <p className="text-[9px] text-slate-400 font-medium mt-0.5">
+                                                                    Pago em {formatDate(order.paymentDate)}
+                                                                </p>
+                                                            )}
+                                                        </>
+                                                    )}
                                                 </div>
                                             </div>
 

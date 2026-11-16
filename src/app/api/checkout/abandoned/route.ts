@@ -67,7 +67,7 @@ export async function POST(request: Request) {
             isLead: true,
             source: source || 'checkout',
             createdAt: now.toISOString(),
-            deadlineDate: deadline.toISOString(),
+            deadlineDate: null, // Lead pendente: prazo inicia apenas após confirmação do pagamento
             updatedAt: now.toISOString(),
         };
 

@@ -262,7 +262,7 @@ export async function POST(request: Request) {
                 shippingAmount: effectiveShipping,
                 userId: userId || '',
                 createdAt: now.toISOString(),
-                deadlineDate: deadline.toISOString(),
+                deadlineDate: null, // O prazo de 15 dias só começa a contar após a confirmação do pagamento
                 status: 'pendente',
                 requestedMethod: 'infinitepay'
             };

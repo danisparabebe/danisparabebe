@@ -140,10 +140,14 @@ export async function POST(req: Request) {
 
         // 3. Atualizando a "Etiqueta" do Pedido
         const isCreditCardPayment = stringified.includes('credit_card') || stringified.includes('cartao');
+        const paidAt = new Date();
+        const deadline = new Date(paidAt);
+        deadline.setDate(deadline.getDate() + 15);
 
         await orderRef.update({
             status: 'pago_aprovado',
-            paymentDate: new Date().toISOString(),
+            paymentDate: paidAt.toISOString(),
+            deadlineDate: deadline.toISOString(), // Prazo de produção/envio começa a correr A PARTIR da data de pagamento
             actualPaymentMethod: isCreditCardPayment ? 'credit_card' : 'pix'
         });
         
