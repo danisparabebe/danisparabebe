@@ -7,7 +7,7 @@ import { BASE_PRICES, formatPrice } from '@/lib/pricing';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp, Truck, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Zap, ShieldCheck, Loader2, ChevronDown, ChevronUp, Truck, ExternalLink, CreditCard } from 'lucide-react';
 import Image from 'next/image';
 import { FREE_SHIPPING_THRESHOLD, FREE_SHIPPING_REGIONS_LABEL, isEligibleForFreeShipping } from '@/lib/shipping-rules';
 
@@ -645,6 +645,17 @@ export function StepReview() {
                             </div>
                         </div>
 
+                        {/* Aviso amigável sobre formas de pagamento na InfinitePay */}
+                        <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs space-y-1">
+                            <div className="flex items-center gap-1.5 font-bold text-slate-800">
+                                <CreditCard className="w-4 h-4 text-emerald-600" />
+                                <span>Cartão de Crédito (até 12x) ou Pix</span>
+                            </div>
+                            <p className="text-[11px] text-slate-600 leading-relaxed">
+                                Na tela de pagamento da InfinitePay você escolhe a melhor opção. Para trocar entre Pix e Cartão, basta tocar em <strong>&quot;Alterar&quot;</strong> no topo.
+                            </p>
+                        </div>
+
                         <div className="flex gap-3">
                             <button
                                 onClick={previousStep}
@@ -663,7 +674,7 @@ export function StepReview() {
                                 ) : (
                                     <>
                                         <span className="font-black text-sm leading-none pt-0.5">PAGAR AGORA</span>
-                                        <span className="text-[7.5px] text-white/90 normal-case tracking-normal">Ambiente Seguro InfinitePay</span>
+                                        <span className="text-[7.5px] text-white/90 normal-case tracking-normal">Escolha Cartão ou Pix na InfinitePay</span>
                                     </>
                                 )}
                             </button>
@@ -694,7 +705,7 @@ export function StepReview() {
                                 {formatPrice(grandTotal)}
                             </span>
                             <span className="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
-                                no PIX
+                                PIX ou Cartão
                             </span>
                         </div>
                         <span className="text-[10px] font-medium text-slate-500">

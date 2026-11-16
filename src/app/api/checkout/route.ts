@@ -324,7 +324,11 @@ export async function POST(request: Request) {
                 description: item.description,
                 price: item.price,
                 quantity: item.quantity,
-            }))
+            })),
+            payment_methods: ['credit_card', 'pix'],
+            options: {
+                payment_methods_enabled: ['credit_card', 'pix']
+            }
         };
 
         console.log('\n🚀 PAYLOAD ENVIADO PARA INFINITEPAY:');

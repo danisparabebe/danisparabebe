@@ -20,7 +20,8 @@ import {
     Package,
     Lock,
     Palette,
-    ExternalLink
+    ExternalLink,
+    CreditCard
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatPrice, getKitDiscountPercentage } from '@/lib/pricing';
@@ -1045,8 +1046,18 @@ export default function UnifiedCheckoutPage() {
                                 </div>
                             </div>
 
-                            {/* 5. BOTÃO PRINCIPAL DE PAGAMENTO — SEMPRE CLICÁVEL & RESPONSIVO NO CELULAR */}
-                            <div className="space-y-2 pt-1">
+                            {/* 5. INSTRUÇÃO CLARA DE FORMAS DE PAGAMENTO & BOTÃO PRINCIPAL */}
+                            <div className="space-y-3 pt-1">
+                                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs space-y-1.5">
+                                    <div className="flex items-center gap-1.5 font-bold text-slate-800">
+                                        <CreditCard className="w-4 h-4 text-emerald-600" />
+                                        <span>Formas de Pagamento na InfinitePay</span>
+                                    </div>
+                                    <p className="text-[11px] text-slate-600 leading-relaxed">
+                                        Você poderá pagar no <strong>Cartão de Crédito (até 12x)</strong>, <strong>Pix</strong> ou <strong>Apple Pay</strong>. Na tela do pagamento, caso queira trocar a forma, basta clicar no botão <strong>&quot;Alterar&quot;</strong> no topo.
+                                    </p>
+                                </div>
+
                                 <button
                                     type="button"
                                     onClick={handleBuyNow}
@@ -1062,7 +1073,7 @@ export default function UnifiedCheckoutPage() {
                                         <>
                                             <span className="leading-none">PAGAR AGORA</span>
                                             <span className="text-[10px] text-white/90 font-medium normal-case tracking-normal">
-                                                Pagamento Direto e Seguro via InfinitePay
+                                                Escolha Cartão de Crédito (até 12x) ou Pix na InfinitePay
                                             </span>
                                         </>
                                     )}
@@ -1086,7 +1097,7 @@ export default function UnifiedCheckoutPage() {
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total com frete</span>
                     <div className="flex items-baseline gap-1.5">
                         <span className="text-lg font-black text-emerald-700 leading-tight">{formatPrice(finalTotal)}</span>
-                        <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">PIX</span>
+                        <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">PIX ou Cartão</span>
                     </div>
                 </div>
                 <button
