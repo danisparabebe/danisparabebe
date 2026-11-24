@@ -6,6 +6,56 @@ import Link from 'next/link';
 import { Sparkles, Gift, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { INAUGURATION_PROMO_CONFIG } from '@/data/inauguration-promo';
 
+function AnimatedFlameIcon({ className = "w-4 h-4" }: { className?: string }) {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={`${className} shrink-0 drop-shadow-[0_0_4px_rgba(249,115,22,0.45)]`}
+            aria-hidden="true"
+        >
+            {/* Chama externa laranja/vermelha com leve oscilação */}
+            <path
+                d="M12.5 2C12.5 2 18 6.8 18 12.2C18 16.5 15.3 20 12 20C8.7 20 6 16.5 6 12.2C6 9.8 7.1 7.6 8.3 6C8.3 6 8.1 8.4 9.6 9.2C9.6 9.2 9.1 5.2 12.5 2Z"
+                fill="url(#flameOuter)"
+            >
+                <animateTransform
+                    attributeName="transform"
+                    type="scale"
+                    values="1 1; 1.05 0.96; 0.97 1.04; 1 1"
+                    dur="1.4s"
+                    repeatCount="indefinite"
+                    additive="sum"
+                />
+            </path>
+            {/* Miolo amarelo brilhante */}
+            <path
+                d="M12.2 9.5C12.2 9.5 14.8 11.8 14.8 14.5C14.8 16.7 13.5 18.5 12 18.5C10.5 18.5 9.2 16.7 9.2 14.5C9.2 13 9.9 11.7 10.6 10.9C10.6 10.9 10.7 12.2 11.5 12.6C11.5 12.6 11.3 10.8 12.2 9.5Z"
+                fill="url(#flameInner)"
+            >
+                <animate
+                    attributeName="opacity"
+                    values="0.85;1;0.8;1;0.85"
+                    dur="1.1s"
+                    repeatCount="indefinite"
+                />
+            </path>
+            <defs>
+                <linearGradient id="flameOuter" x1="12" y1="2" x2="12" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FB923C" />
+                    <stop offset="0.55" stopColor="#F97316" />
+                    <stop offset="1" stopColor="#DC2626" />
+                </linearGradient>
+                <linearGradient id="flameInner" x1="12" y1="9.5" x2="12" y2="18.5" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FEF08A" />
+                    <stop offset="1" stopColor="#FACC15" />
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+}
+
 export function InaugurationBanner() {
     const config = INAUGURATION_PROMO_CONFIG;
 
@@ -96,7 +146,12 @@ export function InaugurationBanner() {
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FBF3F3] text-dusty-rose border border-dusty-rose/40">
                                 🌸 {fem.badge}
                             </span>
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
+                                !stock.fem.isSoldOut && stock.fem.available < 5
+                                    ? 'bg-orange-50 text-orange-700 border-orange-200 shadow-xs'
+                                    : 'bg-slate-100 text-slate-600 border-slate-200'
+                            }`}>
+                                {!stock.fem.isSoldOut && stock.fem.available < 5 && <AnimatedFlameIcon className="w-3.5 h-3.5" />}
                                 {stock.fem.isSoldOut 
                                     ? 'Esgotado' 
                                     : stock.fem.available < 5 
@@ -181,7 +236,12 @@ export function InaugurationBanner() {
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#F4F8F5] text-[#245E3B] border border-[#ADCEB3]">
                                 🌿 {mas.badge}
                             </span>
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
+                                !stock.mas.isSoldOut && stock.mas.available < 5
+                                    ? 'bg-orange-50 text-orange-700 border-orange-200 shadow-xs'
+                                    : 'bg-slate-100 text-slate-600 border-slate-200'
+                            }`}>
+                                {!stock.mas.isSoldOut && stock.mas.available < 5 && <AnimatedFlameIcon className="w-3.5 h-3.5" />}
                                 {stock.mas.isSoldOut 
                                     ? 'Esgotado' 
                                     : stock.mas.available < 5 

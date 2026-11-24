@@ -30,7 +30,9 @@ const MAS_IDS = [
 export async function getInaugurationStock(): Promise<InaugurationStockData> {
     const initialPerGender = INAUGURATION_PROMO_CONFIG.unitsPerGender || 5;
 
-    let femSold = 0;
+    // Vendas realizadas diretamente fora do checkout automático (ex: WhatsApp)
+    const FEM_EXTERNAL_SOLD = 1;
+    let femSold = FEM_EXTERNAL_SOLD;
     let masSold = 0;
 
     try {
