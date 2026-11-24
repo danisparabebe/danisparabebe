@@ -962,7 +962,7 @@ export default function UnifiedCheckoutPage() {
                                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 flex items-start gap-2">
                                     <span className="text-amber-700 text-xs mt-0.5">⏱️</span>
                                     <p className="text-[10px] text-amber-900 leading-relaxed font-semibold">
-                                        <strong className="uppercase">Atenção:</strong> Peças sob encomenda com bordado artesanal exclusivo. O envio é realizado após o prazo de confecção de <strong>até 12 dias úteis</strong>.
+                                        <strong className="uppercase">Atenção:</strong> Peças sob encomenda com bordado artesanal exclusivo. O envio é realizado após o prazo de confecção de <strong>até 9 dias úteis</strong>.
                                     </p>
                                 </div>
 

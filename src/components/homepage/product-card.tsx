@@ -77,17 +77,19 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                     </div>
                 </div>
 
-                <div className="mt-3 flex flex-col flex-1 px-1">
-                    {category && <p className="text-[11px] text-slate uppercase tracking-wider font-medium">{category}</p>}
-                    <h3 className="text-sm font-semibold text-charcoal/60 line-clamp-2 min-h-[2.5rem] mt-1 pr-8 leading-snug">{name}</h3>
-                    <div className="space-y-1 mt-auto pt-3">
-                        <div className="text-sm text-charcoal/40">
+                <div className="mt-3 flex flex-col flex-1 px-1 text-center">
+                    <div className="min-h-[1rem]">
+                        {category && <p className="text-[10px] sm:text-[11px] text-slate uppercase tracking-wider font-medium leading-tight">{category}</p>}
+                    </div>
+                    <h3 className="text-[13px] sm:text-sm font-semibold text-charcoal/60 line-clamp-2 min-h-[2.375rem] sm:min-h-[2.5rem] mt-1 leading-snug">{name}</h3>
+                    <div className="space-y-1.5 mt-auto pt-3 w-full">
+                        <div className="text-xs sm:text-sm text-charcoal/40 min-h-[2.375rem] flex items-center justify-center">
                             <span className="font-medium text-[12px]">Preço disponível em breve</span>
                         </div>
                     </div>
                     <button
                         disabled
-                        className="mt-4 w-full bg-charcoal/10 text-charcoal/40 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase cursor-not-allowed border border-charcoal/5 flex items-center justify-center gap-1.5"
+                        className="mt-3 sm:mt-4 w-full h-10 bg-charcoal/10 text-charcoal/40 rounded-full text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-widest uppercase cursor-not-allowed border border-charcoal/5 flex items-center justify-center gap-1.5"
                     >
                         <Clock className="w-3.5 h-3.5" />
                         Em Breve
@@ -131,32 +133,41 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                 <Heart className={`h-4 w-4 transition-colors duration-300 ${fav ? 'fill-dusty-rose text-dusty-rose' : 'text-slate group-hover/heart:text-dusty-rose'}`} />
             </button>
 
-            <div className="mt-3 flex flex-col flex-1 px-1">
+            <div className="mt-3 flex flex-col flex-1 px-1 text-center">
                 <Link href={linkHref} className="block group/title">
-                    {category && <p className="text-[11px] text-slate uppercase tracking-wider font-medium group-hover/title:text-sage-green-dark transition-colors">{category}</p>}
-                    <h3 className="text-sm font-semibold text-charcoal line-clamp-2 min-h-[2.5rem] mt-1 pr-8 leading-snug group-hover/title:text-sage-green-dark transition-colors">{name}</h3>
+                    <div className="min-h-[1rem]">
+                        {category && <p className="text-[10px] sm:text-[11px] text-slate uppercase tracking-wider font-medium leading-tight group-hover/title:text-sage-green-dark transition-colors">{category}</p>}
+                    </div>
+                    <h3 className="text-[13px] sm:text-sm font-semibold text-charcoal line-clamp-2 min-h-[2.375rem] sm:min-h-[2.5rem] mt-1 leading-snug group-hover/title:text-sage-green-dark transition-colors">{name}</h3>
                 </Link>
-                <div className="space-y-1 mt-auto pt-3">
-                    {installmentPrice && (
-                        <div className="text-sm text-charcoal">
-                            {originalPrice && (
-                                <span className="text-[10px] text-slate line-through mr-1.5 block mb-0.5">De R$ {originalPrice.toFixed(2)}</span>
+                <div className="space-y-1.5 mt-auto pt-3 w-full">
+                    {installmentPrice ? (
+                        <div className="min-h-[2.375rem] flex flex-col items-center justify-end text-charcoal">
+                            {Boolean(originalPrice) && (
+                                <span className="text-[10px] sm:text-[11px] text-slate line-through leading-tight mb-0.5">
+                                    De R$ {originalPrice!.toFixed(2)}
+                                </span>
                             )}
-                            <span className="font-bold">{installments}x R$ {installmentPrice.toFixed(2)}</span>
+                            <span className="text-sm font-bold leading-tight">
+                                {installments}x R$ {installmentPrice.toFixed(2)}
+                            </span>
                         </div>
-                    )}
-                    <div className="text-[11px] text-slate flex items-center gap-1 mt-0.5">
-                        ou <span className={`font-black px-2 py-0.5 rounded-md text-[12px] ${
+                    ) : null}
+                    <div
+                        className={`w-full flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-black whitespace-nowrap ${
                             badge?.toLowerCase().includes('black baby')
                                 ? 'bg-black text-emerald-300 border border-emerald-400/30 shadow-xs'
-                                : 'text-charcoal bg-sage-green/40'
-                        }`}>R$ {price.toFixed(2)} no PIX</span>
+                                : 'text-charcoal bg-sage-green/40 border border-sage-green/30'
+                        }`}
+                    >
+                        <span className="font-medium opacity-75 text-[10px] sm:text-[11px]">ou</span>
+                        <span>R$ {price.toFixed(2)} no PIX</span>
                     </div>
                 </div>
-                <div className="mt-4 w-full flex items-center gap-1.5">
+                <div className="mt-3 sm:mt-4 w-full flex items-center gap-1.5">
                     <Link
                         href={linkHref}
-                        className="flex-[7] basis-7/10 h-10 relative overflow-hidden group/buy bg-sage-green text-charcoal hover:bg-[#9CBD9F] rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/5 flex items-center justify-center text-center"
+                        className="flex-1 h-10 relative overflow-hidden group/buy bg-sage-green text-charcoal hover:bg-[#9CBD9F] rounded-full text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-widest uppercase transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/5 flex items-center justify-center text-center px-2"
                     >
                         <span className="relative z-10">Comprar</span>
                         <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover/buy:animate-shine" />
@@ -168,7 +179,7 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                             e.stopPropagation();
                             setIsPersonalizationOpen(true);
                         }}
-                        className="flex-[3] basis-3/10 h-10 relative overflow-hidden group/cart bg-charcoal/5 hover:bg-charcoal text-charcoal hover:text-white rounded-full transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/10 flex items-center justify-center gap-1"
+                        className="w-12 sm:w-14 shrink-0 h-10 relative overflow-hidden group/cart bg-charcoal/5 hover:bg-charcoal text-charcoal hover:text-white rounded-full transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.98] border border-charcoal/10 flex items-center justify-center gap-0.5"
                         title="Adicionar ao carrinho"
                         aria-label="Adicionar ao carrinho"
                     >

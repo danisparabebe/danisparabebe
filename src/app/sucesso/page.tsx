@@ -142,7 +142,7 @@ function SuccessContent() {
     // Deadline formatted
     const deadlineFormatted = orderData?.deadlineDate
         ? new Date(orderData.deadlineDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
-        : '12 dias úteis';
+        : '9 dias úteis';
 
     const cityState = orderData?.address?.city 
         ? `${orderData.address.city}/${orderData.address.state || ''}`

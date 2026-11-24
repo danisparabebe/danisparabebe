@@ -17,7 +17,7 @@ export function Footer({ simple = false }: { simple?: boolean }) {
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <ShieldCheck className="h-5 w-5 text-sage-green-dark" />
-                        <span>Produção artesanal em até 12 dias úteis</span>
+                        <span>Produção artesanal em até 9 dias úteis</span>
                     </div>
                 </div>
             </div>

@@ -81,9 +81,9 @@ const QUALITY_PHRASES = [
 ];
 
 const TIMEFRAME_PHRASES = [
-    '⏱️ Prazo de confecção: 7 a 12 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.',
-    '⏱️ Tempo de produção: 7 a 12 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.',
-    '⏱️ Confecção artesanal: 7 a 12 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.',
+    '⏱️ Prazo de confecção: 7 a 9 dias úteis. Como cada peça é feita sob encomenda e personalizada exclusivamente para o seu bebê, pedimos um tempinho especial de preparo.',
+    '⏱️ Tempo de produção: 7 a 9 dias úteis. Cada kit é produzido artesanalmente sob encomenda, garantindo atenção total aos detalhes do seu pedido.',
+    '⏱️ Confecção artesanal: 7 a 9 dias úteis. Seu kit é feito exclusivamente para você — nenhuma peça é produzida em série, por isso cada detalhe recebe atenção especial.',
 ];
 
 const CLOSING_PHRASES = [

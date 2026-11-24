@@ -225,7 +225,7 @@ export async function POST(request: Request) {
 
         // 3. Pre-Register order in Firebase (Pendente)
         const now = new Date();
-        const deadline = addBusinessDays(now, 12);
+        const deadline = addBusinessDays(now, 9);
         
         const cleanCustomerName = sanitizeText(customer.name, 100) || 'Cliente';
         const cleanCustomerEmail = sanitizeText(customer.email, 100);

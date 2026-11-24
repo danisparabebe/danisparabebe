@@ -26,7 +26,7 @@ export default function PoliticasPage() {
                         <h2 className="text-2xl font-heading font-bold text-sage-green-dark mb-4">Prazos de Produção Artesanal</h2>
                         <div className="space-y-4 text-charcoal/80 leading-relaxed">
                             <p>
-                                Todas as nossas peças são feitas sob encomenda e personalizadas com o nome e as cores escolhidas por você. Por se tratar de um processo 100% artesanal, feito com muito cuidado e dedicação para o seu bebê, <strong>nosso prazo de produção é de 7 a 12 dias úteis</strong> após a confirmação do pagamento.
+                                Todas as nossas peças são feitas sob encomenda e personalizadas com o nome e as cores escolhidas por você. Por se tratar de um processo 100% artesanal, feito com muito cuidado e dedicação para o seu bebê, <strong>nosso prazo de produção é de 7 a 9 dias úteis</strong> após a confirmação do pagamento.
                             </p>
                             <p>
                                 Este prazo não inclui o tempo de trânsito dos Correios/Transportadora. O seu código de rastreio será enviado por e-mail e WhatsApp assim que a caixinha for despachada.

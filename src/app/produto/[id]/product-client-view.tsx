@@ -497,7 +497,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                     {/* Trust Badges — below buttons */}
                     <div className="grid grid-cols-3 gap-2 mt-4">
                         {[
-                            { icon: Wand2, title: 'Feito à Mão', sub: 'Até 12 dias úteis' },
+                            { icon: Wand2, title: 'Feito à Mão', sub: 'Até 9 dias úteis' },
                             { icon: ShieldCheck, title: 'Garantia Danis', sub: 'Qualidade total' },
                             { icon: CreditCard, title: 'Pag. Seguro', sub: 'Via InfinitePay' },
                         ].map(({ icon: Icon, title, sub }) => (
@@ -516,7 +516,7 @@ export function ProductClientView({ product }: { product: ProductData }) {
                     <div className="flex items-start gap-2 p-3 mt-3 bg-warm-stone/20 rounded-xl border border-line">
                         <Info className="w-4 h-4 text-sage-green-dark mt-0.5 shrink-0" />
                         <p className="text-[10px] text-slate leading-relaxed">
-                            <strong className="text-charcoal block mb-0.5">Prazo de Produção: Máximo 12 dias úteis</strong>
+                            <strong className="text-charcoal block mb-0.5">Prazo de Produção: Máximo 9 dias úteis</strong>
                             Cada peça é feita sob medida com carinho. Se o seu pedido ficar pronto antes, enviaremos imediatamente!
                         </p>
                     </div>

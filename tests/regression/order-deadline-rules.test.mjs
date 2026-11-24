@@ -45,4 +45,43 @@ describe('Regressão: Regras de Prazo de Entrega e Produção (Pós-Pagamento)',
         const sheetContent = fs.readFileSync(clientOrderSheetPath, 'utf-8');
         assert.ok(sheetContent.includes('Inicia após confirmação do pagamento'), 'Ficha técnica deve indicar que prazo inicia pós-pagamento');
     });
+
+    test('Prazo padrão de produção deve ser de 9 dias úteis em todo o site (sem referências a 12 dias úteis)', () => {
+        const filesToCheck = [
+            'src/app/api/checkout/route.ts',
+            'src/app/checkout/page.tsx',
+            'src/app/politicas/page.tsx',
+            'src/app/produto/[id]/product-client-view.tsx',
+            'src/app/sucesso/page.tsx',
+            'src/components/homepage/footer.tsx',
+            'src/components/homepage/top-bar.tsx',
+            'src/lib/description-generator.ts',
+            'src/data/product-control.ts',
+        ];
+
+        for (const relPath of filesToCheck) {
+            const fullPath = path.resolve(process.cwd(), relPath);
+            const content = fs.readFileSync(fullPath, 'utf-8');
+            assert.ok(
+                !/12\s*(?:dias|úteis|uteis)/i.test(content),
+                `${relPath} não deve conter "12 dias" ou "12 úteis"`
+            );
+        }
+
+        const checkoutApiContent = fs.readFileSync(checkoutApiPath, 'utf-8');
+        assert.ok(
+            checkoutApiContent.includes('addBusinessDays(now, 9)'),
+            'Checkout API deve calcular deadline com addBusinessDays(now, 9)'
+        );
+        assert.ok(
+            !checkoutApiContent.includes('addBusinessDays(now, 12)'),
+            'Checkout API não deve usar addBusinessDays(now, 12)'
+        );
+
+        const topBarContent = fs.readFileSync(path.resolve(process.cwd(), 'src/components/homepage/top-bar.tsx'), 'utf-8');
+        assert.ok(topBarContent.includes('9 dias úteis'), 'TopBar deve exibir 9 dias úteis');
+
+        const footerContent = fs.readFileSync(path.resolve(process.cwd(), 'src/components/homepage/footer.tsx'), 'utf-8');
+        assert.ok(footerContent.includes('9 dias úteis'), 'Footer deve exibir 9 dias úteis');
+    });
 });
