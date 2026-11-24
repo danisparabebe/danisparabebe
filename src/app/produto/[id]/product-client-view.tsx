@@ -295,17 +295,17 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         
                         {product.tags?.includes('black-baby') ? (
                             <div className="inline-flex items-baseline gap-2 bg-black px-4 py-2 rounded-xl border border-emerald-400/30 shadow-md w-fit my-1">
-                                <span className="text-3xl font-extrabold text-emerald-300 tracking-tight">
+                                <span className="text-3xl font-black text-emerald-400 tracking-tight">
                                     R$ {currentPixPrice.toFixed(2).replace('.', ',')}
                                 </span>
                                 <span className="text-sm font-bold text-emerald-200">no PIX</span>
                             </div>
                         ) : (
                             <div className="flex items-baseline gap-2">
-                                <span className="text-3xl font-extrabold text-charcoal tracking-tight">
+                                <span className="text-3xl font-black text-emerald-400 tracking-tight">
                                     R$ {currentPixPrice.toFixed(2).replace('.', ',')}
                                 </span>
-                                <span className="text-sm font-bold text-sage-green-dark">no PIX</span>
+                                <span className="text-sm font-bold text-charcoal/60">no PIX</span>
                             </div>
                         )}
                         

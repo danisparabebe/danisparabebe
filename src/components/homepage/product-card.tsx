@@ -142,26 +142,31 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                 </Link>
                 <div className="space-y-1.5 mt-auto pt-3 w-full">
                     {installmentPrice ? (
-                        <div className="min-h-[2.375rem] flex flex-col items-center justify-end text-charcoal">
+                        <div className="min-h-[1.75rem] flex flex-wrap items-baseline justify-center gap-x-1 gap-y-0.5 text-charcoal leading-tight">
                             {Boolean(originalPrice) && (
-                                <span className="text-[10px] sm:text-[11px] text-slate line-through leading-tight mb-0.5">
+                                <span className="text-[10px] sm:text-[11px] text-slate line-through whitespace-nowrap">
                                     De R$ {originalPrice!.toFixed(2)}
                                 </span>
                             )}
-                            <span className="text-sm font-bold leading-tight">
+                            <span className="text-xs sm:text-sm font-bold whitespace-nowrap">
+                                {Boolean(originalPrice) && (
+                                    <span className="font-medium text-charcoal/80 mr-1">por</span>
+                                )}
                                 {installments}x R$ {installmentPrice.toFixed(2)}
                             </span>
                         </div>
                     ) : null}
-                    <div
-                        className={`w-full flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-black whitespace-nowrap ${
+                    <div className={`w-full flex items-center justify-center whitespace-nowrap pt-1 ${
+                        badge?.toLowerCase().includes('black baby')
+                            ? 'bg-charcoal rounded-lg py-1.5 px-3'
+                            : ''
+                    }`}>
+                        <span className="text-sm sm:text-base font-black text-emerald-400">R$ {price.toFixed(2)}</span>
+                        <span className={`text-[11px] sm:text-xs font-medium ml-1.5 ${
                             badge?.toLowerCase().includes('black baby')
-                                ? 'bg-black text-emerald-300 border border-emerald-400/30 shadow-xs'
-                                : 'text-charcoal bg-sage-green/40 border border-sage-green/30'
-                        }`}
-                    >
-                        <span className="font-medium opacity-75 text-[10px] sm:text-[11px]">ou</span>
-                        <span>R$ {price.toFixed(2)} no PIX</span>
+                                ? 'text-white/60'
+                                : 'text-charcoal/60'
+                        }`}>no PIX</span>
                     </div>
                 </div>
                 <div className="mt-3 sm:mt-4 w-full flex items-center gap-1.5">

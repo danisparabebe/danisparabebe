@@ -38,6 +38,7 @@ const config: Config = {
                 'blush-white': '#F9EBEC',
                 'slate': '#64748B',
                 'sage-green': '#ADCEB3',
+                'sage-green-dark': '#245E3B',
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
