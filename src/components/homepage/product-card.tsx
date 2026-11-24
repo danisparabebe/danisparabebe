@@ -146,7 +146,11 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                         </div>
                     )}
                     <div className="text-[11px] text-slate flex items-center gap-1 mt-0.5">
-                        ou <span className="font-black text-charcoal bg-sage-green/40 px-1.5 py-0.5 rounded-md text-[12px]">R$ {price.toFixed(2)} no PIX</span>
+                        ou <span className={`font-black px-2 py-0.5 rounded-md text-[12px] ${
+                            badge?.toLowerCase().includes('black baby')
+                                ? 'bg-black text-emerald-300 border border-emerald-400/30 shadow-xs'
+                                : 'text-charcoal bg-sage-green/40'
+                        }`}>R$ {price.toFixed(2)} no PIX</span>
                     </div>
                 </div>
                 <div className="mt-4 w-full flex items-center gap-1.5">

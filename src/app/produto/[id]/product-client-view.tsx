@@ -259,8 +259,8 @@ export function ProductClientView({ product }: { product: ProductData }) {
                         <div className="flex flex-wrap items-center gap-2 mb-1">
                             <span className="inline-block text-xs font-bold tracking-wider uppercase text-sage-green-dark">{product.category}</span>
                             {product.tags?.includes('black-baby') && (
-                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-charcoal text-amber-300 border border-amber-400/40 shadow-xs">
-                                    Black Baby 🖤
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-black text-amber-300 border border-amber-400/40 shadow-xs">
+                                    Black Baby
                                 </span>
                             )}
                         </div>
@@ -293,12 +293,21 @@ export function ProductClientView({ product }: { product: ProductData }) {
                             </div>
                         )}
                         
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-extrabold text-charcoal tracking-tight">
-                                R$ {currentPixPrice.toFixed(2).replace('.', ',')}
-                            </span>
-                            <span className="text-sm font-bold text-sage-green-dark">no PIX</span>
-                        </div>
+                        {product.tags?.includes('black-baby') ? (
+                            <div className="inline-flex items-baseline gap-2 bg-black px-4 py-2 rounded-xl border border-emerald-400/30 shadow-md w-fit my-1">
+                                <span className="text-3xl font-extrabold text-emerald-300 tracking-tight">
+                                    R$ {currentPixPrice.toFixed(2).replace('.', ',')}
+                                </span>
+                                <span className="text-sm font-bold text-emerald-200">no PIX</span>
+                            </div>
+                        ) : (
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-3xl font-extrabold text-charcoal tracking-tight">
+                                    R$ {currentPixPrice.toFixed(2).replace('.', ',')}
+                                </span>
+                                <span className="text-sm font-bold text-sage-green-dark">no PIX</span>
+                            </div>
+                        )}
                         
                         <div className="flex items-center gap-2 mt-1">
                             <ShieldCheck className="w-3.5 h-3.5 text-sage-green-dark shrink-0" />
