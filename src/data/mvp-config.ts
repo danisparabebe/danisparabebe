@@ -28,5 +28,10 @@ export const MVP_PRODUCT_SELECTION: string[] = [
     "DPB-0027",
     "DPB-0063",
     "DPB-0064",
-    "DPB-0075"
+    "DPB-0075",
+    "DPB-0136",
+    "DPB-0137",
+    "DPB-0138",
+    "DPB-0139",
+    "DPB-0140"
 ];

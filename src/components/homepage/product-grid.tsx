@@ -14,6 +14,7 @@ interface Product {
     installments?: number;
     image: string;
     badge?: string;
+    features?: string[];
     isHot?: boolean;
     comingSoon?: boolean;
 }

@@ -89,6 +89,15 @@ function HeroCarouselPanel({ slides, intervalMs = 3500 }: HeroCarouselPanelProps
                                     priority={idx === 0}
                                 />
                             )}
+                            {slide.badge && (
+                                <span className={`absolute top-3 left-3 z-20 px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase shadow-md ${
+                                    slide.badge.toLowerCase().includes('black baby')
+                                        ? 'bg-charcoal text-amber-300 border border-amber-400/40'
+                                        : 'bg-white/90 backdrop-blur-sm text-charcoal border border-black/5'
+                                }`}>
+                                    {slide.badge}
+                                </span>
+                            )}
 
                         </Link>
                     );

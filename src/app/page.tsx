@@ -51,13 +51,14 @@ export default async function HomePage() {
             name: p.name,
             category: p.category || 'Geral',
             price: pixPrice,
-            originalPrice: p.originalPriceFull && p.originalPriceFull > p.priceFull ? p.originalPriceFull : undefined,
+            originalPrice: p.originalPriceFull && p.originalPriceFull > pixPrice ? p.originalPriceFull : undefined,
             installmentPrice: installment12x,
             installments: 12,
             image: p.images?.[0] ? encodeURI(p.images[0]) : '/Logos/Logomarca%20Rose.png',
             badge: available ? (p.badge || (p.tags?.includes('oferta') ? 'Oferta' : undefined)) : 'Em Breve',
             gridPosition: p.gridPosition,
             tags: p.tags || [],
+            features: p.features || [],
             isHot: p.isHot || false,
             comingSoon: !available,
         };
@@ -85,7 +86,7 @@ export default async function HomePage() {
 
     // 4. HERO DIREITO: Prioriza os modelos explicitamente configurados com gridPosition === 'HERO_RIGHT'
     const heroRightCandidates = managedProducts.filter(p => p.gridPosition === 'HERO_RIGHT');
-    const heroRightOrder = ['DPB-0116', 'DPB-0123', 'DPB-0134', 'DPB-0129'];
+    const heroRightOrder = ['DPB-0136', 'DPB-0116', 'DPB-0123', 'DPB-0134', 'DPB-0129'];
     const sortedHeroRight = heroRightCandidates.length > 0
         ? [...heroRightCandidates].sort((a, b) => {
             const idxA = heroRightOrder.indexOf(a.shortCode || '');
@@ -101,16 +102,24 @@ export default async function HomePage() {
         name: p.name,
         image: p.image,
         link: `/produto/${p.shortCode || p.id}`,
+        badge: p.badge,
         isHot: p.isHot || false
     }));
 
-    // 3. HERO ESQUERDO: Filtra os Kits Manta do MVP excluindo os que já estão no Hero Direito
+    // 3. HERO ESQUERDO: Filtra os Kits Manta do MVP excluindo os que já estão no Hero Direito (destacando os novos lançamentos primeiro)
     const heroRightIdSet = new Set(sortedHeroRight.map(p => p.id));
+    const heroLeftPriority = ['DPB-0138', 'DPB-0137', 'DPB-0140', 'DPB-0139'];
     const kitMantaProducts = mvpProducts.filter(p => !heroRightIdSet.has(p.id) && (p.gridPosition === 'HERO_LEFT' || p.name.toLowerCase().includes('manta')));
-    const heroLeftSlides = getZippedProducts(kitMantaProducts, kitMantaProducts.length).map((p) => ({
+    const priorityLeft = heroLeftPriority
+        .map(code => kitMantaProducts.find(p => p.shortCode === code))
+        .filter(Boolean) as typeof kitMantaProducts;
+    const priorityLeftIds = new Set(priorityLeft.map(p => p.id));
+    const remainingLeft = getZippedProducts(kitMantaProducts.filter(p => !priorityLeftIds.has(p.id)), kitMantaProducts.length);
+    const heroLeftSlides = [...priorityLeft, ...remainingLeft].map((p) => ({
         name: p.name,
         image: p.image,
         link: `/produto/${p.shortCode || p.id}`,
+        badge: p.badge,
         isHot: p.isHot || false
     }));
 

@@ -35,7 +35,7 @@ async function getProduct(rawId: string) {
             name: managedProduct.name,
             category: managedProduct.category || 'Geral',
             priceFull: managedProduct.priceFull,
-            originalPrice: managedProduct.originalPriceFull && managedProduct.originalPriceFull > managedProduct.priceFull ? managedProduct.originalPriceFull : undefined,
+            originalPrice: managedProduct.originalPriceFull && managedProduct.originalPriceFull > pixPrice ? managedProduct.originalPriceFull : undefined,
             pixPrice: pixPrice,
             installments: 3,
             images: managedProduct.images,

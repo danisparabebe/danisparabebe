@@ -20,11 +20,12 @@ interface ProductCardProps {
     installments?: number;
     image: string;
     badge?: string;
+    features?: string[];
     isHot?: boolean;
     comingSoon?: boolean;
 }
 
-export function ProductCard({ id, shortCode, name, category, price, originalPrice, installmentPrice, installments = 3, image, badge, isHot, comingSoon }: ProductCardProps) {
+export function ProductCard({ id, shortCode, name, category, price, originalPrice, installmentPrice, installments = 3, image, badge, features = [], isHot, comingSoon }: ProductCardProps) {
     const { addItem, openCart } = useCartStore();
     const { toggle, isFavorite } = useFavoritesStore();
     const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
@@ -111,7 +112,11 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                     <div className="absolute top-3 left-3 z-10 flex items-center gap-2 pointer-events-none">
 
                         {badge && (
-                            <div className="bg-white/80 backdrop-blur-sm text-charcoal border border-white/40 px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-semibold shadow-sm">
+                            <div className={`px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-semibold shadow-sm ${
+                                badge.toLowerCase().includes('black baby')
+                                    ? 'bg-charcoal text-amber-300 border border-amber-400/40'
+                                    : 'bg-white/80 backdrop-blur-sm text-charcoal border border-white/40'
+                            }`}>
                                 {badge}
                             </div>
                         )}
@@ -174,8 +179,9 @@ export function ProductCard({ id, shortCode, name, category, price, originalPric
                 onClose={() => setIsPersonalizationOpen(false)}
                 productName={name}
                 productImage={image}
+                productId={id}
                 onConfirm={handleConfirmPersonalization}
-                features={[]}
+                features={features}
             />
         </div>
     );

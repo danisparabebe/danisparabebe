@@ -256,7 +256,14 @@ export function ProductClientView({ product }: { product: ProductData }) {
                 {/* Right Column: Product Info — grows freely, page scrolls naturally */}
                 <div className="flex flex-col space-y-4 pb-8">
                     <div>
-                        <span className="inline-block text-xs font-bold tracking-wider uppercase text-sage-green-dark mb-1">{product.category}</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className="inline-block text-xs font-bold tracking-wider uppercase text-sage-green-dark">{product.category}</span>
+                            {product.tags?.includes('black-baby') && (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-charcoal text-amber-300 border border-amber-400/40 shadow-xs">
+                                    Black Baby 🖤
+                                </span>
+                            )}
+                        </div>
                         <h1 className="text-2xl md:text-3xl font-bold text-charcoal leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
                             {currentName}
                         </h1>

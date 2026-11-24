@@ -4553,5 +4553,210 @@ export const productControl: ManagedProduct[] = [
         "netValue": 581,
         "mvpEnabled": false,
         "colorVariations": []
+    },
+    {
+        "id": "FEM-KIT-BOR-RSA-BAB-RSA_MAT_01",
+        "shortCode": "DPB-0136",
+        "name": "Borboletas Rosa · Kit Maternidade Completo (9 Peças)",
+        "technicalName": "FEM-KIT-BOR-RSA-BAB-RSA_MAT_01",
+        "description": "§INTRO§\nO enxoval dos sonhos para receber sua princesa na maternidade! Este Kit Maternidade Completo no tema Borboletas Rosa combina delicadeza, sofisticação e praticidade em 9 peças essenciais bordadas à mão.\n\n§PERSONAL§\nTodas as 9 peças do kit são personalizadas com o nome da sua bebê em bordado de alta definição, com laços de cetim rosa e acabamento em bordado inglês.\n\n§ITEMS§\n📦 Este kit maternidade completo contém 9 peças:\n\n• 1x Toalha de Banho Forrada com Capuz\n• 1x Manta Forrada\n• 1x Fralda de Passeio (Grande)\n• 4x Fraldas de Boca\n• 1x Body Manga Curta Personalizado\n• 1x Touca Bordada\n\n§SIZES§\n📐 Toalha de Banho com Capuz: 80x68 cm — Atoalhado macio forrado com Fralda 100% Algodão\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda de Passeio: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fraldas de Boca (4 unidades): 38x32 cm — Tecido Duplo 100% Algodão\n📐 Body Curto: Malha Suedine 100% Algodão (escolha o tamanho RN, P, M ou G)\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§FINISH§\n🎀 Acabamento premium com babado em bordado inglês rosa, passa-fita branco com fita de cetim rosa, laços delicados e detalhes em pérolas no body.\n\n§QUALITY§\nConfeccionado em tecido 100% algodão hipoalergênico de altíssima maciez, pensado especialmente para proteger a pele sensível do recém-nascido.\n\n§TIMEFRAME§\n⏱️ Produção artesanal sob medida: até 12 dias úteis após a confirmação do pagamento.",
+        "features": [
+            "1x TOB",
+            "1x MNT",
+            "1x FRG",
+            "4x FRP",
+            "1x BDC",
+            "1x TOU"
+        ],
+        "priceFull": 631.2,
+        "originalPriceFull": 575,
+        "pixPrice": 526,
+        "pixDiscountPct": 9,
+        "discountPct": 17,
+        "netValue": 526,
+        "images": [
+            "/produtos/conferidos/FEM-KIT-BOR-RSA-BAB-RSA_MAT_01.jpg"
+        ],
+        "gridPosition": "HERO_RIGHT",
+        "category": "Kits",
+        "theme": "Borboletas",
+        "color": "Rosa",
+        "passaFitaColor": "Branco",
+        "tags": [
+            "novidade",
+            "destaque",
+            "kit-maternidade",
+            "borboletas",
+            "Linha Premium"
+        ],
+        "badge": "Kit Maternidade",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true,
+        "colorVariations": []
+    },
+    {
+        "id": "MAS-KIT-MON-AZM-BAB-AZM_MPR_01",
+        "shortCode": "DPB-0137",
+        "name": "Monograma Azul Marinho · Kit Manta Minha Primeira Roupinha",
+        "technicalName": "MAS-KIT-MON-AZM-BAB-AZM_MPR_01",
+        "description": "§INTRO§\nClássico, elegante e perfeito para levar na maternidade! O Kit Manta Minha Primeira Roupinha com Monograma Azul Marinho e Dourado é também uma ótima opção para presentear 🎁 — super útil no dia a dia do bebê.\n\n§PERSONAL§\nPersonalizado com a inicial dourada e o nome do seu bebê bordado em azul marinho em todas as peças do conjunto.\n\n§ITEMS§\n📦 Este kit contém 5 peças completas:\n\n• 1x Manta Forrada\n• 1x Fralda Grande\n• 1x Fralda de Boca\n• 1x Body Manga Curta\n• 1x Touca Bordada\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda de Boca: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Body Curto: Malha Suedine 100% Algodão (escolha o tamanho RN, P, M ou G)\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§FINISH§\n🎀 Acabamento refinado com babado em bordado inglês azul marinho, passa-fita branco com fita azul marinho e laços de cetim.\n\n§QUALITY§\nTecidos 100% algodão hipoalergênico, macios e respiráveis para garantir conforto absoluto desde os primeiros dias de vida.\n\n§TIMEFRAME§\n⏱️ Condição especial Black Baby 🖤! Produção artesanal sob medida em até 12 dias úteis após a confirmação do pagamento.",
+        "features": [
+            "1x MNT",
+            "1x FRG",
+            "1x FRP",
+            "1x BDC",
+            "1x TOU"
+        ],
+        "priceFull": 284.4,
+        "originalPriceFull": 315,
+        "pixPrice": 237,
+        "pixDiscountPct": 25,
+        "discountPct": 17,
+        "netValue": 237,
+        "images": [
+            "/produtos/conferidos/MAS-KIT-MON-AZM-BAB-AZM_MPR_01.jpg"
+        ],
+        "gridPosition": "HERO_LEFT",
+        "category": "Kits",
+        "theme": "Monograma",
+        "color": "Azul Marinho",
+        "passaFitaColor": "Branco",
+        "tags": [
+            "novidade",
+            "destaque",
+            "black-baby",
+            "black-friday",
+            "monograma",
+            "minha-primeira-roupinha"
+        ],
+        "badge": "Black Baby 🖤",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true,
+        "colorVariations": []
+    },
+    {
+        "id": "FEM-KIT-MON-RSE-BAB-RSE_MPR_01",
+        "shortCode": "DPB-0138",
+        "name": "Monograma Rosê · Kit Manta Minha Primeira Roupinha",
+        "technicalName": "FEM-KIT-MON-RSE-BAB-RSE_MPR_01",
+        "description": "§INTRO§\nDelicadeza em cada pontinho! O Kit Manta Minha Primeira Roupinha no tema Monograma Rosê com borboleta e florzinhas é perfeito para levar na maternidade e uma ótima opção para presentear 🎁 — super útil!\n\n§PERSONAL§\nPersonalizado com a inicial floral e o nome da sua bebê bordado em todas as peças, além de uma linda faixa de cabelo com laço de cetim e inicial em pérolas.\n\n§ITEMS§\n📦 Este kit contém 5 peças completas:\n\n• 1x Manta Forrada\n• 1x Fralda Grande\n• 1x Fralda de Boca\n• 1x Body Manga Curta\n• 1x Faixa de Cabelo Personalizada\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda de Boca: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Body Curto: Malha Suedine 100% Algodão (escolha o tamanho RN, P, M ou G)\n📐 Faixa: Meia de seda super confortável que se adapta sem apertar\n\n§FINISH§\n🎀 Acabamento encantador com babado em bordado inglês rosê, passa-fita branco com fita rosê, laços nos ombros e pérolas na gola do body.\n\n§QUALITY§\nTecidos 100% algodão hipoalergênico, ultra macios e seguros para a pele sensível do recém-nascido.\n\n§TIMEFRAME§\n⏱️ Condição especial Black Baby 🖤! Produção artesanal sob medida em até 12 dias úteis após a confirmação do pagamento.",
+        "features": [
+            "1x MNT",
+            "1x FRG",
+            "1x FRP",
+            "1x BDC",
+            "1x FAI"
+        ],
+        "priceFull": 284.4,
+        "originalPriceFull": 308,
+        "pixPrice": 237,
+        "pixDiscountPct": 23,
+        "discountPct": 17,
+        "netValue": 237,
+        "images": [
+            "/produtos/conferidos/FEM-KIT-MON-RSE-BAB-RSE_MPR_01.jpg"
+        ],
+        "gridPosition": "HERO_LEFT",
+        "category": "Kits",
+        "theme": "Monograma",
+        "color": "Rosê",
+        "passaFitaColor": "Branco",
+        "tags": [
+            "novidade",
+            "destaque",
+            "black-baby",
+            "black-friday",
+            "monograma",
+            "minha-primeira-roupinha"
+        ],
+        "badge": "Black Baby 🖤",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true,
+        "colorVariations": []
+    },
+    {
+        "id": "MAS-KIT-SAF-VDM-BAB-VDM_MPR_01",
+        "shortCode": "DPB-0139",
+        "name": "Safari Verde Militar · Kit Manta Minha Primeira Roupinha",
+        "technicalName": "MAS-KIT-SAF-VDM-BAB-VDM_MPR_01",
+        "description": "§INTRO§\nUm charme cheio de aventura para a chegada do seu bebê! O Kit Manta Minha Primeira Roupinha no tema Safari Verde Militar é perfeito para levar na maternidade e uma ótima opção para presentear 🎁 — super útil!\n\n§PERSONAL§\nBordado artesanal com os bichinhos do Safari (elefantinho, girafa e leãozinho) e o nome do seu bebê personalizado em todas as peças.\n\n§ITEMS§\n📦 Este kit contém 5 peças completas:\n\n• 1x Manta Forrada\n• 1x Fralda Grande\n• 1x Fralda de Boca\n• 1x Body Manga Curta\n• 1x Touca Bordada\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda de Boca: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Body Curto: Malha Suedine 100% Algodão (escolha o tamanho RN, P, M ou G)\n📐 Touca: Tamanho Único RN — Malha Especial 100% Algodão\n\n§FINISH§\n🎀 Acabamento impecável com babado em bordado inglês verde militar, passa-fita branco com fita verde oliva e laços de cetim.\n\n§QUALITY§\nConfeccionado em 100% algodão hipoalergênico premium, garantindo máximo conforto e suavidade para o bebê.\n\n§TIMEFRAME§\n⏱️ Condição especial Black Baby 🖤! Produção artesanal sob medida em até 12 dias úteis após a confirmação do pagamento.",
+        "features": [
+            "1x MNT",
+            "1x FRG",
+            "1x FRP",
+            "1x BDC",
+            "1x TOU"
+        ],
+        "priceFull": 284.4,
+        "originalPriceFull": 315,
+        "pixPrice": 237,
+        "pixDiscountPct": 25,
+        "discountPct": 17,
+        "netValue": 237,
+        "images": [
+            "/produtos/conferidos/MAS-KIT-SAF-VDM-BAB-VDM_MPR_01.jpg"
+        ],
+        "gridPosition": "HERO_LEFT",
+        "category": "Kits",
+        "theme": "Safari",
+        "color": "Verde Militar",
+        "passaFitaColor": "Branco",
+        "tags": [
+            "novidade",
+            "destaque",
+            "black-baby",
+            "black-friday",
+            "safari",
+            "minha-primeira-roupinha"
+        ],
+        "badge": "Black Baby 🖤",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true,
+        "colorVariations": []
+    },
+    {
+        "id": "FEM-KIT-BOR-LIL-BAB-LIL_MPR_01",
+        "shortCode": "DPB-0140",
+        "name": "Borboletas Lilás · Kit Manta Minha Primeira Roupinha",
+        "technicalName": "FEM-KIT-BOR-LIL-BAB-LIL_MPR_01",
+        "description": "§INTRO§\nUm sonho em tom lavanda! O Kit Manta Minha Primeira Roupinha no tema Borboletas Lilás é perfeito para levar na maternidade e uma ótima opção para presentear 🎁 — super útil e inesquecível!\n\n§PERSONAL§\nPersonalizado com o nome da sua bebê em meio a delicadas borboletas e ramos florais lilás, acompanhado de uma linda faixa de cabelo com inicial.\n\n§ITEMS§\n📦 Este kit contém 5 peças completas:\n\n• 1x Manta Forrada\n• 1x Fralda Grande\n• 1x Fralda de Boca\n• 1x Body Manga Curta\n• 1x Faixa de Cabelo Personalizada\n\n§SIZES§\n📐 Manta: 80x80 cm — Tecido Flanelado 100% Algodão\n📐 Fralda Grande: 65x69 cm — Tecido Duplo 100% Algodão\n📐 Fralda de Boca: 38x32 cm — Tecido Duplo 100% Algodão\n📐 Body Curto: Malha Suedine 100% Algodão (escolha o tamanho RN, P, M ou G)\n📐 Faixa: Meia de seda macia e confortável para recém-nascida\n\n§FINISH§\n🎀 Acabamento delicado com babado em bordado inglês lilás, passa-fita branco com fita lilás, laços nos ombros e pérolas na gola.\n\n§QUALITY§\nTecidos 100% algodão hipoalergênico premium, pensados para cuidar da pele delicada do bebê com todo carinho.\n\n§TIMEFRAME§\n⏱️ Condição especial Black Baby 🖤! Produção artesanal sob medida em até 12 dias úteis após a confirmação do pagamento.",
+        "features": [
+            "1x MNT",
+            "1x FRG",
+            "1x FRP",
+            "1x BDC",
+            "1x FAI"
+        ],
+        "priceFull": 284.4,
+        "originalPriceFull": 308,
+        "pixPrice": 237,
+        "pixDiscountPct": 23,
+        "discountPct": 17,
+        "netValue": 237,
+        "images": [
+            "/produtos/conferidos/FEM-KIT-BOR-LIL-BAB-LIL_MPR_01.jpg"
+        ],
+        "gridPosition": "HERO_LEFT",
+        "category": "Kits",
+        "theme": "Borboletas",
+        "color": "Lilás",
+        "passaFitaColor": "Branco",
+        "tags": [
+            "novidade",
+            "destaque",
+            "black-baby",
+            "black-friday",
+            "borboletas",
+            "minha-primeira-roupinha"
+        ],
+        "badge": "Black Baby 🖤",
+        "isHot": true,
+        "mvpEnabled": true,
+        "published": true,
+        "colorVariations": []
     }
 ];
